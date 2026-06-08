@@ -68,7 +68,9 @@ The first integration should be contract-first:
 
 1. UI Registry defines renderer payload schema and component vocabulary.
 2. Harness defines artifact/action/policy references that can point at UI payloads.
-3. Both repos add compatibility fixtures for a small shared payload set.
+3. Both repos add machine-readable compatibility fixtures for shared payloads, action
+   responses, artifact views, theme refs, suite refs, unsupported components, denied
+   actions, invalid payloads, and renderer error states.
 4. Suite packs consume harness capabilities through adapters, not direct runtime imports.
 5. Showcase or hosted apps can import both packages through normal package boundaries once
    each side has stable exports.
@@ -80,6 +82,8 @@ The first integration should be contract-first:
 - Do not let the UI registry own policy execution, tool invocation, memory writes, or
   agent runtime state.
 - Do not render arbitrary model-provided React, HTML, scripts, or package imports.
+- Do not accept shared harness/UI contracts as prose-only alignment; every active seam
+  needs schemas or fixtures and failing-closed negative cases.
 - Do not duplicate full roadmaps across repos; link them and keep project-specific
   execution in the owning repo.
 

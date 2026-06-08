@@ -2,7 +2,7 @@
 
 Date: 2026-06-07
 Status: Active planning
-Source reports: `docs/research/2026-06-07-agent-harness-production-feasibility-report.md`; `docs/research/master/00-orchestration/plan.md`; `docs/research/master/00-orchestration/synthesis.md`
+Source reports: `docs/research/2026-06-07-agent-harness-production-feasibility-report.md`; `docs/research/master/00-orchestration/plan.md`; `docs/research/master/00-orchestration/synthesis.md`; crossflow adversarial review at `C:\Users\james\dev\orgs\oss\registry\docs\research\2026-06-08-harness-ui-plan-adversarial-review.md`
 Owner: Jami Studio
 Surface: Jami Agent Harness root workspace
 Sibling foundation: `C:\Users\james\dev\orgs\oss\registry\ui-registry`
@@ -28,6 +28,9 @@ Define the full production-shaped implementation plan for `@jami-studio/harness`
 - [x] Master canon identifies `@jami-studio/harness`, `@jami-studio/ui`, and `@jami-studio/orchestra` as the `jami.studio` foundation repos.
 - [x] `docs/architecture/foundation-alignment.md` records the repo split: Jami Agent Harness owns governed agent execution, tools, policy, memory, artifacts, traces, and agent-facing runtime surfaces; Studio UI Registry owns UI, tokens, renderer, registry, workbench, suites, and UI install surfaces.
 - [x] Master canon selects agent-native as the preferred OSS foundation substrate, pending current lock-time verification.
+- [x] Crossflow adversarial review found the prior agent-native package targets stale as of 2026-06-08:
+  current npm metadata showed `@agent-native/core@0.40.1` and `@agent-native/dispatch@0.9.3`; those
+  observations are evidence inputs, not durable pins, and must be refreshed at runtime source-lock time.
 - [x] Official OpenAI Agents SDK docs support tools, handoffs, guardrails, sessions, and tracing patterns, but should inform adapters rather than own the product grammar.
 - [x] OpenTelemetry GenAI semantic conventions, OWASP LLM/agent guidance, NIST AI RMF/Generative AI Profile, OpenAPI, SLSA/GitHub attestations, and Mintlify docs all shape production requirements.
 
@@ -172,6 +175,25 @@ consume the stable primitives. Release/provenance and public docs close the loop
 UI payload/action/artifact references align with Studio UI Registry after the harness
 contracts can express provenance and policy.
 
+## Adversarial Hardening Gates
+
+These gates convert the crossflow adversarial review into execution criteria. They are part of the
+active plan, not optional research notes.
+
+- `source-lock`: before runtime, protocol, package, or third-party source implementation, capture the
+  official/current source, package/spec name, version or spec identifier, date, license/provenance state,
+  tarball or commit evidence where applicable, and unresolved risks.
+- `compat-lock`: shared UI/action/artifact/theme/suite references must have machine-readable schemas or
+  fixtures consumed by both this repo and `ui-registry`.
+- `policy-lock`: prompt-injection, tool-metadata poisoning, MCP transport abuse, secret exfiltration,
+  approval replay, denied action, and redaction fixtures must fail closed.
+- `adapter-lock`: every adapter declares supported, unsupported, denied, trace, auth, streaming,
+  cancellation, and resumability behavior.
+- `evidence-lock`: generated docs, changelogs, system maps, and public claims must link to source commit,
+  accepted contract, command evidence, timestamp, and freshness class once evidence schemas exist.
+- `supply-chain-lock`: source/license provenance, SBOM policy, and release attestation requirements start
+  before code is lifted or forked, not only during final release.
+
 ## Workstream 1: Canonical Contracts And Primitive Registry
 
 Goal: Define the harness-owned contract vocabulary and composable primitive registry on top of the accepted `@jami-studio/harness` foundation boundary.
@@ -193,18 +215,22 @@ Primary areas:
 Implementation tasks:
 
 - [ ] Add run, task, plan, actor, project, environment, tool, policy, approval, artifact, memory, trace, audit, evidence, docs-source, and release-packet schemas.
-- [ ] Add harness-side schema anchors for `uiPayload`, `artifactView`, `actionRef`, `themeRef`, and `suiteRef` references without importing UI implementation ownership.
+- [ ] Add harness-side schema anchors for `runEvent`, `uiPayload`, `artifactView`, `actionRef`, `themeRef`, and `suiteRef` references without importing UI implementation ownership.
 - [ ] Define core ports for model, store, policy, tools, memory, context, search, artifacts, observability, secrets, docs output, and UI references.
 - [ ] Define capability manifest format so modules can declare supported features, required scopes, failure modes, and replacement compatibility.
 - [ ] Generate JSON Schema and TypeScript exports.
 - [ ] Define primitive registry manifest format.
-- [ ] Add contract tests and schema compatibility checks.
+- [ ] Add contract tests and schema compatibility checks, including shared fixtures for unsupported UI components, invalid payloads, denied actions, and renderer error states.
+- [ ] Define the initial threat model fixture catalog for policy/tool/UI/action/memory/evidence risks.
+- [ ] Define the evidence packet schema before docs-generation work consumes evidence claims.
 - [ ] Document primitive lifecycle and versioning.
 
 Exit criteria:
 
 - [ ] Contracts build, validate, and generate docs/reference artifacts.
 - [ ] Ports make module replacement explicit without weakening core policy, audit, artifact, evidence, or checkpoint contracts.
+- [ ] Shared harness/UI compatibility fixtures can be consumed by both this repo and `ui-registry`.
+- [ ] Evidence packet and threat model schemas exist before runtime, gateway, memory, or docs generation work builds on them.
 
 Suggested verification:
 
@@ -232,7 +258,7 @@ Primary areas:
 Implementation tasks:
 
 - [ ] Implement run/session/task state machine.
-- [ ] Verify current agent-native package versions, license notices, and Dispatch/core package boundaries.
+- [ ] Produce a source-lock report for agent-native before adoption or fork work: exact scoped package names, current versions, dist-tags, repository commit or tarball evidence, license/NOTICE files, transitive dependency review, and fork-delta rationale.
 - [ ] Preserve upstream MIT notices and add Apache-2.0 foundation licensing as accepted.
 - [ ] Add turn streaming, cancellation, retry, timeout, handoff, and checkpoint semantics.
 - [ ] Add local durable store adapter and hosted-store interface.
@@ -245,6 +271,8 @@ Exit criteria:
 
 - [ ] A run can start, execute mock turns/tools, checkpoint, fail, resume, and close with artifacts.
 - [ ] Runtime call sites do not assume any default memory, context, store, provider, or observability implementation.
+- [ ] No public harness contract imports agent-native package types directly.
+- [ ] Runtime checkpoint/resume evidence survives retry, cancellation, and failure recovery fixtures.
 
 Suggested verification:
 
@@ -276,10 +304,12 @@ Implementation tasks:
 - [ ] Add adapter for a policy engine while keeping harness vocabulary canonical.
 - [ ] Ship a default rules-based policy engine while preserving a stable policy-engine replacement port.
 - [ ] Add audit events for all policy decisions.
+- [ ] Add negative fixtures for prompt injection, tool metadata poisoning, approval replay, cross-scope action attempts, secret exfiltration attempts, and UI denied-action states.
 
 Exit criteria:
 
 - [ ] Sensitive tool and artifact actions cannot execute without an explicit allow decision.
+- [ ] Policy denial, redaction, approval expiry, and audit evidence are covered by failing-closed tests.
 
 Suggested verification:
 
@@ -310,14 +340,16 @@ Implementation tasks:
 - [ ] Normalize MCP, OpenAPI, function, shell, browser, code, and provider tools through one execution envelope.
 - [ ] Add MCP client support for stdio and Streamable HTTP.
 - [ ] Add A2A agent-card/task interop where cross-agent communication is required.
-- [ ] Add origin/session/auth controls for HTTP transports.
+- [ ] Add origin/session/auth controls for HTTP transports, including MCP Streamable HTTP origin and localhost-binding safeguards where applicable.
 - [ ] Add OpenAPI/function tool adapters.
 - [ ] Add local shell/browser/code wrappers with sandbox policy.
 - [ ] Add tool-call approval, timeout, cancellation, trace, and audit events.
+- [ ] Add adapter capability manifests for streaming, cancellation, resumability, auth model, tool result shape, artifact support, error taxonomy, trace propagation, policy hooks, and unsupported states.
 
 Exit criteria:
 
 - [ ] Tools execute only through policy, emit traces/audit, and produce typed artifacts.
+- [ ] Every adapter has positive, denied, unsupported, and trace/evidence fixtures.
 
 Suggested verification:
 
@@ -356,6 +388,7 @@ Implementation tasks:
 - [ ] Add retrieval adapters for local and hosted search.
 - [ ] Add citation and freshness metadata to every recalled item.
 - [ ] Add eval fixtures for recall precision and permission filtering.
+- [ ] Add privacy and replay fixtures for data classes, retention, forgetting/redaction, permission leakage, inclusion reasons, and deterministic context pack hashes.
 
 Exit criteria:
 
@@ -363,6 +396,7 @@ Exit criteria:
 - [ ] Runs can execute with no memory module configured.
 - [ ] Context assembly is replaceable and replayable from evidence.
 - [ ] User-owned memory/search/context systems can integrate without changing runtime call sites.
+- [ ] Cross-project or cross-actor memory leakage attempts fail closed.
 
 Suggested verification:
 
@@ -398,10 +432,12 @@ Implementation tasks:
 - [ ] Add docs-source manifests and verification gates.
 - [ ] Add Mintlify-ready navigation generation.
 - [ ] Add claim registry for marketing and public docs.
+- [ ] Require generated docs/changelog/system-map outputs to include source commit, accepted contract, command result, timestamp, freshness class, and generated output paths.
 
 Exit criteria:
 
 - [ ] A completed run can produce verified docs/changelog/system-map artifacts tied to source evidence.
+- [ ] Generated surfaces cannot be accepted without evidence provenance.
 
 Suggested verification:
 
@@ -438,12 +474,14 @@ Implementation tasks:
 - [ ] Add cost/latency/token/tool metrics.
 - [ ] Add regression eval scenarios for tool safety, docs generation, memory recall, and recovery.
 - [ ] Add redaction defaults for sensitive payloads.
+- [ ] Add evidence packet fixture validation against the Workstream 1 schema.
 
 Exit criteria:
 
 - [ ] Every run emits trace, audit, metrics, and evidence artifacts with redaction controls.
 - [ ] Runs can produce local evidence packets without any hosted observability backend.
 - [ ] Hosted or user-owned observability sinks can replace defaults without changing runtime call sites.
+- [ ] Trace/audit/evidence output redacts sensitive prompts, secrets, credentials, and private payloads by default.
 
 Suggested verification:
 
@@ -476,6 +514,7 @@ Implementation tasks:
 - [ ] Add SDK for run creation, tool registration, policy hooks, artifact reads, and trace reads.
 - [ ] Add SDK configuration APIs for injecting custom memory, context, store, policy, provider, tool, artifact, observability, and docs-output modules.
 - [ ] Add CLI doctor/inspect commands that show active modules, defaults, replacements, missing optional capabilities, and exact next setup steps.
+- [ ] Add CLI/source-lock inspection for active adapters, package/protocol versions, optional capability support, and provenance evidence.
 - [ ] Add workbench views for run timeline, tool approvals, artifacts, traces, memory, docs preview, system map.
 - [ ] Integrate Studio UI Registry packages only through stable published package boundaries and typed shared contracts.
 - [ ] Add examples and smoke tests.
@@ -513,6 +552,7 @@ Implementation tasks:
 
 - [ ] Add CI, lint, typecheck, unit/integration/security/doc checks.
 - [ ] Add SBOM and artifact attestation release flow.
+- [ ] Carry forward source-lock, license/NOTICE, transitive dependency, and fork-delta evidence from runtime/tool/UI integration work.
 - [ ] Add contributor guide, code of conduct, security policy, support policy.
 - [ ] Add Mintlify docs config and generated navigation.
 - [ ] Add public examples, quickstart, guides, API/SDK reference, integration guide, and launch claims matrix.
@@ -530,12 +570,16 @@ Suggested verification:
 
 ## Final Verification And Closeout
 
+- [ ] Source-lock reports are current for drift-prone packages, protocols, providers, and release tools.
+- [ ] Shared harness/UI compatibility fixtures pass in both repos.
+- [ ] Threat model and policy negative fixtures pass.
 - [ ] Root docs read back.
 - [ ] Contracts generate and validate.
 - [ ] Runtime/tool/policy/memory/artifact/observability tests pass.
 - [ ] CLI and workbench smoke pass.
 - [ ] Docs generation and Mintlify build pass.
 - [ ] SBOM/provenance release dry run pass.
+- [ ] Evidence packet provenance and redaction checks pass.
 - [ ] No secrets in tracked files or generated artifacts.
 - [ ] Changelog and decision records updated.
 - [ ] Git commit and push when the root becomes a Git repo with remote.
@@ -548,18 +592,21 @@ Suggested verification:
 - [ ] Public docs, guides, changelogs, system maps, and marketing claims flow from verified canon.
 - [ ] Provider choices are replaceable without breaking harness-owned contracts.
 - [ ] Memory, context, stores, policy engine, tool adapters, providers, observability sinks, artifact storage, and docs outputs are replaceable through stable ports.
+- [ ] Shared UI/action/artifact/theme/suite references are backed by machine-readable fixtures and negative tests, not prose-only alignment.
+- [ ] Runtime, tool, memory, docs, and release surfaces carry source/provenance/evidence records suitable for public trust claims.
 
 ## Implementation Order
 
-1. Canonical contracts and primitive registry.
-2. Policy/identity vocabulary.
-3. Runtime checkpoint kernel.
-4. Observability/audit event spine.
-5. Tool gateway with MCP/OpenAPI/function tools.
-6. Memory/search/citation layer.
-7. Artifact/docs/changelog/system-map canon.
-8. CLI/SDK/workbench.
-9. Release, provenance, hosted readiness, Mintlify publishing.
+1. Current-source lock and sibling compatibility fixture setup.
+2. Canonical contracts, primitive registry, threat model, and evidence packet schema.
+3. Policy/identity vocabulary and negative fixtures.
+4. Runtime checkpoint kernel with agent-native source-lock evidence.
+5. Observability/audit event spine and evidence packet export.
+6. Tool gateway with MCP/OpenAPI/function tools and adapter capability manifests.
+7. Memory/search/citation layer with privacy, permission, freshness, and replay fixtures.
+8. Artifact/docs/changelog/system-map canon with provenance-backed generated outputs.
+9. CLI/SDK/workbench with source-lock and capability inspection.
+10. Release, provenance, hosted readiness, Mintlify publishing, SBOM, and attestation policy.
 
 ## Creative Questions Pending User Discussion
 
