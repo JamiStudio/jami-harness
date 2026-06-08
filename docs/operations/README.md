@@ -17,3 +17,8 @@ Future operations docs should cover:
 - Docs publishing to Mintlify.
 
 Until implementation starts, use [AGENTS.md](../../AGENTS.md), [the project charter](../project/charter.md), [the production plan](../roadmaps/2026-06-07-agent-harness-production-plan.md), and [the feasibility report](../research/2026-06-07-agent-harness-production-feasibility-report.md) as the operating source.
+
+Current operating procedures:
+
+- [Development workflow](development-workflow.md)
+- [Changelog system](changelog.md)

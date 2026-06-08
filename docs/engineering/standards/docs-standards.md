@@ -26,6 +26,10 @@ One canon source should feed:
 
 Generated content must include enough metadata to identify its source contract, generation time, generator version, and verification state.
 
+When implementation packages exist, keep docs, marketing, legal/support material, user manuals,
+architecture diagrams, system maps, changelogs, and release notes generated from accepted contracts,
+manifests, fragments, and evidence packets rather than copied by hand.
+
 ## Link Policy
 
 - Prefer links to stable directories and source-owned files.

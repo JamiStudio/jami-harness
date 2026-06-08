@@ -89,6 +89,8 @@ Modular capability classes:
 - `docs/architecture/*` and `docs/owned-core/*` own durable architecture.
 - `docs/architecture/modular-responsibility-map.md` owns package/module responsibility
   boundaries.
+- `docs/operations/development-workflow.md` owns local-first verification, manual CI posture,
+  source-registry expectations, changelog, diagramming, and no-stub escalation rules.
 - `docs/research/master/00-orchestration/plan.md` and `synthesis.md` are master canon context. Current official sources override stale or future-dated protocol claims.
 - Imported product trees are context unless explicitly promoted by plan.
 - Studio UI Registry is a sibling product source, not imported harness implementation.
@@ -110,6 +112,9 @@ For substantial implementation streams:
 5. Checkpoint result with changed files, verification, blockers, and next action.
 6. Run a second fresh-context pass for broad or foundational streams.
 7. Gate only after evidence exists: source diff, docs updates, tests, verification output, and no unresolved blockers.
+
+If a stream needs human account action or product direction, pause and record the exact intervention.
+Do not stub, skip, weaken validation, or merge around the missing input.
 
 ## Coordinator Closeout Expectations
 

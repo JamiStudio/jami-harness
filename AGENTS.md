@@ -10,6 +10,7 @@ These rules apply at the workspace root for Jami Agent Harness work.
 - The live filesystem is authoritative. Imported project docs are evidence, not proof of harness implementation.
 - Read [docs/architecture/foundation-alignment.md](docs/architecture/foundation-alignment.md) before changing harness-to-UI contracts or repo-boundary decisions.
 - Read [docs/architecture/modular-responsibility-map.md](docs/architecture/modular-responsibility-map.md) before changing package boundaries, adapter boundaries, or optional/default capability behavior.
+- Read [docs/operations/development-workflow.md](docs/operations/development-workflow.md) before changing verification, CI, docs generation, changelog, diagramming, or release behavior.
 - Keep permanent decisions in [docs/decisions/](docs/decisions/) or durable architecture/operations docs. Keep active task sequencing in roadmaps.
 - Never write secrets, API keys, tokens, connection strings with credentials, signed URLs, or private account material into tracked files.
 
@@ -27,6 +28,7 @@ These rules apply at the workspace root for Jami Agent Harness work.
 - Orchestration guidance lives under [docs/engineering/agents/](docs/engineering/agents/).
 - Style standards live under [docs/engineering/standards/](docs/engineering/standards/).
 - Durable product architecture lives under [docs/architecture/](docs/architecture/), [docs/owned-core/](docs/owned-core/), and [docs/operations/](docs/operations/).
+- Changelog fragments live under [.changes/](.changes/). Add one for production-meaningful behavior, docs, operations, automation, or release changes.
 - Public docs are prepared for Mintlify later, but `docs/` remains the canonical source until publishing setup is accepted.
 
 ## Modular Capability Rules
@@ -59,8 +61,11 @@ rendering into this repo.
 ## Verification
 
 - Docs-only changes: read back changed Markdown and run `git diff --check` when Git exists.
+- Current docs gate: `pnpm docs:check`.
+- Full local gate: `pnpm verify`.
 - Planning changes: confirm links resolve locally and no stale project-specific commands remain.
 - Cross-repo contract changes: confirm the matching Studio UI Registry alignment doc and
   active plan still describe the same responsibility split.
 - External protocol/provider claims: verify against official sources before locking them in.
 - Current official sources override stale or future-dated planning claims.
+- GitHub Actions are manual fallback while minutes are limited. Do not push unverified work and expect CI to catch it.
