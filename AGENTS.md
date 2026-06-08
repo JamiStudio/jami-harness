@@ -1,6 +1,8 @@
 # Agent Operating Rules
 
-These rules apply at the workspace root for Jami Agent Harness work.
+These rules apply at the workspace root for Jami Harness work.
+
+Canonical repo identity: `jami-harness` at `https://github.com/JamiStudio/jami-harness.git`.
 
 ## Source Truth
 
@@ -45,16 +47,16 @@ These rules apply at the workspace root for Jami Agent Harness work.
 
 ## Sibling Boundary
 
-`agent-harness` stays separate from `ui-registry`. Keep them cohesive through
+`jami-harness` stays separate from `studio-ui`. Keep them cohesive through
 typed contracts and cross-links, not duplicated roadmaps or collapsed ownership.
 
 This repo owns agent runs, tools, policy, approvals, memory, artifacts, traces, evidence,
-runtime state, and agent-facing CLI/SDK surfaces. Studio UI Registry owns tokens, UI
+runtime state, and agent-facing CLI/SDK surfaces. Studio UI owns tokens, UI
 primitives, registry items, resident rendering, workbench controls, suite packs, and UI
 install/config flows.
 
 When a UI payload, artifact view, action ref, theme ref, or suite ref contract changes,
-update `docs/architecture/foundation-alignment.md` and the matching UI Registry doc. Do
+update `docs/architecture/foundation-alignment.md` and the matching Studio UI doc. Do
 not move token decisions, primitive implementation, registry packaging, or resident UI
 rendering into this repo.
 
@@ -64,7 +66,7 @@ rendering into this repo.
 - Current docs gate: `pnpm docs:check`.
 - Full local gate: `pnpm verify`.
 - Planning changes: confirm links resolve locally and no stale project-specific commands remain.
-- Cross-repo contract changes: confirm the matching Studio UI Registry alignment doc and
+- Cross-repo contract changes: confirm the matching Studio UI alignment doc and
   active plan still describe the same responsibility split.
 - External protocol/provider claims: verify against official sources before locking them in.
 - Current official sources override stale or future-dated planning claims.

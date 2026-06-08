@@ -5,7 +5,7 @@ Last updated: 2026-06-07
 
 ## Purpose
 
-Keep Jami Agent Harness development fast, uniform, and evidence-backed. Agents run checks in session
+Keep Jami Harness development fast, uniform, and evidence-backed. Agents run checks in session
 before code reaches GitHub. GitHub Actions exist as a manual fallback, not as the primary development
 gate while minutes are limited.
 

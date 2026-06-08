@@ -1,6 +1,6 @@
 # Orchestration Reliability
 
-Use this guidance when a goal run coordinates work through agents, subagents, local processes, or long-running implementation streams in Jami Agent Harness.
+Use this guidance when a goal run coordinates work through agents, subagents, local processes, or long-running implementation streams in Jami Harness.
 
 ## Failure Mode
 

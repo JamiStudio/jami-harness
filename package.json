@@ -1,8 +1,8 @@
 {
-  "name": "agent-harness",
+  "name": "jami-harness",
   "private": true,
   "version": "0.0.0",
-  "description": "Jami Agent Harness docs, roadmap, contracts, runtime, and governance foundation.",
+  "description": "Jami Harness docs, roadmap, contracts, runtime, and governance foundation.",
   "packageManager": "pnpm@10.33.2",
   "type": "module",
   "scripts": {

@@ -1,4 +1,4 @@
-# Agent Harness Production Feasibility Report
+# Jami Harness Production Feasibility Report
 
 Date: 2026-06-07
 Status: Saved for discussion
@@ -37,7 +37,7 @@ Local sources checked:
 - `evals/docs/engineering/standards/report-style.md`
 - `evals/docs/engineering/standards/docs-standards.md`
 - Root directory inventory for imported projects and Git state
-- Memory notes for prior agent-harness owned-core framing
+- Memory notes for prior Jami Harness owned-core framing
 
 Official/current external sources checked:
 
@@ -318,7 +318,7 @@ Local:
 - `docs/architecture/product-architecture.md`
 - `docs/architecture/candidate-stack.md`
 - `docs/owned-core/README.md`
-- `docs/roadmaps/2026-06-07-agent-harness-production-plan.md`
+- `docs/roadmaps/2026-06-07-jami-harness-production-plan.md`
 - `docs/research/master/00-orchestration/plan.md`
 - `docs/research/master/00-orchestration/synthesis.md`
 - `docs/research/master/06-rebuild-feasibility/report.md`

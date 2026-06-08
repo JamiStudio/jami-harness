@@ -6,14 +6,14 @@ Last updated: 2026-06-07
 
 ## Purpose
 
-Jami Agent Harness and Studio UI Registry are sibling foundation projects. They stay
+Jami Harness and Studio UI are sibling foundation projects. They stay
 separate so each can publish, version, and integrate independently, but they share a
 deliberate contract surface under the `@jami-studio/*` family.
 
 ## Sibling Repositories
 
-- `agent-harness`: source at `C:\Users\james\dev\orgs\oss\registry\agent-harness`.
-- `ui-registry`: source at `C:\Users\james\dev\orgs\oss\registry\ui-registry`.
+- `jami-harness`: source at `C:\Users\james\dev\orgs\oss\registry\jami-harness`.
+- `studio-ui`: source at `C:\Users\james\dev\orgs\oss\registry\studio-ui`.
 
 The repositories should remain separate until a later decision record proves that one
 workspace would reduce real release or integration friction. Planning convenience is not
@@ -21,7 +21,7 @@ enough reason to merge them.
 
 ## Responsibility Split
 
-Jami Agent Harness owns:
+Jami Harness owns:
 
 - Agent run, task, session, plan, handoff, retry, cancellation, and checkpoint contracts.
 - Tool, MCP, OpenAPI, function-tool, shell/browser/code, and provider adapter execution.
@@ -29,7 +29,7 @@ Jami Agent Harness owns:
 - Memory, citation, context, evidence, trace, metric, and artifact lifecycle.
 - Agent-facing CLI, SDK, run inspection, docs generation, and release evidence flows.
 
-Studio UI Registry owns:
+Studio UI owns:
 
 - Tokens, factory themes, and generated design-system outputs.
 - Radix-first shadcn primitives, components, blocks, pages, app shells, and suites.
@@ -44,11 +44,11 @@ Studio UI Registry owns:
 The shared seam is typed data, not arbitrary code:
 
 - Harness emits structured artifact, action, state, and UI payload references.
-- UI Registry validates and renders those payloads with resident allowlisted components.
+- Studio UI validates and renders those payloads with resident allowlisted components.
 - Harness action refs stay policy-gated and auditable.
-- UI Registry components expose declared action slots and never execute model-provided code.
+- Studio UI components expose declared action slots and never execute model-provided code.
 - Theme, preset, registry item, and suite metadata can be referenced by harness artifacts
-  but remain authored and distributed by UI Registry.
+  but remain authored and distributed by Studio UI.
 
 Initial shared contract families:
 
@@ -66,7 +66,7 @@ Initial shared contract families:
 
 The first integration should be contract-first:
 
-1. UI Registry defines renderer payload schema and component vocabulary.
+1. Studio UI defines renderer payload schema and component vocabulary.
 2. Harness defines artifact/action/policy references that can point at UI payloads.
 3. Both repos add machine-readable compatibility fixtures for shared payloads, action
    responses, artifact views, theme refs, suite refs, unsupported components, denied
@@ -89,7 +89,7 @@ The first integration should be contract-first:
 
 ## Cross-Links
 
-- Harness roadmap: `docs/roadmaps/2026-06-07-agent-harness-production-plan.md`
-- UI Registry roadmap: `C:\Users\james\dev\orgs\oss\registry\ui-registry\docs\roadmaps\2026-06-07-studio-ui-registry-production-shape-plan.md`
+- Harness roadmap: `docs/roadmaps/2026-06-07-jami-harness-production-plan.md`
+- Studio UI roadmap: `C:\Users\james\dev\orgs\oss\registry\studio-ui\docs\roadmaps\2026-06-07-studio-ui-production-shape-plan.md`
 - Harness product architecture: `docs/architecture/product-architecture.md`
-- UI Registry product shape: `C:\Users\james\dev\orgs\oss\registry\ui-registry\docs\architecture\registry-product-shape.md`
+- Studio UI product shape: `C:\Users\james\dev\orgs\oss\registry\studio-ui\docs\architecture\studio-ui-product-shape.md`

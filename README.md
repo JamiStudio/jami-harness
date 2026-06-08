@@ -1,6 +1,6 @@
-# Jami Agent Harness
+# Jami Harness
 
-Jami Agent Harness is the `@jami-studio/harness` foundation for the `jami.studio` open-source platform. It sits beside `@jami-studio/ui` and `@jami-studio/orchestra` as one of the core foundations consumed by Intercal, the Collective, yrka, and future Jami Studio products.
+Jami Harness is the `@jami-studio/harness` foundation for the `jami.studio` open-source platform. The canonical repository is `JamiStudio/jami-harness`. It sits beside Studio UI (`@jami-studio/ui`) and `@jami-studio/orchestra` as one of the core foundations consumed by Intercal, the Collective, yrka, and future Jami Studio products.
 
 It is not a narrow app integration. It owns the agent product grammar, governance model, runtime contracts, artifact lifecycle, tool policy, memory semantics, observability spine, documentation pipeline, and developer experience that downstream products can trust.
 
@@ -11,8 +11,8 @@ This workspace currently includes imported project context from `daily-briefs`, 
 - [Project charter](docs/project/charter.md)
 - [Docs index](docs/README.md)
 - [Master synthesis](docs/research/master/00-orchestration/synthesis.md)
-- [Production feasibility report](docs/research/2026-06-07-agent-harness-production-feasibility-report.md)
-- [Active production plan](docs/roadmaps/2026-06-07-agent-harness-production-plan.md)
+- [Production feasibility report](docs/research/2026-06-07-jami-harness-production-feasibility-report.md)
+- [Active production plan](docs/roadmaps/2026-06-07-jami-harness-production-plan.md)
 - [Agent orchestration goal](docs/engineering/agents/goal.md)
 - [Candidate stack](docs/architecture/candidate-stack.md)
 - [Owned core map](docs/owned-core/README.md)

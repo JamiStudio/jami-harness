@@ -4,7 +4,7 @@ Date: 2026-06-07
 Status: Initial taxonomy
 Owner: Jami Studio
 
-The owned core is the product grammar Jami Agent Harness must control directly. Infrastructure can be adapter-backed; these semantics cannot be outsourced without weakening the product.
+The owned core is the product grammar Jami Harness must control directly. Infrastructure can be adapter-backed; these semantics cannot be outsourced without weakening the product.
 
 ## Mechanism Areas
 

@@ -1,6 +1,6 @@
 # Documentation Standards
 
-Durable docs should make Jami Agent Harness easier to build, operate, publish, and hand off without becoming a second implementation surface. The live contracts and source artifacts remain authoritative.
+Durable docs should make Jami Harness easier to build, operate, publish, and hand off without becoming a second implementation surface. The live contracts and source artifacts remain authoritative.
 
 ## Ownership
 

@@ -1,12 +1,12 @@
-# Jami Agent Harness Docs
+# Jami Harness Docs
 
-This docs tree is the canonical planning and operating source for Jami Agent Harness.
+This docs tree is the canonical planning and operating source for Jami Harness.
 
 ## Start Here
 
 - [Project charter](project/charter.md)
-- [Production feasibility report](research/2026-06-07-agent-harness-production-feasibility-report.md)
-- [Active production plan](roadmaps/2026-06-07-agent-harness-production-plan.md)
+- [Production feasibility report](research/2026-06-07-jami-harness-production-feasibility-report.md)
+- [Active production plan](roadmaps/2026-06-07-jami-harness-production-plan.md)
 - [System architecture](architecture/product-architecture.md)
 - [Candidate stack](architecture/candidate-stack.md)
 - [Owned core](owned-core/README.md)

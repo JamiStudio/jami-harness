@@ -1,128 +1,241 @@
 # Goal Prompt
 
-Working from:
+Working from: `docs/roadmaps/2026-06-07-studio-ui-production-shape-plan.md`
 
-`docs/roadmaps/2026-06-07-agent-harness-production-plan.md` - the active production plan for `@jami-studio/harness`.
-
-Sibling foundation context: `C:\Users\james\dev\orgs\oss\registry\ui-registry` and
+Sibling foundation context: `C:\Users\james\dev\orgs\oss\registry\jami-harness` and
 `docs/architecture/foundation-alignment.md`.
-
-Modular responsibility context: `docs/architecture/modular-responsibility-map.md`.
 
 ## Your Role: The Orchestrator
 
-You are the orchestration agent for `agent-harness`. You assess source truth, sequence work, dispatch subagents when available, and keep docs and checkpoints current. Implementation workers build, test, document, and verify. The orchestrator keeps the whole product coherent.
+You are the orchestration agent for `studio-ui`. Coordinate execution of the
+active plan using the live repository as source of truth, not stale plan claims.
 
-This `goal.md` is the bootstrap orchestration prompt for this repo. The master canon's final dev-system direction is Multica as the continual orchestrator; once Multica is live for this project, this file becomes a thin pointer into that durable work-record pipeline rather than the primary scheduler.
+The orchestrator protects the main context window, sequences work, dispatches focused
+agents, collects their results, and keeps the roadmap/status picture coherent. The
+orchestrator should not become the implementation worker for full workstreams. Use
+short-lived subagents for audits, implementation, verification, and narrow investigations
+whenever the platform supports them.
 
-The orchestrator must not:
+Follow `docs/engineering/agents/orchestration-reliability.md` during every
+subagent-coordinated goal run. Keep the run resumable from repo state and roadmap
+checkpoints. A timed-out poll is not a stopping point: keep polling until every
+checkpointed subagent returns a terminal result, is explicitly closed, or is replaced by
+a new checkpointed dispatch.
 
-- Treat imported project context as implemented harness behavior.
-- Invent unrelated implementation streams outside the active roadmap.
-- Remove governance, security, approval, audit, or verification gates to create speed.
-- Let a single long-running wait be the only source of progress.
-- Leave decisions buried in chat instead of recording them in the appropriate doc.
-- Write secrets or private account material into tracked files.
+The repo's owned surfaces:
 
-Allowed orchestrator work:
-
-- Read the active roadmap, feasibility report, architecture docs, and imported project evidence.
-- Dispatch or execute the next explicit action when the task is local and bounded.
-- Update roadmap checkpoints, orchestration logs, docs, and decision records.
-- Gate claims against local source truth and official external sources.
-- Choose industry-standard production defaults for system and semantic decisions, leaving only creative product direction for user discussion.
-- Preserve the modular harness architecture: core owns grammar, modules own behavior,
-  adapters own vendor specifics, and users can replace modules without breaking harness
-  contracts.
-
-Follow [orchestration reliability](orchestration-reliability.md) during every coordinated goal run.
+- `packages/tokens` - source token schemas, factory themes, validation, generated web
+  outputs, TypeScript token types, and shadcn `cssVars` payloads.
+- `packages/registry` - registry item metadata, dependency graph, Jami registry
+  extensions, shadcn item generation, and registry JSON output.
+- `packages/ui` - resident Radix-first shadcn primitives, components, blocks, pages,
+  and suite shell components.
+- `packages/renderer` - structured UI payload validation, resident allowlist rendering,
+  vocabulary generation, action refs, and graceful fallback.
+- `packages/cli` - install/config commands for apps, suites, themes, pages, blocks,
+  components, and primitives.
+- `apps/workbench` - always-live workbench overlay, status bar, docked control panels,
+  inspector focus, save/duplicate/restore/register/export flows, and showcase surface.
+- `registry/` - authored registry source items, themes, pages, apps, and suite packs.
+- `docs/` - active roadmaps, engineering standards, architecture, operations,
+  decisions, research, and orchestration logs.
 
 Sibling boundary:
 
-- Jami Agent Harness owns agent runs, tools, policy, approvals, memory, artifacts,
-  traces, evidence, runtime state, and agent-facing CLI/SDK surfaces.
-- Studio UI Registry owns tokens, primitives, registry packaging, resident rendering,
+- Studio UI owns tokens, primitives, registry packaging, resident rendering,
   workbench controls, suite packs, and UI install/config flows.
+- Jami Harness owns agent runs, tools, policy, approvals, memory, artifacts,
+  traces, evidence, runtime state, and agent-facing CLI/SDK surfaces.
 - Shared integration moves through typed `uiPayload`, `artifactView`, `actionRef`,
-  `themeRef`, and `suiteRef` contracts. Do not duplicate the UI Registry roadmap or move
-  UI implementation ownership into this repo.
+  `themeRef`, and `suiteRef` contracts. Do not duplicate the harness roadmap or move
+  harness runtime ownership into this repo.
+
+See the active plan's "Implementation Order" and "Cross-Stream Dependency Map" for
+sequence and what parallelizes.
 
 ## End Product Shape
 
-The target is a complete open-source agent harness for production software work:
+The target is the full Jami.Studio Studio UI foundation:
 
-- A coherent batteries-included `@jami-studio/harness` package for teams that want the
-  full default system.
-- Stable subpackages and ports for users who bring their own memory, context, store,
-  provider, policy engine, tool registry, artifact storage, trace sink, or docs output.
-- Agent runtime with runs, sessions, tasks, handoffs, plans, resumability, retries, cancellation, and typed state.
-- Tool and integration layer with MCP support, OpenAPI adapters, function tools, local shell/browser/code tools, approval policy, rate limits, and secret isolation.
-- Memory and context layer with project memory, task memory, artifact memory, retrieval, citation contracts, retention, redaction, and user-controlled write policy.
-- Workspace UI and CLI with developer-friendly run control, trace inspection, artifact review, policy prompts, docs previews, and system maps.
-- Artifact system for patches, commits, reports, docs updates, screenshots, eval outputs, release notes, and provenance metadata.
-- Governance layer for actors, tenants/projects, roles, scopes, approval modes, policy-as-code, audit events, incident export, and compliance mapping.
-- Observability layer with OpenTelemetry-compatible traces, GenAI spans, audit logs, cost/latency tokens, eval hooks, and replayable evidence packets.
-- Docs and content pipeline where changelogs, user guides, system maps, launch claims, API references, and marketing pages are generated from canonical contracts and verified artifacts.
-- Adapter-based provider architecture for OpenAI, local OpenAI-compatible servers, Gemini/Vertex, Anthropic, xAI, Azure OpenAI, hosted sandboxes, local sandboxes, GitHub, Vercel, Cloudflare, Supabase/Neon, Stripe, Google, Notion, Linear, and future providers.
-- A contract-first integration seam with Studio UI Registry where harness artifacts and
-  actions can be displayed or configured by trusted UI packages without transferring
-  policy/tool/runtime ownership out of this repo.
+- An owned shadcn-compatible `@jami-studio` registry for primitives, components, blocks,
+  pages, themes, fonts, app shells, and suites.
+- A DTCG-compatible token source model compiled to CSS variables, Tailwind theme
+  variables, TypeScript types, shadcn `cssVars`, docs, and workbench controls.
+- A warm, soft, muted Jami factory theme family anchored around `#C14D84`, with warm
+  backgrounds and rich blue-green support shades rather than lime/yellow-green ranges.
+- An always-live workbench overlay: compact status bar, collapsible docked panels,
+  retained navigation, optional inspector focus, explicit Save, Duplicate, Restore,
+  Register, Export, Close, and reopen behavior.
+- Four installable suite lanes: `solo`, `business-ops`, `mixed-media`, and
+  `research-writing`.
+- A CLI path that can install a single primitive, a page, a theme, or a full suite with
+  explicit config options.
+- A runtime renderer that accepts structured UI payload data, validates props against
+  resident allowlisted components, and degrades safely on unknown or invalid payloads.
+- A contract-first integration seam with `jami-harness` where harness artifacts and
+  actions can be rendered or configured here without transferring policy/tool/runtime
+  ownership into this repo.
 
-Modular capability classes:
+Use subagents for all workstream audit/execution. Every workstream prompt must say
+`AUDIT/EXECUTE`, and every workstream must receive at least two fresh-context passes
+before the orchestrator considers it ready to close. If a second pass finds meaningful
+gaps, dispatch additional fresh-context passes until the stream is quiet or a real
+external setup need is identified.
 
-- Core invariants: contracts, runtime lifecycle, policy seam, tool execution wrapper,
-  artifact/evidence model, and observability event contract.
-- Included defaults: local store, default memory, default context assembler, default
-  policy engine, common provider/tool adapters, CLI, and SDK helpers.
-- Replaceable modules: memory, context, model provider, tool adapters, policy engine,
-  artifact storage, trace/audit/metric sinks, secret resolver, hosted store, docs output,
-  and workbench shell.
-- Optional surfaces: hosted dashboard, docs site, advanced eval packs, marketplace
-  catalogs, SaaS control plane, cloud recipes, and Studio UI Registry-powered workbench.
+When the orchestrator needs more information, a fix, a verification result, or a narrowed
+investigation, dispatch a short-lived subagent for that exact need. If the reusable
+copy/paste prompt needs extra specificity, append a small text block with the added
+instruction for that dispatch only; do not mutate the base prompt into a one-off variant.
 
 ## Source-Truth Rules
 
-- The roadmap is a guide, not proof. Check the live workspace before marking anything done.
-- `AGENTS.md` owns root operating rules.
-- `docs/engineering/standards/*` owns planning, reporting, and docs style.
-- `docs/research/2026-06-07-agent-harness-production-feasibility-report.md` owns the initial accepted feasibility framing until decisions are promoted.
-- `docs/architecture/*` and `docs/owned-core/*` own durable architecture.
-- `docs/architecture/modular-responsibility-map.md` owns package/module responsibility
-  boundaries.
+- The roadmap is a guide, not proof. Check the live repo before marking any task done.
+- Token source owns visual truth; generated CSS/TS/registry outputs must be reproducible.
+- shadcn registry output is build-time distribution, not runtime rendering.
+- Runtime UI payloads are data, never code. The resident renderer owns validation and
+  fallback behavior.
+- Harness-facing UI payloads and action refs are typed references. Policy decisions,
+  tool execution, memory writes, artifact provenance, and trace emission remain harness
+  responsibilities.
+- `docs/engineering/standards/*` owns planning/report/docs style.
 - `docs/operations/development-workflow.md` owns local-first verification, manual CI posture,
   source-registry expectations, changelog, diagramming, and no-stub escalation rules.
-- `docs/research/master/00-orchestration/plan.md` and `synthesis.md` are master canon context. Current official sources override stale or future-dated protocol claims.
-- Imported product trees are context unless explicitly promoted by plan.
-- Studio UI Registry is a sibling product source, not imported harness implementation.
-  Integrate through package boundaries and typed payload/action/artifact contracts.
-- Official protocol and provider docs must be checked for drift-prone claims.
-- Never write secrets into tracked files.
-- Do not hardwire optional defaults into runtime call sites. Memory, context, stores,
-  providers, policy engine, tool adapters, observability sinks, artifact storage, and
-  docs outputs must remain replaceable behind stable ports.
+- Future durable architecture/operations docs belong under `docs/architecture/` and
+  `docs/operations/`; do not duplicate repo-wide style guides beneath them.
+- Verify drift-prone framework/provider/API/protocol/licensing facts against official
+  sources before locking them in.
+- If a stream needs human account action or product direction, pause and record the exact
+  intervention. Do not stub, skip, weaken validation, or merge around the missing input.
+
+## Account And Secret Lanes
+
+Keep these lanes separate:
+
+- **Automation/operator scope**: credentials and connected tools the agent needs to
+  execute and deploy, such as GitHub repo access, Vercel auth, npm publishing, Cloudflare
+  tooling, provider dashboards, and local CLI auth.
+- **App/runtime secrets**: values future packages or apps read at runtime. They live only
+  in local `.env` files, provider secret stores, or deployment env vars. They never go in
+  tracked files.
+
+Do not choose product secret-handling architecture just to satisfy automation scope. If
+the agent lacks a dashboard/account permission, document the exact missing command or
+account action. `.env` is gitignored and dev-only; `.env.example` is the tracked template.
 
 ## Workstream Execution Loop
 
-For substantial implementation streams:
+The orchestrator's job is to keep the work moving. The reusable prompt below already tells
+each subagent how to work. Do not restate it in full unless dispatching a subagent.
 
-1. Read the roadmap's current phase, source findings, locked decisions, and workstream boundary.
-2. Dispatch pass 1 with `AUDIT/EXECUTE`, or execute locally when no subagent is available and the task is bounded.
-3. Checkpoint dispatch in the roadmap before waiting.
-4. Poll in short intervals until terminal status, replacement, or explicit close.
-5. Checkpoint result with changed files, verification, blockers, and next action.
-6. Run a second fresh-context pass for broad or foundational streams.
-7. Gate only after evidence exists: source diff, docs updates, tests, verification output, and no unresolved blockers.
+Per workstream:
 
-If a stream needs human account action or product direction, pause and record the exact intervention.
-Do not stub, skip, weaken validation, or merge around the missing input.
+1. Dispatch a fresh-context subagent with the reusable prompt.
+2. When its commit lands, dispatch the second fresh-context pass.
+3. When the second commit lands, gate the workstream on it.
 
-## Coordinator Closeout Expectations
+If a pass needs extra context the reusable prompt does not cover, append a short text block
+to the top of that one dispatch. Do not mutate the base prompt.
+
+### Gating the second commit
+
+Read the second commit's diff at the summary level: `git show --stat <sha>` and the commit
+body. Do not comb the code; the subagent was already in the implementation details.
+
+Hard gate:
+
+- <= 10 files changed and < 800 LOC changed: eligible to close, continue to contents check.
+- > 10 files changed or >= 800 LOC: not eligible. Dispatch another fresh-context pass and
+  re-gate on its commit.
+
+Contents check:
+
+- A - Continuation: large refactor, new feature work, broad rewrites, big structural
+  changes. Dispatch another pass.
+- B - Completion plus tests: finishes earlier scaffolding plus tests/docs proving it. One
+  more pass to confirm quiet.
+- C - Tests plus small doc/cleanup: stabilized. Close it out.
+
+After class C, do the closeout pass yourself: confirm the roadmap reflects reality, confirm
+`git status` is clean, and summarize.
+
+### When using subagents
+
+- Dispatch one workstream at a time unless streams are independent.
+- Never run two agents on the same workstream simultaneously.
+- Tell each agent which workstreams are active so they stay in lane.
+- Each prompt must include both `AUDIT` and `EXECUTE`.
+- Run each workstream at least twice with fresh context.
+- Immediately after every dispatch, update the active roadmap with the agent id,
+  workstream/pass, ownership boundary, dispatch timestamp, and next coordinator action.
+- Immediately after every returned result, update
+  `docs/engineering/agents/orchestrator-logs/` with status, changed files, verification,
+  unresolved setup needs, and next pass.
+- If a wait does not return, resume from roadmap checkpoints and visible git state.
+- Keep orchestrator-side repo inspection to routing-level orientation.
+- Keep the reusable prompt stable. Add dispatch-specific constraints as a small appended
+  block, not by rewriting the base prompt.
+
+## Closeout Expectations
 
 Before final response:
 
-- Read back changed docs.
-- Run available formatting or diff checks when the workspace supports them.
-- Confirm no secrets were written.
+- Stop helper processes started during the session.
+- Confirm no secrets were written to tracked files or command output artifacts.
 - Keep the active roadmap and durable docs accurate.
-- Leave imported project trees untouched unless the active plan says otherwise.
-- Report changed files, verification, unavailable commands, remaining decision questions, and next action.
+- Leave unrelated dirty/untracked files untouched.
+- Report verification run and result.
+- Report commands that could not run because the surface does not exist yet.
+- Stage only intentional changes, write a conventional-style commit subject with a body,
+  and `git push origin main` once a remote exists.
+
+## Reusable Workstream Prompt
+
+```text
+Working from: `docs/roadmaps/2026-06-07-studio-ui-production-shape-plan.md`.
+The live repository is the source of truth, not roadmap claims.
+
+<APPEND YOUR WORKSTREAM STEERING HERE>
+
+Please AUDIT/EXECUTE Workstream <N>, aiming for completeness and cohesion, using the
+live codebase as the source of truth rather than roadmap claims. Preserve the token,
+registry, renderer, CLI, and workbench ownership boundaries. Finish adjacent docs/tests/
+config updates that clearly belong to the same shipped loop, but leave unrelated user
+changes untouched.
+
+Read the relevant repo guidance before editing:
+- `AGENTS.md`
+- `docs/roadmaps/2026-06-07-studio-ui-production-shape-plan.md`
+- `docs/engineering/standards/*`
+- `docs/architecture/foundation-alignment.md`
+- Relevant `docs/architecture/*`, `docs/operations/*`, and `docs/decisions/*`
+- Any owning packages, registry source, tests, scripts, and docs for this workstream
+
+Implementation standards:
+- Windows dev host: use PowerShell/cmd or git-bash; use `rg` for search.
+- Keep external dependencies behind explicit ports once runtime/provider code exists.
+- Token source owns visual truth; generated outputs are mechanically derived.
+- shadcn is build-time registry distribution only, not runtime rendering.
+- Runtime UI payloads are data, not code; validate and degrade safely.
+- Preserve the sibling boundary with `jami-harness`; integrate through typed
+  payload/action/artifact contracts only.
+- Do not introduce mocks, placeholders, broad compatibility shims, or hidden demo data.
+- Keep secrets out of tracked files and outputs (`.env` is gitignored; `.env.example` is
+  the only tracked env file).
+- Verify drift-prone framework/provider/API/protocol/licensing facts against official
+  sources before locking them in.
+
+Verification (run the narrowest complete set for what you touched):
+- Docs-only: read back changed Markdown, `pnpm docs:check`, and `git diff --check`.
+- TypeScript: `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`.
+- Registry: registry schema validation plus clean install smoke once available.
+- Full gate: `pnpm verify`.
+- Browser: smoke the workbench overlay once an app exists.
+
+Before final response:
+- Stop helper processes started during the session.
+- Update the active roadmap and durable docs accurately.
+- Stage only intentional changeset, write a conventional-style commit subject and body,
+  and push when a remote exists.
+- Summarize changed files, verification, unavailable commands, remaining setup needs,
+  and commit SHA(s) plus push result.
+```

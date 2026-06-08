@@ -6,7 +6,7 @@ Owner: Jami Studio
 
 ## Mission
 
-Jami Agent Harness is `@jami-studio/harness`: the provider-agnostic agent SDK and governed action runtime for the `jami.studio` foundations. It lets developers and agents build, run, govern, inspect, document, and improve real software work across Jami Studio projects and open-source consumers.
+Jami Harness is `@jami-studio/harness`: the provider-agnostic agent SDK and governed action runtime for the `jami.studio` foundations. It lets developers and agents build, run, govern, inspect, document, and improve real software work across Jami Studio projects and open-source consumers.
 
 The product target is a robust, production-ready agent harness that developers enjoy using because it gives them power without chaos: clear contracts, safe tool access, portable runtime adapters, durable artifacts, readable traces, strong policy controls, and documentation that stays synchronized with the system.
 
@@ -34,7 +34,7 @@ The harness should make agentic development feel reliable:
 The master rebuild canon under `docs/research/master/` is the source context for this project. The accepted direction is greenfield product work under the `C:\Users\james\dev` structure, with `oss/registry` housing the foundation repos:
 
 - `@jami-studio/harness` - provider-agnostic agent runtime and governed action loop.
-- `@jami-studio/ui` - tokenized UI Registry and primitive render vocabulary.
+- `@jami-studio/ui` - Studio UI token system, registry package, and primitive render vocabulary.
 - `@jami-studio/orchestra` - orchestration/dev system over harness and UI.
 
 The harness should fork the MIT `agent-native` foundation where that remains the verified current best starting point, then own the durable vocabulary and harden the adapter seams. The fork is not legacy carry-forward; it is an adopted open-source foundation.

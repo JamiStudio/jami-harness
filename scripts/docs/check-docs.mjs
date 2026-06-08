@@ -6,8 +6,8 @@ const root = process.cwd();
 const requiredFiles = [
   "AGENTS.md",
   "README.md",
-  "docs/research/2026-06-07-agent-harness-production-feasibility-report.md",
-  "docs/roadmaps/2026-06-07-agent-harness-production-plan.md",
+  "docs/research/2026-06-07-jami-harness-production-feasibility-report.md",
+  "docs/roadmaps/2026-06-07-jami-harness-production-plan.md",
   "docs/architecture/foundation-alignment.md",
   "docs/architecture/modular-responsibility-map.md",
   "docs/architecture/product-architecture.md",

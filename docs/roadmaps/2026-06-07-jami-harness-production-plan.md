@@ -1,11 +1,11 @@
-# Agent Harness Production Implementation Plan
+# Jami Harness Production Implementation Plan
 
 Date: 2026-06-07
 Status: Active planning
-Source reports: `docs/research/2026-06-07-agent-harness-production-feasibility-report.md`; `docs/research/master/00-orchestration/plan.md`; `docs/research/master/00-orchestration/synthesis.md`; crossflow adversarial review at `C:\Users\james\dev\orgs\oss\registry\docs\research\2026-06-08-harness-ui-plan-adversarial-review.md`
+Source reports: `docs/research/2026-06-07-jami-harness-production-feasibility-report.md`; `docs/research/master/00-orchestration/plan.md`; `docs/research/master/00-orchestration/synthesis.md`; crossflow adversarial review at `C:\Users\james\dev\orgs\oss\registry\docs\research\2026-06-08-harness-ui-plan-adversarial-review.md`
 Owner: Jami Studio
-Surface: Jami Agent Harness root workspace
-Sibling foundation: `C:\Users\james\dev\orgs\oss\registry\ui-registry`
+Surface: Jami Harness root workspace
+Sibling foundation: `C:\Users\james\dev\orgs\oss\registry\studio-ui`
 
 ## Purpose
 
@@ -26,7 +26,7 @@ Define the full production-shaped implementation plan for `@jami-studio/harness`
 - [x] `docs/architecture/modular-responsibility-map.md` establishes the packaging thesis: core owns grammar, modules own behavior, adapters own vendor specifics, and users can replace modules without breaking harness contracts.
 - [x] Official MCP latest spec is `2025-11-25`; Streamable HTTP, authorization, tool safety, elicitation, sampling, roots, and consent are directly relevant.
 - [x] Master canon identifies `@jami-studio/harness`, `@jami-studio/ui`, and `@jami-studio/orchestra` as the `jami.studio` foundation repos.
-- [x] `docs/architecture/foundation-alignment.md` records the repo split: Jami Agent Harness owns governed agent execution, tools, policy, memory, artifacts, traces, and agent-facing runtime surfaces; Studio UI Registry owns UI, tokens, renderer, registry, workbench, suites, and UI install surfaces.
+- [x] `docs/architecture/foundation-alignment.md` records the repo split: Jami Harness owns governed agent execution, tools, policy, memory, artifacts, traces, and agent-facing runtime surfaces; Studio UI owns UI, tokens, renderer, registry, workbench, suites, and UI install surfaces.
 - [x] Master canon selects agent-native as the preferred OSS foundation substrate, pending current lock-time verification.
 - [x] Crossflow adversarial review found the prior agent-native package targets stale as of 2026-06-08:
   current npm metadata showed `@agent-native/core@0.40.1` and `@agent-native/dispatch@0.9.3`; those
@@ -47,7 +47,7 @@ Define the full production-shaped implementation plan for `@jami-studio/harness`
 - [x] OpenTelemetry-compatible traces are required.
 - [x] Security, policy, consent, approval, and audit are foundational requirements, not later embellishments.
 - [x] Public docs will be prepared for Mintlify, but the repo docs tree remains source canon until publishing setup is accepted.
-- [x] Jami Agent Harness and Studio UI Registry remain separate sibling repos. Cohesion comes from shared typed contracts and cross-links, not from merging planning work into one repository.
+- [x] Jami Harness and Studio UI remain separate sibling repos. Cohesion comes from shared typed contracts and cross-links, not from merging planning work into one repository.
 - [x] The full harness ships a coherent batteries-included path through `@jami-studio/harness`, while memory, context, stores, providers, policy engine, tool adapters, observability sinks, artifact storage, and docs publishing remain replaceable behind stable ports.
 
 ## Scope Boundaries
@@ -55,7 +55,7 @@ Define the full production-shaped implementation plan for `@jami-studio/harness`
 - This plan designs the official production product shape and execution sequence.
 - Imported project directories are context sources, not automatically harness-owned packages.
 - Secrets can be used from the developer environment during implementation, but never committed.
-- Studio UI Registry owns UI primitives, tokens, registry packaging, resident rendering, suite UI, and UI install flows. The harness may reference those surfaces through typed contracts, but does not own their implementation.
+- Studio UI owns UI primitives, tokens, registry packaging, resident rendering, suite UI, and UI install flows. The harness may reference those surfaces through typed contracts, but does not own their implementation.
 - Memory and context are harness-owned contracts, not forced implementations. Users may bring their own memory, retrieval, search, context assembler, or knowledge graph as long as the adapter preserves policy, citation, freshness, provenance, and replay requirements.
 - Creative direction decisions stay open for user discussion. System architecture defaults are recommended here.
 
@@ -67,7 +67,7 @@ Define the full production-shaped implementation plan for `@jami-studio/harness`
 - Keep root docs stable and durable.
 - Keep external claims linked to official sources in reports or decision records.
 - Create implementation packages only after the plan is accepted or explicitly started.
-- Preserve cross-repo alignment by linking sibling docs instead of duplicating full plans. When a shared contract changes, update `docs/architecture/foundation-alignment.md` here and the matching UI Registry doc.
+- Preserve cross-repo alignment by linking sibling docs instead of duplicating full plans. When a shared contract changes, update `docs/architecture/foundation-alignment.md` here and the matching Studio UI doc.
 - Preserve modular responsibility boundaries from `docs/architecture/modular-responsibility-map.md`. Do not hardwire optional defaults into runtime call sites.
 
 ## Target Harness Shape
@@ -137,7 +137,7 @@ Optional surfaces:
 - SaaS control plane.
 - Organization/team admin.
 - Cloud deployment recipes.
-- Studio UI Registry-powered workbench UI.
+- Studio UI-powered workbench UI.
 
 The main `@jami-studio/harness` package should give users the full coherent default. The
 subpackages should let advanced users replace memory, context, policy, providers, stores,
@@ -145,13 +145,13 @@ tools, observability, artifacts, and docs output without forking the runtime.
 
 ## Sibling Foundation Boundary
 
-`agent-harness` and `ui-registry` are separate `@jami-studio/*`
+`jami-harness` and `studio-ui` are separate `@jami-studio/*`
 foundation repositories.
 
-Jami Agent Harness owns agent runs, tools, policy, approvals, memory, artifacts, traces,
+Jami Harness owns agent runs, tools, policy, approvals, memory, artifacts, traces,
 evidence, runtime state, and agent-facing CLI/SDK surfaces.
 
-Studio UI Registry owns tokens, UI primitives, registry packaging, suite composition,
+Studio UI owns tokens, UI primitives, registry packaging, suite composition,
 resident rendering, the always-live workbench, and UI install/config flows.
 
 Shared integration is contract-first:
@@ -162,7 +162,7 @@ Shared integration is contract-first:
 - `themeRef` for factory/custom theme references.
 - `suiteRef` for suite install graphs and optional harness capabilities.
 
-Do not duplicate the UI Registry roadmap in this repo. Link to the sibling plan and
+Do not duplicate the Studio UI roadmap in this repo. Link to the sibling plan and
 update shared contract docs when integration decisions change.
 
 ## Cross-Stream Dependency Map
@@ -172,7 +172,7 @@ store, model, policy, tools, memory, context, artifacts, and observability. Tool
 memory, context, search, and artifacts consume those contracts. Observability wraps all
 execution through event contracts and replaceable sinks. CLI/workbench and docs generation
 consume the stable primitives. Release/provenance and public docs close the loop. Shared
-UI payload/action/artifact references align with Studio UI Registry after the harness
+UI payload/action/artifact references align with Studio UI after the harness
 contracts can express provenance and policy.
 
 ## Adversarial Hardening Gates
@@ -184,7 +184,7 @@ active plan, not optional research notes.
   official/current source, package/spec name, version or spec identifier, date, license/provenance state,
   tarball or commit evidence where applicable, and unresolved risks.
 - `compat-lock`: shared UI/action/artifact/theme/suite references must have machine-readable schemas or
-  fixtures consumed by both this repo and `ui-registry`.
+  fixtures consumed by both this repo and `studio-ui`.
 - `policy-lock`: prompt-injection, tool-metadata poisoning, MCP transport abuse, secret exfiltration,
   approval replay, denied action, and redaction fixtures must fail closed.
 - `adapter-lock`: every adapter declares supported, unsupported, denied, trace, auth, streaming,
@@ -229,7 +229,7 @@ Exit criteria:
 
 - [ ] Contracts build, validate, and generate docs/reference artifacts.
 - [ ] Ports make module replacement explicit without weakening core policy, audit, artifact, evidence, or checkpoint contracts.
-- [ ] Shared harness/UI compatibility fixtures can be consumed by both this repo and `ui-registry`.
+- [ ] Shared harness/UI compatibility fixtures can be consumed by both this repo and `studio-ui`.
 - [ ] Evidence packet and threat model schemas exist before runtime, gateway, memory, or docs generation work builds on them.
 
 Suggested verification:
@@ -516,7 +516,7 @@ Implementation tasks:
 - [ ] Add CLI doctor/inspect commands that show active modules, defaults, replacements, missing optional capabilities, and exact next setup steps.
 - [ ] Add CLI/source-lock inspection for active adapters, package/protocol versions, optional capability support, and provenance evidence.
 - [ ] Add workbench views for run timeline, tool approvals, artifacts, traces, memory, docs preview, system map.
-- [ ] Integrate Studio UI Registry packages only through stable published package boundaries and typed shared contracts.
+- [ ] Integrate Studio UI packages only through stable published package boundaries and typed shared contracts.
 - [ ] Add examples and smoke tests.
 
 Exit criteria:

@@ -6,7 +6,7 @@ Owner: Jami Studio
 
 ## Purpose
 
-Jami Agent Harness is an owned contract core with replaceable capability modules. The
+Jami Harness is an owned contract core with replaceable capability modules. The
 design goal is a coherent full harness for teams that want the complete system, while
 still allowing advanced users to bring their own memory, context, storage, policy,
 provider, tool, observability, or UI infrastructure through stable contracts.
@@ -80,7 +80,7 @@ all consumers.
 - SaaS control plane.
 - Organization/team admin.
 - Cloud deployment recipes.
-- Studio UI Registry-powered workbench UI.
+- Studio UI-powered workbench UI.
 
 ## Responsibility Matrix
 

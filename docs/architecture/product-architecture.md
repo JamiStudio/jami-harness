@@ -6,7 +6,7 @@ Owner: Jami Studio
 
 ## Architecture Thesis
 
-Jami Agent Harness should be a contract-first agent platform with an owned semantic core,
+Jami Harness should be a contract-first agent platform with an owned semantic core,
 replaceable capability modules, and replaceable infrastructure adapters. In package
 terms, it is `@jami-studio/harness`, one foundation in the `@jami-studio/*` family.
 
@@ -39,7 +39,7 @@ Harness capabilities fall into four classes:
   artifact storage, trace/audit/metric sinks, secret resolver, hosted store, docs
   publishing output, and workbench shell.
 - **Optional surfaces**: hosted dashboard, docs site, advanced eval packs, marketplace
-  catalogs, SaaS control plane, cloud recipes, and Studio UI Registry-powered workbench.
+  catalogs, SaaS control plane, cloud recipes, and Studio UI-powered workbench.
 
 The full harness should be easy to install and use through `@jami-studio/harness`, while
 subpackages expose stable ports for teams that bring their own infrastructure.
@@ -47,12 +47,12 @@ subpackages expose stable ports for teams that bring their own infrastructure.
 ## Foundation Relationship
 
 - `@jami-studio/harness` owns the governed action loop, tool invocation, memory, runtime, policy hooks, and artifact lifecycle.
-- `ui-registry` / `@jami-studio/ui` owns design tokens, primitive component vocabulary, trusted runtime rendering, registry distribution, suite UI, workbench overlay, and UI install flows.
+- `studio-ui` / `@jami-studio/ui` owns design tokens, primitive component vocabulary, trusted runtime rendering, registry distribution, suite UI, workbench overlay, and UI install flows.
 - `@jami-studio/orchestra` owns the dev-system orchestration surface over harness and UI.
 
 The full sibling boundary is maintained in `docs/architecture/foundation-alignment.md`.
 Harness-to-UI integration is contract-first: the harness emits typed `uiPayload`,
-`artifactView`, `actionRef`, `themeRef`, and `suiteRef` references; Studio UI Registry
+`artifactView`, `actionRef`, `themeRef`, and `suiteRef` references; Studio UI
 validates and renders them through resident allowlisted UI. Policy decisions, tool side
 effects, memory writes, provenance, trace emission, and runtime state remain harness
 responsibilities.

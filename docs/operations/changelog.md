@@ -5,7 +5,7 @@ Last updated: 2026-06-07
 
 ## Purpose
 
-Jami Agent Harness uses `.changes/` fragments as the source for production-meaningful change notes.
+Jami Harness uses `.changes/` fragments as the source for production-meaningful change notes.
 Fragments keep workstream changes reviewable before release notes are compiled.
 
 ## When To Add A Fragment
