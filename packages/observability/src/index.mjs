@@ -7,6 +7,15 @@ const RUN_ID_PATTERN = /^run_[a-z0-9][a-z0-9_-]*$/;
 const METRIC_NAME_PATTERN = /^[a-z][a-z0-9_.-]*$/;
 const METRIC_KINDS = new Set(["latency", "tokens", "cost", "tool_call", "run", "provider", "custom"]);
 const METRIC_UNITS = new Set(["ms", "tokens", "usd", "count", "ratio"]);
+const METRIC_SOURCE_REF_PATTERNS = {
+  eventRef: /^evt_[a-z0-9][a-z0-9_-]*$/,
+  traceRef: /^trc_[a-z0-9][a-z0-9_-]*$/,
+  auditRef: /^aud_[a-z0-9][a-z0-9_-]*$/,
+  artifactRef: /^art_[a-z0-9][a-z0-9_-]*$/,
+  toolExecutionRef: /^tex_[a-z0-9][a-z0-9_-]*$/,
+  providerRunRef: /^prv_[a-z0-9][a-z0-9_-]*$/,
+  checkpointRef: /^chk_[a-z0-9][a-z0-9_-]*$/,
+};
 
 export function createRunObservability(options = {}) {
   const now = options.now ?? (() => new Date());
@@ -120,7 +129,9 @@ export function createRunObservability(options = {}) {
     recordMetric,
     recordUsageMetrics,
     exportEvidencePacket(input = {}) {
-      const redactedCommands = (input.commands ?? []).map((command) => redactObject(command).value);
+      const commandScans = (input.commands ?? []).map((command) => redactObject(command));
+      const redactedCommands = commandScans.map((scan) => scan.value);
+      const commandHadSecrets = commandScans.some((scan) => scan.paths.length > 0);
       const evidenceId = input.evidenceId ?? makeId("ev", input.runId, "evidence_packet");
       const metricRecords = [
         ...metrics,
@@ -136,19 +147,16 @@ export function createRunObservability(options = {}) {
           sourceCommit: input.commit ?? "working-tree",
           sourceRef: input.ref ?? "refs/heads/main",
           evidenceRef: evidenceId,
-          payload: {
-            metricCount: metricRecords.length,
-            metrics: metricRecords,
-          },
+          payload: metricArtifactPayload(metricRecords),
         });
       }
       const artifactRecords = [
         ...artifactStore.list(),
         ...(input.artifacts ?? []),
       ];
-      const containsSecrets = [...events, ...audits, ...traces, ...metricRecords, ...redactedCommands, ...artifactRecords].some((item) => {
+      const containsSecrets = commandHadSecrets || [...events, ...audits, ...traces, ...metricRecords, ...redactedCommands, ...artifactRecords].some((item) => {
         const scan = redactObject(item);
-        return scan.paths.length > 0 || item?.redaction?.privatePayloadPolicy === "omitted";
+        return scan.paths.length > 0 || hasRedactionMarker(item) || item?.redaction?.privatePayloadPolicy === "omitted";
       });
       const packet = {
         schemaVersion: SCHEMA_VERSION,
@@ -226,12 +234,11 @@ export function normalizeMetricRecord(input = {}, options = {}) {
   }
 
   const dimensionScan = redactObject(input.dimensions ?? {});
-  const sourceScan = redactObject(input.source ?? {});
+  const sourceScan = normalizeMetricSource(input.source ?? {});
   const redactedFields = [
     ...dimensionScan.paths.map((path) => path.replace("$", "$.dimensions")),
     ...sourceScan.paths.map((path) => path.replace("$", "$.source")),
   ];
-  const source = sourceScan.value && Object.keys(sourceScan.value).length > 0 ? sourceScan.value : undefined;
 
   return {
     schemaVersion: SCHEMA_VERSION,
@@ -242,7 +249,7 @@ export function normalizeMetricRecord(input = {}, options = {}) {
     value,
     unit,
     observedAt: input.observedAt ?? now().toISOString(),
-    source,
+    source: sourceScan.value,
     dimensions: dimensionScan.value,
     redaction: {
       payloadPolicy: redactedFields.length > 0 ? "redacted" : "none",
@@ -252,13 +259,17 @@ export function normalizeMetricRecord(input = {}, options = {}) {
 }
 
 function redactObject(value, path = "$") {
-  if (value === null || typeof value !== "object") return { value, paths: [] };
   const paths = [];
   const redacted = redactWalk(value, path, paths);
   return { value: redacted, paths };
 }
 
 function redactWalk(value, path, paths) {
+  if (typeof value === "string") {
+    const redacted = redactSecretLikeString(value);
+    if (redacted !== value) paths.push(path);
+    return redacted;
+  }
   if (Array.isArray(value)) return value.map((child, index) => redactWalk(child, `${path}[${index}]`, paths));
   if (value === null || typeof value !== "object") return value;
   const output = {};
@@ -272,6 +283,54 @@ function redactWalk(value, path, paths) {
     output[key] = redactWalk(child, childPath, paths);
   }
   return output;
+}
+
+function redactSecretLikeString(value) {
+  return value
+    .replace(/\b(api[_-]?key|token|secret|password|credential|authorization|cookie|session)\b\s*[:=]\s*[^,\s;]+/gi, "$1=[redacted]")
+    .replace(/\bBearer\s+[A-Za-z0-9._~+/=-]+/g, "Bearer [redacted]");
+}
+
+function normalizeMetricSource(value) {
+  const scan = redactObject(value);
+  if (!scan.value || typeof scan.value !== "object" || Array.isArray(scan.value)) {
+    return { value: undefined, paths: scan.paths };
+  }
+
+  const source = {};
+  for (const [key, refValue] of Object.entries(scan.value)) {
+    const pattern = METRIC_SOURCE_REF_PATTERNS[key];
+    if (pattern && typeof refValue === "string" && pattern.test(refValue)) {
+      source[key] = refValue;
+    }
+  }
+
+  return {
+    value: Object.keys(source).length > 0 ? source : undefined,
+    paths: scan.paths,
+  };
+}
+
+function metricArtifactPayload(metricRecords) {
+  return {
+    metricCount: metricRecords.length,
+    metrics: metricRecords.map((metric) => ({
+      metricId: metric.metricId,
+      runId: metric.runId,
+      name: metric.name,
+      kind: metric.kind,
+      measurement: metric.value,
+      unit: metric.unit,
+      observedAt: metric.observedAt,
+      source: metric.source,
+      redaction: metric.redaction,
+    })),
+  };
+}
+
+function hasRedactionMarker(value) {
+  const serialized = JSON.stringify(value);
+  return typeof serialized === "string" && serialized.includes("[redacted]");
 }
 
 function toEvidenceArtifactKind(kind) {

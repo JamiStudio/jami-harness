@@ -102,9 +102,56 @@ test("records redacted local usage metrics and exports metric evidence artifacts
     subject: "Stream 4 metrics evidence",
   });
   const metricArtifact = evidence.packet.artifacts.find((artifact) => artifact.artifactId === "art_stream4_metrics_metrics");
+  const metricArtifactRecord = observability.artifactStore.read(metricArtifact.artifactId);
+  const metricArtifactPayload = observability.artifactStore.readPayload(metricArtifact.artifactId);
 
   assert.equal(evidence.metrics.length, 6);
   assert.equal(metricArtifact.kind, "report");
+  assert.equal(metricArtifactRecord.redaction.privatePayloadPolicy, "redacted");
+  assert.equal(metricArtifactPayload.metrics[0].measurement, 25);
   assert.equal(evidence.packet.acceptedContracts.some((contract) => contract.name === "metricRecord"), true);
+  assert.equal(evidence.packet.redaction.containsSecrets, true);
+});
+
+test("redacts secret-looking strings and keeps metric source records schema-shaped", () => {
+  const observability = createRunObservability({ now });
+
+  const trace = observability.trace("run.message", {
+    runId: "run_stream4_foundation",
+    attributes: {
+      message: "provider returned token=trace-secret Bearer abc123",
+    },
+  });
+  const metric = observability.recordMetric("provider.latency_ms", {
+    runId: "run_stream4_foundation",
+    kind: "latency",
+    value: 11,
+    unit: "ms",
+    source: {
+      traceRef: "trc_stream4_foundation",
+      requestId: "req_should_not_enter_metric_source",
+      token: "source-secret",
+    },
+    dimensions: {
+      note: "apiKey=dimension-secret",
+    },
+  });
+  const evidence = observability.exportEvidencePacket({
+    runId: "run_stream4_foundation",
+    evidenceId: "ev_stream4_string_redaction",
+    commands: [{
+      command: "curl -H Authorization: Bearer command-secret https://example.invalid",
+      status: "failed",
+      recordedAt: "2026-06-09T12:00:00.000Z",
+    }],
+  });
+
+  assert.equal(trace.attributes.message, "provider returned token=[redacted] Bearer [redacted]");
+  assert.deepEqual(trace.redaction.redactedFields, ["$.message"]);
+  assert.deepEqual(metric.source, { traceRef: "trc_stream4_foundation" });
+  assert.equal(metric.dimensions.note, "apiKey=[redacted]");
+  assert.equal(metric.redaction.redactedFields.includes("$.dimensions.note"), true);
+  assert.equal(metric.redaction.redactedFields.includes("$.source.token"), true);
+  assert.equal(evidence.packet.commands[0].command.includes("command-secret"), false);
   assert.equal(evidence.packet.redaction.containsSecrets, true);
 });

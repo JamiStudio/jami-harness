@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:0ae7e194e426df20dfe3e9ce4b3590a7283746282d0b6be9ff4d15053649f228",
+  "sourceInputHash": "sha256:cb7abdceedb2edcc6dbef915a1bc1601f4830465f01b1866d96c80f7194ed06e",
   "generatedAt": "deterministic:git-head-plus-input-hash",
   "freshnessClass": "deterministic_current_source_tree",
   "command": "pnpm docs:generate -- --check",

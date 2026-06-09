@@ -706,12 +706,13 @@ Pass status:
   is not the OpenTelemetry bridge, hosted trace/audit/metric backend, eval sink, CLI
   inspector, workbench view, or complete metrics pipeline.
 - 2026-06-09 Workstream 7 metrics/eval smoke pass added local `metricRecord` contract
-  coverage, redacted in-memory metric sinks for latency, estimated token, zero-cost local
-  cost, and tool-call measurements, metric-summary artifacts in evidence packet output,
-  SDK/example metric inspection, and `pnpm eval:smoke` scenarios for tool safety, docs
-  generation, memory recall, and recovery. This is local deterministic evidence only; it
-  does not claim hosted observability, OpenTelemetry export, external eval backends, LLM
-  judging, incident exports, or workbench views.
+  coverage, redacted in-memory metric sinks for latency, estimated tokens,
+  external-billable local provider cost, and tool-call measurements, metric-summary
+  artifacts in evidence packet output, SDK/example metric inspection, and
+  `pnpm eval:smoke` scenarios for tool safety, docs generation, memory recall, and
+  recovery. This is local deterministic evidence only; it does not claim hosted
+  observability, OpenTelemetry export, external eval backends, LLM judging, hosted-provider
+  billing, total compute cost, incident exports, or workbench views.
 
 Implementation tasks:
 

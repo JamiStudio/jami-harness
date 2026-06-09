@@ -398,8 +398,11 @@ function createSdkRun({ now, artifactStore, observability, memory, context, chec
           runId,
           latencyName: "run.latency_ms",
           latencyMs: elapsedMs(runStartedAt, now().toISOString()),
+          inputTokenName: "tokens.input_estimate",
           inputTokens: estimateTokens(executeInput.instruction ?? "produce local harness evidence") + tokenEstimateForContext(contextPack),
+          outputTokenName: "tokens.output_estimate",
           outputTokens: estimateTokens(providerResult.output?.text ?? ""),
+          costName: "cost.external_billable_usd",
           costUsd: 0,
           toolCallCount: 0,
           source: {
@@ -409,7 +412,8 @@ function createSdkRun({ now, artifactStore, observability, memory, context, chec
             providerId: providerResult.providerId,
             providerStatus: providerResult.status,
             environment,
-            pricing: "local_zero_cost",
+            tokenMeasurement: "character_count_estimate",
+            costBasis: "no_external_provider_billing",
           },
         });
         const checkpoint = checkpointStore.writeCheckpoint({
@@ -439,6 +443,7 @@ function createSdkRun({ now, artifactStore, observability, memory, context, chec
           acceptedContracts: [
             { name: "runEvent", version: SCHEMA_VERSION },
             { name: "traceEvent", version: SCHEMA_VERSION },
+            { name: "metricRecord", version: SCHEMA_VERSION },
             { name: "artifactRecord", version: SCHEMA_VERSION },
             { name: "evidencePacket", version: SCHEMA_VERSION },
           ],
@@ -494,8 +499,11 @@ function createSdkRun({ now, artifactStore, observability, memory, context, chec
         runId,
         latencyName: "run.latency_ms",
         latencyMs: elapsedMs(runStartedAt, now().toISOString()),
+        inputTokenName: "tokens.input_estimate",
         inputTokens: estimateTokens(executeInput.instruction ?? "produce local harness evidence") + tokenEstimateForContext(contextPack),
+        outputTokenName: "tokens.output_estimate",
         outputTokens: estimateTokens(providerResult.output?.text ?? ""),
+        costName: "cost.external_billable_usd",
         costUsd: 0,
         toolCallCount: toolExecutions.length,
         source: {
@@ -506,7 +514,8 @@ function createSdkRun({ now, artifactStore, observability, memory, context, chec
           providerId: providerResult.providerId,
           providerStatus: providerResult.status,
           environment,
-          pricing: "local_zero_cost",
+          tokenMeasurement: "character_count_estimate",
+          costBasis: "no_external_provider_billing",
         },
       });
       const artifact = artifactStore.write({

@@ -69,6 +69,7 @@ test("executes a registered function tool only after policy allows it", async ()
   assert.equal(result.trace.attributes.result.token, "[redacted]");
   assert.equal(result.artifact.redaction.classification, "secret_adjacent");
   assert.equal(result.evidence.acceptedContracts.some((contract) => contract.name === "toolExecution"), true);
+  assert.equal(result.evidence.acceptedContracts.some((contract) => contract.name === "metricRecord"), true);
   assert.equal(gateway.observability.metrics.some((metric) => metric.name === "tool.latency_ms"), true);
   assert.equal(gateway.observability.metrics.some((metric) => metric.name === "tool.call.count" && metric.value === 1), true);
   assert.equal(result.evidence.artifacts.some((artifact) => artifact.artifactId.endsWith("_metrics") && artifact.kind === "report"), true);
@@ -259,6 +260,7 @@ test("discovers and calls a trusted MCP fixture tool through the policy-gated en
   assert.deepEqual(result.trace.attributes.result.structuredContent, { ok: true });
   assert.equal(result.execution.capabilityManifestRef, "cap_mcp_tool_gateway");
   assert.equal(result.evidence.acceptedContracts.some((contract) => contract.name === "toolExecution"), true);
+  assert.equal(result.evidence.acceptedContracts.some((contract) => contract.name === "metricRecord"), true);
 });
 
 test("denied MCP fixture calls do not invoke tools/call", async () => {

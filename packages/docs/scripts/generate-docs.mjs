@@ -349,7 +349,7 @@ function evidenceIndex(model) {
     "- Local CLI/SDK evidence smoke exists.",
     "- Full local source-checkout install and modular replacement paths are recorded in a generated install-readiness manifest.",
     "- Local deterministic provider workflow exists and routes tool calls through the policy-gated tool gateway.",
-    "- Local redacted metric records exist for latency, token, cost, and tool-call measurements.",
+    "- Local redacted metric records exist for latency, token-estimate, external-billable-cost, and tool-call measurements.",
     "- Local deterministic regression eval smoke exists for tool safety, docs generation, memory recall, and recovery.",
     "- Tool adapter source inspection exists for supported function and trusted MCP fixture paths plus fail-closed OpenAPI, shell, browser, code, provider-as-tool, and A2A dry-run evidence.",
     "- Release publishing, hosted docs, hosted model providers, executable full protocol/local tool adapters, attestation, and package release artifacts remain unavailable until their gates close.",

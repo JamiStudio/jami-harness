@@ -23,8 +23,10 @@ test("creates a local run with evidence, artifacts, traces, and inspectable modu
   assert.match(result.checkpoint.replayHash, /^sha256:/);
   assert.equal(result.contextPack.runId, "run_sdk_fixture");
   assert.equal(result.metrics.some((metric) => metric.name === "run.latency_ms"), true);
-  assert.equal(result.metrics.some((metric) => metric.name === "tokens.input" && metric.unit === "tokens"), true);
-  assert.equal(result.metrics.some((metric) => metric.name === "cost.usd" && metric.value === 0), true);
+  assert.equal(result.metrics.some((metric) => metric.name === "tokens.input_estimate" && metric.unit === "tokens"), true);
+  assert.equal(result.metrics.some((metric) => metric.name === "cost.external_billable_usd" && metric.value === 0), true);
+  assert.equal(result.metrics.some((metric) => metric.dimensions.tokenMeasurement === "character_count_estimate"), true);
+  assert.equal(result.metrics.some((metric) => metric.dimensions.costBasis === "no_external_provider_billing"), true);
   assert.equal(result.metrics.some((metric) => metric.name === "tool.call.count" && metric.value === 1), true);
   assert.equal(result.evidence.artifacts.some((artifact) => artifact.artifactId.endsWith("_metrics")), true);
   assert.equal(harness.resume("run_sdk_fixture").reason, "run_completed");
@@ -66,7 +68,8 @@ test("external provider requests fail closed without hosted provider execution",
   assert.equal(result.checkpoint.status, "unsupported");
   assert.equal(result.evidence.commands[0].status, "failed");
   assert.equal(result.metrics.some((metric) => metric.name === "tool.call.count" && metric.value === 0), true);
-  assert.equal(result.metrics.some((metric) => metric.name === "cost.usd" && metric.value === 0), true);
+  assert.equal(result.metrics.some((metric) => metric.name === "cost.external_billable_usd" && metric.value === 0), true);
+  assert.equal(result.evidence.acceptedContracts.some((contract) => contract.name === "metricRecord"), true);
 });
 
 test("recoverable provider failure records checkpoint evidence and completes on retry", async () => {

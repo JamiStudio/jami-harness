@@ -7,8 +7,8 @@ This package currently provides:
 
 - Event and audit sinks that connect to the existing runtime run-event spine.
 - Minimal `traceEvent` records with redacted attributes.
-- Local `metricRecord` capture for latency, token, cost, and tool-call measurements with
-  redacted dimensions.
+- Local `metricRecord` capture for latency, token estimates, external-billable-cost, and
+  tool-call measurements with redacted dimensions.
 - Local evidence packet export backed by the artifact storage port.
 - Metric-summary artifacts referenced by evidence packet output.
 - Default redaction for prompts, inline secrets, credentials, private payloads, and tool metadata.

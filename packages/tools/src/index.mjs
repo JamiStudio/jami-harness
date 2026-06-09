@@ -797,6 +797,7 @@ function finalizeExecution(input) {
       { name: "policyDecision", version: SCHEMA_VERSION },
       { name: "auditEvent", version: SCHEMA_VERSION },
       { name: "traceEvent", version: SCHEMA_VERSION },
+      { name: "metricRecord", version: SCHEMA_VERSION },
       { name: "artifactRecord", version: SCHEMA_VERSION },
       { name: "evidencePacket", version: SCHEMA_VERSION },
     ],

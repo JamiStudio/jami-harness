@@ -2,7 +2,7 @@
   "$schema": "../../schemas/metric-record.schema.json",
   "expectedValid": true,
   "caseId": "valid-metric-record",
-  "description": "Metric records capture local latency, token, cost, and tool-call measurements without exposing sensitive dimensions.",
+  "description": "Metric records capture local measurements without exposing sensitive dimensions.",
   "payload": {
     "schemaVersion": "2026-06-09",
     "metricId": "met_stream4_tool_latency",

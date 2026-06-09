@@ -142,7 +142,8 @@ await scenario("recovery", async () => {
   assert.equal(result.toolExecutions[0].status, "completed");
   assert.equal(harness.readArtifacts().some((artifact) => artifact.title.includes("failed_recoverable")), true);
   assert.equal(result.metrics.some((metric) => metric.name === "tool.call.count" && metric.value >= 1), true);
-  assert.equal(result.metrics.some((metric) => metric.name === "cost.usd" && metric.value === 0), true);
+  assert.equal(result.metrics.some((metric) => metric.name === "cost.external_billable_usd" && metric.value === 0), true);
+  assert.equal(result.metrics.some((metric) => metric.name === "tokens.input_estimate"), true);
 
   return {
     status: result.status,
