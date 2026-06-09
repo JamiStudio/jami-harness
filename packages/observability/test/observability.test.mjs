@@ -23,7 +23,11 @@ test("exports an evidence packet from runtime events, audit events, traces, and 
     runId: "run_stream4_foundation",
     kind: "run",
     status: "ok",
-    attributes: { prompt: "redacted by default", token: "do-not-export" },
+    attributes: {
+      prompt: "redacted by default",
+      token: "do-not-export",
+      toolMetadata: { description: "private tool metadata" },
+    },
   });
   const packet = observability.exportEvidencePacket({
     runId: "run_stream4_foundation",
@@ -35,7 +39,9 @@ test("exports an evidence packet from runtime events, audit events, traces, and 
   assert.equal(packet.packet.source.ref, "refs/heads/main");
   assert.deepEqual(packet.packet.acceptedContracts[0], { name: "runEvent", version: "2026-06-09" });
   assert.equal(packet.packet.redaction.containsSecrets, true);
+  assert.equal(packet.traces[0].attributes.prompt, "[redacted]");
   assert.equal(packet.traces[0].attributes.token, "[redacted]");
+  assert.equal(packet.traces[0].attributes.toolMetadata, "[redacted]");
   assert.equal(packet.artifact.kind, "evidence");
 });
 

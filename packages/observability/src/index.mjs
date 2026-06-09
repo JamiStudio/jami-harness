@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { createInMemoryArtifactStore } from "../../artifacts/src/index.mjs";
 
 const SCHEMA_VERSION = "2026-06-09";
-const SECRET_FIELD_PATTERN = /secret|token|apiKey|credential|password|privatePayload|plaintext|value/i;
+const SENSITIVE_FIELD_PATTERN = /secret|token|apiKey|credential|password|privatePayload|plaintext|value|prompt|systemPrompt|developerPrompt|userPrompt|toolMetadata|tool_metadata|toolDescription|tool_description|toolSchema|tool_schema/i;
 
 export function createRunObservability(options = {}) {
   const now = options.now ?? (() => new Date());
@@ -132,7 +132,7 @@ function redactWalk(value, path, paths) {
   const output = {};
   for (const [key, child] of Object.entries(value)) {
     const childPath = `${path}.${key}`;
-    if (SECRET_FIELD_PATTERN.test(key)) {
+    if (SENSITIVE_FIELD_PATTERN.test(key)) {
       output[key] = "[redacted]";
       paths.push(childPath);
       continue;
