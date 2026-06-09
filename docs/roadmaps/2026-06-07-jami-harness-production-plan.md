@@ -41,11 +41,12 @@ unsupported or human-intervention-gated rather than weakening the gates.
 - [x] Imported `evals` docs provide reusable orchestration, planning, docs, and report standards.
 - [x] Prior harness framing established the owned-core thesis: own product grammar and contracts; put vendors behind adapters.
 - [x] `docs/architecture/modular-responsibility-map.md` establishes the packaging thesis: core owns grammar, modules own behavior, adapters own vendor specifics, and users can replace modules without breaking harness contracts.
-- [x] The registry-root source-lock record dated 2026-06-09 selects MCP baseline `2025-06-18`
-  for implementation intake; Streamable HTTP, authorization, tool safety, elicitation,
-  sampling, roots, consent, origin validation, and local-binding safeguards are directly
-  relevant. Re-check the registry-root record before any MCP implementation work because
-  protocol currentness is drift-prone.
+- [x] The registry-root source-lock record originally selected MCP baseline `2025-06-18`;
+  Workstream 4 MCP source-lock pass 1 refreshed the harness-local implementation lock in
+  `docs/operations/mcp-source-lock.md` to official MCP `2025-11-25`, current latest as
+  verified on 2026-06-09. Streamable HTTP, authorization, tool safety, elicitation,
+  sampling, roots, consent, origin validation, and local-binding safeguards remain
+  directly relevant and must be refreshed before any broader MCP implementation.
 - [x] Master canon identifies `@jami-studio/harness`, `@jami-studio/ui`, and `@jami-studio/orchestra` as the `jami.studio` foundation repos.
 - [x] `docs/architecture/foundation-alignment.md` records the repo split: Jami Harness owns governed agent execution, tools, policy, memory, artifacts, traces, and agent-facing runtime surfaces; Studio UI owns UI, tokens, renderer, registry, workbench, suites, and UI install surfaces.
 - [x] Master canon selects agent-native as the preferred OSS foundation substrate, pending current lock-time verification.
@@ -486,37 +487,46 @@ Pass status:
   labels, one policy-gated execution envelope, a real function-tool adapter path,
   timeout/cancellation status, typed `toolExecution` contract records, trace/audit/
   evidence/artifact output, redaction for secret-like inputs and results, SDK/CLI
-  capability inspection, and adapter capability manifests. MCP, OpenAPI, shell, browser,
-  code, provider, and A2A adapters are explicit unsupported capability manifests and
-  fail closed until repo-local source-lock evidence and adapter fixtures exist.
+  capability inspection, and adapter capability manifests. At that pass, MCP, OpenAPI,
+  shell, browser, code, provider, and A2A adapters were explicit unsupported capability
+  manifests and failed closed until repo-local source-lock evidence and adapter fixtures
+  existed.
 - 2026-06-09 Workstream 4 pass 2 confirmation found and fixed narrow hardening gaps:
   replaceable policy-engine failures now fail closed into typed denied tool execution
   evidence without invoking handlers, non-cooperative function tools cannot outlive the
   timeout envelope, and failed-tool error messages are redacted before trace and artifact
   payloads record them.
+- 2026-06-09 Workstream 4 MCP source-lock pass 1 refreshed repo-local MCP evidence to
+  official `2025-11-25` and added a narrow trusted in-process MCP fixture adapter. The
+  supported path maps MCP `initialize`, `tools/list`, and `tools/call` into the existing
+  policy-gated execution envelope, validates tool metadata before registration, rejects
+  poisoned metadata and unsupported protocol versions, and represents Streamable HTTP
+  Origin/session/protocol-version/local-binding guards as fail-closed validation. This is
+  not stdio subprocess transport, remote Streamable HTTP, OAuth, resources, prompts,
+  roots, sampling, elicitation, tasks, resumability, or full MCP SDK parity.
 
 Implementation tasks:
 
 - [x] Implement tool registry and risk labels.
-- [~] Normalize MCP, OpenAPI, function, shell, browser, code, and provider tools through one execution envelope for status reporting; only function tools have an executable adapter in this pass, while MCP/OpenAPI/shell/browser/code/provider adapters fail closed as unsupported.
-- [ ] Add MCP client support for stdio and Streamable HTTP.
+- [~] Normalize MCP, OpenAPI, function, shell, browser, code, and provider tools through one execution envelope for status reporting; function tools and trusted in-process MCP fixture tools have executable adapter paths, while OpenAPI/shell/browser/code/provider/A2A and remote MCP surfaces fail closed as unsupported.
+- [~] Add MCP client support for stdio and Streamable HTTP; trusted in-process fixture discovery/call mapping is implemented, while stdio subprocess and remote Streamable HTTP transports remain unsupported.
 - [ ] Add A2A agent-card/task interop where cross-agent communication is required.
-- [ ] Add origin/session/auth controls for HTTP transports, including MCP Streamable HTTP origin and localhost-binding safeguards where applicable.
+- [~] Add origin/session/auth controls for HTTP transports, including MCP Streamable HTTP origin and localhost-binding safeguards where applicable; guard validation exists for Origin, visible-ASCII session id, protocol version, and public local binding, while remote HTTP transport and OAuth remain unsupported.
 - [~] Add OpenAPI/function tool adapters; function tools are implemented, OpenAPI remains unsupported until current source-lock evidence and fixtures exist.
 - [ ] Add local shell/browser/code wrappers with sandbox policy.
 - [~] Add tool-call approval, timeout, cancellation, trace, and audit events; the foundation covers approval through the policy seam and represents timeout/cancellation status, but streaming and resume semantics remain open.
-- [~] Add adapter capability manifests for streaming, cancellation, resumability, auth model, tool result shape, artifact support, error taxonomy, trace propagation, policy hooks, and unsupported states.
+- [~] Add adapter capability manifests for streaming, cancellation, resumability, auth model, tool result shape, artifact support, error taxonomy, trace propagation, policy hooks, and unsupported states; the MCP manifest now distinguishes trusted fixture support from unsupported stdio, Streamable HTTP, OAuth, resources, prompts, roots, sampling, elicitation, tasks, and resumability.
 
 Exit criteria:
 
-- [~] Tools execute only through policy, emit traces/audit, and produce typed artifacts for the current function-tool foundation.
-- [~] Every adapter has positive, denied, unsupported, and trace/evidence fixtures for the current foundation; protocol-specific positive fixtures remain open because those adapters are unsupported.
+- [~] Tools execute only through policy, emit traces/audit, and produce typed artifacts for the current function-tool and trusted MCP fixture foundations.
+- [~] Every adapter has positive, denied, unsupported, and trace/evidence fixtures for the current foundation; the MCP trusted fixture path now has positive and denied coverage, while remote protocol support remains open.
 
 Suggested verification:
 
 - `pnpm tools:test`
 - `pnpm contracts:validate`
-- MCP compatibility smoke against trusted local fixture server after MCP source-lock evidence and adapter implementation exist.
+- MCP compatibility smoke against trusted local fixture server after MCP source-lock evidence and adapter implementation exist; current pass covers the trusted in-process fixture path through `pnpm tools:test`.
 
 ## Workstream 5: Memory, Context, Search, And Citation
 

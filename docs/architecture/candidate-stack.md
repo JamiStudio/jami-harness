@@ -32,11 +32,12 @@ The master canon points to a wholesale fork of the MIT `agent-native` foundation
 
 ## External Standards To Track
 
-- MCP specification baseline selected by
-  `C:\Users\james\dev\orgs\oss\registry\docs\operations\source-lock-evidence.md`;
-  the current registry-root source-lock record dated 2026-06-09 selects `2025-06-18`
-  for implementation intake. Re-check the registry-root record and add repo-local
-  command-backed source-lock evidence before any MCP implementation depends on it.
+- MCP specification baseline selected by repo-local evidence in
+  `docs/operations/mcp-source-lock.md`; the current harness lock dated 2026-06-09
+  targets official MCP `2025-11-25` for the narrow trusted fixture tool adapter.
+  Future stdio, Streamable HTTP, OAuth, resources, prompts, roots, sampling,
+  elicitation, tasks, or full SDK-parity work must refresh source-lock evidence before
+  implementation depends on it.
 - A2A official project/docs for agent-to-agent interop.
 - AG-UI official docs for external agent-to-UI event interop.
 - agent-native official docs/package metadata for fork feasibility and exact package versions.

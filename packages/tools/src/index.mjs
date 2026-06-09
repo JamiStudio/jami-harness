@@ -4,15 +4,18 @@ import { createRunObservability } from "../../observability/src/index.mjs";
 import { createDefaultPolicyEngine } from "../../policy/src/index.mjs";
 
 const SCHEMA_VERSION = "2026-06-09";
+export const MCP_PROTOCOL_VERSION = "2025-11-25";
 const TOOL_ID_PATTERN = /^tool_[a-z0-9][a-z0-9_-]*$/;
 const ADAPTER_ID_PATTERN = /^adapter_[a-z0-9][a-z0-9_-]*$/;
 const RUN_ID_PATTERN = /^run_[a-z0-9][a-z0-9_-]*$/;
 const ACTOR_ID_PATTERN = /^actor_[a-z0-9][a-z0-9_-]*$/;
 const PROJECT_ID_PATTERN = /^proj_[a-z0-9][a-z0-9_-]*$/;
+const MCP_TOOL_NAME_PATTERN = /^[A-Za-z0-9_.-]{1,128}$/;
 const ALLOWED_RISKS = new Set(["read", "write", "destructive", "external", "secret_adjacent"]);
 const ELEVATED_RISKS = new Set(["write", "destructive", "external", "secret_adjacent"]);
 const UNSUPPORTED_ADAPTER_IDS = ["mcp", "openapi", "shell", "browser", "code", "provider", "a2a"];
 const SENSITIVE_FIELD_PATTERN = /secret|token|apiKey|credential|password|privatePayload|plaintext|value|authorization|cookie|session|prompt|systemPrompt|developerPrompt|userPrompt|toolMetadata|toolSchema|toolDescription/i;
+const MCP_METADATA_POISON_PATTERN = /ignore\s+(policy|approval|instructions)|bypass\s+(policy|approval)|exfiltrate|leak\s+(secret|token|credential)|send\s+.*(secret|token|credential)/i;
 
 export class ToolGatewayError extends Error {
   constructor(code, message) {
@@ -57,8 +60,8 @@ export function createToolRegistry(options = {}) {
       return {
         schemaVersion: SCHEMA_VERSION,
         mode: options.mode ?? "memory",
-        supportedAdapters: ["adapter_function"],
-        unsupportedAdapters: UNSUPPORTED_ADAPTER_IDS.map((id) => `adapter_${id}`),
+        supportedAdapters: ["adapter_function", "adapter_mcp"],
+        unsupportedAdapters: UNSUPPORTED_ADAPTER_IDS.filter((id) => id !== "mcp").map((id) => `adapter_${id}`),
         replacementPort: "harness.tools.registry",
       };
     },
@@ -70,6 +73,131 @@ export function createFunctionTool(tool) {
     adapterId: "adapter_function",
     ...tool,
   };
+}
+
+export function createTrustedMcpFixtureServer(options = {}) {
+  const protocolVersion = options.protocolVersion ?? MCP_PROTOCOL_VERSION;
+  const tools = new Map();
+  for (const tool of options.tools ?? []) {
+    assertMcpToolMetadata(tool);
+    tools.set(tool.name, tool);
+  }
+
+  return {
+    protocolVersion,
+    transport: { kind: "mcp_in_process", trusted: true },
+
+    async request(message = {}) {
+      if (message.jsonrpc !== "2.0") {
+        return jsonRpcError(message.id, -32600, "invalid JSON-RPC 2.0 request");
+      }
+      if (message.method === "initialize") {
+        return jsonRpcResult(message.id, {
+          protocolVersion,
+          capabilities: { tools: { listChanged: false } },
+          serverInfo: {
+            name: options.name ?? "jami-harness-mcp-fixture",
+            version: "0.0.0-fixture",
+            description: "Trusted in-process MCP fixture for harness adapter tests",
+          },
+        });
+      }
+      if (message.method === "tools/list") {
+        return jsonRpcResult(message.id, {
+          tools: [...tools.values()].map(({ handler: _handler, risk: _risk, requiredScopes: _requiredScopes, ...tool }) => tool),
+        });
+      }
+      if (message.method === "tools/call") {
+        const name = message.params?.name;
+        const tool = tools.get(name);
+        if (!tool) return jsonRpcError(message.id, -32602, "unknown MCP tool");
+        const result = await tool.handler?.(message.params?.arguments ?? {});
+        return jsonRpcResult(message.id, result ?? { content: [] });
+      }
+      return jsonRpcError(message.id, -32601, "unsupported MCP fixture method");
+    },
+  };
+}
+
+export async function registerMcpServerTools(registry, options = {}) {
+  assertPort("registry", registry, ["register"]);
+  const discovered = await discoverMcpServerTools(options);
+  return discovered.map((tool) => registry.register(tool));
+}
+
+export async function discoverMcpServerTools(options = {}) {
+  const server = options.server;
+  if (!server || typeof server.request !== "function") {
+    throw new ToolGatewayError("invalid_mcp_server", "MCP server must expose a request method");
+  }
+  const sourceLock = options.sourceLock ?? MCP_SOURCE_LOCK;
+  assertMcpSourceLock(sourceLock);
+  const serverTrust = options.serverTrust ?? "trusted";
+  if (serverTrust !== "trusted") {
+    throw new ToolGatewayError("untrusted_mcp_server", "MCP tool metadata is accepted only from trusted servers in this foundation pass");
+  }
+
+  const initialized = await mcpRequest(server, "initialize", {
+    protocolVersion: sourceLock.protocolVersion,
+    capabilities: {},
+    clientInfo: { name: "jami-harness-tools", version: "0.0.0" },
+  });
+  const negotiatedVersion = initialized.protocolVersion ?? server.protocolVersion;
+  if (negotiatedVersion !== sourceLock.protocolVersion) {
+    throw new ToolGatewayError("unsupported_mcp_protocol", `MCP protocol version must be ${sourceLock.protocolVersion}`);
+  }
+
+  const listed = await mcpRequest(server, "tools/list", {});
+  if (!Array.isArray(listed.tools)) {
+    throw new ToolGatewayError("invalid_mcp_tools", "MCP tools/list result must include a tools array");
+  }
+
+  return listed.tools.map((metadata) => {
+    assertMcpToolMetadata(metadata);
+    const toolId = toHarnessToolId(metadata.name);
+    const risk = options.riskByToolName?.[metadata.name] ?? metadata.risk ?? "read";
+    const requiredScopes = options.requiredScopesByToolName?.[metadata.name] ?? metadata.requiredScopes ?? ["repo:read"];
+    return {
+      toolId,
+      label: metadata.title ?? metadata.name,
+      adapterId: "adapter_mcp",
+      risk,
+      sideEffect: risk === "read" ? "none" : "writes",
+      requiredScopes,
+      timeoutMs: options.timeoutMs ?? 30_000,
+      inputSchema: metadata.inputSchema,
+      resultShape: "mcp_tool_result",
+      artifactKind: "evidence",
+      mcp: {
+        serverId: options.serverId ?? "trusted_fixture",
+        toolName: metadata.name,
+        protocolVersion: sourceLock.protocolVersion,
+        transport: "in_process_fixture",
+      },
+      capabilityManifest: mcpCapabilityManifest({ requiredScopes, sourceLock }),
+      async handler(input) {
+        return mcpRequest(server, "tools/call", { name: metadata.name, arguments: input ?? {} });
+      },
+    };
+  });
+}
+
+export function validateMcpStreamableHttpRequest(input = {}) {
+  const allowedOrigins = new Set(input.allowedOrigins ?? []);
+  const origin = input.origin;
+  if (origin && !allowedOrigins.has(origin)) {
+    return { ok: false, status: 403, code: "invalid_origin", message: "invalid Origin header" };
+  }
+  if (input.protocolVersion !== MCP_PROTOCOL_VERSION) {
+    return { ok: false, status: 400, code: "unsupported_protocol_version", message: `MCP-Protocol-Version must be ${MCP_PROTOCOL_VERSION}` };
+  }
+  if (input.requireSession !== false && !isVisibleAscii(input.sessionId)) {
+    return { ok: false, status: 400, code: "invalid_session", message: "MCP-Session-Id is required and must be visible ASCII" };
+  }
+  if (input.localhostBinding === "public") {
+    return { ok: false, status: 403, code: "public_local_binding", message: "local MCP HTTP servers must not bind publicly" };
+  }
+  return { ok: true, status: 200, code: "accepted", message: "MCP Streamable HTTP request controls accepted" };
 }
 
 export function createUnsupportedAdapterManifests() {
@@ -176,7 +304,7 @@ export function createToolGateway(options = {}) {
         });
       }
 
-      if (tool.support === "unsupported" || tool.adapterId !== "adapter_function") {
+      if (tool.support === "unsupported" || !["adapter_function", "adapter_mcp"].includes(tool.adapterId)) {
         return finalizeExecution({
           now,
           artifactStore,
@@ -321,9 +449,9 @@ function normalizeToolDefinition(tool) {
     throw new ToolGatewayError("invalid_tool", "requiredScopes must be an array");
   }
 
-  const support = adapterId === "adapter_function" ? "supported" : "unsupported";
+  const support = ["adapter_function", "adapter_mcp"].includes(adapterId) && typeof tool.handler === "function" ? "supported" : "unsupported";
   if (support === "supported" && typeof tool.handler !== "function") {
-    throw new ToolGatewayError("invalid_tool", "function tools must provide a handler");
+    throw new ToolGatewayError("invalid_tool", "supported tools must provide a handler");
   }
 
   return {
@@ -520,6 +648,9 @@ function auditForDecision({ runId, actor, projectId, environment, toolId, outcom
 }
 
 function capabilityManifestForTool(tool, adapterId, support) {
+  if (adapterId === "adapter_mcp") {
+    return mcpCapabilityManifest({ requiredScopes: tool.requiredScopes ?? [], sourceLock: MCP_SOURCE_LOCK, support });
+  }
   const adapterName = adapterId.replace(/^adapter_/, "");
   return {
     schemaVersion: SCHEMA_VERSION,
@@ -550,6 +681,54 @@ function capabilityManifestForTool(tool, adapterId, support) {
   };
 }
 
+const MCP_SOURCE_LOCK = {
+  sourceId: "mcp-spec-2025-11-25",
+  protocolVersion: MCP_PROTOCOL_VERSION,
+  evidenceDate: "2026-06-09",
+  officialUrls: [
+    "https://modelcontextprotocol.io/specification/2025-11-25",
+    "https://modelcontextprotocol.io/specification/2025-11-25/basic/transports",
+    "https://modelcontextprotocol.io/specification/2025-11-25/server/tools",
+    "https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization",
+    "https://modelcontextprotocol.io/specification/2025-11-25/changelog",
+  ],
+};
+
+function mcpCapabilityManifest({ requiredScopes = [], sourceLock = MCP_SOURCE_LOCK, support = "supported" } = {}) {
+  return {
+    schemaVersion: SCHEMA_VERSION,
+    capabilityId: "cap_mcp_tool_gateway",
+    ownerPackage: "@jami-studio/harness-tools",
+    capabilityClass: "adapter",
+    features: [
+      { featureId: "source_lock.mcp_spec", support: "supported", notes: `Official MCP specification ${sourceLock.protocolVersion} is locked in repo-local evidence.` },
+      { featureId: "mcp.trusted_in_process_fixture", support, notes: "Trusted fixture server supports initialize, tools/list, and tools/call mapping into the harness execution envelope." },
+      { featureId: "mcp.tool_discovery", support, notes: "Tool metadata is validated before registration." },
+      { featureId: "mcp.tool_call", support, notes: "Tool calls execute only after harness policy allows the mapped tool." },
+      { featureId: "mcp.stdio_client", support: "unsupported", notes: "Subprocess stdio transport is not implemented in this pass." },
+      { featureId: "mcp.streamable_http_client", support: "unsupported", notes: "Remote Streamable HTTP client, SSE, polling, and resumability are not implemented in this pass." },
+      { featureId: "mcp.streamable_http_controls", support: "supported", notes: "Origin, visible-ASCII session id, protocol-version, and localhost-binding guards are represented as fail-closed validation." },
+      { featureId: "mcp.oauth", support: "unsupported", notes: "OAuth discovery, PKCE, Client ID Metadata Documents, dynamic registration, and token validation are not implemented." },
+      { featureId: "mcp.resources_prompts_roots_sampling_elicitation", support: "unsupported", notes: "This pass maps only server tools." },
+      { featureId: "policy_gate", support: "supported", notes: "MCP calls use the same policy, audit, trace, evidence, artifact, and redaction envelope as function tools." },
+      { featureId: "resumability", support: "unsupported", notes: "Checkpoint/resume store and MCP SSE redelivery are not implemented." },
+    ],
+    requiredScopes,
+    failureModes: [
+      { mode: "policy_denied", observableAs: "audit_event" },
+      { mode: "adapter_unsupported", observableAs: "typed_result" },
+      { mode: "metadata_poisoning", observableAs: "typed_result" },
+      { mode: "invalid_origin_or_session", observableAs: "typed_result" },
+      { mode: "redacted_payload", observableAs: "evidence_packet" },
+    ],
+    replacementCompatibility: {
+      portId: "harness.tools.adapter.mcp",
+      contractVersion: SCHEMA_VERSION,
+      mustPreserve: ["policy", "audit", "artifact", "evidence", "redaction"],
+    },
+  };
+}
+
 function unsupportedCapabilityManifest(id) {
   return {
     schemaVersion: SCHEMA_VERSION,
@@ -574,6 +753,75 @@ function unsupportedCapabilityManifest(id) {
       mustPreserve: ["policy", "audit", "artifact", "evidence", "redaction"],
     },
   };
+}
+
+async function mcpRequest(server, method, params) {
+  const id = makeId("mcp", method);
+  const response = await server.request({ jsonrpc: "2.0", id, method, params });
+  if (!response || response.jsonrpc !== "2.0") {
+    throw new ToolGatewayError("invalid_mcp_response", "MCP server returned an invalid JSON-RPC response");
+  }
+  if (response.error) {
+    throw new ToolGatewayError("mcp_request_failed", response.error.message ?? "MCP request failed");
+  }
+  return response.result ?? {};
+}
+
+function jsonRpcResult(id, result) {
+  return { jsonrpc: "2.0", id, result };
+}
+
+function jsonRpcError(id, code, message) {
+  return { jsonrpc: "2.0", id, error: { code, message } };
+}
+
+function assertMcpSourceLock(sourceLock) {
+  if (sourceLock.protocolVersion !== MCP_PROTOCOL_VERSION) {
+    throw new ToolGatewayError("invalid_source_lock", `MCP source-lock protocolVersion must be ${MCP_PROTOCOL_VERSION}`);
+  }
+  if (!Array.isArray(sourceLock.officialUrls) || sourceLock.officialUrls.length < 5) {
+    throw new ToolGatewayError("invalid_source_lock", "MCP source-lock must include official specification, transport, tools, authorization, and changelog URLs");
+  }
+  if (!sourceLock.officialUrls.every((url) => typeof url === "string" && url.startsWith("https://modelcontextprotocol.io/specification/2025-11-25"))) {
+    throw new ToolGatewayError("invalid_source_lock", "MCP source-lock URLs must be official 2025-11-25 specification URLs");
+  }
+}
+
+function assertMcpToolMetadata(tool) {
+  if (!tool || typeof tool !== "object") {
+    throw new ToolGatewayError("invalid_mcp_tool_metadata", "MCP tool metadata must be an object");
+  }
+  if (!MCP_TOOL_NAME_PATTERN.test(tool.name ?? "")) {
+    throw new ToolGatewayError("invalid_mcp_tool_metadata", "MCP tool names must be 1-128 ASCII letters, digits, underscore, hyphen, or dot");
+  }
+  if (hasPoisonedMcpMetadata(tool)) {
+    throw new ToolGatewayError("mcp_metadata_poisoning", "MCP tool metadata contains policy-bypass or secret-exfiltration language");
+  }
+  if (!tool.inputSchema || typeof tool.inputSchema !== "object" || Array.isArray(tool.inputSchema)) {
+    throw new ToolGatewayError("invalid_mcp_tool_metadata", "MCP tool inputSchema must be an object");
+  }
+  if (tool.inputSchema.type !== undefined && tool.inputSchema.type !== "object") {
+    throw new ToolGatewayError("invalid_mcp_tool_metadata", "MCP tool inputSchema must describe an object input");
+  }
+}
+
+function hasPoisonedMcpMetadata(value) {
+  if (typeof value === "string") return MCP_METADATA_POISON_PATTERN.test(value);
+  if (Array.isArray(value)) return value.some((child) => hasPoisonedMcpMetadata(child));
+  if (value === null || typeof value !== "object") return false;
+  return Object.entries(value).some(([key, child]) => {
+    if (/authorization|cookie|credential|password|secret|session|token/i.test(key)) return true;
+    if (key === "annotations" && hasPoisonedMcpMetadata(child)) return true;
+    return ["name", "title", "description", "inputSchema"].includes(key) && hasPoisonedMcpMetadata(child);
+  });
+}
+
+function toHarnessToolId(name) {
+  return `tool_mcp_${name.toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "").slice(0, 64)}`;
+}
+
+function isVisibleAscii(value) {
+  return typeof value === "string" && /^[\x21-\x7E]+$/.test(value);
 }
 
 function normalizeActor(actor = {}) {

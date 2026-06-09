@@ -253,7 +253,12 @@ execution envelope, a real function-tool adapter path, timeout/cancellation stat
 typed trace/audit/evidence/artifact output, redaction, and unsupported capability
 manifests for MCP, OpenAPI, shell, browser, code, provider, and A2A adapters. The
 unsupported adapters intentionally do not claim protocol support until repo-local
-source-lock evidence and adapter fixtures are added.
+source-lock evidence and adapter fixtures are added. Workstream 4 MCP source-lock pass 1
+adds repo-local MCP `2025-11-25` evidence and a trusted in-process fixture adapter that
+maps MCP `initialize`, `tools/list`, and `tools/call` into that same execution envelope.
+The MCP manifest still marks stdio subprocess transport, remote Streamable HTTP, OAuth,
+resources, prompts, roots, sampling, elicitation, tasks, resumability, and full SDK
+parity as unsupported.
 
 ## Storage Strategy
 

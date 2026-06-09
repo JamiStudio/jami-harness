@@ -23,4 +23,5 @@ Current operating procedures:
 
 - [Development workflow](development-workflow.md)
 - [Changelog system](changelog.md)
+- [MCP source lock](mcp-source-lock.md)
 - [Release readiness](release-readiness.md)

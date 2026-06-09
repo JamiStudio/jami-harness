@@ -120,7 +120,13 @@ policy-gated function tool execution, timeout/cancellation status, typed trace/a
 evidence/artifact output, redaction, and unsupported adapter manifests. That foundation
 does not implement MCP, OpenAPI, shell, browser, code, provider, or A2A adapters; those
 remain explicit unsupported capabilities until current repo-local source-lock evidence
-and adapter tests exist. The contracts package now emits checked
+and adapter tests exist. Workstream 4 MCP source-lock pass 1 adds repo-local MCP
+`2025-11-25` source-lock evidence plus a trusted in-process MCP fixture adapter for
+`initialize`, `tools/list`, and `tools/call` mapping through the same policy, audit,
+trace, evidence, artifact, and redaction envelope. Stdio subprocess transport, remote
+Streamable HTTP, OAuth, resources, prompts, roots, sampling, elicitation, tasks,
+resumability, and full SDK parity remain unsupported and are named in the MCP capability
+manifest. The contracts package now emits checked
 generated artifacts in `packages/contracts/generated/`: TypeScript schema exports, an
 OpenAPI 3.1 component reference, and a compact reference manifest with the Studio UI
 handshake. Studio UI should consume those generated outputs or the same schema ids and
