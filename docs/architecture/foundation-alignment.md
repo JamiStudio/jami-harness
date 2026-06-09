@@ -94,12 +94,16 @@ actions without policy evidence or renderer errors without a typed renderer erro
 It also rejects unsafe UI props and suite refs that do not point at Studio UI registry
 items. Policy fixtures now cover prompt injection, tool metadata poisoning, MCP transport
 abuse, secret exfiltration, approval replay, denied action audit states, and
-secret-reference value leakage as harness-owned typed references. The contracts package now emits checked generated artifacts in
-`packages/contracts/generated/`: TypeScript schema exports, an OpenAPI 3.1 component
-reference, and a compact reference manifest with the Studio UI handshake. Studio UI
-should consume those generated outputs or the same schema ids and fixture categories
-from its own lane and report any renderer-side fixture needs back across the sibling
-boundary.
+secret-reference value leakage as harness-owned typed references. The first
+`packages/runtime` spine emits typed `runEvent` records for lifecycle progress,
+`uiPayload` and `artifactView` references, and policy-gated `actionRef` requests. It
+fails closed on malformed, poisoned, replayed, secret-inline, or denied action requests
+and does not execute tools or render UI. The contracts package now emits checked
+generated artifacts in `packages/contracts/generated/`: TypeScript schema exports, an
+OpenAPI 3.1 component reference, and a compact reference manifest with the Studio UI
+handshake. Studio UI should consume those generated outputs or the same schema ids and
+fixture categories from its own lane and report any renderer-side fixture needs back
+across the sibling boundary.
 
 ## Integration Direction
 

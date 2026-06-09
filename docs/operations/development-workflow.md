@@ -41,6 +41,7 @@ Run the narrowest complete checks for the touched surface:
 - Contracts and schemas: generation, drift check, schema validation, compatibility fixtures.
 - Runtime/policy/tools/memory/artifacts/observability: lint, typecheck, unit tests, targeted integration
   tests, recovery or policy regression fixtures as applicable.
+- Current runtime/policy package gates: `pnpm policy:test` and `pnpm runtime:test`.
 - CLI/SDK/workbench: command smoke, idempotency checks, clean temporary-project checks, browser smoke when UI exists.
 - Full gate: `pnpm verify`.
 

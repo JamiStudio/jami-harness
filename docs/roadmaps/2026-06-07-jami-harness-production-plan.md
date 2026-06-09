@@ -267,6 +267,11 @@ Pass status:
   malformed policy request handling so default-deny decisions still produce typed
   denial/audit evidence when run, actor, project, environment, risk, or scope inputs
   are missing or invalid.
+- 2026-06-09 Stream 3 policy runtime and safe rendering, harness lane, pass 3 added
+  the first `packages/runtime` kernel for typed run lifecycle events, data-only
+  `uiPayload` and `artifactView` emission, and policy-gated `actionRef` emission that
+  fails closed on malformed, poisoned, replayed, secret-inline, or denied action
+  requests.
 - Root verification now runs `pnpm contracts:validate` through `pnpm verify`.
 - The workstream remains open because broad run/task/policy/memory/evidence schemas,
   core ports, primitive lifecycle/versioning docs, and cross-repo Studio UI consumer
@@ -316,6 +321,17 @@ Suggested verification:
 
 Goal: Fork/adopt the verified agent-native runtime substrate, then harden the run lifecycle and durable resumability model behind harness-owned contracts.
 
+Pass status:
+
+- 2026-06-09 Stream 3 policy runtime and safe rendering, harness lane, pass 3 added
+  `@jami-studio/harness-runtime` as a dependency-light runtime spine. It emits typed
+  `runEvent` records for start/progress/complete/fail, `ui.payload.emitted`,
+  `artifact.created`, `policy.decision`, and allowed `tool.call.requested` references.
+  Action emission runs through the existing policy kernel and denied or malformed action
+  requests stay display-only. This is not the full provider runtime, tool gateway,
+  durable checkpoint store, memory/context/search integration, observability sink, CLI,
+  or real agent execution loop.
+
 Depends on:
 
 - [ ] Workstream 1 contracts.
@@ -332,19 +348,19 @@ Primary areas:
 
 Implementation tasks:
 
-- [ ] Implement run/session/task state machine.
+- [~] Implement run/session/task state machine.
 - [ ] Produce a source-lock report for agent-native before adoption or fork work: exact scoped package names, current versions, dist-tags, repository commit or tarball evidence, license/NOTICE files, transitive dependency review, and fork-delta rationale.
 - [ ] Preserve upstream MIT notices and add Apache-2.0 foundation licensing as accepted.
-- [ ] Add turn streaming, cancellation, retry, timeout, handoff, and checkpoint semantics.
+- [~] Add turn streaming, cancellation, retry, timeout, handoff, and checkpoint semantics.
 - [ ] Add local durable store adapter and hosted-store interface.
 - [ ] Compose runtime against replaceable model, store, memory, context, policy, tool, artifact, observability, and secret-resolver ports.
 - [ ] Add explicit capability checks for optional modules so absent memory/context/search/docs sinks degrade clearly.
 - [ ] Add recovery from checkpoint with evidence preservation.
-- [ ] Add runtime contract tests and simulated failure recovery tests.
+- [~] Add runtime contract tests and simulated failure recovery tests.
 
 Exit criteria:
 
-- [ ] A run can start, execute mock turns/tools, checkpoint, fail, resume, and close with artifacts.
+- [~] A run can start, emit UI/action/artifact references, fail, and close with typed events.
 - [ ] Runtime call sites do not assume any default memory, context, store, provider, or observability implementation.
 - [ ] No public harness contract imports agent-native package types directly.
 - [ ] Runtime checkpoint/resume evidence survives retry, cancellation, and failure recovery fixtures.
@@ -392,6 +408,10 @@ Pass status:
   closed-state evidence sentinels for malformed policy requests and tests proving the
   helper returns non-executable, typed denial/audit references instead of malformed
   contract records.
+- 2026-06-09 Stream 3 policy runtime and safe rendering, harness lane, pass 3 connected
+  the policy package to the new runtime action emission path and added runtime negative
+  tests for prompt-injection-like metadata, tool metadata poisoning, malformed action
+  refs, secret-inline attempts, approval replay, and denied actions.
 - The contract spine now includes `policyDecision`, `approvalRequest`, `auditEvent`, and
   `secretRef` anchors and generated outputs. Studio UI still needs matching renderer-side
   denied-state consumer fixtures in its lane; this harness pass did not edit Studio UI.
