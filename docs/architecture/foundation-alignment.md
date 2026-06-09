@@ -140,6 +140,13 @@ manifest. The current adapter-readiness pass exposes CLI/SDK source inspection f
 adapter manifests and source-lock states. OpenAPI, shell, browser, code, provider-as-tool,
 and A2A have fail-closed dry-run evidence only; they do not execute external protocols,
 local processes, browsers, code runners, hosted provider APIs, or agent interop. The
+local workbench pass adds `apps/workbench` as a dependency-free static shell generated
+from current SDK runtime evidence, generated docs manifests, explicit CLI state summaries
+when a `.jami-harness` state root is provided, and the generated system map. It renders
+run timeline, local approval records, artifacts, traces, metrics, memory/context, docs
+preview, system map, tool-adapter state, and fail-closed unavailable surfaces. This is
+not a hosted workbench/control plane, hosted store, Studio UI package integration,
+Mintlify validation/build/publish, npm publishing, or release attestation surface. The
 contracts package now emits checked
 generated artifacts in `packages/contracts/generated/`: TypeScript schema exports, an
 OpenAPI 3.1 component reference, and a compact reference manifest with the Studio UI

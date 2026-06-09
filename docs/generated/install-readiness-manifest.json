@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:f71c84e6d0201d2d80158684ef804db8ab6d967badf86146679ca549fa1e3dfc",
+  "sourceInputHash": "sha256:4693004a8d665da7bdc6d9306728754c2d2924f818cee6e001bcc07da4a9d85f",
   "generatedAt": "deterministic:git-head-plus-input-hash",
   "freshnessClass": "deterministic_current_source_tree",
   "command": "pnpm docs:generate -- --check",
@@ -29,6 +29,7 @@
       "pnpm sdk:test",
       "pnpm cli:test",
       "pnpm docs:generate -- --check",
+      "pnpm workbench:check",
       "pnpm eval:smoke",
       "pnpm release:readiness"
     ],
@@ -36,6 +37,7 @@
       "packages/sdk/src/index.mjs",
       "apps/cli/src/cli.mjs",
       "packages/docs/scripts/generate-docs.mjs",
+      "apps/workbench/scripts/generate-workbench.mjs",
       "evals/smoke.mjs",
       "docs/operations/release-readiness.md"
     ],

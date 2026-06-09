@@ -373,6 +373,13 @@ foundation with check mode and Mintlify-ready draft output; hosted docs publishi
 Mintlify build remain unavailable. The current CLI/source-inspection pass extends
 `jami tools --json` and `jami map --json` with tool adapter manifests and source-lock
 states, including missing-source-lock evidence for unsupported executable adapters.
+The local workbench pass adds `@jami-studio/harness-workbench` under `apps/workbench` as
+a dependency-free static shell generated from current SDK runtime evidence, generated
+docs manifests, source records, and explicit CLI state summaries when provided. It
+covers run timeline, local approvals, artifacts, traces, metrics, memory/context, docs
+preview, and system-map inspection for the current local foundation. Hosted workbench,
+hosted stores, Studio UI package integration, Mintlify validation/build/publish, release
+publishing, and attestations remain unavailable.
 
 ## Workstream Implications
 

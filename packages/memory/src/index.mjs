@@ -103,7 +103,7 @@ export function createInMemoryMemoryPort(options = {}) {
     },
     search(query = {}) {
       const droppedItems = [];
-      const nowDate = query.now ?? now();
+      const nowDate = resolveNow(query.now, now);
       const items = [...records.values()]
         .filter((record) => {
           const allowed = canReadMemory(record, query.actor ?? {}, query.projectId);
@@ -213,6 +213,16 @@ function canReadMemory(record, actor, projectId) {
   if (record.scope.allowedActorIds.length > 0 && !record.scope.allowedActorIds.includes(actor.actorId)) return false;
   const actorScopes = new Set(actor.scopes ?? []);
   return record.scope.allowedScopes.every((scope) => actorScopes.has(scope));
+}
+
+function resolveNow(value, fallback) {
+  if (typeof value === "function") return value();
+  if (value instanceof Date) return value;
+  if (typeof value === "string") {
+    const parsed = new Date(value);
+    if (Number.isFinite(parsed.getTime())) return parsed;
+  }
+  return fallback();
 }
 
 function redactMemoryForRecall(record) {

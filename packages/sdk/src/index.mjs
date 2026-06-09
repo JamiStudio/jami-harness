@@ -184,7 +184,7 @@ export function createHarness(options = {}) {
         boundaries: {
           toolGateway: "foundation_only",
           hostedControlPlane: "not_implemented",
-          workbench: "not_implemented",
+          workbench: "local_static_workbench_available_hosted_unavailable",
           docsGeneration: "repo_generator_available_sdk_output_not_wired",
           checkpointStore: checkpointStore.capabilities?.durable ? "durable_local" : "memory_only",
           providerRuntime: provider.capabilities?.provider === true ? "local_deterministic_only" : "unsupported",
@@ -233,6 +233,7 @@ function buildInstallPaths(modules) {
       unavailableReasons: [
         "Workspace package manifests remain private:true, so public npm installation is not claimed.",
         "Hosted providers, hosted stores, hosted workbench, release publishing, hosted docs, and SDK docs-output injection remain unavailable.",
+        "Local static workbench generation is available through pnpm workbench:generate; it is not a hosted control plane.",
       ],
     },
     modularPaths: [

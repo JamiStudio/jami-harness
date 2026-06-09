@@ -194,7 +194,7 @@ async function capabilityCommand(cwd, command, parsed, io) {
     sourceLocks: inspection.sourceLocks,
     toolAdapters: includeToolInspection ? inspection.toolAdapters : undefined,
     toolAdapterManifests: includeToolInspection ? inspection.toolAdapterManifests : undefined,
-    note: command === "map" ? "Active module map only; hosted control plane and workbench are not implemented." : undefined,
+    note: command === "map" ? "Active module map only; local static workbench generation is available through pnpm workbench:generate, and hosted control plane remains unsupported." : undefined,
   }, parsed));
   return 0;
 }

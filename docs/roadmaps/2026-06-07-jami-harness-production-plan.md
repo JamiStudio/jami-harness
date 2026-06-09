@@ -797,6 +797,15 @@ Pass status:
   source inspection for adapter readiness; it does not add executable OpenAPI, shell,
   browser, code, provider-as-tool, A2A, remote MCP, hosted workbench, or release publishing
   support.
+- 2026-06-09 local workbench pass added `apps/workbench` as a dependency-free local
+  static shell generated from current SDK runtime evidence, generated docs manifests,
+  source records, and explicit CLI state summaries when a `.jami-harness` state root is
+  provided. The generated shell renders run timeline, local approval records, artifacts,
+  traces, metrics, memory/context, docs preview, system map, tool-adapter state, and
+  fail-closed unavailable surfaces. This is a reusable local-first workbench foundation
+  only; it does not claim hosted workbench/control plane, hosted stores, Studio UI package
+  integration, Mintlify validation/build/publish, npm publishing, release attestations, or
+  executable unsupported adapters.
 
 Implementation tasks:
 
@@ -806,7 +815,7 @@ Implementation tasks:
 - [~] Add SDK configuration APIs for injecting custom memory, context, store, policy, local provider, tool, artifact, observability, and docs-output modules.
 - [~] Add CLI doctor/inspect commands that show active modules, defaults, replacements, missing optional capabilities, and exact next setup steps.
 - [~] Add CLI/source-lock inspection for active adapters, package/protocol versions, optional capability support, and provenance evidence; tool adapter manifests and source-lock states now appear in SDK inspection and CLI `tools`/`map` output, while provider/release/docs-hosting source inspection remains open.
-- [ ] Add workbench views for run timeline, tool approvals, artifacts, traces, memory, docs preview, system map.
+- [~] Add workbench views for run timeline, tool approvals, artifacts, traces, memory, docs preview, system map; current coverage is a local static generated shell over SDK/CLI/docs evidence, not hosted control or Studio UI package integration.
 - [ ] Integrate Studio UI packages only through stable published package boundaries and typed shared contracts.
 - [~] Add examples and smoke tests.
 
@@ -818,7 +827,9 @@ Exit criteria:
 Suggested verification:
 
 - `pnpm verify`
-- Browser/workbench smoke after UI exists.
+- `pnpm workbench:check`
+- `pnpm workbench:test`
+- Browser/workbench smoke against `apps/workbench/dist/index.html`.
 
 ## Workstream 9: Release, Supply Chain, Hosted Readiness, And Public Docs
 
@@ -924,11 +935,14 @@ Suggested verification:
 - [ ] Root docs read back.
 - [ ] Contracts generate and validate.
 - [ ] Runtime/tool/provider/policy/memory/artifact/observability tests pass.
-- [~] CLI local smoke passes for init/run/provider-route-fail-closed nonzero/provider-fail-once/resume/approve/inspect/doctor/tools-source-inspection/map/verify; workbench smoke remains unavailable until a workbench exists.
+- [~] CLI local smoke passes for init/run/provider-route-fail-closed nonzero/provider-fail-once/resume/approve/inspect/doctor/tools-source-inspection/map/verify; local static workbench generation/check/test and file-open smoke now cover the first workbench foundation, while hosted workbench/control remains unavailable.
 - [~] Docs generation passes locally through `pnpm docs:generate -- --check`; the
   generated install-readiness manifest now records the current full-local and modular
   BYO paths. Mintlify build remains unavailable until the CLI/package is source-locked
   and installed.
+- [~] Local workbench generation passes through `pnpm workbench:check` and
+  `pnpm workbench:test`; hosted workbench, hosted stores, and Studio UI package integration
+  remain unavailable.
 - [~] SBOM/provenance release dry-run pass has local SBOM generation/check and
   non-publishing release audit evidence plus a generated fail-closed release capability
   manifest; npm provenance, package contents dry-run, signing, GitHub attestation,

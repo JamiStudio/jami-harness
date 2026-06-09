@@ -5,7 +5,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:f71c84e6d0201d2d80158684ef804db8ab6d967badf86146679ca549fa1e3dfc`
+- Source input hash: `sha256:4693004a8d665da7bdc6d9306728754c2d2924f818cee6e001bcc07da4a9d85f`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -19,6 +19,8 @@ The root package is `jami-harness` at version `0.0.0`. Package manifests remain 
 ```powershell
 pnpm install --frozen-lockfile
 pnpm docs:generate -- --check
+pnpm workbench:generate
+pnpm workbench:check
 pnpm eval:smoke
 pnpm verify
 node apps/cli/src/cli.mjs init --json
@@ -57,6 +59,7 @@ The same evidence is emitted as structured JSON in `docs/generated/install-readi
 ## Available Foundations
 
 - `@jami-studio/harness-cli` from `apps/cli/package.json`: Agent-first CLI foundation for local Jami Harness runs and evidence inspection.
+- `@jami-studio/harness-workbench` from `apps/workbench/package.json`: Dependency-free local workbench shell for Jami Harness runtime evidence, docs, and system maps.
 - `jami-harness` from `package.json`: Jami Harness docs, roadmap, contracts, runtime, and governance foundation.
 - `@jami-studio/harness-artifacts` from `packages/artifacts/package.json`: Harness-owned artifact provenance records and replaceable storage port defaults.
 - `@jami-studio/harness-contracts` from `packages/contracts/package.json`: Harness-owned shared contracts, JSON Schema anchors, and compatibility fixtures.
@@ -77,3 +80,4 @@ The same evidence is emitted as structured JSON in `docs/generated/install-readi
 - Mintlify validation/build/publish has not run in this repo.
 - Hosted model providers are not implemented; the provider foundation is local deterministic only.
 - Hosted observability and external eval backends are not implemented; eval smoke is local deterministic only.
+- Hosted workbench is not implemented; the workbench surface is local static output only.

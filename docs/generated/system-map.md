@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:f71c84e6d0201d2d80158684ef804db8ab6d967badf86146679ca549fa1e3dfc`
+- Source input hash: `sha256:4693004a8d665da7bdc6d9306728754c2d2924f818cee6e001bcc07da4a9d85f`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -28,6 +28,7 @@ flowchart LR
   sdk[packages/sdk]
   cli[apps/cli]
   docs[packages/docs]
+  workbench[apps/workbench]
   contracts --> runtime
   contracts --> policy
   contracts --> tools
@@ -47,6 +48,10 @@ flowchart LR
   memory --> evals
   docs --> evals
   sdk --> cli
+  sdk --> workbench
+  cli --> workbench
+  docs --> workbench
+  observability --> workbench
   install[docs/generated/install-readiness-manifest.json]
   install --> sdk
   install --> cli
@@ -60,5 +65,5 @@ flowchart LR
 
 - Contract schemas: 20
 - Contract fixtures: 37
-- Package manifests: 13
-- Changelog fragments: 36
+- Package manifests: 14
+- Changelog fragments: 37

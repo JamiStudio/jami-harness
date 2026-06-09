@@ -41,7 +41,9 @@ Local filesystem checkpoint/resume and approval evidence are available through
 `@jami-studio/harness-store-local`. Repo-level docs generation exists through
 `pnpm docs:generate` and is recorded in
 `docs/generated/install-readiness-manifest.json`; the CLI `docs` capability still reports
-SDK docs-output injection as not wired. Public package installation, hosted workbench,
-hosted stores, hosted provider runtime, release publishing, Mintlify build/publish, and full
-MCP/OpenAPI/shell/browser/code/provider-as-tool/A2A execution remain unavailable until
-those surfaces exist with current source-lock evidence.
+SDK docs-output injection as not wired. A dependency-free local static workbench is
+generated through `pnpm workbench:generate` from current SDK/CLI/runtime evidence and
+generated docs manifests. Public package installation, hosted workbench, hosted stores,
+hosted provider runtime, release publishing, Mintlify build/publish, and full MCP/OpenAPI/
+shell/browser/code/provider-as-tool/A2A execution remain unavailable until those surfaces
+exist with current source-lock evidence.

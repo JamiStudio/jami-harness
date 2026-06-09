@@ -119,8 +119,16 @@ test("replaceable search and context adapters preserve permissions, citations, a
     projectId: "proj_jami_harness",
     actor: { actorId: "actor_developer", scopes: ["memory:read"] },
   });
+  const packWithClockFunction = assembler.assemble({
+    runId: "run_context_adapter",
+    projectId: "proj_jami_harness",
+    actor: { actorId: "actor_developer", scopes: ["memory:read"] },
+    now,
+  });
 
   assert.equal(pack.items.length, 1);
+  assert.equal(packWithClockFunction.items.length, 1);
+  assert.equal(packWithClockFunction.assembledAt, "2026-06-09T12:00:00.000Z");
   assert.equal(pack.items[0].sourceRef, "mem_context_allowed");
   assert.equal(pack.items[0].citationId, "cit_context_adapter_project");
   assert.equal(pack.droppedItems.some((item) => item.reason === "permission_denied"), true);

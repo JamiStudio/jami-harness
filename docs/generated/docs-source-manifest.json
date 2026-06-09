@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:f71c84e6d0201d2d80158684ef804db8ab6d967badf86146679ca549fa1e3dfc",
+  "sourceInputHash": "sha256:4693004a8d665da7bdc6d9306728754c2d2924f818cee6e001bcc07da4a9d85f",
   "generatedAt": "deterministic:git-head-plus-input-hash",
   "freshnessClass": "deterministic_current_source_tree",
   "command": "pnpm docs:generate -- --check",
@@ -85,6 +85,11 @@
       "path": ".changes/2026-06-09-local-deterministic-provider.md",
       "sha256": "sha256:42a42c7f954d386bb917f8022a0082328e5ab5207b415a8afb498ab3be9b45e8",
       "bytes": 387
+    },
+    {
+      "path": ".changes/2026-06-09-local-workbench-shell.md",
+      "sha256": "sha256:3a3aa2da6f72bb5533b8ade7c9a37d02310cd63c8548e84664c421f731ca237c",
+      "bytes": 467
     },
     {
       "path": ".changes/2026-06-09-mcp-direct-registration-hardening.md",
@@ -203,8 +208,8 @@
     },
     {
       "path": "apps/cli/README.md",
-      "sha256": "sha256:859fdbf41ee6ea3ccdade7f1953baaa9e1cac368f8507813a2f6bef9df986df0",
-      "bytes": 2882
+      "sha256": "sha256:331eb2406c1e79f604116781f947fc83c8aa30b719b280902de9d23bb3487f3b",
+      "bytes": 3039
     },
     {
       "path": "apps/cli/package.json",
@@ -213,8 +218,8 @@
     },
     {
       "path": "apps/cli/src/cli.mjs",
-      "sha256": "sha256:24a741993eaf9660d4c0a80069a5cf96d978c688a9c1933cf92acc13c0f5bc8d",
-      "bytes": 15724
+      "sha256": "sha256:19c41ff0414bdf270771b0250fb9a13ca31dfbef8c22bbd47ae7590db0726e1d",
+      "bytes": 15794
     },
     {
       "path": "apps/cli/test/cli.test.mjs",
@@ -222,9 +227,24 @@
       "bytes": 8213
     },
     {
+      "path": "apps/workbench/package.json",
+      "sha256": "sha256:94071b4618690d51dcef3e4cf484b09cafefdbba42b6340b6eb6ed9a821dfdf0",
+      "bytes": 569
+    },
+    {
+      "path": "apps/workbench/scripts/generate-workbench.mjs",
+      "sha256": "sha256:69ecc2bf831f72656af8c92eec53cff7299b864678bd85658831e313b2d5b639",
+      "bytes": 30775
+    },
+    {
+      "path": "apps/workbench/test/workbench.test.mjs",
+      "sha256": "sha256:acd4d7469c1be4e5615d2f291e3fea0dd8317f1d88caad3bd6966f90232265bc",
+      "bytes": 3619
+    },
+    {
       "path": "docs/architecture/modular-responsibility-map.md",
-      "sha256": "sha256:c52e2d08578bb4060130d98b3ffa561533164b4275ce6f3e8346cf9f88158241",
-      "bytes": 17716
+      "sha256": "sha256:d097009cf9725fe5e21e54b2c44578b2b514133848e004be56e3c7a92abb10ee",
+      "bytes": 18286
     },
     {
       "path": "docs/architecture/product-architecture.md",
@@ -233,8 +253,8 @@
     },
     {
       "path": "docs/generated/release-capability-manifest.json",
-      "sha256": "sha256:113c86607956a8572ca9fc9aa6df90d3eb4576a4e72caea7193502991486a897",
-      "bytes": 23696
+      "sha256": "sha256:bfcb60e26dee0e58d343b7aa6a617c9dfbb6b3a78cf96a6a3a24fe864e2cbd31",
+      "bytes": 24193
     },
     {
       "path": "docs/operations/release-capability-source-lock.md",
@@ -253,8 +273,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "sha256:a81969d83b5324ea95ab6892bb6b82d1aabdbfcb3669ff647f0fc456592eb3f0",
-      "bytes": 3145
+      "sha256": "sha256:254cd4f7a27f24343b04ff2c3520304fd6df4f95e6cabb8432d6d8c8169b8b5a",
+      "bytes": 3486
     },
     {
       "path": "packages/artifacts/package.json",
@@ -568,8 +588,8 @@
     },
     {
       "path": "packages/docs/scripts/generate-docs.mjs",
-      "sha256": "sha256:bdb2581f8b958879016d970c02c054e9e79a905213b132f33bc876cfdec0a192",
-      "bytes": 26265
+      "sha256": "sha256:22d73ee6b23def8a6712048272837ca63020a829ac42d20281d12fd1a6de86db",
+      "bytes": 27327
     },
     {
       "path": "packages/memory/package.json",
@@ -628,8 +648,8 @@
     },
     {
       "path": "packages/sdk/src/index.mjs",
-      "sha256": "sha256:9241cdc382adfbc0539d1a97a53d17db555eabcbd4a9b460bf10504910de2cb2",
-      "bytes": 28805
+      "sha256": "sha256:b314c5796fef52e3c23106cca929d5e162223508ecba00740c513afd37aa2d20",
+      "bytes": 28966
     },
     {
       "path": "packages/sdk/test/sdk.test.mjs",
@@ -1092,7 +1112,9 @@
     "apps/docs/user-manual.mdx",
     "apps/docs/api-reference.mdx",
     "apps/docs/system-map.mdx",
-    "apps/docs/evidence-index.mdx"
+    "apps/docs/evidence-index.mdx",
+    "apps/workbench/generated/workbench-manifest.json",
+    "apps/workbench/dist/index.html"
   ],
   "unavailable": [
     {
