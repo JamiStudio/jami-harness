@@ -67,7 +67,8 @@ test("run fails closed for unsupported external provider routes", async () => {
     const runPayload = JSON.parse(run.out);
     const summary = JSON.parse(await readFile(runPayload.summaryPath, "utf8"));
 
-    assert.equal(run.code, 0);
+    assert.equal(run.code, 2);
+    assert.equal(runPayload.ok, false);
     assert.equal(runPayload.status, "unsupported");
     assert.equal(runPayload.providerStatus, "unsupported");
     assert.equal(summary.provider.status, "unsupported");

@@ -75,11 +75,13 @@ async function runCommand(cwd, parsed, io) {
   await mkdir(runPath, { recursive: true });
   await writeFile(join(runPath, "evidence.json"), `${JSON.stringify(result.evidence, null, 2)}\n`, "utf8");
   await writeFile(join(runPath, "summary.json"), `${JSON.stringify(toRunSummary(result), null, 2)}\n`, "utf8");
+  const completed = result.status === "completed";
   io.out(formatOutput({
-    ok: true,
+    ok: completed,
     command: "run",
     runId,
     status: result.status,
+    message: completed ? undefined : result.reason ?? `run ended with status ${result.status}`,
     providerStatus: result.providerResult?.status,
     providerId: result.providerResult?.providerId,
     toolExecutionStatuses: result.toolExecutions?.map((execution) => execution.status) ?? [],
@@ -88,7 +90,8 @@ async function runCommand(cwd, parsed, io) {
     evidencePath: join(runPath, "evidence.json"),
     summaryPath: join(runPath, "summary.json"),
   }, parsed));
-  return 0;
+  if (completed) return 0;
+  return result.status === "unsupported" ? 2 : 1;
 }
 
 async function resumeCommand(cwd, parsed, io) {

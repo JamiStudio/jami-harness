@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:2b210fd0bbc091bd7a32aa4f8e9b9ac61e8df0c9f4eacd82086c70b0ca7eb2eb`
+- Source input hash: `sha256:1cb71914b0a9a4be57eac0b8aa0d2a50e8be6ea74ad97c103538f04fcd231925`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -18,6 +18,7 @@
 - 2026-06-08-jami-harness-rename (`.changes/2026-06-08-jami-harness-rename.md`)
 - 2026-06-09-candidate-stack-source-lock (`.changes/2026-06-09-candidate-stack-source-lock.md`)
 - Checkpoint Resume Store Foundation (`.changes/2026-06-09-checkpoint-resume-store.md`)
+- CLI Unsupported Provider Exit Hardening (`.changes/2026-06-09-cli-provider-unsupported-exit.md`)
 - 2026-06-09-contract-generation-evidence (`.changes/2026-06-09-contract-generation-evidence.md`)
 - 2026-06-09-contract-spine-validation-hardening (`.changes/2026-06-09-contract-spine-validation-hardening.md`)
 - Contract Spine (`.changes/2026-06-09-contract-spine.md`)

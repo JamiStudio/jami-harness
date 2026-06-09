@@ -764,6 +764,10 @@ Pass status:
   artifact, trace, memory/context, and evidence seams. This is not hosted provider
   support, full protocol tool gateway support, hosted store, hosted workbench, Studio UI
   installer, release publishing, or SDK docs-output injection.
+- 2026-06-09 post-audit confirmation pass 2 hardened the CLI hosted-provider
+  fail-closed path so unsupported provider routes still write evidence and summaries but
+  return `ok: false` with a nonzero exit code instead of looking successful to
+  automation. Hosted provider execution remains unsupported.
 
 Implementation tasks:
 
@@ -857,7 +861,7 @@ Suggested verification:
 - [ ] Root docs read back.
 - [ ] Contracts generate and validate.
 - [ ] Runtime/tool/provider/policy/memory/artifact/observability tests pass.
-- [~] CLI local smoke passes for init/run/provider-route-fail-closed/provider-fail-once/resume/approve/inspect/doctor/map/verify; workbench smoke remains unavailable until a workbench exists.
+- [~] CLI local smoke passes for init/run/provider-route-fail-closed nonzero/provider-fail-once/resume/approve/inspect/doctor/map/verify; workbench smoke remains unavailable until a workbench exists.
 - [~] Docs generation passes locally through `pnpm docs:generate -- --check`; Mintlify build remains unavailable until the CLI/package is source-locked and installed.
 - [ ] SBOM/provenance release dry run pass.
 - [~] Evidence packet, provider/tool workflow, and checkpoint provenance/redaction checks pass for local foundations.

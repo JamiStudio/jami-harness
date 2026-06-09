@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:2b210fd0bbc091bd7a32aa4f8e9b9ac61e8df0c9f4eacd82086c70b0ca7eb2eb",
+  "sourceInputHash": "sha256:1cb71914b0a9a4be57eac0b8aa0d2a50e8be6ea74ad97c103538f04fcd231925",
   "generatedAt": "deterministic:git-head-plus-input-hash",
   "freshnessClass": "deterministic_current_source_tree",
   "command": "pnpm docs:generate -- --check",
@@ -35,6 +35,11 @@
       "path": ".changes/2026-06-09-checkpoint-resume-store.md",
       "sha256": "sha256:14c833709cf8fb33c8ba704eb639e03f85c555c42a754031464b9e54516b5e5a",
       "bytes": 489
+    },
+    {
+      "path": ".changes/2026-06-09-cli-provider-unsupported-exit.md",
+      "sha256": "sha256:c8259b42eb637b22e4c93ef77b9427a86d41e691683d353d8bc5f0a55f74fa42",
+      "bytes": 217
     },
     {
       "path": ".changes/2026-06-09-contract-generation-evidence.md",
@@ -153,8 +158,8 @@
     },
     {
       "path": "apps/cli/README.md",
-      "sha256": "sha256:e47c801f80003b28cd55e581f33aa3c521e038a1b1b3f92a77fe84661bfdd1ef",
-      "bytes": 2330
+      "sha256": "sha256:8cec82b7bfb7c4083e0de2c62437f0dc3ff38f158af6bfd11a6674d71face54a",
+      "bytes": 2355
     },
     {
       "path": "apps/cli/package.json",

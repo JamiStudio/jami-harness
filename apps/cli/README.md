@@ -13,7 +13,7 @@ Current commands:
   writes run evidence under `.jami-harness/runs/<runId>/` plus a redacted checkpoint under
   `.jami-harness/checkpoints/`.
 - `jami run --json --provider-id provider_openai` fails closed as an unsupported external
-  provider route; no hosted provider API is called.
+  provider route with a nonzero exit code; no hosted provider API is called.
 - `jami run --json --provider-failure-mode fail_once` records recoverable provider failure
   evidence before deterministic retry.
 - `jami resume --json --run-id <runId>` reports checkpoint replay status and replay hash.

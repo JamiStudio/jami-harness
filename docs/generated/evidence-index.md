@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:2b210fd0bbc091bd7a32aa4f8e9b9ac61e8df0c9f4eacd82086c70b0ca7eb2eb`
+- Source input hash: `sha256:1cb71914b0a9a4be57eac0b8aa0d2a50e8be6ea74ad97c103538f04fcd231925`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -26,6 +26,7 @@
 - `.changes/2026-06-08-jami-harness-rename.md` (sha256:df02a10fb696bef220639a8f006029c2a0bfbbac71b765267f4a16350eb3441f)
 - `.changes/2026-06-09-candidate-stack-source-lock.md` (sha256:b1549284045c002b840b766615041bdee2b5aade42ac543b94cc99da891fd3c0)
 - `.changes/2026-06-09-checkpoint-resume-store.md` (sha256:14c833709cf8fb33c8ba704eb639e03f85c555c42a754031464b9e54516b5e5a)
+- `.changes/2026-06-09-cli-provider-unsupported-exit.md` (sha256:c8259b42eb637b22e4c93ef77b9427a86d41e691683d353d8bc5f0a55f74fa42)
 - `.changes/2026-06-09-contract-generation-evidence.md` (sha256:c9249512e27c6b4924b7db129a537fdea77e336dd0345e545e18ce0760bf9578)
 - `.changes/2026-06-09-contract-spine-validation-hardening.md` (sha256:365b9a39f2d209053f54db2c045ddabcafe37c1bedb4c276ef806b8174ac6298)
 - `.changes/2026-06-09-contract-spine.md` (sha256:af85b4d4d95f9c47a9cb28db05486f022cade60a0e9cc02f5e2a7e854f89cab9)
@@ -49,7 +50,7 @@
 - `.changes/README.md` (sha256:e528bf4b90ab589bfc83ffed78e37918f56ac94240e5eedebc8d03265e09e52f)
 - `.changes/stream5-cli-sdk-fail-closed-ids.md` (sha256:3b455ab2dfa9385a84a24beda28073ffbddcc2062e32ff4b1cb21a50814e1d4f)
 - `.changes/stream5-cli-sdk-foundation.md` (sha256:e496cce37d42a13d18d0745a780bfd40795097bbf4c5a89af3cc51b5d974af79)
-- `apps/cli/README.md` (sha256:e47c801f80003b28cd55e581f33aa3c521e038a1b1b3f92a77fe84661bfdd1ef)
+- `apps/cli/README.md` (sha256:8cec82b7bfb7c4083e0de2c62437f0dc3ff38f158af6bfd11a6674d71face54a)
 - `apps/cli/package.json` (sha256:0bc99bef0178528f7fc866201ea25cbf76e5c13f42453092530e40a7e600588c)
 - `docs/architecture/modular-responsibility-map.md` (sha256:86923c4dcedd85af62cf6c80f7faf06f8f1af8973e99006b20a5ffc8b98a0b2d)
 - `docs/architecture/product-architecture.md` (sha256:d9b30effc258fc3d4164596fd9bf81902330706254f24d9da7c0e01b2cdff968)
