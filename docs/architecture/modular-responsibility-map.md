@@ -304,6 +304,18 @@ Replaceable sinks:
   harness-owned contracts.
 - Defaults should be strong enough for real use, not decorative examples.
 
+## Developer Surface Status
+
+Current foundation status: Stream 5 pass 1 adds `@jami-studio/harness-sdk` and
+`@jami-studio/harness-cli` as local developer foundations. The SDK composes current
+runtime, policy, artifact, observability, and memory modules; creates a local evidence
+run; reads artifacts and traces; and exposes module injection and capability inspection.
+The CLI exposes idempotent local `init`, evidence `run`, `inspect`, `tools`, `memory`,
+`docs`, `map`, and `verify` commands with JSON output and clean exit codes. These
+surfaces intentionally report missing tool gateway, provider runtime, docs generation,
+hosted stores, hosted workbench, Studio UI install flows, and release publishing until
+their owning packages exist.
+
 ## Workstream Implications
 
 - Workstream 1 must define ports and capability contracts, not just data shapes.

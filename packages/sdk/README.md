@@ -1,0 +1,27 @@
+# Jami Harness SDK Foundation
+
+Status: local foundation
+
+`@jami-studio/harness-sdk` composes the current dependency-light runtime, policy,
+artifact, observability, and memory packages into one developer API.
+
+Current capabilities:
+
+- Create a local run through the existing runtime lifecycle kernel.
+- Export local evidence packets from runtime events, traces, and artifact records.
+- Read artifact records and trace records from the default local stores.
+- Inspect active module capabilities and missing optional surfaces.
+- Inject replacement modules such as memory, policy, artifacts, and observability without
+  changing the run grammar.
+
+This package does not implement provider execution, a tool gateway, durable hosted
+stores, docs generation, release publishing, or a hosted control plane.
+
+```js
+import { createHarness } from "@jami-studio/harness-sdk";
+
+const harness = createHarness();
+const result = await harness.run({ runId: "run_local_example" });
+
+console.log(result.evidence.evidenceId);
+```

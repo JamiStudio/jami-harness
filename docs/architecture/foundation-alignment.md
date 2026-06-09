@@ -108,8 +108,12 @@ for artifact provenance, trace/audit references, evidence redaction, memory rete
 permission-scoped citation freshness, and deterministic context replay. The new
 `packages/artifacts`, `packages/observability`, and `packages/memory` defaults are local
 and replaceable foundations only; they are not hosted stores, OpenTelemetry backends,
-vector search, docs generators, CLI surfaces, or workbench implementations. The contracts
-package now emits checked
+vector search, docs generators, or workbench implementations. Stream 5 pass 1 adds the
+first local `packages/sdk` and `apps/cli` foundations so developers and agents can create
+local evidence runs, inspect artifacts/traces/capabilities, and see missing optional
+modules through JSON output. Those surfaces are not provider runtimes, tool gateways,
+docs generators, hosted stores, hosted workbenches, Studio UI installers, or release
+publishing tools. The contracts package now emits checked
 generated artifacts in `packages/contracts/generated/`: TypeScript schema exports, an
 OpenAPI 3.1 component reference, and a compact reference manifest with the Studio UI
 handshake. Studio UI should consume those generated outputs or the same schema ids and

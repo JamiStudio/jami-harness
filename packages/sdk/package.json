@@ -1,0 +1,13 @@
+{
+  "name": "@jami-studio/harness-sdk",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Harness SDK foundation for local run creation, evidence inspection, and module injection.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  }
+}

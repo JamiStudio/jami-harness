@@ -13,9 +13,12 @@
     "artifacts:test": "node --test packages/artifacts/test/*.test.mjs",
     "observability:test": "node --test packages/observability/test/*.test.mjs",
     "memory:test": "node --test packages/memory/test/*.test.mjs",
+    "sdk:test": "node --test packages/sdk/test/*.test.mjs",
+    "cli:test": "node --test apps/cli/test/*.test.mjs",
+    "examples:smoke": "node examples/local-evidence-run.mjs",
     "policy:test": "node --test packages/policy/test/*.test.mjs",
     "runtime:test": "node --test packages/runtime/test/*.test.mjs",
-    "verify": "node scripts/docs/check-docs.mjs && node packages/contracts/scripts/generate-contracts.mjs --check && node packages/contracts/scripts/validate-contracts.mjs && node --test packages/policy/test/*.test.mjs && node --test packages/runtime/test/*.test.mjs && node --test packages/artifacts/test/*.test.mjs && node --test packages/observability/test/*.test.mjs && node --test packages/memory/test/*.test.mjs"
+    "verify": "node scripts/docs/check-docs.mjs && node packages/contracts/scripts/generate-contracts.mjs --check && node packages/contracts/scripts/validate-contracts.mjs && node --test packages/policy/test/*.test.mjs && node --test packages/runtime/test/*.test.mjs && node --test packages/artifacts/test/*.test.mjs && node --test packages/observability/test/*.test.mjs && node --test packages/memory/test/*.test.mjs && node --test packages/sdk/test/*.test.mjs && node --test apps/cli/test/*.test.mjs && node examples/local-evidence-run.mjs"
   },
   "engines": {
     "node": ">=24.0.0",

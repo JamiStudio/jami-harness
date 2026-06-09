@@ -662,22 +662,35 @@ Primary areas:
 - `packages/sdk`
 - `docs/architecture/foundation-alignment.md`
 
+Pass status:
+
+- 2026-06-09 Stream 5 CLI/SDK/developer experience, harness lane, pass 1 added
+  `packages/sdk`, `apps/cli`, and `examples/local-evidence-run.mjs` as the first local
+  developer foundation. The SDK composes the existing runtime, policy, artifact,
+  observability, and memory defaults; supports module injection for replacement ports;
+  creates local runs; and exposes artifact, trace, evidence, and capability inspection.
+  The CLI adds idempotent `init`, local evidence `run`, `inspect`, `tools`, `memory`,
+  `docs`, `map`, and `verify` commands with JSON output and clean exit codes. This is not
+  a provider runtime, tool gateway, approval executor, resume/checkpoint store, docs
+  generator, hosted workbench, hosted control plane, Studio UI installer, or release
+  publishing surface.
+
 Implementation tasks:
 
-- [ ] Add CLI commands for init, run, inspect, resume, approve, tools, memory, docs, map, verify, release.
-- [ ] Add `--json`, idempotent commands, clean exit codes, and agent-first help output for AX.
-- [ ] Add SDK for run creation, tool registration, policy hooks, artifact reads, and trace reads.
-- [ ] Add SDK configuration APIs for injecting custom memory, context, store, policy, provider, tool, artifact, observability, and docs-output modules.
-- [ ] Add CLI doctor/inspect commands that show active modules, defaults, replacements, missing optional capabilities, and exact next setup steps.
-- [ ] Add CLI/source-lock inspection for active adapters, package/protocol versions, optional capability support, and provenance evidence.
+- [~] Add CLI commands for init, run, inspect, resume, approve, tools, memory, docs, map, verify, release.
+- [x] Add `--json`, idempotent commands, clean exit codes, and agent-first help output for AX.
+- [~] Add SDK for run creation, tool registration, policy hooks, artifact reads, and trace reads.
+- [~] Add SDK configuration APIs for injecting custom memory, context, store, policy, provider, tool, artifact, observability, and docs-output modules.
+- [~] Add CLI doctor/inspect commands that show active modules, defaults, replacements, missing optional capabilities, and exact next setup steps.
+- [~] Add CLI/source-lock inspection for active adapters, package/protocol versions, optional capability support, and provenance evidence.
 - [ ] Add workbench views for run timeline, tool approvals, artifacts, traces, memory, docs preview, system map.
 - [ ] Integrate Studio UI packages only through stable published package boundaries and typed shared contracts.
-- [ ] Add examples and smoke tests.
+- [~] Add examples and smoke tests.
 
 Exit criteria:
 
-- [ ] A new developer can run a local harness example, inspect evidence, approve a tool, and generate docs.
-- [ ] A developer can use the default full harness or inject at least one custom module without changing product grammar.
+- [~] A new developer can run a local harness example, inspect evidence, approve a tool, and generate docs.
+- [~] A developer can use the default full harness or inject at least one custom module without changing product grammar.
 
 Suggested verification:
 

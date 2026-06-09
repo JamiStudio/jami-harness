@@ -1,0 +1,13 @@
+{
+  "name": "@jami-studio/harness-cli",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Agent-first CLI foundation for local Jami Harness runs and evidence inspection.",
+  "type": "module",
+  "bin": {
+    "jami": "./src/cli.mjs"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  }
+}
