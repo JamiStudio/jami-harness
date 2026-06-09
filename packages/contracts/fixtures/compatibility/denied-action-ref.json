@@ -1,0 +1,21 @@
+{
+  "$schema": "../../schemas/action-ref.schema.json",
+  "expectedValid": true,
+  "caseId": "denied-action-ref",
+  "description": "Denied actions are visible to UI slots but remain policy-owned and non-executable.",
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "actionId": "act_publish_release",
+    "label": "Publish release",
+    "route": "harness://actions/publish-release",
+    "risk": "external",
+    "policyScope": "release:publish",
+    "confirmationMode": "owner_required",
+    "state": "denied",
+    "denial": {
+      "reason": "Actor lacks release:publish scope.",
+      "auditRef": "aud_denied_publish_release"
+    },
+    "evidenceRef": "ev_denied_publish_release"
+  }
+}

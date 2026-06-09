@@ -2,7 +2,7 @@
 
 Status: Active boundary
 Owner: Jami.Studio
-Last updated: 2026-06-07
+Last updated: 2026-06-09
 
 ## Purpose
 
@@ -61,6 +61,29 @@ Initial shared contract families:
   restore target.
 - `suiteRef`: suite lane, installed item graph, app shell id, route map, and optional
   harness capabilities.
+
+Harness-side schema anchors now live in
+`packages/contracts/schemas/` with compatibility fixtures under
+`packages/contracts/fixtures/`. These anchors define the data the harness can emit or
+consume at the sibling seam; they do not define Studio UI token output, primitive
+implementation, registry item packaging, resident renderer internals, or suite install
+behavior.
+
+The initial checkable anchors are:
+
+- `runEvent`
+- `uiPayload`
+- `artifactView`
+- `actionRef`
+- `themeRef`
+- `suiteRef`
+- `capabilityManifest`
+- `primitiveManifest`
+
+The first negative compatibility cases cover unsupported UI components, invalid
+payloads, denied actions, and renderer error states. Studio UI should consume the same
+schema ids and fixture categories from its own lane and report any renderer-side fixture
+needs back across the sibling boundary.
 
 ## Integration Direction
 

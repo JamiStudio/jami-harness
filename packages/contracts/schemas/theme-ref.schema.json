@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jami.studio/schemas/harness/theme-ref.schema.json",
+  "title": "themeRef",
+  "type": "object",
+  "required": ["schemaVersion", "themeId", "tokenSchemaVersion", "source", "restoreTarget"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "2026-06-09" },
+    "themeId": { "type": "string", "pattern": "^theme_[a-z0-9][a-z0-9_-]*$" },
+    "tokenSchemaVersion": { "type": "string" },
+    "source": {
+      "type": "object",
+      "required": ["owner", "registryItemId", "kind"],
+      "additionalProperties": false,
+      "properties": {
+        "owner": { "type": "string", "const": "studio-ui" },
+        "registryItemId": { "type": "string" },
+        "kind": { "type": "string", "enum": ["factory", "custom"] }
+      }
+    },
+    "restoreTarget": {
+      "type": "object",
+      "required": ["packageName", "itemPath"],
+      "additionalProperties": false,
+      "properties": {
+        "packageName": { "type": "string", "const": "@jami-studio/ui" },
+        "itemPath": { "type": "string" }
+      }
+    }
+  }
+}

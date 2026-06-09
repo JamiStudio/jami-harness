@@ -1,0 +1,26 @@
+{
+  "$schema": "../../schemas/ui-payload.schema.json",
+  "expectedValid": true,
+  "caseId": "unsupported-ui-component",
+  "description": "Unknown components remain data-only and require an explicit unsupported fallback.",
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "payloadId": "uip_unknown_component",
+    "componentRef": {
+      "namespace": "@jami-studio/ui",
+      "name": "unregistered-panel",
+      "version": "0.0.0",
+      "allowlisted": false
+    },
+    "props": {},
+    "fallback": {
+      "mode": "unsupported_component",
+      "message": "This component is not installed in the resident renderer."
+    },
+    "provenance": {
+      "runId": "run_contract_spine",
+      "emittedBy": "harness",
+      "evidenceRef": "ev_unsupported_component"
+    }
+  }
+}

@@ -1,7 +1,7 @@
 # Jami Harness Production Implementation Plan
 
 Date: 2026-06-07
-Status: Active planning
+Status: Active implementation
 Source reports: `docs/research/2026-06-07-jami-harness-production-feasibility-report.md`; `docs/research/master/00-orchestration/plan.md`; `docs/research/master/00-orchestration/synthesis.md`; crossflow adversarial review at `C:\Users\james\dev\orgs\oss\registry\docs\research\2026-06-08-harness-ui-plan-adversarial-review.md`
 Owner: Jami Studio
 Surface: Jami Harness root workspace
@@ -243,6 +243,17 @@ active plan, not optional research notes.
 
 Goal: Define the harness-owned contract vocabulary and composable primitive registry on top of the accepted `@jami-studio/harness` foundation boundary.
 
+Pass status:
+
+- 2026-06-09 Stream 2 contract spine, harness lane, pass 1 added the first
+  dependency-free `packages/contracts` scaffold with JSON Schema anchors and
+  compatibility fixtures for `runEvent`, `uiPayload`, `artifactView`, `actionRef`,
+  `themeRef`, `suiteRef`, `capabilityManifest`, and `primitiveManifest`.
+- Root verification now runs `pnpm contracts:validate` through `pnpm verify`.
+- The workstream remains open because broad run/task/policy/memory/evidence schemas,
+  generated TypeScript exports, OpenAPI/reference generation, and cross-repo Studio UI
+  consumer fixtures are not implemented yet.
+
 Depends on:
 
 - [x] Charter and feasibility framing.
@@ -260,12 +271,12 @@ Primary areas:
 Implementation tasks:
 
 - [ ] Add run, task, plan, actor, project, environment, tool, policy, approval, artifact, memory, trace, audit, evidence, docs-source, and release-packet schemas.
-- [ ] Add harness-side schema anchors for `runEvent`, `uiPayload`, `artifactView`, `actionRef`, `themeRef`, and `suiteRef` references without importing UI implementation ownership.
+- [x] Add harness-side schema anchors for `runEvent`, `uiPayload`, `artifactView`, `actionRef`, `themeRef`, and `suiteRef` references without importing UI implementation ownership.
 - [ ] Define core ports for model, store, policy, tools, memory, context, search, artifacts, observability, secrets, docs output, and UI references.
-- [ ] Define capability manifest format so modules can declare supported features, required scopes, failure modes, and replacement compatibility.
+- [x] Define capability manifest format so modules can declare supported features, required scopes, failure modes, and replacement compatibility.
 - [ ] Generate JSON Schema and TypeScript exports.
-- [ ] Define primitive registry manifest format.
-- [ ] Add contract tests and schema compatibility checks, including shared fixtures for unsupported UI components, invalid payloads, denied actions, and renderer error states.
+- [x] Define primitive registry manifest format.
+- [~] Add contract tests and schema compatibility checks, including shared fixtures for unsupported UI components, invalid payloads, denied actions, and renderer error states.
 - [ ] Define the initial threat model fixture catalog for policy/tool/UI/action/memory/evidence risks.
 - [ ] Define the evidence packet schema before docs-generation work consumes evidence claims.
 - [ ] Document primitive lifecycle and versioning.

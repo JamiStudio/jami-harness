@@ -1,0 +1,35 @@
+{
+  "$schema": "../../schemas/capability-manifest.schema.json",
+  "expectedValid": true,
+  "caseId": "capability-manifest",
+  "description": "Harness modules declare supported and unsupported behavior without weakening invariants.",
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "capabilityId": "cap_ui_reference_adapter",
+    "ownerPackage": "@jami-studio/harness-contracts",
+    "capabilityClass": "adapter",
+    "features": [
+      {
+        "featureId": "uiPayload.emit",
+        "support": "supported"
+      },
+      {
+        "featureId": "uiPrimitive.render",
+        "support": "unsupported",
+        "notes": "Resident rendering is owned by Studio UI."
+      }
+    ],
+    "requiredScopes": ["ui:emit"],
+    "failureModes": [
+      {
+        "mode": "unsupported_component",
+        "observableAs": "typed_result"
+      }
+    ],
+    "replacementCompatibility": {
+      "portId": "uiReferencePort",
+      "contractVersion": "2026-06-09",
+      "mustPreserve": ["policy", "audit", "artifact", "evidence", "redaction"]
+    }
+  }
+}

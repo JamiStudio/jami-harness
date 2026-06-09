@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jami.studio/schemas/harness/action-ref.schema.json",
+  "title": "actionRef",
+  "type": "object",
+  "required": ["schemaVersion", "actionId", "label", "route", "risk", "policyScope", "confirmationMode", "state"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "2026-06-09" },
+    "actionId": { "type": "string", "pattern": "^act_[a-z0-9][a-z0-9_-]*$" },
+    "label": { "type": "string" },
+    "route": { "type": "string", "pattern": "^harness://actions/[a-z0-9][a-z0-9-]*$" },
+    "risk": { "type": "string", "enum": ["read", "write", "destructive", "external", "secret_adjacent"] },
+    "policyScope": { "type": "string" },
+    "confirmationMode": { "type": "string", "enum": ["none", "confirm", "approval_required", "owner_required"] },
+    "state": { "type": "string", "enum": ["available", "disabled", "denied", "pending_approval", "executed", "failed"] },
+    "denial": {
+      "type": "object",
+      "required": ["reason", "auditRef"],
+      "additionalProperties": false,
+      "properties": {
+        "reason": { "type": "string" },
+        "auditRef": { "type": "string" }
+      }
+    },
+    "inputSchemaRef": { "type": "string" },
+    "evidenceRef": { "type": "string" }
+  }
+}

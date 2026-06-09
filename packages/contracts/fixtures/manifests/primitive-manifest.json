@@ -1,0 +1,24 @@
+{
+  "$schema": "../../schemas/primitive-manifest.schema.json",
+  "expectedValid": true,
+  "caseId": "primitive-manifest",
+  "description": "Harness primitives define schemas, policy, audit, trace, docs, and verification requirements.",
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "primitiveId": "prim_ui_payload_reference",
+    "version": "0.0.0",
+    "ownerPackage": "@jami-studio/harness-contracts",
+    "primitiveClass": "ui_reference",
+    "inputSchemaRef": "schemas/ui-payload.schema.json",
+    "outputSchemaRef": "schemas/run-event.schema.json",
+    "policyRequirements": ["ui:emit"],
+    "auditEventShape": "policy.decision",
+    "traceSpanShape": "ui.payload.emitted",
+    "docs": {
+      "summary": "Data-only UI payload reference emitted by harness runs.",
+      "referencePath": "packages/contracts/README.md"
+    },
+    "verification": ["pnpm --filter @jami-studio/harness-contracts validate"],
+    "adapterCompatibility": ["studio-ui resident renderer"]
+  }
+}

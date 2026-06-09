@@ -37,6 +37,13 @@ Each primitive should define:
 - verification requirements
 - adapter compatibility
 
+The initial machine-readable vocabulary is in
+`packages/contracts/schemas/primitive-manifest.schema.json`. Capability modules and
+adapters use `packages/contracts/schemas/capability-manifest.schema.json` to declare
+supported features, unsupported states, required scopes, failure modes, and replacement
+compatibility. These manifests keep optional modules replaceable while preserving policy,
+audit, artifact, evidence, redaction, and checkpoint invariants.
+
 ## Product Rule
 
 If a concept appears in user trust, agent autonomy, artifact promotion, public documentation, or governance claims, it belongs in the owned core first and behind an adapter second.

@@ -7,7 +7,8 @@
   "type": "module",
   "scripts": {
     "docs:check": "node scripts/docs/check-docs.mjs",
-    "verify": "pnpm docs:check"
+    "contracts:validate": "pnpm --filter @jami-studio/harness-contracts validate",
+    "verify": "pnpm docs:check && pnpm contracts:validate"
   },
   "engines": {
     "node": ">=24.0.0",

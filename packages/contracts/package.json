@@ -1,0 +1,14 @@
+{
+  "name": "@jami-studio/harness-contracts",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Harness-owned shared contracts, JSON Schema anchors, and compatibility fixtures.",
+  "type": "module",
+  "exports": {
+    "./schemas/*": "./schemas/*.schema.json",
+    "./fixtures/*": "./fixtures/*.json"
+  },
+  "scripts": {
+    "validate": "node scripts/validate-contracts.mjs"
+  }
+}

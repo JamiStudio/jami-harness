@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jami.studio/schemas/harness/ui-payload.schema.json",
+  "title": "uiPayload",
+  "type": "object",
+  "required": ["schemaVersion", "payloadId", "componentRef", "props", "fallback"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "2026-06-09" },
+    "payloadId": { "type": "string", "pattern": "^uip_[a-z0-9][a-z0-9_-]*$" },
+    "componentRef": {
+      "type": "object",
+      "required": ["namespace", "name", "version"],
+      "additionalProperties": false,
+      "properties": {
+        "namespace": { "type": "string", "const": "@jami-studio/ui" },
+        "name": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+        "version": { "type": "string" },
+        "allowlisted": { "type": "boolean" }
+      }
+    },
+    "props": { "type": "object" },
+    "children": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "actionRefs": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^act_[a-z0-9][a-z0-9_-]*$" }
+    },
+    "artifactViewRefs": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^artv_[a-z0-9][a-z0-9_-]*$" }
+    },
+    "themeRef": { "type": "string", "pattern": "^theme_[a-z0-9][a-z0-9_-]*$" },
+    "suiteRef": { "type": "string", "pattern": "^suite_[a-z0-9][a-z0-9_-]*$" },
+    "fallback": {
+      "type": "object",
+      "required": ["mode", "message"],
+      "additionalProperties": false,
+      "properties": {
+        "mode": { "type": "string", "enum": ["text", "artifact_link", "unsupported_component", "invalid_payload", "renderer_error"] },
+        "message": { "type": "string" }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["runId", "emittedBy"],
+      "additionalProperties": false,
+      "properties": {
+        "runId": { "type": "string", "pattern": "^run_[a-z0-9][a-z0-9_-]*$" },
+        "emittedBy": { "type": "string", "enum": ["harness", "adapter"] },
+        "evidenceRef": { "type": "string" }
+      }
+    }
+  }
+}

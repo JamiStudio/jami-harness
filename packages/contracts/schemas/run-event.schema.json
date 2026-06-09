@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jami.studio/schemas/harness/run-event.schema.json",
+  "title": "runEvent",
+  "type": "object",
+  "required": ["schemaVersion", "eventId", "runId", "sequence", "occurredAt", "eventType"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "2026-06-09" },
+    "eventId": { "type": "string", "pattern": "^evt_[a-z0-9][a-z0-9_-]*$" },
+    "runId": { "type": "string", "pattern": "^run_[a-z0-9][a-z0-9_-]*$" },
+    "taskId": { "type": "string", "pattern": "^task_[a-z0-9][a-z0-9_-]*$" },
+    "sequence": { "type": "integer", "minimum": 0 },
+    "occurredAt": { "type": "string", "format": "date-time" },
+    "eventType": {
+      "type": "string",
+      "enum": [
+        "run.started",
+        "run.progress",
+        "run.completed",
+        "run.failed",
+        "policy.decision",
+        "approval.requested",
+        "tool.call.requested",
+        "tool.call.completed",
+        "artifact.created",
+        "ui.payload.emitted",
+        "renderer.error"
+      ]
+    },
+    "traceRef": {
+      "type": "object",
+      "required": ["traceId"],
+      "additionalProperties": false,
+      "properties": {
+        "traceId": { "type": "string" },
+        "spanId": { "type": "string" }
+      }
+    },
+    "policyDecision": {
+      "type": "object",
+      "required": ["decision", "scope"],
+      "additionalProperties": false,
+      "properties": {
+        "decision": { "type": "string", "enum": ["allow", "deny", "needs_approval", "needs_owner"] },
+        "scope": { "type": "string" },
+        "reason": { "type": "string" },
+        "auditRef": { "type": "string" }
+      }
+    },
+    "uiPayloadRef": { "type": "string" },
+    "artifactViewRef": { "type": "string" },
+    "actionRef": { "type": "string" },
+    "rendererState": { "type": "string", "enum": ["not_requested", "rendered", "unsupported_component", "invalid_payload", "error_state"] },
+    "message": { "type": "string" }
+  }
+}

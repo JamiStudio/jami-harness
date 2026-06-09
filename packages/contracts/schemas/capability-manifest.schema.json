@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jami.studio/schemas/harness/capability-manifest.schema.json",
+  "title": "capabilityManifest",
+  "type": "object",
+  "required": ["schemaVersion", "capabilityId", "ownerPackage", "capabilityClass", "features", "requiredScopes", "failureModes", "replacementCompatibility"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "2026-06-09" },
+    "capabilityId": { "type": "string", "pattern": "^cap_[a-z0-9][a-z0-9_-]*$" },
+    "ownerPackage": { "type": "string", "pattern": "^@jami-studio/harness[a-z0-9-]*$" },
+    "capabilityClass": { "type": "string", "enum": ["core_invariant", "included_default", "replaceable_module", "optional_surface", "adapter"] },
+    "features": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["featureId", "support"],
+        "additionalProperties": false,
+        "properties": {
+          "featureId": { "type": "string" },
+          "support": { "type": "string", "enum": ["supported", "unsupported", "denied_by_policy", "requires_adapter", "requires_approval"] },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "requiredScopes": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "failureModes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["mode", "observableAs"],
+        "additionalProperties": false,
+        "properties": {
+          "mode": { "type": "string" },
+          "observableAs": { "type": "string", "enum": ["typed_result", "audit_event", "trace_event", "evidence_packet"] }
+        }
+      }
+    },
+    "replacementCompatibility": {
+      "type": "object",
+      "required": ["portId", "contractVersion", "mustPreserve"],
+      "additionalProperties": false,
+      "properties": {
+        "portId": { "type": "string" },
+        "contractVersion": { "type": "string" },
+        "mustPreserve": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["policy", "audit", "artifact", "evidence", "checkpoint", "redaction"] }
+        }
+      }
+    }
+  }
+}

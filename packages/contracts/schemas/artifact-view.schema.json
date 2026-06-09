@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jami.studio/schemas/harness/artifact-view.schema.json",
+  "title": "artifactView",
+  "type": "object",
+  "required": ["schemaVersion", "artifactViewId", "artifactId", "kind", "promotionState", "renderers", "provenance"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "2026-06-09" },
+    "artifactViewId": { "type": "string", "pattern": "^artv_[a-z0-9][a-z0-9_-]*$" },
+    "artifactId": { "type": "string", "pattern": "^art_[a-z0-9][a-z0-9_-]*$" },
+    "kind": { "type": "string", "enum": ["report", "patch", "document", "image", "trace", "evidence", "release_packet"] },
+    "title": { "type": "string" },
+    "promotionState": { "type": "string", "enum": ["draft", "reviewed", "accepted", "rejected", "promoted"] },
+    "renderers": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["rendererId", "mode"],
+        "additionalProperties": false,
+        "properties": {
+          "rendererId": { "type": "string" },
+          "mode": { "type": "string", "enum": ["text", "markdown", "diff", "image", "json", "studio_ui"] },
+          "componentRef": { "type": "string" },
+          "unsupportedReason": { "type": "string" }
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["runId", "sourceCommit", "evidenceRef"],
+      "additionalProperties": false,
+      "properties": {
+        "runId": { "type": "string", "pattern": "^run_[a-z0-9][a-z0-9_-]*$" },
+        "sourceCommit": { "type": "string" },
+        "evidenceRef": { "type": "string" }
+      }
+    }
+  }
+}

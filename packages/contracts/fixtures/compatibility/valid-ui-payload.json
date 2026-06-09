@@ -1,0 +1,32 @@
+{
+  "$schema": "../../schemas/ui-payload.schema.json",
+  "expectedValid": true,
+  "caseId": "valid-ui-payload",
+  "description": "Harness emits a data-only payload for a resident Studio UI component.",
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "payloadId": "uip_run_summary",
+    "componentRef": {
+      "namespace": "@jami-studio/ui",
+      "name": "run-summary",
+      "version": "0.0.0",
+      "allowlisted": true
+    },
+    "props": {
+      "status": "completed",
+      "title": "Contract validation"
+    },
+    "children": ["Validation completed."],
+    "actionRefs": ["act_open_artifact"],
+    "artifactViewRefs": ["artv_contract_report"],
+    "fallback": {
+      "mode": "text",
+      "message": "Run summary is available as text."
+    },
+    "provenance": {
+      "runId": "run_contract_spine",
+      "emittedBy": "harness",
+      "evidenceRef": "ev_contract_validation"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "../../schemas/ui-payload.schema.json",
+  "expectedValid": false,
+  "caseId": "invalid-ui-payload",
+  "description": "Renderer payloads without a fallback must fail schema validation.",
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "payloadId": "uip_missing_fallback",
+    "componentRef": {
+      "namespace": "@jami-studio/ui",
+      "name": "run-summary",
+      "version": "0.0.0"
+    },
+    "props": {},
+    "provenance": {
+      "runId": "run_contract_spine",
+      "emittedBy": "harness"
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jami.studio/schemas/harness/primitive-manifest.schema.json",
+  "title": "primitiveManifest",
+  "type": "object",
+  "required": ["schemaVersion", "primitiveId", "version", "ownerPackage", "primitiveClass", "inputSchemaRef", "outputSchemaRef", "policyRequirements", "auditEventShape", "traceSpanShape", "docs", "verification"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "2026-06-09" },
+    "primitiveId": { "type": "string", "pattern": "^prim_[a-z0-9][a-z0-9_-]*$" },
+    "version": { "type": "string" },
+    "ownerPackage": { "type": "string", "pattern": "^@jami-studio/harness[a-z0-9-]*$" },
+    "primitiveClass": { "type": "string", "enum": ["run", "tool", "policy", "artifact", "memory", "context", "evidence", "ui_reference", "docs"] },
+    "inputSchemaRef": { "type": "string" },
+    "outputSchemaRef": { "type": "string" },
+    "policyRequirements": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "auditEventShape": { "type": "string" },
+    "traceSpanShape": { "type": "string" },
+    "docs": {
+      "type": "object",
+      "required": ["summary", "referencePath"],
+      "additionalProperties": false,
+      "properties": {
+        "summary": { "type": "string" },
+        "referencePath": { "type": "string" }
+      }
+    },
+    "verification": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" }
+    },
+    "adapterCompatibility": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}
