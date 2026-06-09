@@ -18,6 +18,23 @@ Define the full production-shaped implementation plan for `@jami-studio/harness`
 - [x] Complete
 - [!] Blocked or needs decision
 
+## Crossflow Completion Audit
+
+2026-06-09 fresh-context harness audit result: the registry-root crossflow Stream 1-6
+closure is proven only for the foundation work that now exists in this repository. The
+live repo proves contracts/generation/validation, policy-denial fixtures, runtime event
+spine, local memory/artifact/observability foundations, CLI/SDK local evidence smoke, and
+non-publishing release-readiness audits through `pnpm verify` and the targeted commands
+listed in the pass-status notes below.
+
+Do not read the registry-root `Status: Complete` as final harness product acceptance.
+The roadmap final verification and acceptance criteria remain open because the live repo
+still lacks the full tool gateway, provider execution, checkpoint/resume store, hosted or
+replaceable durable stores, docs/changelog/system-map generator, Mintlify build, SBOM
+artifact generation, release attestations, publishable package manifests, and hosted
+workbench/docs surfaces. The release-readiness audit intentionally reports these as
+unsupported or human-intervention-gated rather than weakening the gates.
+
 ## Source Findings
 
 - [x] The root workspace currently has imported project context but no prior root `docs/` canon.
