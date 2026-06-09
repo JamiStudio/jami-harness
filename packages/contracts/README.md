@@ -21,16 +21,31 @@ implementation.
 
 ## Compatibility Fixtures
 
-Fixtures under `fixtures/compatibility/` are intentionally small. They prove the
-contract categories that both repos need before runtime or renderer work expands:
+Fixtures under `fixtures/compatibility/` are intentionally small. They prove every
+current shared anchor plus the contract categories that both repos need before
+runtime or renderer work expands:
 
 - unsupported UI components
 - invalid payloads
 - denied actions
 - renderer error states
+- artifact views
+- theme references
+- suite references
+- unsafe UI prop rejection
 
 Studio UI should add matching consumer fixtures against these schema ids in its own
 lane rather than editing this package from the UI stream.
+
+The validation gate fails when any anchor lacks fixture coverage, when a fixture points
+outside `packages/contracts/schemas/`, or when cross-field contract semantics are
+violated. Current semantic checks include denied-action evidence, elevated-risk action
+confirmation, renderer error states, emitted UI payload references, policy decision
+payloads, data-only UI props, Studio UI renderer component references, replacement
+invariants, Studio UI registry item ids for suite refs, and Studio UI adapter
+compatibility for UI-reference primitives. Required negative fixtures cover invalid
+payloads, denied actions without denial evidence, renderer errors without error state,
+and unsafe UI props.
 
 ## Verification
 

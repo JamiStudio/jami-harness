@@ -1,0 +1,20 @@
+{
+  "$schema": "../../schemas/theme-ref.schema.json",
+  "expectedValid": true,
+  "caseId": "valid-theme-ref",
+  "description": "Theme references point to Studio UI token outputs while leaving token generation ownership in Studio UI.",
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "themeId": "theme_factory_default",
+    "tokenSchemaVersion": "studio-ui-token-schema-2026-06-09",
+    "source": {
+      "owner": "studio-ui",
+      "registryItemId": "theme/factory-default",
+      "kind": "factory"
+    },
+    "restoreTarget": {
+      "packageName": "@jami-studio/ui",
+      "itemPath": "themes/factory-default"
+    }
+  }
+}

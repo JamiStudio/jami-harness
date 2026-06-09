@@ -249,6 +249,11 @@ Pass status:
   dependency-free `packages/contracts` scaffold with JSON Schema anchors and
   compatibility fixtures for `runEvent`, `uiPayload`, `artifactView`, `actionRef`,
   `themeRef`, `suiteRef`, `capabilityManifest`, and `primitiveManifest`.
+- 2026-06-09 Stream 2 contract spine, harness lane, pass 2 hardened the contract
+  validation gate with required fixture coverage for every current anchor, schema
+  reference containment, fixture metadata checks, and semantic negative cases for
+  denied-action evidence, renderer error state, unsafe UI payload props, and Studio UI
+  suite item references.
 - Root verification now runs `pnpm contracts:validate` through `pnpm verify`.
 - The workstream remains open because broad run/task/policy/memory/evidence schemas,
   generated TypeScript exports, OpenAPI/reference generation, and cross-repo Studio UI

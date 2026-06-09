@@ -1,0 +1,29 @@
+{
+  "$schema": "../../schemas/suite-ref.schema.json",
+  "expectedValid": true,
+  "caseId": "valid-suite-ref",
+  "description": "Suite references name Studio UI install graphs and optional harness capabilities without runtime imports.",
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "suiteId": "suite_workspace_ops",
+    "lane": "workspace",
+    "appShellId": "studio-ui/workbench-shell",
+    "installedItems": [
+      "@jami-studio/ui/run-summary",
+      "@jami-studio/ui/artifact-panel"
+    ],
+    "routeMap": [
+      {
+        "routeId": "runs",
+        "path": "/runs"
+      },
+      {
+        "routeId": "artifacts",
+        "path": "/artifacts"
+      }
+    ],
+    "optionalHarnessCapabilities": [
+      "cap_ui_reference_adapter"
+    ]
+  }
+}

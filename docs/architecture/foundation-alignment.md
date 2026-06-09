@@ -80,10 +80,14 @@ The initial checkable anchors are:
 - `capabilityManifest`
 - `primitiveManifest`
 
-The first negative compatibility cases cover unsupported UI components, invalid
-payloads, denied actions, and renderer error states. Studio UI should consume the same
-schema ids and fixture categories from its own lane and report any renderer-side fixture
-needs back across the sibling boundary.
+The first compatibility cases cover unsupported UI components, invalid payloads,
+denied actions, renderer error states, artifact views, theme references, suite
+references, and unsafe UI prop rejection. Harness validation now requires fixture
+coverage for every current shared anchor and fails cross-field semantics such as denied
+actions without policy evidence or renderer errors without a typed renderer error state.
+It also rejects unsafe UI props and suite refs that do not point at Studio UI registry
+items. Studio UI should consume the same schema ids and fixture categories from its own
+lane and report any renderer-side fixture needs back across the sibling boundary.
 
 ## Integration Direction
 

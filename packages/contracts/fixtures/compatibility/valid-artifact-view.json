@@ -1,0 +1,30 @@
+{
+  "$schema": "../../schemas/artifact-view.schema.json",
+  "expectedValid": true,
+  "caseId": "valid-artifact-view",
+  "description": "Artifact views carry harness provenance and renderer intent without owning UI implementation.",
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "artifactViewId": "artv_contract_report",
+    "artifactId": "art_contract_report",
+    "kind": "report",
+    "title": "Contract validation report",
+    "promotionState": "reviewed",
+    "renderers": [
+      {
+        "rendererId": "renderer_markdown",
+        "mode": "markdown"
+      },
+      {
+        "rendererId": "renderer_studio_ui_summary",
+        "mode": "studio_ui",
+        "componentRef": "@jami-studio/ui/run-summary"
+      }
+    ],
+    "provenance": {
+      "runId": "run_contract_spine",
+      "sourceCommit": "ef5be4ea270b42bca2b8a30a7c310e4f78cb8e37",
+      "evidenceRef": "ev_contract_validation"
+    }
+  }
+}

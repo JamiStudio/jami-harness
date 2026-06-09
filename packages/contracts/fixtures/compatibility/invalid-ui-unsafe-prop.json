@@ -1,0 +1,30 @@
+{
+  "$schema": "../../schemas/ui-payload.schema.json",
+  "expectedValid": false,
+  "caseId": "invalid-ui-unsafe-prop",
+  "description": "Harness UI payloads are data-only and cannot carry event handlers or raw HTML props.",
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "payloadId": "uip_unsafe_prop",
+    "componentRef": {
+      "namespace": "@jami-studio/ui",
+      "name": "run-summary",
+      "version": "0.0.0",
+      "allowlisted": true
+    },
+    "props": {
+      "title": "Unsafe payload",
+      "dangerouslySetInnerHTML": {
+        "__html": "<script>alert(1)</script>"
+      }
+    },
+    "fallback": {
+      "mode": "text",
+      "message": "Unsafe payload was rejected."
+    },
+    "provenance": {
+      "runId": "run_contract_spine",
+      "emittedBy": "harness"
+    }
+  }
+}

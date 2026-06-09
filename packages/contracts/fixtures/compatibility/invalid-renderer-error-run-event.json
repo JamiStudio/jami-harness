@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schemas/run-event.schema.json",
+  "expectedValid": false,
+  "caseId": "invalid-renderer-error-run-event",
+  "description": "Renderer error events must use the typed renderer error state.",
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "eventId": "evt_renderer_error_missing_state",
+    "runId": "run_contract_spine",
+    "sequence": 5,
+    "occurredAt": "2026-06-09T12:01:00.000Z",
+    "eventType": "renderer.error",
+    "uiPayloadRef": "uip_unknown_component",
+    "message": "Resident renderer rejected the payload."
+  }
+}

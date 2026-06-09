@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schemas/action-ref.schema.json",
+  "expectedValid": false,
+  "caseId": "invalid-denied-action-ref",
+  "description": "Denied actions must carry denial evidence so UI slots cannot invent policy state.",
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "actionId": "act_missing_denial",
+    "label": "Publish release",
+    "route": "harness://actions/publish-release",
+    "risk": "external",
+    "policyScope": "release:publish",
+    "confirmationMode": "owner_required",
+    "state": "denied"
+  }
+}

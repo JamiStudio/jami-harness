@@ -1,5 +1,5 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
-import { dirname, join, normalize, relative, resolve } from "node:path";
+import { dirname, isAbsolute, join, normalize, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const packageRoot = dirname(dirname(fileURLToPath(import.meta.url)));
@@ -17,6 +17,15 @@ const requiredAnchors = new Map([
   ["primitiveManifest", "primitive-manifest.schema.json"],
 ]);
 
+const requiredFixtureAnchors = new Set(requiredAnchors.keys());
+const requiredNegativeCaseIds = new Set([
+  "invalid-denied-action-ref",
+  "invalid-renderer-error-run-event",
+  "invalid-ui-payload",
+  "invalid-ui-unsafe-prop",
+]);
+const fixtureCoverage = new Map();
+const negativeCaseCoverage = new Set();
 const failures = [];
 
 function readJson(path) {
@@ -39,6 +48,11 @@ function listJsonFiles(root) {
     }
   }
   return entries;
+}
+
+function isWithin(root, path) {
+  const relativePath = relative(root, path);
+  return relativePath === "" || (!relativePath.startsWith("..") && !isAbsolute(relativePath));
 }
 
 function validate(schema, value, path = "$") {
@@ -116,6 +130,91 @@ function validate(schema, value, path = "$") {
   return errors;
 }
 
+function findUnsafeUiPropPath(value, path = "$.props") {
+  if (value === null || typeof value !== "object") return undefined;
+
+  for (const [key, child] of Object.entries(value)) {
+    if (/^on[A-Z]/.test(key) || key === "dangerouslySetInnerHTML" || key === "innerHTML" || key === "html") {
+      return `${path}.${key}`;
+    }
+
+    const childPath = findUnsafeUiPropPath(child, `${path}.${key}`);
+    if (childPath) return childPath;
+  }
+
+  return undefined;
+}
+
+function validateSemantics(schemaTitle, value) {
+  const errors = [];
+
+  if (schemaTitle === "actionRef") {
+    if (value.state === "denied" && !value.denial) {
+      errors.push("$.denial is required when $.state is denied");
+    }
+    if (value.state !== "denied" && value.denial) {
+      errors.push("$.denial is only allowed when $.state is denied");
+    }
+    if (["destructive", "external", "secret_adjacent"].includes(value.risk) && value.confirmationMode === "none") {
+      errors.push("$.confirmationMode cannot be none for elevated-risk actions");
+    }
+  }
+
+  if (schemaTitle === "runEvent") {
+    if (value.eventType === "renderer.error" && value.rendererState !== "error_state") {
+      errors.push("$.rendererState must be error_state for renderer.error events");
+    }
+    if (value.eventType === "ui.payload.emitted" && !value.uiPayloadRef) {
+      errors.push("$.uiPayloadRef is required for ui.payload.emitted events");
+    }
+    if (value.eventType === "policy.decision" && !value.policyDecision) {
+      errors.push("$.policyDecision is required for policy.decision events");
+    }
+  }
+
+  if (schemaTitle === "uiPayload") {
+    if (value.componentRef.allowlisted === false && value.fallback.mode !== "unsupported_component") {
+      errors.push("$.fallback.mode must be unsupported_component when $.componentRef.allowlisted is false");
+    }
+
+    const unsafePropPath = findUnsafeUiPropPath(value.props);
+    if (unsafePropPath) {
+      errors.push(`${unsafePropPath} is not allowed in data-only UI payload props`);
+    }
+  }
+
+  if (schemaTitle === "artifactView") {
+    value.renderers.forEach((renderer, index) => {
+      if (renderer.mode === "studio_ui" && !renderer.componentRef) {
+        errors.push(`$.renderers[${index}].componentRef is required for studio_ui renderers`);
+      }
+    });
+  }
+
+  if (schemaTitle === "suiteRef") {
+    if (value.installedItems.some((item) => !item.startsWith("@jami-studio/ui/"))) {
+      errors.push("$.installedItems must reference Studio UI registry items");
+    }
+  }
+
+  if (schemaTitle === "capabilityManifest") {
+    const preserved = new Set(value.replacementCompatibility.mustPreserve);
+    for (const invariant of ["policy", "audit", "evidence"]) {
+      if (!preserved.has(invariant)) {
+        errors.push(`$.replacementCompatibility.mustPreserve must include ${invariant}`);
+      }
+    }
+  }
+
+  if (schemaTitle === "primitiveManifest" && value.primitiveClass === "ui_reference") {
+    if (!value.adapterCompatibility?.some((entry) => entry.includes("studio-ui"))) {
+      errors.push("$.adapterCompatibility must name studio-ui for ui_reference primitives");
+    }
+  }
+
+  return errors;
+}
+
 for (const [title, file] of requiredAnchors) {
   const schema = readJson(join(schemaRoot, file));
   if (!schema) continue;
@@ -131,8 +230,13 @@ for (const fixtureFile of listJsonFiles(fixtureRoot)) {
   const fixture = readJson(fixtureFile);
   if (!fixture) continue;
 
+  if (typeof fixture.$schema !== "string" || fixture.$schema.length === 0) {
+    failures.push(`${relative(packageRoot, fixtureFile)} must declare $schema`);
+    continue;
+  }
+
   const schemaPath = normalize(resolve(dirname(fixtureFile), fixture.$schema ?? ""));
-  if (!schemaPath.startsWith(normalize(schemaRoot))) {
+  if (!isWithin(normalize(schemaRoot), schemaPath)) {
     failures.push(`${relative(packageRoot, fixtureFile)} references schema outside packages/contracts/schemas`);
     continue;
   }
@@ -144,8 +248,25 @@ for (const fixtureFile of listJsonFiles(fixtureRoot)) {
     failures.push(`${relative(packageRoot, fixtureFile)} must declare expectedValid`);
     continue;
   }
+  if (typeof fixture.caseId !== "string" || fixture.caseId.length === 0) {
+    failures.push(`${relative(packageRoot, fixtureFile)} must declare caseId`);
+    continue;
+  }
+  if (typeof fixture.description !== "string" || fixture.description.length === 0) {
+    failures.push(`${relative(packageRoot, fixtureFile)} must declare description`);
+    continue;
+  }
+  if (!("payload" in fixture)) {
+    failures.push(`${relative(packageRoot, fixtureFile)} must declare payload`);
+    continue;
+  }
 
-  const errors = validate(schema, fixture.payload);
+  fixtureCoverage.set(schema.title, (fixtureCoverage.get(schema.title) ?? 0) + 1);
+  if (fixture.expectedValid === false) {
+    negativeCaseCoverage.add(fixture.caseId);
+  }
+
+  const errors = [...validate(schema, fixture.payload), ...validateSemantics(schema.title, fixture.payload)];
   const valid = errors.length === 0;
 
   if (valid !== fixture.expectedValid) {
@@ -153,6 +274,18 @@ for (const fixtureFile of listJsonFiles(fixtureRoot)) {
     for (const error of errors) {
       failures.push(`  - ${error}`);
     }
+  }
+}
+
+for (const title of requiredFixtureAnchors) {
+  if (!fixtureCoverage.has(title)) {
+    failures.push(`fixtures must include at least one case for ${title}`);
+  }
+}
+
+for (const caseId of requiredNegativeCaseIds) {
+  if (!negativeCaseCoverage.has(caseId)) {
+    failures.push(`fixtures must include failing negative case ${caseId}`);
   }
 }
 
