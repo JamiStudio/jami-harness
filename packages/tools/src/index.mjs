@@ -126,7 +126,31 @@ export function createToolGateway(options = {}) {
       }
 
       const policyRequest = toPolicyRequest({ input, tool, runId, actor, projectId, environment });
-      const policyDecision = await policyEngine.evaluate(policyRequest);
+      let policyDecision;
+      try {
+        policyDecision = await policyEngine.evaluate(policyRequest);
+      } catch (error) {
+        const policyError = sanitizeError(error, "policy_failed_closed");
+        return finalizeExecution({
+          now,
+          artifactStore,
+          observability,
+          executionId,
+          runId,
+          toolId,
+          adapterId: tool.adapterId,
+          status: "denied",
+          startedAt,
+          endedAt: now().toISOString(),
+          policyDecision: denyDecision({ runId, actor, projectId, environment, toolId, reason: `policy engine failed closed: ${policyError.message}`, now }),
+          auditEvent: auditForDecision({ runId, actor, projectId, environment, toolId, outcome: "deny", reason: "policy engine failed closed", now }),
+          inputRedaction,
+          resultRedaction: { value: undefined, paths: [] },
+          error: { code: policyError.code, message: "policy engine failed closed" },
+          capabilityManifestRef: tool.capabilityManifest.capabilityId,
+          timeoutMs: tool.timeoutMs,
+        });
+      }
       const auditEvent = auditForPolicyDecision({ decision: policyDecision, runId, actor, projectId, environment, toolId, now });
       await observability.auditSink?.write?.(auditEvent);
 
@@ -193,11 +217,14 @@ export function createToolGateway(options = {}) {
       }
 
       try {
-        const result = await tool.handler(input.input ?? {}, {
+        const result = await raceHandlerWithCancellation({
+          handlerPromise: Promise.resolve().then(() => tool.handler(input.input ?? {}, {
+            signal: controller.signal,
+            tool,
+            runId,
+            executionId,
+          })),
           signal: controller.signal,
-          tool,
-          runId,
-          executionId,
         });
         const resultRedaction = redactObject(result ?? {});
         return finalizeExecution({
@@ -208,7 +235,7 @@ export function createToolGateway(options = {}) {
           runId,
           toolId,
           adapterId: tool.adapterId,
-          status: controller.signal.aborted ? "cancelled" : "completed",
+          status: "completed",
           startedAt,
           endedAt: now().toISOString(),
           policyDecision,
@@ -217,11 +244,10 @@ export function createToolGateway(options = {}) {
           resultRedaction,
           capabilityManifestRef: tool.capabilityManifest.capabilityId,
           timeoutMs,
-          error: controller.signal.aborted ? { code: "cancelled", message: "tool execution was cancelled" } : undefined,
         });
       } catch (error) {
         const aborted = controller.signal.aborted;
-        const status = aborted && error?.code === "timeout" ? "timeout" : aborted ? "cancelled" : "failed";
+        const status = aborted && controller.signal.reason?.code === "timeout" ? "timeout" : aborted ? "cancelled" : "failed";
         return finalizeExecution({
           now,
           artifactStore,
@@ -239,10 +265,7 @@ export function createToolGateway(options = {}) {
           resultRedaction: { value: undefined, paths: [] },
           capabilityManifestRef: tool.capabilityManifest.capabilityId,
           timeoutMs,
-          error: {
-            code: error?.code ?? status,
-            message: error instanceof Error ? error.message : String(error),
-          },
+          error: sanitizeError(error, status),
         });
       } finally {
         if (timeoutHandle) clearTimeout(timeoutHandle);
@@ -251,6 +274,32 @@ export function createToolGateway(options = {}) {
         }
       }
     },
+  };
+}
+
+function raceHandlerWithCancellation({ handlerPromise, signal }) {
+  if (signal.aborted) {
+    return Promise.reject(signal.reason ?? new ToolGatewayError("cancelled", "tool execution was cancelled"));
+  }
+
+  return Promise.race([
+    handlerPromise,
+    new Promise((_, reject) => {
+      signal.addEventListener("abort", () => {
+        reject(signal.reason ?? new ToolGatewayError("cancelled", "tool execution was cancelled"));
+      }, { once: true });
+    }),
+  ]);
+}
+
+function sanitizeError(error, fallbackCode) {
+  const code = String(error?.code ?? fallbackCode).replace(/[^a-z0-9_-]+/gi, "_").toLowerCase();
+  const message = error instanceof Error ? error.message : String(error ?? fallbackCode);
+  const redacted = redactObject({ message });
+
+  return {
+    code: code || fallbackCode,
+    message: redacted.value.message,
   };
 }
 
@@ -547,6 +596,11 @@ function redactObject(value, path = "$") {
 }
 
 function redactWalk(value, path, paths) {
+  if (typeof value === "string") {
+    const redacted = redactSecretLikeString(value);
+    if (redacted !== value) paths.push(path);
+    return redacted;
+  }
   if (Array.isArray(value)) return value.map((child, index) => redactWalk(child, `${path}[${index}]`, paths));
   if (value === null || typeof value !== "object") return value;
   const output = {};
@@ -560,6 +614,12 @@ function redactWalk(value, path, paths) {
     output[key] = redactWalk(child, childPath, paths);
   }
   return output;
+}
+
+function redactSecretLikeString(value) {
+  return value
+    .replace(/\b(api[_-]?key|token|secret|password|credential|authorization|cookie|session)\b\s*[:=]\s*[^,\s;]+/gi, "$1=[redacted]")
+    .replace(/\bBearer\s+[A-Za-z0-9._~+/=-]+/g, "Bearer [redacted]");
 }
 
 function assertPort(name, port, methods) {

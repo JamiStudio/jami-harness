@@ -156,3 +156,105 @@ test("trace, evidence, and artifact records represent timeout and cancellation",
   assert.equal(result.execution.redaction.resultPolicy, "omitted");
   assert.equal(result.evidence.commands[0].status, "failed");
 });
+
+test("timeouts are deterministic even when handlers ignore AbortSignal", async () => {
+  const registry = createToolRegistry();
+  registry.register(createFunctionTool({
+    toolId: "tool_ignore_abort",
+    label: "Ignore abort",
+    risk: "read",
+    requiredScopes: ["repo:read"],
+    timeoutMs: 1,
+    handler() {
+      return new Promise((resolve) => {
+        setTimeout(() => resolve({ ok: true }), 50);
+      });
+    },
+  }));
+  const gateway = createToolGateway({ now, registry });
+
+  const result = await gateway.execute({
+    runId: "run_tool_gateway",
+    toolId: "tool_ignore_abort",
+    actor: actor(["repo:read"]),
+    projectId: "proj_jami_harness",
+    environment: "local",
+    input: { query: "status" },
+  });
+
+  assert.equal(result.executable, false);
+  assert.equal(result.status, "timeout");
+  assert.equal(result.execution.error.code, "timeout");
+  assert.equal(result.trace.attributes.result, undefined);
+  assert.equal(result.execution.redaction.resultPolicy, "omitted");
+});
+
+test("policy engine failures fail closed without invoking handlers", async () => {
+  let invoked = 0;
+  const registry = createToolRegistry();
+  registry.register(createFunctionTool({
+    toolId: "tool_policy_failure",
+    label: "Policy failure",
+    risk: "read",
+    requiredScopes: ["repo:read"],
+    handler() {
+      invoked += 1;
+      return { ok: true };
+    },
+  }));
+  const gateway = createToolGateway({
+    now,
+    registry,
+    policyEngine: {
+      evaluate() {
+        throw new Error("policy backend unavailable apiKey=policy-secret");
+      },
+    },
+  });
+
+  const result = await gateway.execute({
+    runId: "run_tool_gateway",
+    toolId: "tool_policy_failure",
+    actor: actor(["repo:read"]),
+    projectId: "proj_jami_harness",
+    environment: "local",
+    input: { query: "status" },
+  });
+
+  assert.equal(invoked, 0);
+  assert.equal(result.executable, false);
+  assert.equal(result.status, "denied");
+  assert.equal(result.execution.error.code, "policy_failed_closed");
+  assert.equal(result.execution.error.message, "policy engine failed closed");
+  assert.equal(result.policyDecision.reasons[0].includes("policy-secret"), false);
+});
+
+test("failed tool errors are redacted in traces and artifacts", async () => {
+  const registry = createToolRegistry();
+  registry.register(createFunctionTool({
+    toolId: "tool_error_redaction",
+    label: "Error redaction",
+    risk: "read",
+    requiredScopes: ["repo:read"],
+    handler() {
+      throw new Error("upstream rejected token=tool-secret Bearer abc123");
+    },
+  }));
+  const gateway = createToolGateway({ now, registry });
+
+  const result = await gateway.execute({
+    runId: "run_tool_gateway",
+    toolId: "tool_error_redaction",
+    actor: actor(["repo:read"]),
+    projectId: "proj_jami_harness",
+    environment: "local",
+    input: { query: "status" },
+  });
+
+  assert.equal(result.executable, false);
+  assert.equal(result.status, "failed");
+  assert.equal(result.execution.error.message.includes("tool-secret"), false);
+  assert.equal(result.execution.error.message.includes("abc123"), false);
+  assert.equal(result.trace.attributes.error.message, "upstream rejected token=[redacted] Bearer [redacted]");
+  assert.equal(result.artifact.payload.error.message, "upstream rejected token=[redacted] Bearer [redacted]");
+});

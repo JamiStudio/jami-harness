@@ -489,6 +489,11 @@ Pass status:
   capability inspection, and adapter capability manifests. MCP, OpenAPI, shell, browser,
   code, provider, and A2A adapters are explicit unsupported capability manifests and
   fail closed until repo-local source-lock evidence and adapter fixtures exist.
+- 2026-06-09 Workstream 4 pass 2 confirmation found and fixed narrow hardening gaps:
+  replaceable policy-engine failures now fail closed into typed denied tool execution
+  evidence without invoking handlers, non-cooperative function tools cannot outlive the
+  timeout envelope, and failed-tool error messages are redacted before trace and artifact
+  payloads record them.
 
 Implementation tasks:
 
