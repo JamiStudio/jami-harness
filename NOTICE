@@ -1,0 +1,14 @@
+Jami Harness
+Copyright 2026 Jami Studio
+
+This product is licensed under the Apache License, Version 2.0.
+
+Current provenance note:
+
+- The checked runtime, policy, contract, artifact, observability, memory, CLI, and SDK
+  foundations in this repository are dependency-light Jami Harness implementation work.
+- Imported research archives under docs/research are evidence and source context. They
+  are not promoted into publishable runtime packages by this notice.
+- If future work lifts, forks, or adapts third-party source into publishable packages,
+  the release readiness gate must preserve the upstream license and notice material
+  before any public package claim or release artifact is produced.

@@ -1,0 +1,25 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .: {}
+
+  apps/cli: {}
+
+  packages/artifacts: {}
+
+  packages/contracts: {}
+
+  packages/memory: {}
+
+  packages/observability: {}
+
+  packages/policy: {}
+
+  packages/runtime: {}
+
+  packages/sdk: {}

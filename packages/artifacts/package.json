@@ -3,6 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "description": "Harness-owned artifact provenance records and replaceable storage port defaults.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JamiStudio/jami-harness.git",
+    "directory": "packages/artifacts"
+  },
   "type": "module",
   "exports": {
     ".": "./src/index.mjs"

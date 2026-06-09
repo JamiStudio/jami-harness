@@ -77,6 +77,20 @@ intervention needed, alert the human, then continue after it is resolved. Do not
 - Release notes are compiled from accepted fragments and evidence packets.
 - Changelog entries should describe shipped behavior and verification, not aspirational status.
 
+## Release, Supply Chain, And Public Claims
+
+- `docs/operations/release-readiness.md` owns the current release-readiness gate.
+- `pnpm release:readiness` and `pnpm release:dry-run` are audit commands. They must never
+  publish, tag, deploy, or call external account APIs.
+- Public claims must use the release-readiness claims matrix and current command evidence.
+  Unsupported surfaces should be named as unavailable instead of softened into marketing
+  language.
+- SBOM generation, package contents dry runs, npm provenance, GitHub attestations, and
+  hosted docs deployment must have accepted command evidence before publish-ready claims.
+- Account actions for npm, GitHub releases, docs hosting, Vercel, Cloudflare, or other
+  hosted systems are human interventions until credentials and authorization are
+  explicitly recorded.
+
 ## Free Tooling Bias
 
 Prefer free/local tooling first: `pnpm`, TypeScript, Node scripts, `rg`, Mermaid, JSON Schema, OpenAPI,

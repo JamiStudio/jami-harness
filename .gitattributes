@@ -1,6 +1,8 @@
 * text=auto
 .gitattributes text eol=lf
 .gitignore text eol=lf
+LICENSE text eol=lf
+NOTICE text eol=lf
 *_gitignore text eol=lf
 .*ignore text eol=lf
 .*rc text eol=lf

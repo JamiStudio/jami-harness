@@ -3,6 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "description": "Agent-first CLI foundation for local Jami Harness runs and evidence inspection.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JamiStudio/jami-harness.git",
+    "directory": "apps/cli"
+  },
   "type": "module",
   "bin": {
     "jami": "./src/cli.mjs"

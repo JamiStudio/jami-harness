@@ -3,6 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "description": "Harness-owned dependency-light run lifecycle and policy-gated emission kernel.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JamiStudio/jami-harness.git",
+    "directory": "packages/runtime"
+  },
   "type": "module",
   "exports": {
     ".": "./src/index.mjs"

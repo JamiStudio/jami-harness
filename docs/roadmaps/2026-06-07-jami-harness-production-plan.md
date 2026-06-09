@@ -716,12 +716,24 @@ Primary areas:
 - `apps/docs`
 - package metadata
 
+Pass status:
+
+- 2026-06-09 Stream 6 release, supply-chain, hosted readiness, safe claims, and public
+  docs, harness lane, pass 1 added a non-publishing release readiness audit surface.
+  Package manifests now carry Apache-2.0 and repository provenance while staying
+  `private: true`; `LICENSE` and `NOTICE` record the current license/source posture;
+  `pnpm release:readiness` and `pnpm release:dry-run` report package, claims, SBOM,
+  provenance, attestation, unavailable-command, and human-intervention state without
+  publishing. `docs/operations/release-readiness.md` is the durable claims matrix and
+  release gate. This is not a package publish, SBOM artifact generator, GitHub
+  attestation workflow, Mintlify build, hosted deploy, or account authorization closeout.
+
 Implementation tasks:
 
-- [ ] Add CI, lint, typecheck, unit/integration/security/doc checks.
-- [ ] Add SBOM and artifact attestation release flow.
-- [ ] Carry forward source-lock, license/NOTICE, transitive dependency, and fork-delta evidence from runtime/tool/UI integration work.
-- [ ] Add contributor guide, code of conduct, security policy, support policy.
+- [~] Add CI, lint, typecheck, unit/integration/security/doc checks.
+- [~] Add SBOM and artifact attestation release flow.
+- [~] Carry forward source-lock, license/NOTICE, transitive dependency, and fork-delta evidence from runtime/tool/UI integration work.
+- [~] Add contributor guide, code of conduct, security policy, support policy.
 - [ ] Add Mintlify docs config and generated navigation.
 - [ ] Add public examples, quickstart, guides, API/SDK reference, integration guide, and launch claims matrix.
 - [ ] Document the full-harness install path and modular bring-your-own-memory/context/store/provider/policy paths side by side.

@@ -16,6 +16,7 @@ This workspace currently includes imported project context from `daily-briefs`, 
 - [Agent orchestration goal](docs/engineering/agents/goal.md)
 - [Candidate stack](docs/architecture/candidate-stack.md)
 - [Owned core map](docs/owned-core/README.md)
+- [Release readiness gate](docs/operations/release-readiness.md)
 
 ## Operating Principle
 

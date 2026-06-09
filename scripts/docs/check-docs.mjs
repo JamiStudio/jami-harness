@@ -13,6 +13,7 @@ const requiredFiles = [
   "docs/architecture/product-architecture.md",
   "docs/operations/changelog.md",
   "docs/operations/development-workflow.md",
+  "docs/operations/release-readiness.md",
   "docs/engineering/agents/goal.md",
   "docs/engineering/agents/orchestration-reliability.md",
   "docs/engineering/standards/report-style.md",

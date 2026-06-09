@@ -13,6 +13,7 @@ Future operations docs should cover:
 - Database/object storage/queue setup.
 - Trace backend setup.
 - Release, provenance, SBOM, and package publishing.
+- Release readiness, public claims, package provenance, and attestation gates.
 - Incident response and audit export.
 - Docs publishing to Mintlify.
 
@@ -22,3 +23,4 @@ Current operating procedures:
 
 - [Development workflow](development-workflow.md)
 - [Changelog system](changelog.md)
+- [Release readiness](release-readiness.md)
