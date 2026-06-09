@@ -32,6 +32,8 @@ test("exports an evidence packet from runtime events, audit events, traces, and 
   });
 
   assert.equal(packet.packet.evidenceId, "ev_stream4_foundation_evidence_packet");
+  assert.equal(packet.packet.source.ref, "refs/heads/main");
+  assert.deepEqual(packet.packet.acceptedContracts[0], { name: "runEvent", version: "2026-06-09" });
   assert.equal(packet.packet.redaction.containsSecrets, true);
   assert.equal(packet.traces[0].attributes.token, "[redacted]");
   assert.equal(packet.artifact.kind, "evidence");

@@ -2,7 +2,7 @@
 // Do not edit by hand; run pnpm --filter @jami-studio/harness-contracts generate.
 
 export const generatedContractMetadata = {
-  generatedAt: "2026-06-09T06:40:27.708Z",
+  generatedAt: "2026-06-09T06:55:56.814Z",
   generatorVersion: "2026-06-09.contracts.1",
   source: "packages/contracts/schemas/*.schema.json"
 } as const;
@@ -263,6 +263,12 @@ export const ArtifactRecordSchema = {
         "sourceCommit": {
           "type": "string"
         },
+        "sourceRef": {
+          "type": "string"
+        },
+        "sourceRepo": {
+          "type": "string"
+        },
         "traceRef": {
           "pattern": "^trc_[a-z0-9][a-z0-9_-]*$",
           "type": "string"
@@ -270,7 +276,9 @@ export const ArtifactRecordSchema = {
       },
       "required": [
         "runId",
+        "sourceRepo",
         "sourceCommit",
+        "sourceRef",
         "evidenceRef",
         "createdAt"
       ],
@@ -400,11 +408,19 @@ export const ArtifactViewSchema = {
         },
         "sourceCommit": {
           "type": "string"
+        },
+        "sourceRef": {
+          "type": "string"
+        },
+        "sourceRepo": {
+          "type": "string"
         }
       },
       "required": [
         "runId",
+        "sourceRepo",
         "sourceCommit",
+        "sourceRef",
         "evidenceRef"
       ],
       "type": "object"
@@ -826,7 +842,20 @@ export const EvidencePacketSchema = {
   "properties": {
     "acceptedContracts": {
       "items": {
-        "type": "string"
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "version"
+        ],
+        "type": "object"
       },
       "minItems": 1,
       "type": "array"
@@ -949,6 +978,9 @@ export const EvidencePacketSchema = {
           "format": "date-time",
           "type": "string"
         },
+        "ref": {
+          "type": "string"
+        },
         "repo": {
           "type": "string"
         }
@@ -956,6 +988,7 @@ export const EvidencePacketSchema = {
       "required": [
         "repo",
         "commit",
+        "ref",
         "recordedAt"
       ],
       "type": "object"

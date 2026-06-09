@@ -255,6 +255,12 @@
               "sourceCommit": {
                 "type": "string"
               },
+              "sourceRef": {
+                "type": "string"
+              },
+              "sourceRepo": {
+                "type": "string"
+              },
               "traceRef": {
                 "pattern": "^trc_[a-z0-9][a-z0-9_-]*$",
                 "type": "string"
@@ -262,7 +268,9 @@
             },
             "required": [
               "runId",
+              "sourceRepo",
               "sourceCommit",
+              "sourceRef",
               "evidenceRef",
               "createdAt"
             ],
@@ -391,11 +399,19 @@
               },
               "sourceCommit": {
                 "type": "string"
+              },
+              "sourceRef": {
+                "type": "string"
+              },
+              "sourceRepo": {
+                "type": "string"
               }
             },
             "required": [
               "runId",
+              "sourceRepo",
               "sourceCommit",
+              "sourceRef",
               "evidenceRef"
             ],
             "type": "object"
@@ -813,7 +829,20 @@
         "properties": {
           "acceptedContracts": {
             "items": {
-              "type": "string"
+              "additionalProperties": false,
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "version": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "version"
+              ],
+              "type": "object"
             },
             "minItems": 1,
             "type": "array"
@@ -936,6 +965,9 @@
                 "format": "date-time",
                 "type": "string"
               },
+              "ref": {
+                "type": "string"
+              },
               "repo": {
                 "type": "string"
               }
@@ -943,6 +975,7 @@
             "required": [
               "repo",
               "commit",
+              "ref",
               "recordedAt"
             ],
             "type": "object"
@@ -2062,7 +2095,7 @@
     "title": "Jami Harness Contracts",
     "version": "2026-06-09",
     "x-jami-generated": {
-      "generatedAt": "2026-06-09T06:40:27.708Z",
+      "generatedAt": "2026-06-09T06:55:56.814Z",
       "generatorVersion": "2026-06-09.contracts.1",
       "source": "packages/contracts/schemas/*.schema.json"
     }

@@ -11,6 +11,7 @@
     "source": {
       "repo": "jami-harness",
       "commit": "working-tree",
+      "ref": "refs/heads/main",
       "recordedAt": "2026-06-09T12:00:00.000Z"
     },
     "commands": [],
@@ -20,7 +21,10 @@
       "privatePayloadPolicy": "none"
     },
     "acceptedContracts": [
-      "evidencePacket"
+      {
+        "name": "evidencePacket",
+        "version": "2026-06-09"
+      }
     ]
   }
 }

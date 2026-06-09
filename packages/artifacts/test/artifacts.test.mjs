@@ -18,6 +18,8 @@ test("stores artifact provenance through a replaceable memory storage port", () 
 
   assert.equal(record.storage.mode, "memory");
   assert.equal(record.provenance.runId, "run_stream4_foundation");
+  assert.equal(record.provenance.sourceRepo, "jami-harness");
+  assert.equal(record.provenance.sourceRef, "refs/heads/main");
   assert.equal(record.redaction.privatePayloadPolicy, "redacted");
   assert.equal(store.read("art_stream4_report").artifactId, "art_stream4_report");
 });
@@ -48,6 +50,8 @@ test("creates Studio UI displayable artifact views without exposing payload cont
   const view = toArtifactView(record);
 
   assert.equal(view.artifactViewId, "artv_trace_packet");
+  assert.equal(view.provenance.sourceRepo, "jami-harness");
+  assert.equal(view.provenance.sourceRef, "refs/heads/main");
   assert.equal(view.provenance.evidenceRef, "ev_stream4_foundation");
   assert.equal("payload" in view, false);
 });

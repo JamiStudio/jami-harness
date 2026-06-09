@@ -63,7 +63,9 @@ export function prepareArtifactRecord(input, options = {}) {
       promotionState: input.promotionState ?? "draft",
       provenance: {
         runId: input.runId ?? "run_unknown",
+        sourceRepo: input.sourceRepo ?? "jami-harness",
         sourceCommit: input.sourceCommit ?? "working-tree",
+        sourceRef: input.sourceRef ?? "refs/heads/main",
         evidenceRef: input.evidenceRef ?? makeId("ev", input.runId, artifactId),
         createdAt: now().toISOString(),
         commandRef: input.commandRef,
@@ -96,7 +98,9 @@ export function toArtifactView(record, renderers = [{ rendererId: "renderer_json
     renderers,
     provenance: {
       runId: record.provenance.runId,
+      sourceRepo: record.provenance.sourceRepo,
       sourceCommit: record.provenance.sourceCommit,
+      sourceRef: record.provenance.sourceRef,
       evidenceRef: record.provenance.evidenceRef,
     },
   };

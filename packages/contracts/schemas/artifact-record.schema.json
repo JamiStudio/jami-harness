@@ -24,11 +24,13 @@
     "promotionState": { "type": "string", "enum": ["draft", "reviewed", "accepted", "rejected", "promoted"] },
     "provenance": {
       "type": "object",
-      "required": ["runId", "sourceCommit", "evidenceRef", "createdAt"],
+      "required": ["runId", "sourceRepo", "sourceCommit", "sourceRef", "evidenceRef", "createdAt"],
       "additionalProperties": false,
       "properties": {
         "runId": { "type": "string", "pattern": "^run_[a-z0-9][a-z0-9_-]*$" },
+        "sourceRepo": { "type": "string" },
         "sourceCommit": { "type": "string" },
+        "sourceRef": { "type": "string" },
         "evidenceRef": { "type": "string", "pattern": "^ev_[a-z0-9][a-z0-9_-]*$" },
         "createdAt": { "type": "string", "format": "date-time" },
         "commandRef": { "type": "string" },

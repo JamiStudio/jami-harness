@@ -23,7 +23,9 @@
     ],
     "provenance": {
       "runId": "run_contract_spine",
+      "sourceRepo": "jami-harness",
       "sourceCommit": "ef5be4ea270b42bca2b8a30a7c310e4f78cb8e37",
+      "sourceRef": "refs/heads/main",
       "evidenceRef": "ev_contract_validation"
     }
   }

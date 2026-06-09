@@ -29,11 +29,13 @@
     },
     "provenance": {
       "type": "object",
-      "required": ["runId", "sourceCommit", "evidenceRef"],
+      "required": ["runId", "sourceRepo", "sourceCommit", "sourceRef", "evidenceRef"],
       "additionalProperties": false,
       "properties": {
         "runId": { "type": "string", "pattern": "^run_[a-z0-9][a-z0-9_-]*$" },
+        "sourceRepo": { "type": "string" },
         "sourceCommit": { "type": "string" },
+        "sourceRef": { "type": "string" },
         "evidenceRef": { "type": "string" }
       }
     }

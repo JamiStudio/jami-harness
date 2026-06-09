@@ -66,6 +66,7 @@ export function createRunObservability(options = {}) {
         source: {
           repo: input.repo ?? "jami-harness",
           commit: input.commit ?? "working-tree",
+          ref: input.ref ?? "refs/heads/main",
           recordedAt: now().toISOString(),
         },
         commands: redactedCommands.length > 0 ? redactedCommands : [{
@@ -84,14 +85,22 @@ export function createRunObservability(options = {}) {
           privatePayloadPolicy: containsSecrets ? "redacted" : "none",
           notes: "Prompts, inline secrets, credentials, private payloads, and tool metadata are redacted or omitted before export.",
         },
-        acceptedContracts: input.acceptedContracts ?? ["runEvent", "auditEvent", "traceEvent", "artifactRecord", "evidencePacket"],
+        acceptedContracts: input.acceptedContracts ?? [
+          { name: "runEvent", version: SCHEMA_VERSION },
+          { name: "auditEvent", version: SCHEMA_VERSION },
+          { name: "traceEvent", version: SCHEMA_VERSION },
+          { name: "artifactRecord", version: SCHEMA_VERSION },
+          { name: "evidencePacket", version: SCHEMA_VERSION },
+        ],
       };
       const artifact = artifactStore.write({
         artifactId: input.artifactId ?? `art_${evidenceId.replace(/^ev_/, "")}`,
         kind: "evidence",
         title: packet.subject,
         runId: input.runId ?? "run_unknown",
+        sourceRepo: packet.source.repo,
         sourceCommit: packet.source.commit,
+        sourceRef: packet.source.ref,
         evidenceRef: evidenceId,
         payload: packet,
       });

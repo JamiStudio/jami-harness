@@ -64,7 +64,13 @@ test("emits typed lifecycle, UI payload, artifact view, and allowed action event
     kind: "report",
     promotionState: "draft",
     renderers: [{ rendererId: "renderer_markdown", mode: "markdown" }],
-    provenance: { runId: "run_runtime_fixture", sourceCommit: "local", evidenceRef: "ev_runtime_report" },
+    provenance: {
+      runId: "run_runtime_fixture",
+      sourceRepo: "jami-harness",
+      sourceCommit: "local",
+      sourceRef: "refs/heads/main",
+      evidenceRef: "ev_runtime_report",
+    },
   });
   const action = await kernel.requestAction(actionRef(), { approval: approval() });
 
@@ -183,4 +189,21 @@ test("unsafe UI payload metadata produces renderer error instead of executable b
   assert.equal(result.executable, false);
   assert.equal(result.event.eventType, "renderer.error");
   assert.equal(result.event.rendererState, "error_state");
+});
+
+test("artifact views without full provenance fail closed", () => {
+  const kernel = createKernel();
+  const result = kernel.emitArtifactView({
+    schemaVersion: "2026-06-09",
+    artifactViewId: "artv_runtime_report",
+    artifactId: "art_runtime_report",
+    kind: "report",
+    promotionState: "draft",
+    renderers: [{ rendererId: "renderer_markdown", mode: "markdown" }],
+    provenance: { runId: "run_runtime_fixture", sourceCommit: "local", evidenceRef: "ev_runtime_report" },
+  });
+
+  assert.equal(result.executable, false);
+  assert.match(result.errors.join("; "), /sourceRepo|sourceRef/);
+  assert.equal(result.event.eventType, "run.failed");
 });

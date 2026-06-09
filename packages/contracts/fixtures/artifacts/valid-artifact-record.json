@@ -11,7 +11,9 @@
     "promotionState": "draft",
     "provenance": {
       "runId": "run_stream4_foundation",
+      "sourceRepo": "jami-harness",
       "sourceCommit": "working-tree",
+      "sourceRef": "refs/heads/main",
       "evidenceRef": "ev_stream4_foundation",
       "createdAt": "2026-06-09T12:00:00.000Z",
       "traceRef": "trc_stream4_foundation",

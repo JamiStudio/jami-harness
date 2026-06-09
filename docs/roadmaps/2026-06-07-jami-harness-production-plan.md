@@ -279,6 +279,10 @@ Pass status:
   references, memory permission filtering, citation freshness, retention/redaction, and
   deterministic context replay. These are not full hosted artifact stores, OpenTelemetry
   exporters, vector search backends, docs generators, CLI surfaces, or workbench views.
+- 2026-06-09 Stream 4 pass 2 hardened artifact/evidence provenance by requiring source
+  repo, commit, and ref fields on artifact records, artifact views, and evidence packets;
+  accepted evidence contracts now record name plus schema version, and runtime artifact
+  view emission fails closed when required provenance is missing.
 - Root verification now runs `pnpm contracts:validate` through `pnpm verify`.
 - The workstream remains open because broad run/task/tool/docs/release schemas, core
   ports, primitive lifecycle/versioning docs, and cross-repo Studio UI consumer fixtures

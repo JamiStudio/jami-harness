@@ -6,6 +6,9 @@ const ROUTE_PATTERN = /^harness:\/\/actions\/[a-z0-9][a-z0-9-]*$/;
 const TASK_ID_PATTERN = /^task_[a-z0-9][a-z0-9_-]*$/;
 const UI_PAYLOAD_ID_PATTERN = /^uip_[a-z0-9][a-z0-9_-]*$/;
 const ARTIFACT_VIEW_ID_PATTERN = /^artv_[a-z0-9][a-z0-9_-]*$/;
+const ARTIFACT_ID_PATTERN = /^art_[a-z0-9][a-z0-9_-]*$/;
+const EVIDENCE_ID_PATTERN = /^ev_[a-z0-9][a-z0-9_-]*$/;
+const RUN_ID_PATTERN = /^run_[a-z0-9][a-z0-9_-]*$/;
 const ALLOWED_ACTION_RISKS = new Set(["read", "write", "destructive", "external", "secret_adjacent"]);
 const ALLOWED_CONFIRMATION_MODES = new Set(["none", "confirm", "approval_required", "owner_required"]);
 const ALLOWED_ACTION_STATES = new Set(["available", "disabled", "denied", "pending_approval", "executed", "failed"]);
@@ -255,6 +258,22 @@ function validateArtifactView(artifactView) {
   if (!isObject(artifactView)) return { valid: false, errors: ["artifactView must be an object"] };
   if (artifactView.schemaVersion !== SCHEMA_VERSION) errors.push("artifactView.schemaVersion is invalid");
   if (!ARTIFACT_VIEW_ID_PATTERN.test(artifactView.artifactViewId ?? "")) errors.push("artifactView.artifactViewId is malformed");
+  if (!ARTIFACT_ID_PATTERN.test(artifactView.artifactId ?? "")) errors.push("artifactView.artifactId is malformed");
+  if (!isObject(artifactView.provenance)) {
+    errors.push("artifactView.provenance is required");
+  } else {
+    if (!RUN_ID_PATTERN.test(artifactView.provenance.runId ?? "")) {
+      errors.push("artifactView.provenance.runId is malformed");
+    }
+    for (const field of ["sourceRepo", "sourceCommit", "sourceRef"]) {
+      if (typeof artifactView.provenance[field] !== "string" || artifactView.provenance[field].length === 0) {
+        errors.push(`artifactView.provenance.${field} is required`);
+      }
+    }
+    if (!EVIDENCE_ID_PATTERN.test(artifactView.provenance.evidenceRef ?? "")) {
+      errors.push("artifactView.provenance.evidenceRef is malformed");
+    }
+  }
   if (hasForbiddenSecretValue(artifactView)) errors.push("artifactView contains inline secret material");
   return { valid: errors.length === 0, errors };
 }
