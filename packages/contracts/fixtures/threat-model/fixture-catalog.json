@@ -34,6 +34,11 @@
         "expectedControl": "Approvals bind actor, scope, action, and expiry."
       },
       {
+        "riskId": "risk_scope_escalation",
+        "category": "scope_escalation",
+        "expectedControl": "Actions deny when actor scopes do not cover requested scopes."
+      },
+      {
         "riskId": "risk_denied_action",
         "category": "denied_action",
         "expectedControl": "Denied actions render as denied states and never execute side effects."
@@ -70,6 +75,55 @@
         "expectedValid": false,
         "expectedOutcome": "deny",
         "fixturePath": "fixtures/observability/invalid-evidence-packet-no-command.json"
+      },
+      {
+        "caseId": "valid-policy-decision-deny-prompt-injection",
+        "riskId": "risk_prompt_injection",
+        "expectedValid": true,
+        "expectedOutcome": "deny",
+        "fixturePath": "fixtures/policy/valid-policy-decision-deny-prompt-injection.json"
+      },
+      {
+        "caseId": "valid-policy-decision-deny-tool-metadata-poisoning",
+        "riskId": "risk_tool_metadata_poisoning",
+        "expectedValid": true,
+        "expectedOutcome": "deny",
+        "fixturePath": "fixtures/policy/valid-policy-decision-deny-tool-metadata-poisoning.json"
+      },
+      {
+        "caseId": "valid-policy-decision-deny-mcp-transport-abuse",
+        "riskId": "risk_transport_abuse",
+        "expectedValid": true,
+        "expectedOutcome": "deny",
+        "fixturePath": "fixtures/policy/valid-policy-decision-deny-mcp-transport-abuse.json"
+      },
+      {
+        "caseId": "valid-policy-decision-deny-secret-exfiltration",
+        "riskId": "risk_secret_exfiltration",
+        "expectedValid": true,
+        "expectedOutcome": "deny",
+        "fixturePath": "fixtures/policy/valid-policy-decision-deny-secret-exfiltration.json"
+      },
+      {
+        "caseId": "valid-policy-decision-deny-cross-scope-action",
+        "riskId": "risk_scope_escalation",
+        "expectedValid": true,
+        "expectedOutcome": "deny",
+        "fixturePath": "fixtures/policy/valid-policy-decision-deny-cross-scope-action.json"
+      },
+      {
+        "caseId": "invalid-approval-replay-token",
+        "riskId": "risk_approval_replay",
+        "expectedValid": false,
+        "expectedOutcome": "deny",
+        "fixturePath": "fixtures/policy/invalid-approval-replay-token.json"
+      },
+      {
+        "caseId": "invalid-secret-ref-value-leak",
+        "riskId": "risk_redaction_failure",
+        "expectedValid": false,
+        "expectedOutcome": "deny",
+        "fixturePath": "fixtures/policy/invalid-secret-ref-value-leak.json"
       }
     ]
   }

@@ -16,6 +16,10 @@ const requiredAnchors = new Map([
   ["suiteRef", "suite-ref.schema.json"],
   ["capabilityManifest", "capability-manifest.schema.json"],
   ["primitiveManifest", "primitive-manifest.schema.json"],
+  ["policyDecision", "policy-decision.schema.json"],
+  ["approvalRequest", "approval-request.schema.json"],
+  ["auditEvent", "audit-event.schema.json"],
+  ["secretRef", "secret-ref.schema.json"],
   ["evidencePacket", "evidence-packet.schema.json"],
   ["threatModelFixtureCatalog", "threat-model-fixture-catalog.schema.json"],
 ]);
@@ -27,6 +31,9 @@ const requiredNegativeCaseIds = new Set([
   "invalid-ui-payload",
   "invalid-ui-unsafe-prop",
   "invalid-evidence-packet-no-command",
+  "invalid-secret-ref-value-leak",
+  "invalid-approval-replay-token",
+  "invalid-policy-decision-without-audit",
 ]);
 const fixtureCoverage = new Map();
 const negativeCaseCoverage = new Set();
@@ -173,6 +180,49 @@ function validateSemantics(schemaTitle, value) {
     }
     if (value.eventType === "policy.decision" && !value.policyDecision) {
       errors.push("$.policyDecision is required for policy.decision events");
+    }
+  }
+
+  if (schemaTitle === "policyDecision") {
+    if (value.decision !== "allow" && !value.auditRef) {
+      errors.push("$.auditRef is required for non-allow decisions");
+    }
+    if (value.decision === "allow" && value.risk !== "read" && !value.approvalRef) {
+      errors.push("$.approvalRef is required when elevated-risk actions are allowed");
+    }
+    if (value.redactions.some((redaction) => redaction.mode === "none" && redaction.reason.includes("secret"))) {
+      errors.push("$.redactions cannot use mode none for secret-related reasons");
+    }
+  }
+
+  if (schemaTitle === "approvalRequest") {
+    const requestedAt = Date.parse(value.requestedAt);
+    const expiresAt = Date.parse(value.expiresAt);
+    if (!Number.isNaN(requestedAt) && !Number.isNaN(expiresAt) && expiresAt <= requestedAt) {
+      errors.push("$.expiresAt must be after $.requestedAt");
+    }
+    if (value.status === "replayed" && !value.replayRef) {
+      errors.push("$.replayRef is required when $.status is replayed");
+    }
+    if (value.approvalToken || value.tokenValue) {
+      errors.push("approval token values are not allowed in approval request contracts");
+    }
+  }
+
+  if (schemaTitle === "auditEvent") {
+    if (value.outcome !== "allow" && value.redactionMode === "none") {
+      errors.push("$.redactionMode cannot be none for non-allow audit outcomes");
+    }
+    if (value.secretRefs?.some((secretRef) => /value|token|key|secret/i.test(secretRef))) {
+      errors.push("$.secretRefs must contain reference ids only, not secret-looking values");
+    }
+  }
+
+  if (schemaTitle === "secretRef") {
+    for (const forbidden of ["value", "plaintext", "token", "apiKey", "secret"]) {
+      if (forbidden in value) {
+        errors.push(`$.${forbidden} is not allowed in secret references`);
+      }
     }
   }
 

@@ -1,6 +1,6 @@
 {
   "generated": {
-    "generatedAt": "2026-06-09T05:11:26.953Z",
+    "generatedAt": "2026-06-09T05:42:27.212Z",
     "generatorVersion": "2026-06-09.contracts.1",
     "source": "packages/contracts/schemas/*.schema.json"
   },
@@ -22,6 +22,26 @@
       "title": "actionRef"
     },
     {
+      "file": "schemas/approval-request.schema.json",
+      "id": "https://jami.studio/schemas/harness/approval-request.schema.json",
+      "required": [
+        "schemaVersion",
+        "approvalId",
+        "runId",
+        "actorId",
+        "projectId",
+        "environment",
+        "actionId",
+        "requestedScopes",
+        "risk",
+        "status",
+        "requestedAt",
+        "expiresAt",
+        "auditRef"
+      ],
+      "title": "approvalRequest"
+    },
+    {
       "file": "schemas/artifact-view.schema.json",
       "id": "https://jami.studio/schemas/harness/artifact-view.schema.json",
       "required": [
@@ -34,6 +54,23 @@
         "provenance"
       ],
       "title": "artifactView"
+    },
+    {
+      "file": "schemas/audit-event.schema.json",
+      "id": "https://jami.studio/schemas/harness/audit-event.schema.json",
+      "required": [
+        "schemaVersion",
+        "auditId",
+        "runId",
+        "actorId",
+        "projectId",
+        "environment",
+        "eventType",
+        "outcome",
+        "occurredAt",
+        "redactionMode"
+      ],
+      "title": "auditEvent"
     },
     {
       "file": "schemas/capability-manifest.schema.json",
@@ -67,6 +104,26 @@
       "title": "evidencePacket"
     },
     {
+      "file": "schemas/policy-decision.schema.json",
+      "id": "https://jami.studio/schemas/harness/policy-decision.schema.json",
+      "required": [
+        "schemaVersion",
+        "decisionId",
+        "runId",
+        "actorId",
+        "projectId",
+        "environment",
+        "decision",
+        "risk",
+        "requestedScopes",
+        "matchedScopes",
+        "reasons",
+        "redactions",
+        "decidedAt"
+      ],
+      "title": "policyDecision"
+    },
+    {
       "file": "schemas/primitive-manifest.schema.json",
       "id": "https://jami.studio/schemas/harness/primitive-manifest.schema.json",
       "required": [
@@ -97,6 +154,19 @@
         "eventType"
       ],
       "title": "runEvent"
+    },
+    {
+      "file": "schemas/secret-ref.schema.json",
+      "id": "https://jami.studio/schemas/harness/secret-ref.schema.json",
+      "required": [
+        "schemaVersion",
+        "secretId",
+        "provider",
+        "scope",
+        "redactionClass",
+        "createdAt"
+      ],
+      "title": "secretRef"
     },
     {
       "file": "schemas/suite-ref.schema.json",

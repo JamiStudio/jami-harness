@@ -1,0 +1,13 @@
+{
+  "name": "@jami-studio/harness-policy",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Harness-owned policy, approval, identity, secret-reference, and audit runtime spine.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  }
+}

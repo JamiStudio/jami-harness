@@ -1,0 +1,23 @@
+{
+  "$schema": "../../schemas/policy-decision.schema.json",
+  "expectedValid": true,
+  "caseId": "valid-policy-decision-deny-cross-scope-action",
+  "description": "Cross-scope action attempts deny when actor scopes do not cover requested scopes.",
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "decisionId": "pol_cross_scope_action_denied",
+    "runId": "run_policy_fixture",
+    "actorId": "actor_developer",
+    "projectId": "proj_jami_harness",
+    "environment": "local",
+    "decision": "deny",
+    "risk": "write",
+    "requestedScopes": ["project:other:write"],
+    "matchedScopes": [],
+    "reasons": ["Actor scope does not cover requested project write scope."],
+    "auditRef": "aud_cross_scope_action_denied",
+    "evidenceRef": "ev_cross_scope_action_denied",
+    "redactions": [],
+    "decidedAt": "2026-06-09T12:00:00.000Z"
+  }
+}

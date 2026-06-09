@@ -10,7 +10,8 @@
     "contracts:generate": "node packages/contracts/scripts/generate-contracts.mjs",
     "contracts:generate:check": "node packages/contracts/scripts/generate-contracts.mjs --check",
     "contracts:validate": "node packages/contracts/scripts/validate-contracts.mjs",
-    "verify": "node scripts/docs/check-docs.mjs && node packages/contracts/scripts/generate-contracts.mjs --check && node packages/contracts/scripts/validate-contracts.mjs"
+    "policy:test": "node --test packages/policy/test/*.test.mjs",
+    "verify": "node scripts/docs/check-docs.mjs && node packages/contracts/scripts/generate-contracts.mjs --check && node packages/contracts/scripts/validate-contracts.mjs && node --test packages/policy/test/*.test.mjs"
   },
   "engines": {
     "node": ">=24.0.0",

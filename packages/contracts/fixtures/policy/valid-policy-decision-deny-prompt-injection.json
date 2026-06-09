@@ -1,0 +1,29 @@
+{
+  "$schema": "../../schemas/policy-decision.schema.json",
+  "expectedValid": true,
+  "caseId": "valid-policy-decision-deny-prompt-injection",
+  "description": "Prompt injection attempts produce a denied policy decision with audit evidence.",
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "decisionId": "pol_prompt_injection_denied",
+    "runId": "run_policy_fixture",
+    "actorId": "actor_developer",
+    "projectId": "proj_jami_harness",
+    "environment": "local",
+    "decision": "deny",
+    "risk": "external",
+    "requestedScopes": ["tool:network"],
+    "matchedScopes": [],
+    "reasons": ["Untrusted prompt content requested external tool execution."],
+    "auditRef": "aud_prompt_injection_denied",
+    "evidenceRef": "ev_prompt_injection_denied",
+    "redactions": [
+      {
+        "field": "prompt",
+        "mode": "redacted",
+        "reason": "prompt injection payload excluded from evidence"
+      }
+    ],
+    "decidedAt": "2026-06-09T12:00:00.000Z"
+  }
+}

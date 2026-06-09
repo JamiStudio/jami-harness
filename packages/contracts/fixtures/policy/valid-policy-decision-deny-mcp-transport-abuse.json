@@ -1,0 +1,23 @@
+{
+  "$schema": "../../schemas/policy-decision.schema.json",
+  "expectedValid": true,
+  "caseId": "valid-policy-decision-deny-mcp-transport-abuse",
+  "description": "MCP transport abuse is denied when origin, audience, or session controls are missing.",
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "decisionId": "pol_mcp_transport_abuse_denied",
+    "runId": "run_policy_fixture",
+    "actorId": "actor_developer",
+    "projectId": "proj_jami_harness",
+    "environment": "local",
+    "decision": "deny",
+    "risk": "external",
+    "requestedScopes": ["tool:mcp:connect"],
+    "matchedScopes": [],
+    "reasons": ["Remote MCP transport did not declare trusted origin and session binding."],
+    "auditRef": "aud_mcp_transport_abuse_denied",
+    "evidenceRef": "ev_mcp_transport_abuse_denied",
+    "redactions": [],
+    "decidedAt": "2026-06-09T12:00:00.000Z"
+  }
+}

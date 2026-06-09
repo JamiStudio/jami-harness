@@ -1,0 +1,21 @@
+{
+  "$schema": "../../schemas/audit-event.schema.json",
+  "expectedValid": true,
+  "caseId": "valid-audit-event-denied-action",
+  "description": "Denied actions emit redacted audit evidence that UI can reference without executing side effects.",
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "auditId": "aud_denied_publish_release",
+    "runId": "run_policy_fixture",
+    "actorId": "actor_developer",
+    "projectId": "proj_jami_harness",
+    "environment": "local",
+    "eventType": "tool.denied",
+    "outcome": "deny",
+    "policyDecisionRef": "pol_missing_release_scope",
+    "evidenceRef": "ev_denied_publish_release",
+    "occurredAt": "2026-06-09T12:00:00.000Z",
+    "redactionMode": "redacted",
+    "summary": "Publish release was denied because actor lacked release scope."
+  }
+}

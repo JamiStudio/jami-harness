@@ -1,0 +1,22 @@
+{
+  "$schema": "../../schemas/approval-request.schema.json",
+  "expectedValid": true,
+  "caseId": "valid-approval-request",
+  "description": "Approval requests bind actor, run, action, scope, expiry, audit, and evidence without carrying replayable token values.",
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "approvalId": "apr_publish_release",
+    "runId": "run_policy_fixture",
+    "actorId": "actor_developer",
+    "projectId": "proj_jami_harness",
+    "environment": "local",
+    "actionId": "act_publish_release",
+    "requestedScopes": ["release:publish"],
+    "risk": "external",
+    "status": "requested",
+    "requestedAt": "2026-06-09T12:00:00.000Z",
+    "expiresAt": "2026-06-09T12:15:00.000Z",
+    "auditRef": "aud_publish_release_approval_requested",
+    "evidenceRef": "ev_publish_release_approval_requested"
+  }
+}

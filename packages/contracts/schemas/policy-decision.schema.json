@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jami.studio/schemas/harness/policy-decision.schema.json",
+  "title": "policyDecision",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "decisionId",
+    "runId",
+    "actorId",
+    "projectId",
+    "environment",
+    "decision",
+    "risk",
+    "requestedScopes",
+    "matchedScopes",
+    "reasons",
+    "redactions",
+    "decidedAt"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "2026-06-09" },
+    "decisionId": { "type": "string", "pattern": "^pol_[a-z0-9][a-z0-9_-]*$" },
+    "runId": { "type": "string", "pattern": "^run_[a-z0-9][a-z0-9_-]*$" },
+    "actorId": { "type": "string", "pattern": "^actor_[a-z0-9][a-z0-9_-]*$" },
+    "projectId": { "type": "string", "pattern": "^proj_[a-z0-9][a-z0-9_-]*$" },
+    "environment": { "type": "string", "enum": ["local", "preview", "production"] },
+    "decision": { "type": "string", "enum": ["allow", "deny", "needs_approval", "needs_owner"] },
+    "risk": { "type": "string", "enum": ["read", "write", "destructive", "external", "secret_adjacent"] },
+    "requestedScopes": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "matchedScopes": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "reasons": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" }
+    },
+    "approvalRef": { "type": "string", "pattern": "^apr_[a-z0-9][a-z0-9_-]*$" },
+    "auditRef": { "type": "string", "pattern": "^aud_[a-z0-9][a-z0-9_-]*$" },
+    "evidenceRef": { "type": "string", "pattern": "^ev_[a-z0-9][a-z0-9_-]*$" },
+    "redactions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["field", "mode", "reason"],
+        "additionalProperties": false,
+        "properties": {
+          "field": { "type": "string" },
+          "mode": { "type": "string", "enum": ["none", "redacted", "omitted"] },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "decidedAt": { "type": "string", "format": "date-time" }
+  }
+}

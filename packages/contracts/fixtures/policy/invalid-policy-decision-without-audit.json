@@ -1,0 +1,21 @@
+{
+  "$schema": "../../schemas/policy-decision.schema.json",
+  "expectedValid": false,
+  "caseId": "invalid-policy-decision-without-audit",
+  "description": "Non-allow policy decisions must carry audit evidence.",
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "decisionId": "pol_missing_audit",
+    "runId": "run_policy_fixture",
+    "actorId": "actor_developer",
+    "projectId": "proj_jami_harness",
+    "environment": "local",
+    "decision": "deny",
+    "risk": "external",
+    "requestedScopes": ["tool:network"],
+    "matchedScopes": [],
+    "reasons": ["Missing audit reference should fail validation."],
+    "redactions": [],
+    "decidedAt": "2026-06-09T12:00:00.000Z"
+  }
+}

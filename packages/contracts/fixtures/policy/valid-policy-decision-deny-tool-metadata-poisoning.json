@@ -1,0 +1,23 @@
+{
+  "$schema": "../../schemas/policy-decision.schema.json",
+  "expectedValid": true,
+  "caseId": "valid-policy-decision-deny-tool-metadata-poisoning",
+  "description": "Poisoned tool metadata is denied against the structured capability contract.",
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "decisionId": "pol_tool_metadata_poisoning_denied",
+    "runId": "run_policy_fixture",
+    "actorId": "actor_developer",
+    "projectId": "proj_jami_harness",
+    "environment": "local",
+    "decision": "deny",
+    "risk": "write",
+    "requestedScopes": ["tool:filesystem:write"],
+    "matchedScopes": [],
+    "reasons": ["Tool description requested a broader filesystem write than the manifest allows."],
+    "auditRef": "aud_tool_metadata_poisoning_denied",
+    "evidenceRef": "ev_tool_metadata_poisoning_denied",
+    "redactions": [],
+    "decidedAt": "2026-06-09T12:00:00.000Z"
+  }
+}

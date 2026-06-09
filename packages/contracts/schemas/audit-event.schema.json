@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jami.studio/schemas/harness/audit-event.schema.json",
+  "title": "auditEvent",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "auditId",
+    "runId",
+    "actorId",
+    "projectId",
+    "environment",
+    "eventType",
+    "outcome",
+    "occurredAt",
+    "redactionMode"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "2026-06-09" },
+    "auditId": { "type": "string", "pattern": "^aud_[a-z0-9][a-z0-9_-]*$" },
+    "runId": { "type": "string", "pattern": "^run_[a-z0-9][a-z0-9_-]*$" },
+    "actorId": { "type": "string", "pattern": "^actor_[a-z0-9][a-z0-9_-]*$" },
+    "projectId": { "type": "string", "pattern": "^proj_[a-z0-9][a-z0-9_-]*$" },
+    "environment": { "type": "string", "enum": ["local", "preview", "production"] },
+    "eventType": { "type": "string", "enum": ["policy.decision", "approval.requested", "approval.resolved", "tool.denied", "secret.redacted"] },
+    "outcome": { "type": "string", "enum": ["allow", "deny", "needs_approval", "needs_owner", "redacted"] },
+    "policyDecisionRef": { "type": "string", "pattern": "^pol_[a-z0-9][a-z0-9_-]*$" },
+    "approvalRef": { "type": "string", "pattern": "^apr_[a-z0-9][a-z0-9_-]*$" },
+    "evidenceRef": { "type": "string", "pattern": "^ev_[a-z0-9][a-z0-9_-]*$" },
+    "secretRefs": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^sec_[a-z0-9][a-z0-9_-]*$" }
+    },
+    "occurredAt": { "type": "string", "format": "date-time" },
+    "redactionMode": { "type": "string", "enum": ["none", "redacted", "omitted"] },
+    "summary": { "type": "string" }
+  }
+}

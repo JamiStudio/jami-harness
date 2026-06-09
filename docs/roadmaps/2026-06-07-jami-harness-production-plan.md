@@ -258,6 +258,11 @@ Pass status:
   contract artifacts (`contracts.ts`, OpenAPI components, and reference manifest),
   first evidence packet and threat-model fixture catalog anchors, and drift checks in
   the contract validation/verify path.
+- 2026-06-09 Stream 3 policy runtime and safe rendering, harness lane, pass 1 added
+  policy, approval, audit, and secret-reference contract anchors plus generated artifacts
+  and negative fixtures for prompt injection, tool metadata poisoning, MCP transport
+  abuse, secret exfiltration, cross-scope actions, approval replay, denied action audit state, and
+  secret-reference redaction.
 - Root verification now runs `pnpm contracts:validate` through `pnpm verify`.
 - The workstream remains open because broad run/task/policy/memory/evidence schemas,
   core ports, primitive lifecycle/versioning docs, and cross-repo Studio UI consumer
@@ -279,7 +284,7 @@ Primary areas:
 
 Implementation tasks:
 
-- [ ] Add run, task, plan, actor, project, environment, tool, policy, approval, artifact, memory, trace, audit, evidence, docs-source, and release-packet schemas.
+- [~] Add run, task, plan, actor, project, environment, tool, policy, approval, artifact, memory, trace, audit, evidence, docs-source, and release-packet schemas.
 - [x] Add harness-side schema anchors for `runEvent`, `uiPayload`, `artifactView`, `actionRef`, `themeRef`, and `suiteRef` references without importing UI implementation ownership.
 - [ ] Define core ports for model, store, policy, tools, memory, context, search, artifacts, observability, secrets, docs output, and UI references.
 - [x] Define capability manifest format so modules can declare supported features, required scopes, failure modes, and replacement compatibility.
@@ -364,13 +369,24 @@ Primary areas:
 
 Implementation tasks:
 
-- [ ] Define actor/project/environment/role/scope model.
-- [ ] Implement approval modes and policy decisions.
-- [ ] Add secret-reference contracts with no-value leakage.
-- [ ] Add adapter for a policy engine while keeping harness vocabulary canonical.
-- [ ] Ship a default rules-based policy engine while preserving a stable policy-engine replacement port.
-- [ ] Add audit events for all policy decisions.
-- [ ] Add negative fixtures for prompt injection, tool metadata poisoning, approval replay, cross-scope action attempts, secret exfiltration attempts, and UI denied-action states.
+- [~] Define actor/project/environment/role/scope model.
+- [~] Implement approval modes and policy decisions.
+- [x] Add secret-reference contracts with no-value leakage.
+- [~] Add adapter for a policy engine while keeping harness vocabulary canonical.
+- [~] Ship a default rules-based policy engine while preserving a stable policy-engine replacement port.
+- [~] Add audit events for all policy decisions.
+- [~] Add negative fixtures for prompt injection, tool metadata poisoning, approval replay, cross-scope action attempts, secret exfiltration attempts, and UI denied-action states.
+
+Pass status:
+
+- 2026-06-09 Stream 3 policy runtime and safe rendering, harness lane, pass 1 added
+  `packages/policy` with a dependency-free default-deny engine, a small policy-gated
+  run helper, and tests for scope denial, approval requirements, approval replay/expiry,
+  prompt injection, tool metadata poisoning, MCP Streamable HTTP transport controls,
+  secret exfiltration, secret value redaction, and denied-action audit emission.
+- The contract spine now includes `policyDecision`, `approvalRequest`, `auditEvent`, and
+  `secretRef` anchors and generated outputs. Studio UI still needs matching renderer-side
+  denied-state consumer fixtures in its lane; this harness pass did not edit Studio UI.
 
 Exit criteria:
 

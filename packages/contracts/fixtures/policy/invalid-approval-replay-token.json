@@ -1,0 +1,23 @@
+{
+  "$schema": "../../schemas/approval-request.schema.json",
+  "expectedValid": false,
+  "caseId": "invalid-approval-replay-token",
+  "description": "Approval replay attempts cannot carry raw approval token values in contract payloads.",
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "approvalId": "apr_replayed_publish_release",
+    "runId": "run_policy_fixture",
+    "actorId": "actor_developer",
+    "projectId": "proj_jami_harness",
+    "environment": "local",
+    "actionId": "act_publish_release",
+    "requestedScopes": ["release:publish"],
+    "risk": "external",
+    "status": "replayed",
+    "requestedAt": "2026-06-09T12:00:00.000Z",
+    "expiresAt": "2026-06-09T12:15:00.000Z",
+    "replayRef": "apr_publish_release",
+    "approvalToken": "do-not-serialize-approval-token-values",
+    "auditRef": "aud_approval_replay_denied"
+  }
+}

@@ -18,6 +18,10 @@ implementation.
 - `suiteRef`: references to Studio UI suite install graphs and optional harness capabilities.
 - `capabilityManifest`: harness module and adapter capability vocabulary.
 - `primitiveManifest`: composable primitive registry vocabulary.
+- `policyDecision`: default-deny policy decisions with actor, project, environment, scope, risk, approval, audit, evidence, and redaction references.
+- `approvalRequest`: approval lifecycle records bound to actor, run, action, scopes, expiry, audit, and evidence.
+- `auditEvent`: policy/approval/tool-denial audit records that preserve redaction state.
+- `secretRef`: scoped secret references with redaction metadata and no serialized secret values.
 - `evidencePacket`: source, command, artifact, freshness, contract, and redaction evidence for generated claims.
 - `threatModelFixtureCatalog`: risk-to-fixture catalog for policy, tool, UI action, memory, and evidence hardening.
 
@@ -48,6 +52,13 @@ runtime or renderer work expands:
 - theme references
 - suite references
 - unsafe UI prop rejection
+- prompt injection denial
+- tool metadata poisoning denial
+- MCP transport abuse denial
+- secret exfiltration denial
+- cross-scope action denial
+- approval replay rejection
+- secret-reference value leakage rejection
 - evidence packets missing command evidence
 - threat-model fixture catalog coverage
 
@@ -69,6 +80,10 @@ and unsafe UI props.
 Evidence packet checks reject secret-bearing packets without a redaction policy and
 require unavailable commands to explain why they were unavailable. Threat-model catalog
 checks require every fixture to reference a declared risk.
+Policy checks require non-allow decisions to carry audit evidence, elevated-risk allow
+decisions to carry approval references, approval requests to avoid replayable token
+values, audit events to redact non-allow outcomes, and secret references to carry only
+reference metadata.
 
 ## Verification
 

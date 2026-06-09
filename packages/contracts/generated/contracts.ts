@@ -2,7 +2,7 @@
 // Do not edit by hand; run pnpm --filter @jami-studio/harness-contracts generate.
 
 export const generatedContractMetadata = {
-  generatedAt: "2026-06-09T05:11:26.953Z",
+  generatedAt: "2026-06-09T05:42:27.212Z",
   generatorVersion: "2026-06-09.contracts.1",
   source: "packages/contracts/schemas/*.schema.json"
 } as const;
@@ -93,6 +93,112 @@ export const ActionRefSchema = {
     "state"
   ],
   "title": "actionRef",
+  "type": "object"
+} as const;
+
+export const ApprovalRequestSchema = {
+  "$id": "https://jami.studio/schemas/harness/approval-request.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "actionId": {
+      "pattern": "^act_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "actorId": {
+      "pattern": "^actor_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "approvalId": {
+      "pattern": "^apr_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "auditRef": {
+      "pattern": "^aud_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "environment": {
+      "enum": [
+        "local",
+        "preview",
+        "production"
+      ],
+      "type": "string"
+    },
+    "evidenceRef": {
+      "pattern": "^ev_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "expiresAt": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "projectId": {
+      "pattern": "^proj_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "replayRef": {
+      "type": "string"
+    },
+    "requestedAt": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "requestedScopes": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "resolvedAt": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "risk": {
+      "enum": [
+        "write",
+        "destructive",
+        "external",
+        "secret_adjacent"
+      ],
+      "type": "string"
+    },
+    "runId": {
+      "pattern": "^run_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": "2026-06-09"
+    },
+    "status": {
+      "enum": [
+        "requested",
+        "approved",
+        "denied",
+        "expired",
+        "replayed",
+        "cancelled"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "approvalId",
+    "runId",
+    "actorId",
+    "projectId",
+    "environment",
+    "actionId",
+    "requestedScopes",
+    "risk",
+    "status",
+    "requestedAt",
+    "expiresAt",
+    "auditRef"
+  ],
+  "title": "approvalRequest",
   "type": "object"
 } as const;
 
@@ -203,6 +309,109 @@ export const ArtifactViewSchema = {
     "provenance"
   ],
   "title": "artifactView",
+  "type": "object"
+} as const;
+
+export const AuditEventSchema = {
+  "$id": "https://jami.studio/schemas/harness/audit-event.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "actorId": {
+      "pattern": "^actor_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "approvalRef": {
+      "pattern": "^apr_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "auditId": {
+      "pattern": "^aud_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "environment": {
+      "enum": [
+        "local",
+        "preview",
+        "production"
+      ],
+      "type": "string"
+    },
+    "eventType": {
+      "enum": [
+        "policy.decision",
+        "approval.requested",
+        "approval.resolved",
+        "tool.denied",
+        "secret.redacted"
+      ],
+      "type": "string"
+    },
+    "evidenceRef": {
+      "pattern": "^ev_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "occurredAt": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "outcome": {
+      "enum": [
+        "allow",
+        "deny",
+        "needs_approval",
+        "needs_owner",
+        "redacted"
+      ],
+      "type": "string"
+    },
+    "policyDecisionRef": {
+      "pattern": "^pol_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "projectId": {
+      "pattern": "^proj_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "redactionMode": {
+      "enum": [
+        "none",
+        "redacted",
+        "omitted"
+      ],
+      "type": "string"
+    },
+    "runId": {
+      "pattern": "^run_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": "2026-06-09"
+    },
+    "secretRefs": {
+      "items": {
+        "pattern": "^sec_[a-z0-9][a-z0-9_-]*$",
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "summary": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "auditId",
+    "runId",
+    "actorId",
+    "projectId",
+    "environment",
+    "eventType",
+    "outcome",
+    "occurredAt",
+    "redactionMode"
+  ],
+  "title": "auditEvent",
   "type": "object"
 } as const;
 
@@ -499,6 +708,140 @@ export const EvidencePacketSchema = {
   "type": "object"
 } as const;
 
+export const PolicyDecisionSchema = {
+  "$id": "https://jami.studio/schemas/harness/policy-decision.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "actorId": {
+      "pattern": "^actor_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "approvalRef": {
+      "pattern": "^apr_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "auditRef": {
+      "pattern": "^aud_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "decidedAt": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "decision": {
+      "enum": [
+        "allow",
+        "deny",
+        "needs_approval",
+        "needs_owner"
+      ],
+      "type": "string"
+    },
+    "decisionId": {
+      "pattern": "^pol_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "environment": {
+      "enum": [
+        "local",
+        "preview",
+        "production"
+      ],
+      "type": "string"
+    },
+    "evidenceRef": {
+      "pattern": "^ev_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "matchedScopes": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "projectId": {
+      "pattern": "^proj_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "reasons": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "redactions": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "field": {
+            "type": "string"
+          },
+          "mode": {
+            "enum": [
+              "none",
+              "redacted",
+              "omitted"
+            ],
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "field",
+          "mode",
+          "reason"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "requestedScopes": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "risk": {
+      "enum": [
+        "read",
+        "write",
+        "destructive",
+        "external",
+        "secret_adjacent"
+      ],
+      "type": "string"
+    },
+    "runId": {
+      "pattern": "^run_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": "2026-06-09"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "decisionId",
+    "runId",
+    "actorId",
+    "projectId",
+    "environment",
+    "decision",
+    "risk",
+    "requestedScopes",
+    "matchedScopes",
+    "reasons",
+    "redactions",
+    "decidedAt"
+  ],
+  "title": "policyDecision",
+  "type": "object"
+} as const;
+
 export const PrimitiveManifestSchema = {
   "$id": "https://jami.studio/schemas/harness/primitive-manifest.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -717,6 +1060,67 @@ export const RunEventSchema = {
     "eventType"
   ],
   "title": "runEvent",
+  "type": "object"
+} as const;
+
+export const SecretRefSchema = {
+  "$id": "https://jami.studio/schemas/harness/secret-ref.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "createdAt": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "expiresAt": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "provider": {
+      "enum": [
+        "env",
+        "vault",
+        "hosted_secret_store",
+        "user_adapter"
+      ],
+      "type": "string"
+    },
+    "redactionClass": {
+      "enum": [
+        "credential",
+        "token",
+        "private_key",
+        "connection_string",
+        "private_payload"
+      ],
+      "type": "string"
+    },
+    "rotationRef": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": "2026-06-09"
+    },
+    "scope": {
+      "type": "string"
+    },
+    "secretId": {
+      "pattern": "^sec_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "secretId",
+    "provider",
+    "scope",
+    "redactionClass",
+    "createdAt"
+  ],
+  "title": "secretRef",
   "type": "object"
 } as const;
 
@@ -1101,11 +1505,23 @@ export const harnessContractSchemas = {
     schema: ActionRefSchema,
     typeName: "ActionRef"
   },
+  "approvalRequest": {
+    file: "schemas/approval-request.schema.json",
+    id: "https://jami.studio/schemas/harness/approval-request.schema.json",
+    schema: ApprovalRequestSchema,
+    typeName: "ApprovalRequest"
+  },
   "artifactView": {
     file: "schemas/artifact-view.schema.json",
     id: "https://jami.studio/schemas/harness/artifact-view.schema.json",
     schema: ArtifactViewSchema,
     typeName: "ArtifactView"
+  },
+  "auditEvent": {
+    file: "schemas/audit-event.schema.json",
+    id: "https://jami.studio/schemas/harness/audit-event.schema.json",
+    schema: AuditEventSchema,
+    typeName: "AuditEvent"
   },
   "capabilityManifest": {
     file: "schemas/capability-manifest.schema.json",
@@ -1119,6 +1535,12 @@ export const harnessContractSchemas = {
     schema: EvidencePacketSchema,
     typeName: "EvidencePacket"
   },
+  "policyDecision": {
+    file: "schemas/policy-decision.schema.json",
+    id: "https://jami.studio/schemas/harness/policy-decision.schema.json",
+    schema: PolicyDecisionSchema,
+    typeName: "PolicyDecision"
+  },
   "primitiveManifest": {
     file: "schemas/primitive-manifest.schema.json",
     id: "https://jami.studio/schemas/harness/primitive-manifest.schema.json",
@@ -1130,6 +1552,12 @@ export const harnessContractSchemas = {
     id: "https://jami.studio/schemas/harness/run-event.schema.json",
     schema: RunEventSchema,
     typeName: "RunEvent"
+  },
+  "secretRef": {
+    file: "schemas/secret-ref.schema.json",
+    id: "https://jami.studio/schemas/harness/secret-ref.schema.json",
+    schema: SecretRefSchema,
+    typeName: "SecretRef"
   },
   "suiteRef": {
     file: "schemas/suite-ref.schema.json",
@@ -1159,11 +1587,15 @@ export const harnessContractSchemas = {
 
 export type HarnessContractName = keyof typeof harnessContractSchemas;
 export type ActionRef = Record<string, unknown>;
+export type ApprovalRequest = Record<string, unknown>;
 export type ArtifactView = Record<string, unknown>;
+export type AuditEvent = Record<string, unknown>;
 export type CapabilityManifest = Record<string, unknown>;
 export type EvidencePacket = Record<string, unknown>;
+export type PolicyDecision = Record<string, unknown>;
 export type PrimitiveManifest = Record<string, unknown>;
 export type RunEvent = Record<string, unknown>;
+export type SecretRef = Record<string, unknown>;
 export type SuiteRef = Record<string, unknown>;
 export type ThemeRef = Record<string, unknown>;
 export type ThreatModelFixtureCatalog = Record<string, unknown>;
