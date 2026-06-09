@@ -1,8 +1,15 @@
 import { createInMemoryArtifactStore, toArtifactView } from "../../artifacts/src/index.mjs";
-import { createInMemoryMemoryPort, createNoopMemoryPort } from "../../memory/src/index.mjs";
+import {
+  createContextAssembler,
+  createInMemoryMemoryPort,
+  createMemorySearchAdapter,
+  createNoopMemoryPort,
+  createNoopSearchAdapter,
+} from "../../memory/src/index.mjs";
 import { createRunObservability } from "../../observability/src/index.mjs";
 import { createDefaultPolicyEngine } from "../../policy/src/index.mjs";
 import { createRunLifecycleKernel } from "../../runtime/src/index.mjs";
+import { createInMemoryCheckpointStore } from "../../store-local/src/index.mjs";
 import { createToolRegistry } from "../../tools/src/index.mjs";
 
 const SCHEMA_VERSION = "2026-06-09";
@@ -29,6 +36,12 @@ export function createHarness(options = {}) {
   assertPort("observability", observability, ["trace", "exportEvidencePacket"]);
   const memory = options.memory ?? (options.disableMemory ? createNoopMemoryPort() : createInMemoryMemoryPort({ now }));
   assertCapabilities("memory", memory);
+  const search = options.search ?? (memory.capabilities?.searchable ? createMemorySearchAdapter(memory) : createNoopSearchAdapter());
+  assertPort("search", search, ["search"]);
+  const context = options.context ?? createContextAssembler({ search });
+  assertPort("context", context, ["assemble"]);
+  const checkpointStore = options.checkpointStore ?? createInMemoryCheckpointStore({ now });
+  assertPort("checkpointStore", checkpointStore, ["writeCheckpoint", "readCheckpoint", "resume", "writeApproval", "listApprovals"]);
   const policyEngine = options.policyEngine ?? createDefaultPolicyEngine({ now });
   assertPort("policyEngine", policyEngine, ["evaluate"]);
   const docsOutput = options.docsOutput ?? createUnavailableModule("docsOutput", "repo-level docs generation exists through pnpm docs:generate; SDK docs-output injection is not wired yet");
@@ -60,6 +73,21 @@ export function createHarness(options = {}) {
       "citation freshness",
       "deterministic context packs",
     ], memory.capabilities?.mode === "noop" ? ["memory module disabled"] : []),
+    search: capability("search", "replaceable_module", moduleMode(search), search.capabilities?.searchable === true, [
+      "replaceable retrieval adapter",
+      "permission-preserving local memory search",
+    ], search.capabilities?.searchable === false ? ["search adapter disabled"] : []),
+    context: capability("context", "replaceable_module", moduleMode(context), true, [
+      "deterministic context assembly",
+      "token budget drops",
+      "citation-preserving inclusion reasons",
+    ]),
+    checkpointStore: capability("checkpointStore", "replaceable_module", moduleMode(checkpointStore), checkpointStore.capabilities?.checkpoint === true, [
+      "checkpoint write/read",
+      "resume status",
+      "approval record storage",
+      "redacted replay hash",
+    ], checkpointStore.capabilities?.durable ? [] : ["checkpoint store is in-memory and not durable"]),
     tools: capability("tools", "replaceable_module", moduleMode(tools), true, [
       "tool registry",
       "policy-gated execution envelope",
@@ -82,6 +110,8 @@ export function createHarness(options = {}) {
         artifactStore,
         observability,
         memory,
+        context,
+        checkpointStore,
         policyEngine,
       });
     },
@@ -103,6 +133,14 @@ export function createHarness(options = {}) {
       return observability.traces;
     },
 
+    resume(runId) {
+      return checkpointStore.resume(runId);
+    },
+
+    approve(input = {}) {
+      return checkpointStore.writeApproval(input);
+    },
+
     inspect() {
       return {
         schemaVersion: SCHEMA_VERSION,
@@ -115,13 +153,14 @@ export function createHarness(options = {}) {
           hostedControlPlane: "not_implemented",
           workbench: "not_implemented",
           docsGeneration: "repo_generator_available_sdk_output_not_wired",
+          checkpointStore: checkpointStore.capabilities?.durable ? "durable_local" : "memory_only",
         },
       };
     },
   };
 }
 
-function createSdkRun({ now, artifactStore, observability, memory, policyEngine, ...input }) {
+function createSdkRun({ now, artifactStore, observability, memory, context, checkpointStore, policyEngine, ...input }) {
   const runId = normalizeId("run", input.runId, "run_local");
   const actor = input.actor ?? { actorId: "actor_developer", scopes: ["repo:read"] };
   const projectId = normalizeId("project", input.projectId, "proj_jami_harness");
@@ -147,6 +186,12 @@ function createSdkRun({ now, artifactStore, observability, memory, policyEngine,
       const evidenceRef = normalizeId("evidence", executeInput.evidenceRef, `ev_${runId.replace(/^run_/, "")}_summary`);
       kernel.start(executeInput.message ?? "local harness run started");
       kernel.progress("capturing local evidence foundation");
+      const contextPack = context.assemble({
+        runId,
+        projectId,
+        actor,
+        now,
+      });
       const trace = observability.trace("sdk.run", {
         runId,
         kind: "run",
@@ -155,6 +200,7 @@ function createSdkRun({ now, artifactStore, observability, memory, policyEngine,
           projectId,
           environment,
           memoryMode: memory.capabilities?.mode ?? "unknown",
+          contextHash: contextPack.deterministicHash,
         },
       });
       const artifact = artifactStore.write({
@@ -172,13 +218,30 @@ function createSdkRun({ now, artifactStore, observability, memory, policyEngine,
           status: "completed",
           modules: {
             memory: memory.capabilities?.mode ?? "unknown",
+            context: context.capabilities?.mode ?? "unknown",
             artifacts: artifactStore.capabilities?.mode ?? "unknown",
+          },
+          context: {
+            contextPackId: contextPack.contextPackId,
+            deterministicHash: contextPack.deterministicHash,
+            itemCount: contextPack.items.length,
+            droppedItemCount: contextPack.droppedItems.length,
           },
         },
       });
       const artifactView = toArtifactView(artifact);
       const artifactResult = kernel.emitArtifactView(artifactView);
       kernel.complete("local harness run completed");
+      const checkpoint = checkpointStore.writeCheckpoint({
+        runId,
+        status: "completed",
+        sequence: kernel.events.length,
+        events: kernel.events,
+        artifacts: artifactStore.list(),
+        sourceRepo: executeInput.sourceRepo ?? "jami-harness",
+        sourceCommit: executeInput.sourceCommit ?? "working-tree",
+        sourceRef: executeInput.sourceRef ?? "refs/heads/main",
+      }).checkpoint;
       const evidence = observability.exportEvidencePacket({
         runId,
         subject: executeInput.subject ?? "Local harness SDK evidence",
@@ -193,6 +256,8 @@ function createSdkRun({ now, artifactStore, observability, memory, policyEngine,
         runId,
         status: "completed",
         events: kernel.events,
+        checkpoint,
+        contextPack,
         artifact,
         artifactView: artifactResult.artifactView,
         evidence: evidence.packet,

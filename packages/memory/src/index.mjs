@@ -18,6 +18,78 @@ export function createNoopMemoryPort() {
   };
 }
 
+export function createNoopSearchAdapter() {
+  return {
+    capabilities: { mode: "noop_search", readable: false, searchable: false, hosted: false },
+    search() {
+      return { items: [], droppedItems: [], reason: "search adapter disabled" };
+    },
+  };
+}
+
+export function createMemorySearchAdapter(memory) {
+  assertSearchableMemory(memory);
+  return {
+    capabilities: {
+      mode: "memory_search",
+      readable: memory.capabilities?.readable === true,
+      searchable: memory.capabilities?.searchable === true,
+      hosted: false,
+    },
+    search(query = {}) {
+      return memory.search(query);
+    },
+  };
+}
+
+export function createContextAssembler(options = {}) {
+  const search = options.search ?? createNoopSearchAdapter();
+  const tokenBudget = options.tokenBudget ?? 1200;
+  return {
+    capabilities: {
+      mode: options.mode ?? "default_context_assembler",
+      replaceable: true,
+      tokenBudget,
+      replayable: true,
+      citationPreserving: true,
+    },
+    assemble(input = {}) {
+      const result = search.search(input);
+      const ranked = (result.items ?? [])
+        .map((item, index) => {
+          const text = item.record?.summary ?? item.record?.content ?? "";
+          const tokenEstimate = estimateTokens(text);
+          return {
+            sourceRef: item.record?.memoryId ?? item.sourceRef ?? `source_${index}`,
+            kind: input.kind ?? "retrieved",
+            priority: input.priorityBase ? input.priorityBase - index : 100 - index,
+            inclusionReason: item.inclusionReason ?? "adapter returned item",
+            citationId: item.citation?.citationId ?? item.record?.citation?.citationId,
+            freshnessClass: item.citation?.freshnessClass ?? item.record?.citation?.freshnessClass ?? "unknown",
+            tokenEstimate,
+          };
+        });
+      const included = [];
+      const droppedItems = [...(result.droppedItems ?? [])];
+      let used = 0;
+      for (const item of ranked) {
+        if (used + item.tokenEstimate > tokenBudget) {
+          droppedItems.push({ sourceRef: item.sourceRef, reason: "token_budget_exceeded" });
+          continue;
+        }
+        included.push(item);
+        used += item.tokenEstimate;
+      }
+      return createContextPack({
+        runId: input.runId,
+        now: input.now,
+        items: included,
+        droppedItems,
+      });
+    },
+  };
+}
+
 export function createInMemoryMemoryPort(options = {}) {
   const now = options.now ?? (() => new Date());
   const records = new Map();
@@ -180,6 +252,12 @@ function walk(value, path, paths) {
 
 function estimateTokens(value) {
   return Math.max(1, Math.ceil(String(value).length / 4));
+}
+
+function assertSearchableMemory(memory) {
+  if (!memory?.capabilities || typeof memory.search !== "function") {
+    throw new TypeError("memory search adapter requires a memory port with search()");
+  }
 }
 
 function hashStable(value) {

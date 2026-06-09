@@ -20,19 +20,55 @@ test("init is idempotent and emits JSON", async () => {
   }
 });
 
-test("run writes inspectable evidence and map output reports missing optional surfaces", async () => {
+test("run writes inspectable evidence, checkpoint, and map output reports missing optional surfaces", async () => {
   const cwd = await mkdtemp(join(tmpdir(), "jami-cli-"));
   try {
     const run = await runCli(["run", "--json", "--cwd", cwd, "--run-id", "run_cli_fixture", "--commit", "d6cd77e"]);
     const runPayload = JSON.parse(run.out);
     const evidence = JSON.parse(await readFile(runPayload.evidencePath, "utf8"));
+    const summary = JSON.parse(await readFile(runPayload.summaryPath, "utf8"));
     const inspect = await runCli(["inspect", "--json", "--cwd", cwd, "--run-id", "run_cli_fixture"]);
+    const resume = await runCli(["resume", "--json", "--cwd", cwd, "--run-id", "run_cli_fixture"]);
+    const doctor = await runCli(["doctor", "--json", "--cwd", cwd, "--run-id", "run_cli_fixture"]);
     const map = await runCli(["map", "--json", "--cwd", cwd]);
 
     assert.equal(run.code, 0);
     assert.equal(evidence.source.commit, "d6cd77e");
+    assert.match(summary.replayHash, /^sha256:/);
     assert.equal(JSON.parse(inspect.out).latestRun.runId, "run_cli_fixture");
+    assert.equal(JSON.parse(inspect.out).checkpoint.status, "completed");
+    assert.equal(resume.code, 3);
+    assert.equal(JSON.parse(resume.out).reason, "run_completed");
+    assert.equal(JSON.parse(doctor.out).checkpoint.runId, "run_cli_fixture");
     assert.equal(JSON.parse(map.out).modules.some((module) => module.name === "tools" && module.available), true);
+  } finally {
+    await rm(cwd, { recursive: true, force: true });
+  }
+});
+
+test("approve records local approval evidence and rejects malformed action ids", async () => {
+  const cwd = await mkdtemp(join(tmpdir(), "jami-cli-"));
+  try {
+    await runCli(["init", "--json", "--cwd", cwd]);
+    const approved = await runCli([
+      "approve",
+      "--json",
+      "--cwd",
+      cwd,
+      "--run-id",
+      "run_cli_approval",
+      "--action-id",
+      "act_publish_release",
+      "--scopes",
+      "release:publish",
+    ]);
+    const rejected = await runCli(["approve", "--json", "--cwd", cwd, "--run-id", "run_cli_approval", "--action-id", "../bad"]);
+
+    assert.equal(approved.code, 0);
+    assert.equal(JSON.parse(approved.out).approval.actionId, "act_publish_release");
+    assert.equal(JSON.parse(approved.out).approvals.length, 1);
+    assert.equal(rejected.code, 64);
+    assert.equal(JSON.parse(rejected.err).code, "invalid_identifier");
   } finally {
     await rm(cwd, { recursive: true, force: true });
   }

@@ -12,8 +12,10 @@ This package currently owns only:
 - Policy-gated action emission through `@jami-studio/harness-policy`.
 - Failing-closed denial records for malformed, denied, replayed, poisoned, or
   secret-inline action requests.
+- Runtime events that can be persisted as redacted checkpoints by the SDK or injected
+  store ports.
 
 It can write to injected event and audit sinks, including the initial
 `@jami-studio/harness-observability` local evidence exporter. It does not implement the
-tool gateway, provider runtime, memory/context/search integration, durable checkpoint
-store, CLI, or real agent execution loop yet.
+provider runtime, hosted checkpoint store, CLI workbench, or real agent execution loop
+yet.

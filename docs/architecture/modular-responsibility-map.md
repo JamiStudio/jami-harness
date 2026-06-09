@@ -200,8 +200,11 @@ Replaceable strategies:
 Current foundation status: Stream 4 pass 1 adds a dependency-free
 `@jami-studio/harness-memory` package with a no-op port, in-memory development port,
 permission-filtered search, citation freshness, retention filtering, redaction defaults,
-and deterministic context pack hashes. It intentionally does not add durable storage,
-vector retrieval, hosted search, compression, or external RAG adapters yet.
+and deterministic context pack hashes. Post-audit implementation pass 1 adds explicit
+no-op and memory-backed search adapter ports plus a replaceable context assembler with
+token-budget drops, inclusion reasons, citation metadata, and replay hashes. It
+intentionally does not add durable memory storage, vector retrieval, hosted search,
+compression, or external RAG provider runtime yet.
 
 ## Policy Strategy
 
@@ -277,6 +280,14 @@ Default modules:
 - Postgres hosted store.
 - External store adapter interface.
 
+Current foundation status: post-audit implementation pass 1 adds
+`@jami-studio/harness-store-local` with in-memory and filesystem checkpoint stores,
+redacted replay hashes, local approval records, path-safe run id validation, and explicit
+capabilities for checkpoint, resume, and approval storage. This is the local
+checkpoint/resume foundation only; hosted database stores, sync, multi-user control
+planes, retry/cancellation recovery orchestration, and provider runtime persistence
+remain open.
+
 ## Observability Strategy
 
 Observability is a core event contract with replaceable sinks.
@@ -321,13 +332,15 @@ Replaceable sinks:
 
 Current foundation status: Stream 5 pass 1 adds `@jami-studio/harness-sdk` and
 `@jami-studio/harness-cli` as local developer foundations. The SDK composes current
-runtime, policy, artifact, observability, and memory modules; creates a local evidence
-run; reads artifacts and traces; and exposes module injection and capability inspection.
-The CLI exposes idempotent local `init`, evidence `run`, `inspect`, `tools`, `memory`,
-`docs`, `map`, and `verify` commands with JSON output and clean exit codes. These
-surfaces intentionally report missing provider runtime, SDK-level docs-output injection,
-hosted stores, hosted workbench, Studio UI install flows, and release publishing until
-their owning packages exist. Workstream 6 / Workstream 9 docs-source pass 1 adds
+runtime, policy, artifact, observability, memory, context, search, and checkpoint store
+modules; creates a local evidence run; writes redacted checkpoints; reads artifacts,
+traces, checkpoint state, and approval records; and exposes module injection and
+capability inspection. The CLI exposes idempotent local `init`, evidence `run`,
+`resume`, `approve`, `inspect`, `doctor`, `tools`, `memory`, `docs`, `map`, and `verify`
+commands with JSON output and clean exit codes. These surfaces intentionally report
+missing provider runtime, SDK-level docs-output injection, hosted stores, hosted
+workbench, Studio UI install flows, and release publishing until their owning packages
+exist. Workstream 6 / Workstream 9 docs-source pass 1 adds
 `@jami-studio/harness-docs` as a repo-level generated docs/manual/system-map/changelog
 foundation with check mode and Mintlify-ready draft output; hosted docs publishing and
 Mintlify build remain unavailable.

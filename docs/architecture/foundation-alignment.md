@@ -109,12 +109,17 @@ for artifact provenance, trace/audit references, evidence redaction, memory rete
 permission-scoped citation freshness, and deterministic context replay. The new
 `packages/artifacts`, `packages/observability`, and `packages/memory` defaults are local
 and replaceable foundations only; they are not hosted stores, OpenTelemetry backends,
-vector search, docs generators, or workbench implementations. Stream 5 pass 1 adds the
-first local `packages/sdk` and `apps/cli` foundations so developers and agents can create
-local evidence runs, inspect artifacts/traces/capabilities, and see missing optional
-modules through JSON output. Those surfaces are not provider runtimes, full protocol
-tool gateways, docs generators, hosted stores, hosted workbenches, Studio UI installers,
-or release publishing tools. Workstream 4 pass 1 after the overclaim audit adds a narrow
+vector search, docs generators, or workbench implementations. Post-audit implementation
+pass 1 adds no-op and memory-backed search adapter ports, a replaceable local context
+assembler, and `packages/store-local` for in-memory/filesystem checkpoints, local
+approval records, redacted replay hashes, and path-safe resume evidence. Stream 5 pass 1
+adds the first local `packages/sdk` and `apps/cli` foundations so developers and agents
+can create local evidence runs, inspect artifacts/traces/capabilities, and see missing
+optional modules through JSON output; post-audit implementation pass 1 extends those
+surfaces with SDK checkpoint/resume/approve APIs and CLI `resume`, `approve`, and
+`doctor`. Those surfaces are not provider runtimes, full protocol tool gateways, docs
+generators, hosted stores, hosted workbenches, Studio UI installers, or release
+publishing tools. Workstream 4 pass 1 after the overclaim audit adds a narrow
 `packages/tools` foundation and `toolExecution` contract for registry inspection,
 policy-gated function tool execution, timeout/cancellation status, typed trace/audit/
 evidence/artifact output, redaction, and unsupported adapter manifests. That foundation

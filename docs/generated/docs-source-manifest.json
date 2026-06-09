@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:296f9bbc253bf92731b6a9cb053ff13edb6fc930516da8904cdf3b1611f72474",
+  "sourceInputHash": "sha256:a6fb700c75f28437d773b42ab05882ea65d4dfa8e7afb0f6da4a8f163de36d24",
   "generatedAt": "deterministic:git-head-plus-input-hash",
   "freshnessClass": "deterministic_current_source_tree",
   "command": "pnpm docs:generate -- --check",
@@ -30,6 +30,11 @@
       "path": ".changes/2026-06-09-candidate-stack-source-lock.md",
       "sha256": "sha256:b1549284045c002b840b766615041bdee2b5aade42ac543b94cc99da891fd3c0",
       "bytes": 205
+    },
+    {
+      "path": ".changes/2026-06-09-checkpoint-resume-store.md",
+      "sha256": "sha256:14c833709cf8fb33c8ba704eb639e03f85c555c42a754031464b9e54516b5e5a",
+      "bytes": 489
     },
     {
       "path": ".changes/2026-06-09-contract-generation-evidence.md",
@@ -138,8 +143,8 @@
     },
     {
       "path": "apps/cli/README.md",
-      "sha256": "sha256:d4a5210dc833e05b21a7b254dfcc064056bcb46cc02665498eeb4558c683794a",
-      "bytes": 1333
+      "sha256": "sha256:48c85028b43f90776efc4598ff581d248770fc7755f589a447414751de626d00",
+      "bytes": 1881
     },
     {
       "path": "apps/cli/package.json",
@@ -148,8 +153,8 @@
     },
     {
       "path": "docs/architecture/modular-responsibility-map.md",
-      "sha256": "sha256:dba730f99cb77e186722927cc1fc531d650ac27ae3d9d47ce7c32a45080942ab",
-      "bytes": 15077
+      "sha256": "sha256:ee6c75f82ec46f575569f194d400f03bcc67647f28cf84b192f535fc833a813a",
+      "bytes": 15933
     },
     {
       "path": "docs/architecture/product-architecture.md",
@@ -163,8 +168,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "sha256:a50fdbe2e616c0beb2ff117227142543c0f9dbd8f945be053bea8fea8610b3ab",
-      "bytes": 2396
+      "sha256": "sha256:d9e920c39655882f50fc55d0d0de797f12451518846fc25900e10d2e2b672eb7",
+      "bytes": 2518
     },
     {
       "path": "packages/artifacts/package.json",
@@ -488,13 +493,18 @@
     },
     {
       "path": "packages/sdk/README.md",
-      "sha256": "sha256:cf030d3f576c41bde4585643385d724262aeecda77a832c3188f14908240d27a",
-      "bytes": 1457
+      "sha256": "sha256:e2762f98dd1c820bbb72f14c4d0d0257a43fda320e14d33800802474c556cd32",
+      "bytes": 1700
     },
     {
       "path": "packages/sdk/package.json",
       "sha256": "sha256:e8e9eb7acd489984dff0212e79956696291ee5f284b27eae62cabba61d1f672b",
       "bytes": 487
+    },
+    {
+      "path": "packages/store-local/package.json",
+      "sha256": "sha256:506844412b6f80bffba75a6b544eadcb2e44918da6d1a10993afe62fa796b650",
+      "bytes": 424
     },
     {
       "path": "packages/tools/package.json",

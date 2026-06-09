@@ -3,18 +3,22 @@
 Status: local foundation
 
 `@jami-studio/harness-sdk` composes the current dependency-light runtime, policy,
-tool registry, artifact, observability, and memory packages into one developer API.
+tool registry, artifact, observability, memory, context, search, and checkpoint store
+packages into one developer API.
 
 Current capabilities:
 
 - Create a local run through the existing runtime lifecycle kernel.
 - Export local evidence packets from runtime events, traces, and artifact records.
+- Write redacted run checkpoints with replay hashes through a replaceable checkpoint
+  store port.
+- Resume from stored checkpoint state and record local approval evidence.
 - Read artifact records and trace records from the default local stores.
 - Inspect active module capabilities and missing optional surfaces.
 - Inspect the tool gateway foundation: registry, policy-gated execution envelope,
   function adapter support, and unsupported adapter manifests.
-- Inject replacement modules such as memory, policy, artifacts, and observability without
-  changing the run grammar.
+- Inject replacement modules such as memory, context, search, checkpoint store, policy,
+  artifacts, and observability without changing the run grammar.
 
 Malformed run, artifact, and evidence identifiers fail before local artifacts or evidence
 packets are written. Injected core modules must expose the methods their ports require.

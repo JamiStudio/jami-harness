@@ -29,8 +29,8 @@ listed in the pass-status notes below.
 
 Do not read the registry-root `Status: Complete` as final harness product acceptance.
 The roadmap final verification and acceptance criteria remain open because the live repo
-still lacks the full tool gateway, provider execution, checkpoint/resume store, hosted or
-replaceable durable stores, docs/changelog/system-map generator, Mintlify build, SBOM
+still lacks the full tool gateway, provider execution, hosted durable stores, retry/failure
+recovery checkpoint fixtures, Mintlify build, SBOM
 artifact generation, release attestations, publishable package manifests, and hosted
 workbench/docs surfaces. The release-readiness audit intentionally reports these as
 unsupported or human-intervention-gated rather than weakening the gates.
@@ -367,6 +367,12 @@ Pass status:
   be exported from captured runtime events without hosted observability. Runtime call
   sites still do not own memory/context/search integration, tools, providers, durable
   checkpointing, CLI, or real agent execution.
+- 2026-06-09 post-audit implementation pass 1 added `@jami-studio/harness-store-local`
+  with in-memory and filesystem checkpoint stores, redacted replay hashes, local approval
+  records, path-safe checkpoint reads/writes, SDK checkpoint/resume/approve APIs, and CLI
+  `resume`, `approve`, and `doctor` evidence surfaces. This closes only the local
+  checkpoint/resume foundation; retry/cancellation/failure recovery, hosted stores,
+  provider runtime, and full agent execution remain open.
 
 Depends on:
 
@@ -388,18 +394,19 @@ Implementation tasks:
 - [ ] Produce a source-lock report for agent-native before adoption or fork work: exact scoped package names, current versions, dist-tags, repository commit or tarball evidence, license/NOTICE files, transitive dependency review, and fork-delta rationale.
 - [ ] Preserve upstream MIT notices and add Apache-2.0 foundation licensing as accepted.
 - [~] Add turn streaming, cancellation, retry, timeout, handoff, and checkpoint semantics.
-- [ ] Add local durable store adapter and hosted-store interface.
-- [ ] Compose runtime against replaceable model, store, memory, context, policy, tool, artifact, observability, and secret-resolver ports.
-- [ ] Add explicit capability checks for optional modules so absent memory/context/search/docs sinks degrade clearly.
-- [ ] Add recovery from checkpoint with evidence preservation.
+- [~] Add local durable store adapter and hosted-store interface; local filesystem and
+  in-memory checkpoint stores exist, hosted/database stores remain unsupported.
+- [~] Compose runtime against replaceable model, store, memory, context, policy, tool, artifact, observability, and secret-resolver ports; SDK composition now covers store/memory/context/search/policy/artifact/observability/tool foundations, while model/provider and secret-resolver composition remain open.
+- [~] Add explicit capability checks for optional modules so absent memory/context/search/docs sinks degrade clearly.
+- [~] Add recovery from checkpoint with evidence preservation; local `resume` reports replay status and hash, while retry/cancellation/failure recovery fixtures remain open.
 - [~] Add runtime contract tests and simulated failure recovery tests.
 
 Exit criteria:
 
 - [~] A run can start, emit UI/action/artifact references, fail, and close with typed events.
-- [ ] Runtime call sites do not assume any default memory, context, store, provider, or observability implementation.
+- [~] Runtime/SDK call sites do not assume default memory, context, store, or observability implementations for the current local foundation; provider and secret-resolver ports remain open.
 - [ ] No public harness contract imports agent-native package types directly.
-- [ ] Runtime checkpoint/resume evidence survives retry, cancellation, and failure recovery fixtures.
+- [~] Runtime checkpoint/resume evidence has local replay/redaction checks; retry, cancellation, and failure recovery fixtures remain open.
 
 Suggested verification:
 
@@ -556,6 +563,12 @@ Pass status:
   redaction defaults, and deterministic context pack hashes. This is a replaceable local
   foundation only; durable memory stores, vector search, hosted retrieval, compression,
   external RAG adapters, policy-engine integration, and recall evals remain open.
+- 2026-06-09 post-audit implementation pass 1 added explicit no-op and memory-backed
+  search adapter ports plus a replaceable context assembler with token-budget drops,
+  inclusion reasons, citation metadata, deterministic replay hashes, and negative tests
+  for cross-actor leakage and sensitive memory omission. Hosted/vector retrieval,
+  compression, external RAG provider runtime, policy-engine integration, and recall evals
+  remain open.
 
 Implementation tasks:
 
@@ -564,9 +577,9 @@ Implementation tasks:
 - [~] Add write policy, retention, redaction, and source attribution.
 - [x] Add no-op memory and no-op search adapters for stateless users.
 - [~] Add local default memory/search modules for development.
-- [ ] Add external memory/search adapter interfaces for user-owned RAG, vector database, graph, or retrieval systems.
-- [ ] Add context assembly strategy interface with token budget, freshness, permission, priority, inclusion/exclusion reason, and citation metadata.
-- [ ] Add retrieval adapters for local and hosted search.
+- [~] Add external memory/search adapter interfaces for user-owned RAG, vector database, graph, or retrieval systems; owned port shape exists for local/no-op adapters, hosted/vector implementations remain open.
+- [x] Add context assembly strategy interface with token budget, freshness, permission, priority, inclusion/exclusion reason, and citation metadata.
+- [~] Add retrieval adapters for local and hosted search; local memory-backed and no-op search adapters exist, hosted retrieval remains open.
 - [x] Add citation and freshness metadata to every recalled item.
 - [~] Add eval fixtures for recall precision and permission filtering.
 - [~] Add privacy and replay fixtures for data classes, retention, forgetting/redaction, permission leakage, inclusion reasons, and deterministic context pack hashes.
@@ -575,9 +588,9 @@ Exit criteria:
 
 - [ ] Memory reads and writes are policy-gated, cited, redactable, and replayable.
 - [ ] Runs can execute with no memory module configured.
-- [ ] Context assembly is replaceable and replayable from evidence.
-- [ ] User-owned memory/search/context systems can integrate without changing runtime call sites.
-- [ ] Cross-project or cross-actor memory leakage attempts fail closed.
+- [~] Context assembly is replaceable and replayable from evidence for the local foundation.
+- [~] User-owned memory/search/context systems can integrate through current ports without changing SDK runtime call sites; hosted/vector adapters remain open.
+- [~] Cross-project or cross-actor memory leakage attempts fail closed in current memory/context fixtures.
 
 Suggested verification:
 
@@ -728,12 +741,18 @@ Pass status:
   a provider runtime, full protocol tool gateway, approval executor, resume/checkpoint
   store, docs generator, hosted workbench, hosted control plane, Studio UI installer, or
   release publishing surface.
+- 2026-06-09 post-audit implementation pass 1 extended the SDK/CLI local foundation with
+  store/context/search injection, checkpoint write/read/resume APIs, approval records,
+  CLI `resume`, `approve`, and `doctor`, filesystem-backed local checkpoint evidence,
+  and replay-hash/redaction output. This is still not a provider runtime, full protocol
+  tool gateway, hosted store, hosted workbench, Studio UI installer, or release
+  publishing surface.
 
 Implementation tasks:
 
-- [~] Add CLI commands for init, run, inspect, resume, approve, tools, memory, docs, map, verify, release.
+- [~] Add CLI commands for init, run, inspect, resume, approve, tools, memory, docs, map, verify, release; release remains unavailable in the CLI.
 - [x] Add `--json`, idempotent commands, clean exit codes, and agent-first help output for AX.
-- [~] Add SDK for run creation, tool registration, policy hooks, artifact reads, and trace reads.
+- [~] Add SDK for run creation, checkpoint/resume, approval records, tool registration, policy hooks, artifact reads, and trace reads.
 - [~] Add SDK configuration APIs for injecting custom memory, context, store, policy, provider, tool, artifact, observability, and docs-output modules.
 - [~] Add CLI doctor/inspect commands that show active modules, defaults, replacements, missing optional capabilities, and exact next setup steps.
 - [~] Add CLI/source-lock inspection for active adapters, package/protocol versions, optional capability support, and provenance evidence.
@@ -743,7 +762,7 @@ Implementation tasks:
 
 Exit criteria:
 
-- [~] A new developer can run a local harness example, inspect evidence, approve a tool, and generate docs.
+- [~] A new developer can run a local harness example, inspect evidence, record a local approval, resume checkpoint state, and generate docs.
 - [~] A developer can use the default full harness or inject at least one custom module without changing product grammar.
 
 Suggested verification:
@@ -821,10 +840,10 @@ Suggested verification:
 - [ ] Root docs read back.
 - [ ] Contracts generate and validate.
 - [ ] Runtime/tool/policy/memory/artifact/observability tests pass.
-- [ ] CLI and workbench smoke pass.
+- [~] CLI local smoke passes for init/run/resume/approve/inspect/doctor/map/verify; workbench smoke remains unavailable until a workbench exists.
 - [~] Docs generation passes locally through `pnpm docs:generate -- --check`; Mintlify build remains unavailable until the CLI/package is source-locked and installed.
 - [ ] SBOM/provenance release dry run pass.
-- [ ] Evidence packet provenance and redaction checks pass.
+- [~] Evidence packet and checkpoint provenance/redaction checks pass for local foundations.
 - [ ] No secrets in tracked files or generated artifacts.
 - [ ] Changelog and decision records updated.
 - [ ] Git commit and push when the root becomes a Git repo with remote.

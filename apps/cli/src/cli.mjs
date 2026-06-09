@@ -4,6 +4,7 @@ import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { HarnessInputError, createHarness } from "../../../packages/sdk/src/index.mjs";
+import { HarnessStoreError, createFileSystemCheckpointStore } from "../../../packages/store-local/src/index.mjs";
 
 const STATE_DIR = ".jami-harness";
 const CONFIG_FILE = "harness.json";
@@ -21,7 +22,10 @@ export async function main(argv = process.argv.slice(2), env = process.env, io =
     const command = parsed.command;
     if (command === "init") return await initCommand(cwd, parsed, io);
     if (command === "run") return await runCommand(cwd, parsed, io);
+    if (command === "resume") return await resumeCommand(cwd, parsed, io);
+    if (command === "approve") return await approveCommand(cwd, parsed, io);
     if (command === "inspect") return await inspectCommand(cwd, parsed, io);
+    if (command === "doctor") return await doctorCommand(cwd, parsed, io);
     if (command === "tools" || command === "memory" || command === "docs" || command === "map") {
       return await capabilityCommand(cwd, command, parsed, io);
     }
@@ -30,7 +34,7 @@ export async function main(argv = process.argv.slice(2), env = process.env, io =
     io.err(formatOutput(errorPayload("unknown_command", `Unknown command: ${command}`, 64), parsed));
     return 64;
   } catch (error) {
-    const exitCode = error instanceof HarnessInputError ? 64 : 1;
+    const exitCode = error instanceof HarnessInputError || error instanceof HarnessStoreError ? 64 : 1;
     io.err(formatOutput(errorPayload(error.code ?? "command_failed", error.message, exitCode), parsed));
     return exitCode;
   }
@@ -57,7 +61,8 @@ async function initCommand(cwd, parsed, io) {
 async function runCommand(cwd, parsed, io) {
   await initStateIfMissing(cwd);
   const runId = validateRunId(parsed.options["run-id"] ?? parsed.options.runId ?? `run_${Date.now().toString(36)}`);
-  const harness = createHarness();
+  const checkpointStore = createCliCheckpointStore(cwd);
+  const harness = createHarness({ checkpointStore });
   const result = await harness.run({
     runId,
     sourceRepo: "jami-harness",
@@ -74,23 +79,94 @@ async function runCommand(cwd, parsed, io) {
     command: "run",
     runId,
     status: result.status,
+    checkpointId: result.checkpoint.checkpointId,
+    replayHash: result.checkpoint.replayHash,
     evidencePath: join(runPath, "evidence.json"),
     summaryPath: join(runPath, "summary.json"),
   }, parsed));
   return 0;
 }
 
+async function resumeCommand(cwd, parsed, io) {
+  const runId = validateRunId(parsed.options["run-id"] ?? parsed.options.runId);
+  const checkpointStore = createCliCheckpointStore(cwd);
+  const result = checkpointStore.resume(runId);
+  const exitCode = result.resumable ? 0 : result.reason === "run_completed" ? 3 : 2;
+  io.out(formatOutput({
+    ok: result.resumable,
+    command: "resume",
+    runId,
+    resumable: result.resumable,
+    reason: result.reason,
+    checkpointId: result.checkpoint?.checkpointId,
+    status: result.checkpoint?.status,
+    replayHash: result.replayHash,
+    next: result.resumable ? ["jami inspect --json --run-id " + runId] : ["jami run --json --run-id " + runId],
+  }, parsed));
+  return exitCode;
+}
+
+async function approveCommand(cwd, parsed, io) {
+  await initStateIfMissing(cwd);
+  const runId = validateRunId(parsed.options["run-id"] ?? parsed.options.runId);
+  const actionId = validateActionId(parsed.options["action-id"] ?? parsed.options.actionId ?? "act_local_approval");
+  const checkpointStore = createCliCheckpointStore(cwd);
+  const approval = checkpointStore.writeApproval({
+    runId,
+    actionId,
+    actorId: parsed.options.actor ?? "actor_developer",
+    scopes: parseCsv(parsed.options.scopes),
+    status: parsed.options.status ?? "approved",
+  }).approval;
+  io.out(formatOutput({
+    ok: true,
+    command: "approve",
+    runId,
+    approval,
+    approvals: checkpointStore.listApprovals(runId),
+  }, parsed));
+  return 0;
+}
+
 async function inspectCommand(cwd, parsed, io) {
-  const harness = createHarness();
+  const checkpointStore = createCliCheckpointStore(cwd);
+  const harness = createHarness({ checkpointStore });
   const runId = validateOptionalRunId(parsed.options["run-id"] ?? parsed.options.runId);
   const runSummary = runId ? await readRunSummary(cwd, runId) : await readLatestRunSummary(cwd);
+  const checkpoint = runId ? checkpointStore.readCheckpoint(runId) : undefined;
   io.out(formatOutput({
     ok: true,
     command: "inspect",
     statePath: join(cwd, STATE_DIR),
     latestRun: runSummary,
+    checkpoint,
+    approvals: runId ? checkpointStore.listApprovals(runId) : [],
     harness: harness.inspect(),
     doctor: doctor(harness.inspect(), Boolean(runSummary)),
+  }, parsed));
+  return 0;
+}
+
+async function doctorCommand(cwd, parsed, io) {
+  const checkpointStore = createCliCheckpointStore(cwd);
+  const harness = createHarness({ checkpointStore });
+  const runId = validateOptionalRunId(parsed.options["run-id"] ?? parsed.options.runId);
+  const inspection = harness.inspect();
+  const checkpoint = runId ? checkpointStore.readCheckpoint(runId) : undefined;
+  io.out(formatOutput({
+    ok: true,
+    command: "doctor",
+    statePath: join(cwd, STATE_DIR),
+    initialized: existsSync(join(cwd, STATE_DIR, CONFIG_FILE)),
+    checkpoint: checkpoint ? {
+      runId: checkpoint.runId,
+      status: checkpoint.status,
+      checkpointId: checkpoint.checkpointId,
+      replayHash: checkpoint.replayHash,
+      redaction: checkpoint.redaction,
+    } : undefined,
+    doctor: doctor(inspection, Boolean(checkpoint)),
+    harness: inspection,
   }, parsed));
   return 0;
 }
@@ -134,11 +210,14 @@ function help() {
   return {
     ok: true,
     command: "help",
-    usage: "jami <init|run|inspect|tools|memory|docs|map|verify> [--json]",
+    usage: "jami <init|run|resume|approve|inspect|doctor|tools|memory|docs|map|verify> [--json]",
     commands: {
       init: "Create local .jami-harness state idempotently.",
       run: "Run the local SDK evidence smoke and write evidence under .jami-harness/runs.",
+      resume: "Read a stored checkpoint and report replay/resume status.",
+      approve: "Record a local approval decision for a run/action.",
       inspect: "Show latest run evidence plus active module capabilities.",
+      doctor: "Show module, checkpoint, resume, and missing optional capability diagnostics.",
       tools: "Show tool gateway availability and missing setup.",
       memory: "Show memory module capabilities.",
       docs: "Show docs output availability and missing setup.",
@@ -212,7 +291,7 @@ async function readLatestRunSummary(cwd) {
 function doctor(inspection, hasRun) {
   return {
     status: hasRun ? "ready_for_local_inspection" : "initialized_or_new",
-    next: hasRun ? ["jami inspect --json", "jami map --json"] : ["jami init --json", "jami run --json"],
+    next: hasRun ? ["jami inspect --json", "jami resume --json --run-id <run_id>", "jami map --json"] : ["jami init --json", "jami run --json"],
     missingOptionalCapabilities: inspection.modules
       .filter((module) => !module.available)
       .map((module) => ({ name: module.name, reasons: module.unavailableReasons })),
@@ -227,9 +306,15 @@ function toRunSummary(result) {
     eventCount: result.events.length,
     artifactId: result.artifact.artifactId,
     evidenceId: result.evidence.evidenceId,
+    checkpointId: result.checkpoint.checkpointId,
+    replayHash: result.checkpoint.replayHash,
     traceCount: result.traces.length,
     auditCount: result.audits.length,
   };
+}
+
+function createCliCheckpointStore(cwd) {
+  return createFileSystemCheckpointStore({ root: join(cwd, STATE_DIR) });
 }
 
 function defaultConfig() {
@@ -254,6 +339,16 @@ function validateOptionalRunId(value) {
 function validateRunId(value) {
   if (typeof value === "string" && RUN_ID_PATTERN.test(value)) return value;
   throw new HarnessInputError("invalid_identifier", `run id must match ${RUN_ID_PATTERN.source}`);
+}
+
+function validateActionId(value) {
+  if (typeof value === "string" && /^act_[a-z0-9][a-z0-9_-]*$/.test(value)) return value;
+  throw new HarnessInputError("invalid_identifier", "action id must match ^act_[a-z0-9][a-z0-9_-]*$");
+}
+
+function parseCsv(value) {
+  if (value === undefined || value === true) return [];
+  return String(value).split(",").map((item) => item.trim()).filter(Boolean);
 }
 
 function errorPayload(code, message, exitCode) {

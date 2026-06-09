@@ -15,17 +15,24 @@ test("creates a local run with evidence, artifacts, traces, and inspectable modu
   assert.equal(result.status, "completed");
   assert.equal(result.events.at(0).eventType, "run.started");
   assert.equal(result.evidence.source.commit, "d6cd77e");
+  assert.equal(result.checkpoint.status, "completed");
+  assert.match(result.checkpoint.replayHash, /^sha256:/);
+  assert.equal(result.contextPack.runId, "run_sdk_fixture");
+  assert.equal(harness.resume("run_sdk_fixture").reason, "run_completed");
   assert.equal(harness.readArtifact(result.artifact.artifactId).artifactId, result.artifact.artifactId);
   assert.equal(harness.readTraces()[0].name, "sdk.run");
 
   const inspection = harness.inspect();
   assert.equal(inspection.modules.some((module) => module.name === "runtime" && module.available), true);
+  assert.equal(inspection.modules.some((module) => module.name === "checkpointStore" && module.available), true);
+  assert.equal(inspection.modules.some((module) => module.name === "context" && module.available), true);
   assert.equal(inspection.modules.some((module) => module.name === "tools" && module.available), true);
   assert.equal(inspection.boundaries.toolGateway, "foundation_only");
 });
 
 test("supports configurable module injection without changing run grammar", async () => {
   const writes = [];
+  const checkpoints = [];
   const customMemory = {
     capabilities: { mode: "custom_memory", readable: true, writable: true, searchable: true },
     write(input) {
@@ -39,13 +46,34 @@ test("supports configurable module injection without changing run grammar", asyn
       return { items: [], droppedItems: [] };
     },
   };
+  const customCheckpointStore = {
+    capabilities: { mode: "custom_store", checkpoint: true, resume: true, approvals: true },
+    writeCheckpoint(input) {
+      checkpoints.push(input);
+      return { written: true, checkpoint: { ...input, checkpointId: "chk_custom", replayHash: "sha256:custom" } };
+    },
+    readCheckpoint() {
+      return undefined;
+    },
+    resume() {
+      return { resumable: false, reason: "checkpoint_not_found" };
+    },
+    writeApproval(input) {
+      return { written: true, approval: input };
+    },
+    listApprovals() {
+      return [];
+    },
+  };
 
-  const harness = createHarness({ now, memory: customMemory });
+  const harness = createHarness({ now, memory: customMemory, checkpointStore: customCheckpointStore });
   const result = await harness.run({ runId: "run_custom_memory" });
 
   assert.equal(result.runId, "run_custom_memory");
   assert.equal(harness.inspect().modules.find((module) => module.name === "memory").mode, "custom_memory");
+  assert.equal(harness.inspect().modules.find((module) => module.name === "checkpointStore").mode, "custom_store");
   assert.deepEqual(writes, []);
+  assert.equal(checkpoints.length, 1);
 });
 
 test("rejects malformed run and evidence identifiers before writing artifacts", async () => {
@@ -83,6 +111,11 @@ test("rejects invalid injected core modules at construction", () => {
 
   assert.throws(
     () => createHarness({ policyEngine: {} }),
+    (error) => error instanceof HarnessInputError && error.code === "invalid_module",
+  );
+
+  assert.throws(
+    () => createHarness({ checkpointStore: { capabilities: { mode: "broken" } } }),
     (error) => error instanceof HarnessInputError && error.code === "invalid_module",
   );
 });
