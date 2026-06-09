@@ -1,10 +1,9 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:fb079754-eb8b-53da-a8c8-d7c562c147a6",
+  "serialNumber": "urn:uuid:9cf0566e-17fe-56c1-b0bf-15017f63db1c",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-06-09T09:51:41-04:00",
     "tools": {
       "components": [
         {
@@ -59,7 +58,11 @@
       },
       {
         "name": "jami:harness:sourceCommit",
-        "value": "d149debb028cc35b709351fbb26938bac8acde76"
+        "value": "git:HEAD"
+      },
+      {
+        "name": "jami:harness:sourceCommitResolutionCommand",
+        "value": "git rev-parse HEAD"
       },
       {
         "name": "jami:harness:sourceRef",

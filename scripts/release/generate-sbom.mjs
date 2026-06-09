@@ -12,8 +12,9 @@ const json = args.has("--json");
 const outputPath = "docs/generated/sbom.cdx.json";
 const outputFullPath = join(repoRoot, outputPath);
 const specVersion = "1.7";
-const generatedAt = git(["log", "-1", "--format=%cI"]) ?? "unknown";
-const sourceCommit = git(["rev-parse", "HEAD"]) ?? "working-tree";
+const sourceCommit = "git:HEAD";
+const resolvedSourceCommit = git(["rev-parse", "HEAD"]) ?? "working-tree";
+const resolvedCommitDate = git(["log", "-1", "--format=%cI"]) ?? "unknown";
 const sourceRef = git(["rev-parse", "--abbrev-ref", "HEAD"]) ?? "unknown";
 const sourceRemote = git(["remote", "get-url", "origin"]) ?? "unknown";
 const packageFiles = discoverPackageFiles();
@@ -40,7 +41,6 @@ const bom = {
   serialNumber: `urn:uuid:${deterministicUuid(`${sourceCommit}:${sourceInputHash}`)}`,
   version: 1,
   metadata: {
-    timestamp: generatedAt,
     tools: {
       components: [{
         type: "application",
@@ -54,6 +54,7 @@ const bom = {
       property("jami:harness:sourceRepo", "jami-harness"),
       property("jami:harness:sourceRemote", sourceRemote),
       property("jami:harness:sourceCommit", sourceCommit),
+      property("jami:harness:sourceCommitResolutionCommand", "git rev-parse HEAD"),
       property("jami:harness:sourceRef", sourceRef),
       property("jami:harness:sourceInputHash", sourceInputHash),
       property("jami:harness:commands", "pnpm sbom:generate; pnpm sbom:check"),
@@ -81,11 +82,11 @@ if (check) {
   if (existing !== expected) {
     fail(`${outputPath} is out of date; run pnpm sbom:generate`);
   }
-  report({ status: "passed", outputPath, packageCount: packages.length, sourceInputHash });
+  report({ status: "passed", outputPath, packageCount: packages.length, sourceInputHash, resolvedSourceCommit, resolvedCommitDate });
 } else {
   mkdirSync(dirname(outputFullPath), { recursive: true });
   writeFileSync(outputFullPath, `${JSON.stringify(bom, null, 2)}\n`);
-  report({ status: "written", outputPath, packageCount: packages.length, sourceInputHash });
+  report({ status: "written", outputPath, packageCount: packages.length, sourceInputHash, resolvedSourceCommit, resolvedCommitDate });
 }
 
 function discoverPackageFiles() {

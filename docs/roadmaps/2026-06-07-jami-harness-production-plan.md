@@ -832,7 +832,9 @@ Pass status:
 - 2026-06-09 post-audit implementation pass 1 added a dependency-free local SBOM
   dry-run/check surface. `pnpm sbom:generate` writes
   `docs/generated/sbom.cdx.json` as a CycloneDX `1.7` workspace package-manifest
-  inventory, `pnpm sbom:check` fails on manifest or Git `HEAD` drift, and
+  inventory, `pnpm sbom:check` fails on manifest drift and preserves a symbolic
+  `git:HEAD` provenance marker so the tracked generated artifact does not drift after
+  commit, and
   `docs/operations/sbom-source-lock.md` records current official source evidence for
   the format/tooling choice. Release readiness now treats SBOM dry-run evidence as
   locally supported while npm publish dry-run with provenance, GitHub attestations,

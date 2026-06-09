@@ -102,8 +102,8 @@ results.
 Before any package or release artifact is called publish-ready:
 
 - Generate an SBOM from the exact package set being released.
-- Record generator name, generator version, command, timestamp, source commit, package
-  names, package versions, license metadata, and output path.
+- Record generator name, generator version, command, source commit or checked symbolic
+  source marker, package names, package versions, license metadata, and output path.
 - Verify the SBOM with a check command that fails when package inventory or license
   metadata drifts.
 - Keep generated SBOM artifacts free of secrets and signed URLs.
@@ -116,7 +116,9 @@ Current local implementation:
 - `pnpm sbom:generate` writes a CycloneDX `1.7` workspace package-manifest inventory to
   `docs/generated/sbom.cdx.json`.
 - `pnpm sbom:check` verifies that the checked artifact still matches package manifests,
-  package metadata, workspace dependency edges, and current Git `HEAD`.
+  package metadata, workspace dependency edges, and the symbolic `git:HEAD` provenance
+  marker used to keep tracked generated files deterministic after commit. Runtime command
+  output resolves the current commit for audit use.
 - The source-lock evidence for this local format/tooling choice is
   `docs/operations/sbom-source-lock.md`.
 - The local SBOM dry-run artifact remains non-publishing evidence until package contents

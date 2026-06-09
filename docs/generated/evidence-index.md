@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:3d47fe5bf462fffcc0eabb102bd55f44f15bff9768ca75ef3826ec77a408f15d`
+- Source input hash: `sha256:338a89b9a8a043277d40d752ce1c00c71fc58129e5e0457c28fc691ada2bcbdd`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -42,6 +42,7 @@
 - `.changes/2026-06-09-release-readiness-verify-gate.md` (sha256:c8aae0d21e2bc29818d7de60f33b5dbef24ed22cc4dcfd0a276a6b6a7a125398)
 - `.changes/2026-06-09-runtime-kernel-spine.md` (sha256:dd8b9a002e72eb27bf8b8a155b4775b33e7c54f960b9a11c1dd8837673594117)
 - `.changes/2026-06-09-sbom-dry-run.md` (sha256:8289000f995f8a6880eab8ab1946e1c304aae33415a8a346e05ef032c2e2e00b)
+- `.changes/2026-06-09-sbom-head-determinism.md` (sha256:9289b6f1c4d5c4718de61f710ab7cd6b7a69a91889ae1f6fd03119070c4f700c)
 - `.changes/2026-06-09-store-approval-validation.md` (sha256:d3449912eccc7380aa18b2a132414ec0db06e6e9019efda972a54270a8916c50)
 - `.changes/2026-06-09-stream4-foundations.md` (sha256:a76ddbe8b412907596599229b07f0d0b3cd3971bdd4107c1d34842e2db167cdb)
 - `.changes/2026-06-09-stream4-pass2-provenance-hardening.md` (sha256:848ed071d94154cd2613698ce3db9d1d0269f50372c096bd189ab06f91193b82)
@@ -55,7 +56,7 @@
 - `apps/cli/package.json` (sha256:0bc99bef0178528f7fc866201ea25cbf76e5c13f42453092530e40a7e600588c)
 - `docs/architecture/modular-responsibility-map.md` (sha256:86923c4dcedd85af62cf6c80f7faf06f8f1af8973e99006b20a5ffc8b98a0b2d)
 - `docs/architecture/product-architecture.md` (sha256:d9b30effc258fc3d4164596fd9bf81902330706254f24d9da7c0e01b2cdff968)
-- `docs/operations/release-readiness.md` (sha256:d7af88ebb02948c6d4647af04468eba538f8b2844c0e151a43f6ffcdc616c69c)
+- `docs/operations/release-readiness.md` (sha256:33fd85f04133d99d338ecf1b391b853a00b0df74d4af352cdf1d978ede55772c)
 - `package.json` (sha256:0f5b3163bdf7b317f4bd9aa445308e836e8388b8c41dc418bdb2903f1843da36)
 - `packages/artifacts/package.json` (sha256:f96fc1b6ecd6b7a34ce447c803759ac810b89f6d83bd8251f4b134801f97daa4)
 - `packages/contracts/fixtures/artifacts/valid-artifact-record.json` (sha256:98eab29dc50fcf9f57f517abba2d44c67e9b6fdfca65be0f6e5af2edb341f91b)

@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:3d47fe5bf462fffcc0eabb102bd55f44f15bff9768ca75ef3826ec77a408f15d",
+  "sourceInputHash": "sha256:338a89b9a8a043277d40d752ce1c00c71fc58129e5e0457c28fc691ada2bcbdd",
   "generatedAt": "deterministic:git-head-plus-input-hash",
   "freshnessClass": "deterministic_current_source_tree",
   "command": "pnpm docs:generate -- --check",
@@ -117,6 +117,11 @@
       "bytes": 300
     },
     {
+      "path": ".changes/2026-06-09-sbom-head-determinism.md",
+      "sha256": "sha256:9289b6f1c4d5c4718de61f710ab7cd6b7a69a91889ae1f6fd03119070c4f700c",
+      "bytes": 260
+    },
+    {
       "path": ".changes/2026-06-09-store-approval-validation.md",
       "sha256": "sha256:d3449912eccc7380aa18b2a132414ec0db06e6e9019efda972a54270a8916c50",
       "bytes": 332
@@ -183,8 +188,8 @@
     },
     {
       "path": "docs/operations/release-readiness.md",
-      "sha256": "sha256:d7af88ebb02948c6d4647af04468eba538f8b2844c0e151a43f6ffcdc616c69c",
-      "bytes": 11146
+      "sha256": "sha256:33fd85f04133d99d338ecf1b391b853a00b0df74d4af352cdf1d978ede55772c",
+      "bytes": 11326
     },
     {
       "path": "package.json",

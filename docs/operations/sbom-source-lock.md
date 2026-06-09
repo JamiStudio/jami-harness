@@ -37,7 +37,9 @@ Official source pages verified for this pass:
 
 - `pnpm sbom:generate` writes `docs/generated/sbom.cdx.json`.
 - `pnpm sbom:check` fails when the checked SBOM drifts from workspace package manifests,
-  current Git `HEAD`, package metadata, or workspace dependency edges.
+  package metadata, workspace dependency edges, or the symbolic `git:HEAD` provenance
+  marker used by tracked generated files. The command output resolves the current commit
+  at runtime.
 - `pnpm verify` runs the SBOM drift check before package tests and release audit commands.
 - `pnpm release:readiness` and `pnpm release:dry-run` now report the generated SBOM
   artifact as supported local dry-run evidence.
