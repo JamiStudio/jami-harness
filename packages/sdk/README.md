@@ -16,6 +16,8 @@ Current capabilities:
   store port.
 - Resume from stored checkpoint state and record local approval evidence.
 - Read artifact records and trace records from the default local stores.
+- Read local observability metric records for run latency, estimated tokens, zero-cost
+  local execution, and tool-call counts.
 - Inspect active module capabilities and missing optional surfaces.
 - Inspect the tool gateway foundation: registry, policy-gated execution envelope,
   function adapter support, trusted MCP fixture support, unsupported adapter dry-run

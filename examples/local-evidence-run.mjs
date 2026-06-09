@@ -16,4 +16,5 @@ console.log(JSON.stringify({
   providerStatus: result.providerResult.status,
   toolExecutionStatuses: result.toolExecutions.map((execution) => execution.status),
   traceCount: result.traces.length,
+  metricCount: result.metrics.length,
 }, null, 2));

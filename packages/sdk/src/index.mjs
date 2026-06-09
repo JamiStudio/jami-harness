@@ -81,6 +81,7 @@ export function createHarness(options = {}) {
     observability: capability("observability", "core_invariant", "default", true, [
       "runtime event sink",
       "audit event sink",
+      "local metric sink",
       "local evidence packet export",
     ]),
     memory: capability("memory", "replaceable_module", moduleMode(memory), memory.capabilities?.readable === true, [
@@ -157,6 +158,10 @@ export function createHarness(options = {}) {
 
     readTraces() {
       return observability.traces;
+    },
+
+    readMetrics() {
+      return observability.metrics ?? [];
     },
 
     resume(runId) {
@@ -363,6 +368,7 @@ function createSdkRun({ now, artifactStore, observability, memory, context, chec
     kernel,
 
     async execute(executeInput = {}) {
+      const runStartedAt = now().toISOString();
       const artifactId = normalizeId("artifact", executeInput.artifactId, `art_${runId.replace(/^run_/, "")}_summary`);
       const evidenceRef = normalizeId("evidence", executeInput.evidenceRef, `ev_${runId.replace(/^run_/, "")}_summary`);
       kernel.start(executeInput.message ?? "local harness run started");
@@ -388,6 +394,24 @@ function createSdkRun({ now, artifactStore, observability, memory, context, chec
       });
       if (providerResult.status === "unsupported") {
         kernel.fail(providerResult.reason);
+        observability.recordUsageMetrics?.({
+          runId,
+          latencyName: "run.latency_ms",
+          latencyMs: elapsedMs(runStartedAt, now().toISOString()),
+          inputTokens: estimateTokens(executeInput.instruction ?? "produce local harness evidence") + tokenEstimateForContext(contextPack),
+          outputTokens: estimateTokens(providerResult.output?.text ?? ""),
+          costUsd: 0,
+          toolCallCount: 0,
+          source: {
+            providerRunRef: providerResult.providerRunId,
+          },
+          dimensions: {
+            providerId: providerResult.providerId,
+            providerStatus: providerResult.status,
+            environment,
+            pricing: "local_zero_cost",
+          },
+        });
         const checkpoint = checkpointStore.writeCheckpoint({
           runId,
           status: "unsupported",
@@ -432,6 +456,7 @@ function createSdkRun({ now, artifactStore, observability, memory, context, chec
           evidenceArtifact: evidence.artifact,
           traces: observability.traces,
           audits: observability.audits,
+          metrics: observability.metrics ?? [],
         };
       }
 
@@ -463,6 +488,25 @@ function createSdkRun({ now, artifactStore, observability, memory, context, chec
           memoryMode: memory.capabilities?.mode ?? "unknown",
           contextHash: contextPack.deterministicHash,
           toolExecutionStatuses: toolExecutions.map((execution) => execution.status),
+        },
+      });
+      observability.recordUsageMetrics?.({
+        runId,
+        latencyName: "run.latency_ms",
+        latencyMs: elapsedMs(runStartedAt, now().toISOString()),
+        inputTokens: estimateTokens(executeInput.instruction ?? "produce local harness evidence") + tokenEstimateForContext(contextPack),
+        outputTokens: estimateTokens(providerResult.output?.text ?? ""),
+        costUsd: 0,
+        toolCallCount: toolExecutions.length,
+        source: {
+          traceRef: trace.traceId,
+          providerRunRef: providerResult.providerRunId,
+        },
+        dimensions: {
+          providerId: providerResult.providerId,
+          providerStatus: providerResult.status,
+          environment,
+          pricing: "local_zero_cost",
         },
       });
       const artifact = artifactStore.write({
@@ -551,6 +595,7 @@ function createSdkRun({ now, artifactStore, observability, memory, context, chec
         evidenceArtifact: evidence.artifact,
         traces: observability.traces,
         audits: observability.audits,
+        metrics: observability.metrics ?? [],
       };
     },
   };
@@ -665,6 +710,21 @@ function ensureDefaultLocalTools(tools) {
 
 function moduleMode(module) {
   return module?.capabilities?.mode ?? "custom";
+}
+
+function elapsedMs(startedAt, endedAt) {
+  const started = Date.parse(startedAt);
+  const ended = Date.parse(endedAt);
+  if (!Number.isFinite(started) || !Number.isFinite(ended) || ended < started) return 0;
+  return ended - started;
+}
+
+function tokenEstimateForContext(contextPack) {
+  return (contextPack.items ?? []).reduce((total, item) => total + (item.tokenEstimate ?? 0), 0);
+}
+
+function estimateTokens(value) {
+  return Math.max(1, Math.ceil(String(value ?? "").length / 4));
 }
 
 function normalizeId(kind, value, fallback) {

@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:279101dabd9ea1684df8f93425c981ca5750678c0ac2eb7ef8acfb226c8193bd`
+- Source input hash: `sha256:0ae7e194e426df20dfe3e9ce4b3590a7283746282d0b6be9ff4d15053649f228`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -43,6 +43,8 @@ The docs-output path is intentionally split: repo-level generation is supported 
 
 Generated docs and evidence records are tied to accepted source records, contract references, command result, freshness class, and generated output paths in `docs/generated/docs-source-manifest.json`.
 
+Local metric records and `pnpm eval:smoke` provide deterministic regression coverage for tool safety, docs generation, memory recall, and recovery without a hosted observability or external eval backend.
+
 ## Changelog
 
-The current generated changelog consumes 32 accepted changelog fragments from `.changes/`.
+The current generated changelog consumes 33 accepted changelog fragments from `.changes/`.

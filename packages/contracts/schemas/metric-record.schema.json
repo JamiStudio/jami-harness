@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jami.studio/schemas/harness/metric-record.schema.json",
+  "title": "metricRecord",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "metricId",
+    "runId",
+    "name",
+    "kind",
+    "value",
+    "unit",
+    "observedAt",
+    "redaction"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "2026-06-09" },
+    "metricId": { "type": "string", "pattern": "^met_[a-z0-9][a-z0-9_-]*$" },
+    "runId": { "type": "string", "pattern": "^run_[a-z0-9][a-z0-9_-]*$" },
+    "name": { "type": "string", "pattern": "^[a-z][a-z0-9_.-]*$" },
+    "kind": {
+      "type": "string",
+      "enum": ["latency", "tokens", "cost", "tool_call", "run", "provider", "custom"]
+    },
+    "value": { "type": "number", "minimum": 0 },
+    "unit": { "type": "string", "enum": ["ms", "tokens", "usd", "count", "ratio"] },
+    "observedAt": { "type": "string", "format": "date-time" },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "eventRef": { "type": "string", "pattern": "^evt_[a-z0-9][a-z0-9_-]*$" },
+        "traceRef": { "type": "string", "pattern": "^trc_[a-z0-9][a-z0-9_-]*$" },
+        "auditRef": { "type": "string", "pattern": "^aud_[a-z0-9][a-z0-9_-]*$" },
+        "artifactRef": { "type": "string", "pattern": "^art_[a-z0-9][a-z0-9_-]*$" },
+        "toolExecutionRef": { "type": "string", "pattern": "^tex_[a-z0-9][a-z0-9_-]*$" },
+        "providerRunRef": { "type": "string", "pattern": "^prv_[a-z0-9][a-z0-9_-]*$" },
+        "checkpointRef": { "type": "string", "pattern": "^chk_[a-z0-9][a-z0-9_-]*$" }
+      }
+    },
+    "dimensions": {
+      "type": "object"
+    },
+    "redaction": {
+      "type": "object",
+      "required": ["payloadPolicy", "redactedFields"],
+      "additionalProperties": false,
+      "properties": {
+        "payloadPolicy": { "type": "string", "enum": ["none", "redacted", "omitted"] },
+        "redactedFields": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

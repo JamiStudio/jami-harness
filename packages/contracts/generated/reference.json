@@ -1,6 +1,6 @@
 {
   "generated": {
-    "generatedAt": "2026-06-09T11:40:13.093Z",
+    "generatedAt": "2026-06-09T15:53:53.310Z",
     "generatorVersion": "2026-06-09.contracts.1",
     "source": "packages/contracts/schemas/*.schema.json"
   },
@@ -146,6 +146,22 @@
         "citation"
       ],
       "title": "memoryRecord"
+    },
+    {
+      "file": "schemas/metric-record.schema.json",
+      "id": "https://jami.studio/schemas/harness/metric-record.schema.json",
+      "required": [
+        "schemaVersion",
+        "metricId",
+        "runId",
+        "name",
+        "kind",
+        "value",
+        "unit",
+        "observedAt",
+        "redaction"
+      ],
+      "title": "metricRecord"
     },
     {
       "file": "schemas/policy-decision.schema.json",

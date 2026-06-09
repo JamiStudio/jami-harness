@@ -69,6 +69,9 @@ test("executes a registered function tool only after policy allows it", async ()
   assert.equal(result.trace.attributes.result.token, "[redacted]");
   assert.equal(result.artifact.redaction.classification, "secret_adjacent");
   assert.equal(result.evidence.acceptedContracts.some((contract) => contract.name === "toolExecution"), true);
+  assert.equal(gateway.observability.metrics.some((metric) => metric.name === "tool.latency_ms"), true);
+  assert.equal(gateway.observability.metrics.some((metric) => metric.name === "tool.call.count" && metric.value === 1), true);
+  assert.equal(result.evidence.artifacts.some((artifact) => artifact.artifactId.endsWith("_metrics") && artifact.kind === "report"), true);
 });
 
 test("denied actions do not invoke handlers", async () => {
@@ -100,6 +103,7 @@ test("denied actions do not invoke handlers", async () => {
   assert.equal(result.status, "denied");
   assert.equal(result.auditEvent.eventType, "tool.denied");
   assert.equal(result.execution.error.code, "policy_denied");
+  assert.equal(gateway.observability.metrics.some((metric) => metric.dimensions.status === "denied"), true);
 });
 
 test("unsupported adapters fail closed with capability manifests and no handler path", async () => {

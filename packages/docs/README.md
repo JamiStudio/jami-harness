@@ -10,6 +10,7 @@ Current inputs:
 - accepted compatibility, policy, tool, artifact, memory, and observability fixtures
 - changelog fragments under `.changes/`
 - release readiness policy
+- local regression eval smoke script
 - CLI and SDK docs
 
 Current outputs:

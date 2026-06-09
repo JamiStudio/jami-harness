@@ -1,0 +1,28 @@
+{
+  "$schema": "../../schemas/metric-record.schema.json",
+  "expectedValid": true,
+  "caseId": "valid-metric-record",
+  "description": "Metric records capture local latency, token, cost, and tool-call measurements without exposing sensitive dimensions.",
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "metricId": "met_stream4_tool_latency",
+    "runId": "run_stream4_foundation",
+    "name": "tool.latency_ms",
+    "kind": "latency",
+    "value": 12,
+    "unit": "ms",
+    "observedAt": "2026-06-09T12:00:00.000Z",
+    "source": {
+      "traceRef": "trc_stream4_foundation"
+    },
+    "dimensions": {
+      "toolId": "tool_local_echo",
+      "adapterId": "adapter_function",
+      "status": "completed"
+    },
+    "redaction": {
+      "payloadPolicy": "none",
+      "redactedFields": []
+    }
+  }
+}

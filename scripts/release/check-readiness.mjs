@@ -26,6 +26,7 @@ const checks = [
   checkScript("contracts:validate", "contract and fixture validation"),
   checkScript("sbom:generate", "local SBOM generation command"),
   checkScript("sbom:check", "local SBOM drift check command"),
+  checkScript("eval:smoke", "local regression eval smoke command"),
   checkScript("release:readiness", "release readiness audit command"),
   checkScript("release:dry-run", "non-publishing release dry-run command"),
   checkFile("pnpm-lock.yaml", "lockfile for frozen local and manual CI installs"),
@@ -125,6 +126,13 @@ const claims = [
     "pnpm provider:test",
     "pnpm sdk:test",
     "pnpm cli:test",
+  ]),
+  claim("Local observability metrics and deterministic regression eval smoke exist for current tool safety, docs generation, memory recall, and recovery foundations", "supported", [
+    "packages/observability/src/index.mjs",
+    "packages/observability/test/observability.test.mjs",
+    "evals/smoke.mjs",
+    "pnpm observability:test",
+    "pnpm eval:smoke",
   ]),
   claim("Generated docs, changelog, system map, evidence index, and Mintlify-ready navigation draft exist locally", "supported", [
     "packages/docs/scripts/generate-docs.mjs",

@@ -2,7 +2,7 @@
 // Do not edit by hand; run pnpm --filter @jami-studio/harness-contracts generate.
 
 export const generatedContractMetadata = {
-  generatedAt: "2026-06-09T11:40:13.093Z",
+  generatedAt: "2026-06-09T15:53:53.310Z",
   generatorVersion: "2026-06-09.contracts.1",
   source: "packages/contracts/schemas/*.schema.json"
 } as const;
@@ -1212,6 +1212,133 @@ export const MemoryRecordSchema = {
   "type": "object"
 } as const;
 
+export const MetricRecordSchema = {
+  "$id": "https://jami.studio/schemas/harness/metric-record.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "dimensions": {
+      "type": "object"
+    },
+    "kind": {
+      "enum": [
+        "latency",
+        "tokens",
+        "cost",
+        "tool_call",
+        "run",
+        "provider",
+        "custom"
+      ],
+      "type": "string"
+    },
+    "metricId": {
+      "pattern": "^met_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "name": {
+      "pattern": "^[a-z][a-z0-9_.-]*$",
+      "type": "string"
+    },
+    "observedAt": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "redaction": {
+      "additionalProperties": false,
+      "properties": {
+        "payloadPolicy": {
+          "enum": [
+            "none",
+            "redacted",
+            "omitted"
+          ],
+          "type": "string"
+        },
+        "redactedFields": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "payloadPolicy",
+        "redactedFields"
+      ],
+      "type": "object"
+    },
+    "runId": {
+      "pattern": "^run_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": "2026-06-09"
+    },
+    "source": {
+      "additionalProperties": false,
+      "properties": {
+        "artifactRef": {
+          "pattern": "^art_[a-z0-9][a-z0-9_-]*$",
+          "type": "string"
+        },
+        "auditRef": {
+          "pattern": "^aud_[a-z0-9][a-z0-9_-]*$",
+          "type": "string"
+        },
+        "checkpointRef": {
+          "pattern": "^chk_[a-z0-9][a-z0-9_-]*$",
+          "type": "string"
+        },
+        "eventRef": {
+          "pattern": "^evt_[a-z0-9][a-z0-9_-]*$",
+          "type": "string"
+        },
+        "providerRunRef": {
+          "pattern": "^prv_[a-z0-9][a-z0-9_-]*$",
+          "type": "string"
+        },
+        "toolExecutionRef": {
+          "pattern": "^tex_[a-z0-9][a-z0-9_-]*$",
+          "type": "string"
+        },
+        "traceRef": {
+          "pattern": "^trc_[a-z0-9][a-z0-9_-]*$",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "unit": {
+      "enum": [
+        "ms",
+        "tokens",
+        "usd",
+        "count",
+        "ratio"
+      ],
+      "type": "string"
+    },
+    "value": {
+      "minimum": 0,
+      "type": "number"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "metricId",
+    "runId",
+    "name",
+    "kind",
+    "value",
+    "unit",
+    "observedAt",
+    "redaction"
+  ],
+  "title": "metricRecord",
+  "type": "object"
+} as const;
+
 export const PolicyDecisionSchema = {
   "$id": "https://jami.studio/schemas/harness/policy-decision.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -2307,6 +2434,12 @@ export const harnessContractSchemas = {
     schema: MemoryRecordSchema,
     typeName: "MemoryRecord"
   },
+  "metricRecord": {
+    file: "schemas/metric-record.schema.json",
+    id: "https://jami.studio/schemas/harness/metric-record.schema.json",
+    schema: MetricRecordSchema,
+    typeName: "MetricRecord"
+  },
   "policyDecision": {
     file: "schemas/policy-decision.schema.json",
     id: "https://jami.studio/schemas/harness/policy-decision.schema.json",
@@ -2379,6 +2512,7 @@ export type CapabilityManifest = Record<string, unknown>;
 export type ContextPack = Record<string, unknown>;
 export type EvidencePacket = Record<string, unknown>;
 export type MemoryRecord = Record<string, unknown>;
+export type MetricRecord = Record<string, unknown>;
 export type PolicyDecision = Record<string, unknown>;
 export type PrimitiveManifest = Record<string, unknown>;
 export type RunEvent = Record<string, unknown>;

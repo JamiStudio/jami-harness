@@ -61,3 +61,50 @@ test("observability sinks keep runtime events displayable without executing UI o
 
   assert.equal(observability.events[0].privatePayload, "[redacted]");
 });
+
+test("records redacted local usage metrics and exports metric evidence artifacts", () => {
+  const observability = createRunObservability({ now });
+
+  observability.recordUsageMetrics({
+    runId: "run_stream4_foundation",
+    latencyMs: 25,
+    inputTokens: 12,
+    outputTokens: 18,
+    costUsd: 0,
+    toolCallCount: 2,
+    dimensions: {
+      providerId: "provider_local_deterministic",
+      apiKey: "must-not-export",
+    },
+  });
+  observability.metricSink.write({
+    runId: "run_stream4_foundation",
+    name: "tool.latency_ms",
+    kind: "latency",
+    value: 9,
+    unit: "ms",
+    dimensions: {
+      toolId: "tool_local_echo",
+      token: "must-not-export",
+    },
+  });
+
+  assert.equal(observability.metrics.length, 6);
+  assert.equal(observability.metrics[0].name, "run.latency_ms");
+  assert.equal(observability.metrics[1].unit, "tokens");
+  assert.equal(observability.metrics[3].name, "cost.usd");
+  assert.equal(observability.metrics[5].dimensions.token, "[redacted]");
+  assert.deepEqual(observability.metrics[5].redaction.redactedFields, ["$.dimensions.token"]);
+
+  const evidence = observability.exportEvidencePacket({
+    runId: "run_stream4_foundation",
+    evidenceId: "ev_stream4_metrics",
+    subject: "Stream 4 metrics evidence",
+  });
+  const metricArtifact = evidence.packet.artifacts.find((artifact) => artifact.artifactId === "art_stream4_metrics_metrics");
+
+  assert.equal(evidence.metrics.length, 6);
+  assert.equal(metricArtifact.kind, "report");
+  assert.equal(evidence.packet.acceptedContracts.some((contract) => contract.name === "metricRecord"), true);
+  assert.equal(evidence.packet.redaction.containsSecrets, true);
+});

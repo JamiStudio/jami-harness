@@ -47,10 +47,12 @@ Run the narrowest complete checks for the touched surface:
 - Contracts and schemas: generation, drift check, schema validation, compatibility fixtures.
 - Runtime/policy/tools/memory/artifacts/observability: lint, typecheck, unit tests, targeted integration
   tests, recovery or policy regression fixtures as applicable.
-- Current runtime/policy/tool package gates: `pnpm policy:test`, `pnpm runtime:test`,
-  and `pnpm tools:test`.
+- Current runtime/policy/tool/observability package gates: `pnpm policy:test`,
+  `pnpm runtime:test`, `pnpm tools:test`, and `pnpm observability:test`.
 - Current CLI/SDK package gates: `pnpm sdk:test`, `pnpm cli:test`, and
   `pnpm examples:smoke`.
+- Current local regression eval smoke: `pnpm eval:smoke`, covering tool safety, docs
+  generation, memory recall, and recovery without a hosted eval backend.
 - CLI/SDK/workbench: command smoke, idempotency checks, clean temporary-project checks, browser smoke when UI exists.
 - Full gate: `pnpm verify`, including the non-publishing release readiness and dry-run
   audits.

@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:279101dabd9ea1684df8f93425c981ca5750678c0ac2eb7ef8acfb226c8193bd`
+- Source input hash: `sha256:0ae7e194e426df20dfe3e9ce4b3590a7283746282d0b6be9ff4d15053649f228`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -23,6 +23,7 @@
 - `contextPack` from `packages/contracts/schemas/context-pack.schema.json` with schema id `https://jami.studio/schemas/harness/context-pack.schema.json`.
 - `evidencePacket` from `packages/contracts/schemas/evidence-packet.schema.json` with schema id `https://jami.studio/schemas/harness/evidence-packet.schema.json`.
 - `memoryRecord` from `packages/contracts/schemas/memory-record.schema.json` with schema id `https://jami.studio/schemas/harness/memory-record.schema.json`.
+- `metricRecord` from `packages/contracts/schemas/metric-record.schema.json` with schema id `https://jami.studio/schemas/harness/metric-record.schema.json`.
 - `policyDecision` from `packages/contracts/schemas/policy-decision.schema.json` with schema id `https://jami.studio/schemas/harness/policy-decision.schema.json`.
 - `primitiveManifest` from `packages/contracts/schemas/primitive-manifest.schema.json` with schema id `https://jami.studio/schemas/harness/primitive-manifest.schema.json`.
 - `runEvent` from `packages/contracts/schemas/run-event.schema.json` with schema id `https://jami.studio/schemas/harness/run-event.schema.json`.
@@ -45,6 +46,7 @@
 - `ContextPack`
 - `EvidencePacket`
 - `MemoryRecord`
+- `MetricRecord`
 - `PolicyDecision`
 - `PrimitiveManifest`
 - `RunEvent`

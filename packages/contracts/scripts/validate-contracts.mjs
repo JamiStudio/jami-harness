@@ -23,6 +23,7 @@ const requiredAnchors = new Map([
   ["evidencePacket", "evidence-packet.schema.json"],
   ["artifactRecord", "artifact-record.schema.json"],
   ["traceEvent", "trace-event.schema.json"],
+  ["metricRecord", "metric-record.schema.json"],
   ["memoryRecord", "memory-record.schema.json"],
   ["contextPack", "context-pack.schema.json"],
   ["toolExecution", "tool-execution.schema.json"],
@@ -296,6 +297,24 @@ function validateSemantics(schemaTitle, value) {
   if (schemaTitle === "traceEvent") {
     if (value.redaction.payloadPolicy === "none" && value.attributes && findSecretLookingPath(value.attributes, "$.attributes")) {
       errors.push("$.redaction.payloadPolicy cannot be none when trace attributes contain secret-looking fields");
+    }
+  }
+
+  if (schemaTitle === "metricRecord") {
+    if (value.redaction.payloadPolicy === "none" && value.dimensions && findSecretLookingPath(value.dimensions, "$.dimensions")) {
+      errors.push("$.redaction.payloadPolicy cannot be none when metric dimensions contain secret-looking fields");
+    }
+    if (value.kind === "latency" && value.unit !== "ms") {
+      errors.push("$.unit must be ms for latency metrics");
+    }
+    if (value.kind === "tokens" && value.unit !== "tokens") {
+      errors.push("$.unit must be tokens for token metrics");
+    }
+    if (value.kind === "cost" && value.unit !== "usd") {
+      errors.push("$.unit must be usd for cost metrics");
+    }
+    if (value.kind === "tool_call" && value.unit !== "count") {
+      errors.push("$.unit must be count for tool-call metrics");
     }
   }
 

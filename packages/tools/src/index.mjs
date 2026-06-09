@@ -764,6 +764,24 @@ function finalizeExecution(input) {
     },
     error: input.error,
   };
+  input.observability.recordUsageMetrics?.({
+    runId: input.runId,
+    latencyName: "tool.latency_ms",
+    latencyMs: elapsedMs(input.startedAt, input.endedAt),
+    toolCallName: "tool.call.count",
+    toolCallCount: 1,
+    source: {
+      traceRef: trace.traceId,
+      auditRef: input.auditEvent.auditId,
+      artifactRef: artifact.artifactId,
+      toolExecutionRef: execution.executionId,
+    },
+    dimensions: {
+      toolId: input.toolId,
+      adapterId: input.adapterId,
+      status: input.status,
+    },
+  });
   const evidence = input.observability.exportEvidencePacket({
     runId: input.runId,
     evidenceId: evidenceRef,
@@ -813,6 +831,13 @@ function auditForPolicyDecision({ decision, runId, actor, projectId, environment
     redactionMode: decision.decision === "allow" ? "redacted" : "redacted",
     summary: `tool ${toolId}: ${decision.reasons.join("; ")}`,
   };
+}
+
+function elapsedMs(startedAt, endedAt) {
+  const started = Date.parse(startedAt);
+  const ended = Date.parse(endedAt);
+  if (!Number.isFinite(started) || !Number.isFinite(ended) || ended < started) return 0;
+  return ended - started;
 }
 
 function denyDecision({ runId, actor, projectId, environment, toolId, reason, now }) {

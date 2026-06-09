@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:279101dabd9ea1684df8f93425c981ca5750678c0ac2eb7ef8acfb226c8193bd",
+  "sourceInputHash": "sha256:0ae7e194e426df20dfe3e9ce4b3590a7283746282d0b6be9ff4d15053649f228",
   "generatedAt": "deterministic:git-head-plus-input-hash",
   "freshnessClass": "deterministic_current_source_tree",
   "command": "pnpm docs:generate -- --check",
@@ -95,6 +95,11 @@
       "path": ".changes/2026-06-09-mcp-source-lock-fixture-adapter.md",
       "sha256": "sha256:ae76aaf59bdc90edf563e1f4d79dbbbbac71da85ae41d0c3ff04f35080d8e218",
       "bytes": 500
+    },
+    {
+      "path": ".changes/2026-06-09-observability-metrics-eval-smoke.md",
+      "sha256": "sha256:7284572d1510ee3ae66d4f1adbe6cc84eaa7bd579d1067c854827743e701dbcc",
+      "bytes": 272
     },
     {
       "path": ".changes/2026-06-09-policy-gate-hardening.md",
@@ -213,13 +218,18 @@
     },
     {
       "path": "docs/operations/release-readiness.md",
-      "sha256": "sha256:563ec7e5656b4cabf5b5c796411121af5eaf56e2c084df25cddd14b78760af41",
-      "bytes": 14619
+      "sha256": "sha256:2ad1e90bbaf8a122e2f541a5ddb278208db9a4840f638c929540c5d9775a9008",
+      "bytes": 15459
+    },
+    {
+      "path": "evals/smoke.mjs",
+      "sha256": "sha256:7534ad92fb2dfc0f5cbef2febb05b8a017bba2e98122ed59a88b31ff68bde770",
+      "bytes": 6216
     },
     {
       "path": "package.json",
-      "sha256": "sha256:0f5b3163bdf7b317f4bd9aa445308e836e8388b8c41dc418bdb2903f1843da36",
-      "bytes": 2830
+      "sha256": "sha256:e9dfc3e28ee6222efd05af8ddfa69f51528a7caf71218886071b0676c7362c79",
+      "bytes": 2896
     },
     {
       "path": "packages/artifacts/package.json",
@@ -322,6 +332,11 @@
       "bytes": 1308
     },
     {
+      "path": "packages/contracts/fixtures/observability/valid-metric-record.json",
+      "sha256": "sha256:b36f2eef5f7bd393002f15a05e6481b748b56adbe2ea8bac24ac06b608c469ff",
+      "bytes": 807
+    },
+    {
       "path": "packages/contracts/fixtures/observability/valid-trace-event.json",
       "sha256": "sha256:ab1d06f07f477fb1741b4900e8d1acabf78671aa6ef5811e1e17b0e297b044e5",
       "bytes": 884
@@ -408,13 +423,13 @@
     },
     {
       "path": "packages/contracts/generated/openapi.json",
-      "sha256": "sha256:b79fd2567b8f8610e728a3778f08b0ceebd47658224df6ff8d3e71af47679db5",
-      "bytes": 59939
+      "sha256": "sha256:a9cb8befebb48567c8fdbe033573be76781d749aad563a7604dc0300544d8eb5",
+      "bytes": 63363
     },
     {
       "path": "packages/contracts/generated/reference.json",
-      "sha256": "sha256:b0f093132dbe92251d96a3f2507162b40105e1ee4e690d0d621cfe0ebc88c15e",
-      "bytes": 8146
+      "sha256": "sha256:edfd8d5473916d9baca3582d7733b91ead8303a1f17c359055e7951c1c3cc1c8",
+      "bytes": 8515
     },
     {
       "path": "packages/contracts/package.json",
@@ -465,6 +480,11 @@
       "path": "packages/contracts/schemas/memory-record.schema.json",
       "sha256": "sha256:68c51cdf76e4566d578da56bcc209b2f05eae2d473d3db3e553b371469b1b803",
       "bytes": 3119
+    },
+    {
+      "path": "packages/contracts/schemas/metric-record.schema.json",
+      "sha256": "sha256:0c16e094ef92c6a1a4ecaa591287369ae9c0aa4d38a3fb72f0e8a7bd1775d69a",
+      "bytes": 2115
     },
     {
       "path": "packages/contracts/schemas/policy-decision.schema.json",
@@ -523,8 +543,8 @@
     },
     {
       "path": "packages/docs/scripts/generate-docs.mjs",
-      "sha256": "sha256:b9dd2822bc8889b61918a3e35ec7630d742fa4f1d18c559d9dd4d5ad517c8ce4",
-      "bytes": 24221
+      "sha256": "sha256:0df6cc22b20e00a634683c8a89ccfd537c372f2a32f9877bf985b772f0adb7f8",
+      "bytes": 25160
     },
     {
       "path": "packages/memory/package.json",
@@ -532,9 +552,24 @@
       "bytes": 497
     },
     {
+      "path": "packages/observability/README.md",
+      "sha256": "sha256:69bb2d2b5cfbd650dbc23f4cb3157c4894236a1f9a5f9a14074285d778cdbec0",
+      "bytes": 810
+    },
+    {
       "path": "packages/observability/package.json",
       "sha256": "sha256:a137e0e08648f061a35124e28f76e51c7e35f1f4fb070afcb289d2d1efe92ba4",
       "bytes": 485
+    },
+    {
+      "path": "packages/observability/src/index.mjs",
+      "sha256": "sha256:0d703eb6bedf52c2e13e1dcc1a6fcf79b1ea28b6ab545b64b2387e3249d0eddf",
+      "bytes": 11507
+    },
+    {
+      "path": "packages/observability/test/observability.test.mjs",
+      "sha256": "sha256:2731beafb3ade081a94ac90488f572df70482bf61688daa5965787c7bbcce45b",
+      "bytes": 4109
     },
     {
       "path": "packages/policy/package.json",
@@ -558,8 +593,8 @@
     },
     {
       "path": "packages/sdk/README.md",
-      "sha256": "sha256:9f1bec217ad822dff03f064dca62c98fc29f659cfa462a6b31248921dc955c41",
-      "bytes": 2630
+      "sha256": "sha256:a5b7e1fd2287ab6c211a28196e48766b9d877fd281f1c99a581f645d9786e723",
+      "bytes": 2758
     },
     {
       "path": "packages/sdk/package.json",
@@ -568,13 +603,13 @@
     },
     {
       "path": "packages/sdk/src/index.mjs",
-      "sha256": "sha256:9e9a20128ef27a6e1a59e8f2b7e738624d5c272d9c173472936d3ef84893855d",
-      "bytes": 26067
+      "sha256": "sha256:b46180052ff6eacef17b31f47e2ec3fff2ad4ebdaeb2a6224b5fb6fa16298cdc",
+      "bytes": 28296
     },
     {
       "path": "packages/sdk/test/sdk.test.mjs",
-      "sha256": "sha256:389d4daa718584e26d96655c071cffaf29a2d2a4e715c9fdd910350c570be8ef",
-      "bytes": 8932
+      "sha256": "sha256:f9e950334fa1e0e79bfb43a3a63f65194e45b7374af205f38829810482d48f80",
+      "bytes": 9749
     },
     {
       "path": "packages/store-local/package.json",
@@ -598,8 +633,8 @@
     },
     {
       "path": "scripts/release/check-readiness.mjs",
-      "sha256": "sha256:34b55ea41b37a44368cc513ab643c4c2208ff85a8c9f982736531082b9191a99",
-      "bytes": 13688
+      "sha256": "sha256:a29508151200bf0a534834950f0fa035ae1f843652e4f76a09e95c403e23ad68",
+      "bytes": 14123
     }
   ],
   "acceptedContractReferences": [
@@ -742,6 +777,22 @@
         "retention",
         "redaction",
         "citation"
+      ]
+    },
+    {
+      "name": "metricRecord",
+      "schemaId": "https://jami.studio/schemas/harness/metric-record.schema.json",
+      "schemaPath": "packages/contracts/schemas/metric-record.schema.json",
+      "requiredFields": [
+        "schemaVersion",
+        "metricId",
+        "runId",
+        "name",
+        "kind",
+        "value",
+        "unit",
+        "observedAt",
+        "redaction"
       ]
     },
     {
@@ -944,6 +995,9 @@
     },
     {
       "path": "packages/contracts/fixtures/observability/valid-evidence-packet.json"
+    },
+    {
+      "path": "packages/contracts/fixtures/observability/valid-metric-record.json"
     },
     {
       "path": "packages/contracts/fixtures/observability/valid-trace-event.json"

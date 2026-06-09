@@ -705,6 +705,13 @@ Pass status:
   and tests proving evidence export can consume the existing runtime run-event spine. This
   is not the OpenTelemetry bridge, hosted trace/audit/metric backend, eval sink, CLI
   inspector, workbench view, or complete metrics pipeline.
+- 2026-06-09 Workstream 7 metrics/eval smoke pass added local `metricRecord` contract
+  coverage, redacted in-memory metric sinks for latency, estimated token, zero-cost local
+  cost, and tool-call measurements, metric-summary artifacts in evidence packet output,
+  SDK/example metric inspection, and `pnpm eval:smoke` scenarios for tool safety, docs
+  generation, memory recall, and recovery. This is local deterministic evidence only; it
+  does not claim hosted observability, OpenTelemetry export, external eval backends, LLM
+  judging, incident exports, or workbench views.
 
 Implementation tasks:
 
@@ -712,17 +719,23 @@ Implementation tasks:
 - [~] Add audit event stream and evidence-packet export.
 - [~] Separate trace/audit/metric/evidence event contracts from sink adapters.
 - [~] Add local evidence packet sink and OTel bridge as defaults.
-- [ ] Add cost/latency/token/tool metrics.
-- [ ] Add regression eval scenarios for tool safety, docs generation, memory recall, and recovery.
+- [~] Add cost/latency/token/tool metrics; local redacted metric records now cover current
+  SDK/tool gateway paths, while hosted metric backends and full provider billing remain
+  open.
+- [~] Add regression eval scenarios for tool safety, docs generation, memory recall, and
+  recovery; `pnpm eval:smoke` covers current local foundations without an external eval
+  backend.
 - [x] Add redaction defaults for sensitive payloads.
 - [x] Add evidence packet fixture validation against the Workstream 1 schema.
 
 Exit criteria:
 
-- [ ] Every run emits trace, audit, metrics, and evidence artifacts with redaction controls.
-- [ ] Runs can produce local evidence packets without any hosted observability backend.
-- [ ] Hosted or user-owned observability sinks can replace defaults without changing runtime call sites.
-- [ ] Trace/audit/evidence output redacts sensitive prompts, secrets, credentials, and private payloads by default.
+- [~] Every current local SDK/tool run emits trace, audit, metrics, and evidence artifacts
+  with redaction controls; broader hosted/provider/runtime paths remain open.
+- [~] Runs can produce local evidence packets without any hosted observability backend.
+- [~] Hosted or user-owned observability sinks can replace defaults without changing
+  runtime call sites for current local foundations; hosted sinks remain unimplemented.
+- [x] Trace/audit/evidence output redacts sensitive prompts, secrets, credentials, and private payloads by default.
 
 Suggested verification:
 
@@ -907,6 +920,9 @@ Suggested verification:
   non-publishing release audit evidence; npm provenance, package contents dry-run,
   signing, and GitHub attestation remain unavailable.
 - [~] Evidence packet, provider/tool workflow, and checkpoint provenance/redaction checks pass for local foundations.
+- [~] Local metric/eval smoke checks pass for current tool safety, docs generation,
+  memory recall, and recovery foundations through `pnpm eval:smoke`; hosted
+  observability and external eval backends remain unavailable.
 - [ ] No secrets in tracked files or generated artifacts.
 - [ ] Changelog and decision records updated.
 - [ ] Git commit and push when the root becomes a Git repo with remote.
