@@ -18,7 +18,8 @@ Current capabilities:
 - Read artifact records and trace records from the default local stores.
 - Inspect active module capabilities and missing optional surfaces.
 - Inspect the tool gateway foundation: registry, policy-gated execution envelope,
-  function adapter support, and unsupported adapter manifests.
+  function adapter support, trusted MCP fixture support, unsupported adapter dry-run
+  evidence, adapter manifests, and adapter source-lock state.
 - Inspect the provider foundation: local deterministic workflow support, model
   replacement port, hosted-provider fail-closed behavior, and recovery fixture support.
 - Inject replacement modules such as memory, context, search, checkpoint store, policy,
@@ -28,10 +29,11 @@ Malformed run, artifact, and evidence identifiers fail before local artifacts or
 packets are written. Injected core modules must expose the methods their ports require.
 
 This package does not implement OpenAI, Anthropic, Google, xAI, Azure OpenAI, Bedrock, or
-other hosted provider execution. It also does not implement MCP/OpenAPI/shell/browser/code/A2A
-adapters beyond the current tool gateway foundations, durable hosted stores, SDK-level
-docs-output injection, release publishing, or a hosted control plane. Repo-level docs
-generation exists through `pnpm docs:generate`.
+other hosted provider execution. It also does not implement executable full
+MCP/OpenAPI/shell/browser/code/provider-as-tool/A2A adapters beyond the current function
+tool, trusted MCP fixture, and fail-closed adapter inspection foundations, durable hosted
+stores, SDK-level docs-output injection, release publishing, or a hosted control plane.
+Repo-level docs generation exists through `pnpm docs:generate`.
 
 ```js
 import { createHarness } from "@jami-studio/harness-sdk";

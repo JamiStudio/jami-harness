@@ -7,12 +7,14 @@ Harness. It provides:
 
 - a tool registry with risk labels, scopes, timeouts, adapter ids, and capability manifests
 - one execution envelope for policy, timeout/cancellation, trace, audit, evidence, artifact, and redaction output
-- a real function-tool adapter path
+- a real function-tool adapter path with first-party source inspection
 - a narrow MCP `2025-11-25` adapter foundation for trusted in-process fixture discovery and
   `tools/call` mapping through the same execution envelope
-- explicit unsupported manifests for OpenAPI, shell, browser, code, provider-as-tool, and A2A
-  adapters until repo-local source-lock evidence is refreshed for those protocols or
-  wrappers
+- explicit unsupported manifests and dry-run helpers for OpenAPI, shell, browser, code,
+  provider-as-tool, and A2A adapters until repo-local source-lock evidence is refreshed
+  for those protocols or wrappers
+- adapter source-lock inspection for supported first-party/function and trusted MCP fixture
+  paths, plus missing-source-lock evidence for unsupported adapters
 
 Denied executions do not invoke handlers. Unsupported adapters fail closed and still
 produce typed trace, audit, evidence, artifact, and tool execution records. Inputs and
@@ -26,6 +28,12 @@ resources, prompts, roots, sampling, elicitation, tasks, resumability, and full 
 remain unsupported and are named as unsupported in the MCP capability manifest. Model
 provider routing lives in `@jami-studio/harness-provider-local`; this package does not
 claim hosted provider execution.
+
+`listToolAdapterCapabilities()` and `listToolAdapterSourceLocks()` expose the current
+adapter readiness inventory for SDK and CLI inspection. `dryRunUnsupportedAdapter()` can
+produce typed unsupported evidence for OpenAPI, shell, browser, code, provider-as-tool, and
+A2A without invoking HTTP clients, shells, browsers, code runners, provider APIs, or agent
+interop endpoints.
 
 ## Verification
 

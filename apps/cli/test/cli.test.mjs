@@ -31,6 +31,8 @@ test("run writes inspectable evidence, checkpoint, and map output reports missin
     const resume = await runCli(["resume", "--json", "--cwd", cwd, "--run-id", "run_cli_fixture"]);
     const doctor = await runCli(["doctor", "--json", "--cwd", cwd, "--run-id", "run_cli_fixture"]);
     const map = await runCli(["map", "--json", "--cwd", cwd]);
+    const tools = await runCli(["tools", "--json", "--cwd", cwd]);
+    const toolsPayload = JSON.parse(tools.out);
 
     assert.equal(run.code, 0);
     assert.equal(runPayload.providerStatus, "completed");
@@ -46,6 +48,10 @@ test("run writes inspectable evidence, checkpoint, and map output reports missin
     assert.equal(JSON.parse(resume.out).reason, "run_completed");
     assert.equal(JSON.parse(doctor.out).checkpoint.runId, "run_cli_fixture");
     assert.equal(JSON.parse(map.out).modules.some((module) => module.name === "tools" && module.available), true);
+    assert.equal(toolsPayload.toolAdapters.some((adapter) => adapter.adapterId === "adapter_openapi" && adapter.support === "unsupported"), true);
+    assert.equal(toolsPayload.toolAdapters.some((adapter) => adapter.adapterId === "adapter_function" && adapter.support === "supported"), true);
+    assert.equal(toolsPayload.sourceLocks.some((sourceLock) => sourceLock.adapterId === "adapter_mcp" && sourceLock.status === "locked"), true);
+    assert.equal(toolsPayload.toolAdapterManifests.some((manifest) => manifest.capabilityId === "cap_shell_tool_gateway"), true);
   } finally {
     await rm(cwd, { recursive: true, force: true });
   }

@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:338a89b9a8a043277d40d752ce1c00c71fc58129e5e0457c28fc691ada2bcbdd`
+- Source input hash: `sha256:cbd1700ef6deeacd3f12cbc5988b5c27bc1d69443e90184ea6b16ab9e9a71f66`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -18,7 +18,8 @@
 - Local docs generation exists and has check mode.
 - Local CLI/SDK evidence smoke exists.
 - Local deterministic provider workflow exists and routes tool calls through the policy-gated tool gateway.
-- Release publishing, hosted docs, hosted model providers, attestation, and SBOM artifacts remain unavailable until their gates close.
+- Tool adapter source inspection exists for supported function and trusted MCP fixture paths plus fail-closed OpenAPI, shell, browser, code, provider-as-tool, and A2A dry-run evidence.
+- Release publishing, hosted docs, hosted model providers, executable full protocol/local tool adapters, attestation, and package release artifacts remain unavailable until their gates close.
 
 ## Evidence Inputs
 
@@ -47,16 +48,17 @@
 - `.changes/2026-06-09-stream4-foundations.md` (sha256:a76ddbe8b412907596599229b07f0d0b3cd3971bdd4107c1d34842e2db167cdb)
 - `.changes/2026-06-09-stream4-pass2-provenance-hardening.md` (sha256:848ed071d94154cd2613698ce3db9d1d0269f50372c096bd189ab06f91193b82)
 - `.changes/2026-06-09-stream4-pass3-observability-redaction.md` (sha256:39cc764417680dbd2e118c6b824b314383c09c3291872952bb9f39ed22e77ece)
+- `.changes/2026-06-09-tool-adapter-source-inspection.md` (sha256:74a716044603c3a89def5e5ce0d9d64e4576657a5522131e410713c1037d1ca6)
 - `.changes/2026-06-09-tool-gateway-foundation.md` (sha256:59072ff9cfd3aba9eb7ac0288bafd9a5770dfe92af2a6cbd01cee6ca88a0064c)
 - `.changes/2026-06-09-tool-gateway-pass2-hardening.md` (sha256:942eadb198a7f86c81ac19547511b2882452a193c73b677a0132945bc1352213)
 - `.changes/README.md` (sha256:e528bf4b90ab589bfc83ffed78e37918f56ac94240e5eedebc8d03265e09e52f)
 - `.changes/stream5-cli-sdk-fail-closed-ids.md` (sha256:3b455ab2dfa9385a84a24beda28073ffbddcc2062e32ff4b1cb21a50814e1d4f)
 - `.changes/stream5-cli-sdk-foundation.md` (sha256:e496cce37d42a13d18d0745a780bfd40795097bbf4c5a89af3cc51b5d974af79)
-- `apps/cli/README.md` (sha256:8cec82b7bfb7c4083e0de2c62437f0dc3ff38f158af6bfd11a6674d71face54a)
+- `apps/cli/README.md` (sha256:4ea9d48f688673a72a0c1e7c4e73327ef2691638a535737322f9f455626fa837)
 - `apps/cli/package.json` (sha256:0bc99bef0178528f7fc866201ea25cbf76e5c13f42453092530e40a7e600588c)
-- `docs/architecture/modular-responsibility-map.md` (sha256:86923c4dcedd85af62cf6c80f7faf06f8f1af8973e99006b20a5ffc8b98a0b2d)
+- `docs/architecture/modular-responsibility-map.md` (sha256:c52e2d08578bb4060130d98b3ffa561533164b4275ce6f3e8346cf9f88158241)
 - `docs/architecture/product-architecture.md` (sha256:d9b30effc258fc3d4164596fd9bf81902330706254f24d9da7c0e01b2cdff968)
-- `docs/operations/release-readiness.md` (sha256:33fd85f04133d99d338ecf1b391b853a00b0df74d4af352cdf1d978ede55772c)
+- `docs/operations/release-readiness.md` (sha256:719eeb8f2370d0a13fdd30c6f7cb31071281701f3d7bd30704b10ed6de77280c)
 - `package.json` (sha256:0f5b3163bdf7b317f4bd9aa445308e836e8388b8c41dc418bdb2903f1843da36)
 - `packages/artifacts/package.json` (sha256:f96fc1b6ecd6b7a34ce447c803759ac810b89f6d83bd8251f4b134801f97daa4)
 - `packages/contracts/fixtures/artifacts/valid-artifact-record.json` (sha256:98eab29dc50fcf9f57f517abba2d44c67e9b6fdfca65be0f6e5af2edb341f91b)
@@ -124,8 +126,9 @@
 - `packages/provider-local/README.md` (sha256:913e0d5d43942d837565b97eba77a1467eb521c3d57e54d18d7daf6a20ab165e)
 - `packages/provider-local/package.json` (sha256:ecac070957387e06582ca9a8e121dc46c28a86ad3ce90189339ee748ed9ace58)
 - `packages/runtime/package.json` (sha256:41df6a93f6e8fa3afb89dad2dbfd3136932520a855647753ef43ca0650b9900a)
-- `packages/sdk/README.md` (sha256:7e2a3010d3d4788399ea59180a71df6569f7712b7cfa70e9bc924ac1cc873594)
+- `packages/sdk/README.md` (sha256:f645227423ff202ef7948cbf668bde334bd9bfcc0af81203bc100fc8445ba9cd)
 - `packages/sdk/package.json` (sha256:e8e9eb7acd489984dff0212e79956696291ee5f284b27eae62cabba61d1f672b)
 - `packages/store-local/package.json` (sha256:506844412b6f80bffba75a6b544eadcb2e44918da6d1a10993afe62fa796b650)
+- `packages/tools/README.md` (sha256:5ec08d063cefde1bf120fd2d583669f20f9b123026c93dfe226fc731347942f8)
 - `packages/tools/package.json` (sha256:33d602f8aa67c000525aa603a1c4c3834f0f91a1385180fd61e7e29a00ccc53c)
 - `pnpm-workspace.yaml` (sha256:316f2a0038d464f103abd64d7338dacefc35d0d09e57c8296defa0d5ddb898fe)

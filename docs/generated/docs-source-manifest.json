@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:338a89b9a8a043277d40d752ce1c00c71fc58129e5e0457c28fc691ada2bcbdd",
+  "sourceInputHash": "sha256:cbd1700ef6deeacd3f12cbc5988b5c27bc1d69443e90184ea6b16ab9e9a71f66",
   "generatedAt": "deterministic:git-head-plus-input-hash",
   "freshnessClass": "deterministic_current_source_tree",
   "command": "pnpm docs:generate -- --check",
@@ -142,6 +142,11 @@
       "bytes": 405
     },
     {
+      "path": ".changes/2026-06-09-tool-adapter-source-inspection.md",
+      "sha256": "sha256:74a716044603c3a89def5e5ce0d9d64e4576657a5522131e410713c1037d1ca6",
+      "bytes": 251
+    },
+    {
       "path": ".changes/2026-06-09-tool-gateway-foundation.md",
       "sha256": "sha256:59072ff9cfd3aba9eb7ac0288bafd9a5770dfe92af2a6cbd01cee6ca88a0064c",
       "bytes": 603
@@ -168,8 +173,8 @@
     },
     {
       "path": "apps/cli/README.md",
-      "sha256": "sha256:8cec82b7bfb7c4083e0de2c62437f0dc3ff38f158af6bfd11a6674d71face54a",
-      "bytes": 2355
+      "sha256": "sha256:4ea9d48f688673a72a0c1e7c4e73327ef2691638a535737322f9f455626fa837",
+      "bytes": 2626
     },
     {
       "path": "apps/cli/package.json",
@@ -178,8 +183,8 @@
     },
     {
       "path": "docs/architecture/modular-responsibility-map.md",
-      "sha256": "sha256:86923c4dcedd85af62cf6c80f7faf06f8f1af8973e99006b20a5ffc8b98a0b2d",
-      "bytes": 17180
+      "sha256": "sha256:c52e2d08578bb4060130d98b3ffa561533164b4275ce6f3e8346cf9f88158241",
+      "bytes": 17716
     },
     {
       "path": "docs/architecture/product-architecture.md",
@@ -188,8 +193,8 @@
     },
     {
       "path": "docs/operations/release-readiness.md",
-      "sha256": "sha256:33fd85f04133d99d338ecf1b391b853a00b0df74d4af352cdf1d978ede55772c",
-      "bytes": 11326
+      "sha256": "sha256:719eeb8f2370d0a13fdd30c6f7cb31071281701f3d7bd30704b10ed6de77280c",
+      "bytes": 12134
     },
     {
       "path": "package.json",
@@ -528,8 +533,8 @@
     },
     {
       "path": "packages/sdk/README.md",
-      "sha256": "sha256:7e2a3010d3d4788399ea59180a71df6569f7712b7cfa70e9bc924ac1cc873594",
-      "bytes": 2180
+      "sha256": "sha256:f645227423ff202ef7948cbf668bde334bd9bfcc0af81203bc100fc8445ba9cd",
+      "bytes": 2355
     },
     {
       "path": "packages/sdk/package.json",
@@ -540,6 +545,11 @@
       "path": "packages/store-local/package.json",
       "sha256": "sha256:506844412b6f80bffba75a6b544eadcb2e44918da6d1a10993afe62fa796b650",
       "bytes": 424
+    },
+    {
+      "path": "packages/tools/README.md",
+      "sha256": "sha256:5ec08d063cefde1bf120fd2d583669f20f9b123026c93dfe226fc731347942f8",
+      "bytes": 2369
     },
     {
       "path": "packages/tools/package.json",

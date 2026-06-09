@@ -11,7 +11,13 @@ import { createDefaultPolicyEngine } from "../../policy/src/index.mjs";
 import { createDeterministicProvider } from "../../provider-local/src/index.mjs";
 import { createRunLifecycleKernel } from "../../runtime/src/index.mjs";
 import { createInMemoryCheckpointStore } from "../../store-local/src/index.mjs";
-import { createFunctionTool, createToolGateway, createToolRegistry } from "../../tools/src/index.mjs";
+import {
+  createFunctionTool,
+  createToolGateway,
+  createToolRegistry,
+  listToolAdapterCapabilities,
+  listToolAdapterSourceLocks,
+} from "../../tools/src/index.mjs";
 
 const SCHEMA_VERSION = "2026-06-09";
 const ID_PATTERNS = {
@@ -53,7 +59,9 @@ export function createHarness(options = {}) {
   ensureDefaultLocalTools(tools);
   const toolGateway = options.toolGateway ?? createToolGateway({ registry: tools, artifactStore, observability, policyEngine, now });
   assertPort("toolGateway", toolGateway, ["execute"]);
-  const sourceLocks = options.sourceLocks ?? [];
+  const toolAdapterManifests = typeof tools.manifests === "function" ? tools.manifests() : [];
+  const toolAdapters = listToolAdapterCapabilities();
+  const sourceLocks = options.sourceLocks ?? listToolAdapterSourceLocks();
 
   const modules = {
     runtime: capability("runtime", "core_invariant", "default", true, [
@@ -105,7 +113,9 @@ export function createHarness(options = {}) {
       "tool registry",
       "policy-gated execution envelope",
       "function tool adapter",
-      "unsupported adapter capability manifests",
+      "trusted MCP fixture adapter",
+      "unsupported adapter dry-run evidence",
+      "adapter source-lock inspection",
     ], tools.reason ? [tools.reason] : []),
     docsOutput: capability("docsOutput", "optional_surface", moduleMode(docsOutput), false, [], [docsOutput.reason]),
   };
@@ -162,6 +172,8 @@ export function createHarness(options = {}) {
         generatedAt: now().toISOString(),
         modules: Object.values(modules),
         sourceLocks,
+        toolAdapters,
+        toolAdapterManifests,
         boundaries: {
           providerRuntime: "not_implemented",
           toolGateway: "foundation_only",

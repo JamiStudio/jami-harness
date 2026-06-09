@@ -13,9 +13,108 @@ const PROJECT_ID_PATTERN = /^proj_[a-z0-9][a-z0-9_-]*$/;
 const MCP_TOOL_NAME_PATTERN = /^[A-Za-z0-9_.-]{1,128}$/;
 const ALLOWED_RISKS = new Set(["read", "write", "destructive", "external", "secret_adjacent"]);
 const ELEVATED_RISKS = new Set(["write", "destructive", "external", "secret_adjacent"]);
-const UNSUPPORTED_ADAPTER_IDS = ["mcp", "openapi", "shell", "browser", "code", "provider", "a2a"];
+const EXECUTABLE_ADAPTER_IDS = new Set(["adapter_function", "adapter_mcp"]);
 const SENSITIVE_FIELD_PATTERN = /secret|token|apiKey|credential|password|privatePayload|plaintext|value|authorization|cookie|session|prompt|systemPrompt|developerPrompt|userPrompt|toolMetadata|toolSchema|toolDescription/i;
 const MCP_METADATA_POISON_PATTERN = /ignore\s+(policy|approval|instructions)|bypass\s+(policy|approval)|exfiltrate|leak\s+(secret|token|credential)|send\s+.*(secret|token|credential)/i;
+
+const MCP_SOURCE_LOCK = {
+  sourceId: "mcp-spec-2025-11-25",
+  protocolVersion: MCP_PROTOCOL_VERSION,
+  evidenceDate: "2026-06-09",
+  officialUrls: [
+    "https://modelcontextprotocol.io/specification/2025-11-25",
+    "https://modelcontextprotocol.io/specification/2025-11-25/basic/transports",
+    "https://modelcontextprotocol.io/specification/2025-11-25/server/tools",
+    "https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization",
+    "https://modelcontextprotocol.io/specification/2025-11-25/changelog",
+  ],
+};
+
+const TOOL_ADAPTER_CATALOG = [
+  {
+    adapterId: "adapter_function",
+    shortId: "function",
+    support: "supported",
+    label: "Function tool adapter",
+    sourceLock: {
+      sourceId: "function-tool-first-party",
+      status: "first_party",
+      evidenceDate: "2026-06-09",
+      provenance: "First-party dependency-free adapter in @jami-studio/harness-tools.",
+      refreshTrigger: "Any handler contract, execution envelope, policy, artifact, or redaction change.",
+    },
+    dryRunToolId: "tool_function_dry_run",
+    unsupportedReason: undefined,
+  },
+  {
+    adapterId: "adapter_mcp",
+    shortId: "mcp",
+    support: "supported",
+    label: "MCP trusted fixture adapter",
+    sourceLock: {
+      ...MCP_SOURCE_LOCK,
+      status: "locked",
+      provenance: "Official MCP protocol pages locked in docs/operations/mcp-source-lock.md.",
+      refreshTrigger: "Any MCP support beyond trusted in-process fixture tools or a newer official MCP spec.",
+    },
+    dryRunToolId: "tool_mcp_dry_run",
+    unsupportedReason: "Remote MCP stdio, Streamable HTTP, OAuth, resources, prompts, roots, sampling, elicitation, tasks, and resumability remain unsupported.",
+  },
+  {
+    adapterId: "adapter_openapi",
+    shortId: "openapi",
+    support: "unsupported",
+    label: "OpenAPI tool adapter",
+    sourceLock: missingSourceLock("openapi-tool-adapter-source-lock", "OpenAPI parsing, operation discovery, HTTP execution, request auth, and schema coercion."),
+    dryRunToolId: "tool_openapi_dry_run",
+    unsupportedReason: "OpenAPI parsing and HTTP execution are unavailable until repo-local source-lock evidence and adapter fixtures land.",
+  },
+  {
+    adapterId: "adapter_shell",
+    shortId: "shell",
+    support: "unsupported",
+    label: "Local shell tool adapter",
+    sourceLock: missingSourceLock("shell-tool-adapter-source-lock", "Command execution, sandbox policy, working-directory limits, environment filtering, and output redaction."),
+    dryRunToolId: "tool_shell_dry_run",
+    unsupportedReason: "Shell execution is unavailable until sandbox policy, source-lock evidence, and negative fixtures land.",
+  },
+  {
+    adapterId: "adapter_browser",
+    shortId: "browser",
+    support: "unsupported",
+    label: "Browser tool adapter",
+    sourceLock: missingSourceLock("browser-tool-adapter-source-lock", "Browser automation package choice, install provenance, local target policy, and screenshot/evidence handling."),
+    dryRunToolId: "tool_browser_dry_run",
+    unsupportedReason: "Browser automation is unavailable until the browser driver/package is source-locked and policy fixtures exist.",
+  },
+  {
+    adapterId: "adapter_code",
+    shortId: "code",
+    support: "unsupported",
+    label: "Code execution tool adapter",
+    sourceLock: missingSourceLock("code-tool-adapter-source-lock", "Code runner sandbox, language runtime selection, filesystem isolation, and artifact capture."),
+    dryRunToolId: "tool_code_dry_run",
+    unsupportedReason: "Code execution is unavailable until sandbox/runtime source-lock evidence and isolation fixtures land.",
+  },
+  {
+    adapterId: "adapter_provider",
+    shortId: "provider",
+    support: "unsupported",
+    label: "Provider-as-tool adapter",
+    sourceLock: missingSourceLock("provider-as-tool-source-lock", "Provider-as-tool routing, auth, hosted API boundaries, and provider/tool trace handoff."),
+    dryRunToolId: "tool_provider_dry_run",
+    unsupportedReason: "Provider-as-tool execution is unavailable; model routing stays behind harness.provider.model and hosted providers fail closed.",
+  },
+  {
+    adapterId: "adapter_a2a",
+    shortId: "a2a",
+    support: "unsupported",
+    label: "A2A interop adapter",
+    sourceLock: missingSourceLock("a2a-tool-adapter-source-lock", "A2A agent-card/task interop, auth, task lifecycle, and trace handoff."),
+    dryRunToolId: "tool_a2a_dry_run",
+    unsupportedReason: "A2A interop execution is unavailable until protocol source-lock evidence and fixtures land.",
+  },
+];
 
 export class ToolGatewayError extends Error {
   constructor(code, message) {
@@ -29,7 +128,7 @@ export function createToolRegistry(options = {}) {
   const tools = new Map();
   const manifests = new Map();
 
-  for (const manifest of createUnsupportedAdapterManifests()) {
+  for (const manifest of createToolAdapterManifests()) {
     manifests.set(manifest.capabilityId, manifest);
   }
 
@@ -60,8 +159,9 @@ export function createToolRegistry(options = {}) {
       return {
         schemaVersion: SCHEMA_VERSION,
         mode: options.mode ?? "memory",
-        supportedAdapters: ["adapter_function", "adapter_mcp"],
-        unsupportedAdapters: UNSUPPORTED_ADAPTER_IDS.filter((id) => id !== "mcp").map((id) => `adapter_${id}`),
+        supportedAdapters: TOOL_ADAPTER_CATALOG.filter((adapter) => adapter.support === "supported").map((adapter) => adapter.adapterId),
+        unsupportedAdapters: TOOL_ADAPTER_CATALOG.filter((adapter) => adapter.support === "unsupported").map((adapter) => adapter.adapterId),
+        adapterSourceLocks: listToolAdapterSourceLocks(),
         replacementPort: "harness.tools.registry",
       };
     },
@@ -201,7 +301,99 @@ export function validateMcpStreamableHttpRequest(input = {}) {
 }
 
 export function createUnsupportedAdapterManifests() {
-  return UNSUPPORTED_ADAPTER_IDS.map((id) => unsupportedCapabilityManifest(id));
+  return TOOL_ADAPTER_CATALOG
+    .filter((adapter) => adapter.support === "unsupported")
+    .map((adapter) => unsupportedCapabilityManifest(adapter));
+}
+
+export function createToolAdapterManifests() {
+  return TOOL_ADAPTER_CATALOG.map((adapter) => {
+    if (adapter.adapterId === "adapter_function") return functionCapabilityManifest();
+    if (adapter.adapterId === "adapter_mcp") return mcpCapabilityManifest({ sourceLock: MCP_SOURCE_LOCK, support: "supported" });
+    return unsupportedCapabilityManifest(adapter);
+  });
+}
+
+export function listToolAdapterCapabilities() {
+  return TOOL_ADAPTER_CATALOG.map((adapter) => ({
+    adapterId: adapter.adapterId,
+    capabilityId: capabilityIdForAdapter(adapter),
+    label: adapter.label,
+    support: adapter.support,
+    dryRunToolId: adapter.dryRunToolId,
+    sourceLock: adapter.sourceLock,
+    unsupportedReason: adapter.unsupportedReason,
+  }));
+}
+
+export function listToolAdapterSourceLocks() {
+  return TOOL_ADAPTER_CATALOG.map((adapter) => ({
+    adapterId: adapter.adapterId,
+    sourceId: adapter.sourceLock.sourceId,
+    status: adapter.sourceLock.status,
+    evidenceDate: adapter.sourceLock.evidenceDate,
+    protocolVersion: adapter.sourceLock.protocolVersion,
+    provenance: adapter.sourceLock.provenance,
+    requiredBefore: adapter.sourceLock.requiredBefore,
+    refreshTrigger: adapter.sourceLock.refreshTrigger,
+    officialUrls: adapter.sourceLock.officialUrls ?? [],
+  }));
+}
+
+export function createUnsupportedAdapterTool(adapterId, options = {}) {
+  const adapter = adapterForId(adapterId);
+  if (adapter.support !== "unsupported") {
+    throw new ToolGatewayError("adapter_supported", `${adapter.adapterId} has an executable local fixture path; use the adapter-specific fixture instead`);
+  }
+  return {
+    toolId: options.toolId ?? adapter.dryRunToolId,
+    label: options.label ?? `${adapter.label} dry-run`,
+    adapterId: adapter.adapterId,
+    risk: options.risk ?? "read",
+    sideEffect: "none",
+    requiredScopes: options.requiredScopes ?? ["repo:read"],
+    timeoutMs: options.timeoutMs ?? 1000,
+    inputSchema: options.inputSchema ?? {
+      type: "object",
+      properties: {
+        dryRun: { type: "boolean" },
+        requestedSurface: { type: "string" },
+      },
+    },
+    resultShape: "unsupported_dry_run",
+    artifactKind: "evidence",
+    capabilityManifest: unsupportedCapabilityManifest(adapter),
+  };
+}
+
+export async function dryRunUnsupportedAdapter(options = {}) {
+  const adapterId = options.adapterId ?? "adapter_openapi";
+  const adapter = adapterForId(adapterId);
+  if (adapter.support !== "unsupported") {
+    throw new ToolGatewayError("adapter_supported", `${adapter.adapterId} is not an unsupported adapter dry-run target`);
+  }
+  const registry = options.registry ?? createToolRegistry();
+  const tool = registry.get(adapter.dryRunToolId) ?? registry.register(createUnsupportedAdapterTool(adapter.adapterId));
+  const gateway = options.gateway ?? createToolGateway({
+    registry,
+    artifactStore: options.artifactStore,
+    observability: options.observability,
+    policyEngine: options.policyEngine,
+    now: options.now,
+  });
+  return gateway.execute({
+    runId: options.runId ?? "run_adapter_dry_run",
+    toolId: tool.toolId,
+    actor: options.actor ?? { actorId: "actor_developer", scopes: ["repo:read"] },
+    projectId: options.projectId ?? "proj_jami_harness",
+    environment: options.environment ?? "local",
+    input: options.input ?? {
+      dryRun: true,
+      adapterId: adapter.adapterId,
+      requestedSurface: adapter.label,
+      sourceLockStatus: adapter.sourceLock.status,
+    },
+  });
 }
 
 export function createToolGateway(options = {}) {
@@ -304,7 +496,7 @@ export function createToolGateway(options = {}) {
         });
       }
 
-      if (tool.support === "unsupported" || !["adapter_function", "adapter_mcp"].includes(tool.adapterId)) {
+      if (tool.support === "unsupported" || !EXECUTABLE_ADAPTER_IDS.has(tool.adapterId)) {
         return finalizeExecution({
           now,
           artifactStore,
@@ -449,7 +641,7 @@ function normalizeToolDefinition(tool) {
     throw new ToolGatewayError("invalid_tool", "requiredScopes must be an array");
   }
 
-  const support = ["adapter_function", "adapter_mcp"].includes(adapterId) && typeof tool.handler === "function" ? "supported" : "unsupported";
+  const support = EXECUTABLE_ADAPTER_IDS.has(adapterId) && typeof tool.handler === "function" ? "supported" : "unsupported";
   if (support === "supported" && typeof tool.handler !== "function") {
     throw new ToolGatewayError("invalid_tool", "supported tools must provide a handler");
   }
@@ -648,25 +840,36 @@ function auditForDecision({ runId, actor, projectId, environment, toolId, outcom
 }
 
 function capabilityManifestForTool(tool, adapterId, support) {
+  if (adapterId === "adapter_function") {
+    return functionCapabilityManifest({ requiredScopes: tool.requiredScopes ?? [], support });
+  }
   if (adapterId === "adapter_mcp") {
     return mcpCapabilityManifest({ requiredScopes: tool.requiredScopes ?? [], sourceLock: MCP_SOURCE_LOCK, support });
   }
-  const adapterName = adapterId.replace(/^adapter_/, "");
+  const adapter = TOOL_ADAPTER_CATALOG.find((item) => item.adapterId === adapterId);
+  if (adapter?.support === "unsupported") {
+    return unsupportedCapabilityManifest(adapter, { requiredScopes: tool.requiredScopes ?? [] });
+  }
+  return genericCapabilityManifest({ adapterId, requiredScopes: tool.requiredScopes ?? [], support });
+}
+
+function functionCapabilityManifest({ requiredScopes = [], support = "supported" } = {}) {
   return {
     schemaVersion: SCHEMA_VERSION,
-    capabilityId: `cap_${adapterName}_tool_gateway`,
+    capabilityId: "cap_function_tool_gateway",
     ownerPackage: "@jami-studio/harness-tools",
     capabilityClass: "adapter",
     features: [
       { featureId: "registry", support: "supported", notes: "Tool metadata is registered through the harness registry." },
       { featureId: "policy_gate", support: "supported", notes: "Policy decision is required before handler invocation." },
       { featureId: "execution_envelope", support: support === "supported" ? "supported" : "unsupported", notes: "Tool output is normalized into trace, audit, evidence, and artifact records." },
+      { featureId: "function.local_handler", support, notes: "First-party local function handlers execute only through the harness policy-gated envelope." },
       { featureId: "streaming", support: "unsupported", notes: "Streaming is not implemented in this foundation pass." },
       { featureId: "cancellation", support: "supported", notes: "AbortSignal cancellation is represented in execution status." },
       { featureId: "resumability", support: "unsupported", notes: "Checkpoint/resume store is not implemented yet." },
       { featureId: "auth_model", support: "requires_adapter", notes: "Auth is represented by secret refs and policy scopes; protocol auth adapters are not implemented." },
     ],
-    requiredScopes: tool.requiredScopes ?? [],
+    requiredScopes,
     failureModes: [
       { mode: "policy_denied", observableAs: "audit_event" },
       { mode: "adapter_unsupported", observableAs: "typed_result" },
@@ -681,18 +884,36 @@ function capabilityManifestForTool(tool, adapterId, support) {
   };
 }
 
-const MCP_SOURCE_LOCK = {
-  sourceId: "mcp-spec-2025-11-25",
-  protocolVersion: MCP_PROTOCOL_VERSION,
-  evidenceDate: "2026-06-09",
-  officialUrls: [
-    "https://modelcontextprotocol.io/specification/2025-11-25",
-    "https://modelcontextprotocol.io/specification/2025-11-25/basic/transports",
-    "https://modelcontextprotocol.io/specification/2025-11-25/server/tools",
-    "https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization",
-    "https://modelcontextprotocol.io/specification/2025-11-25/changelog",
-  ],
-};
+function genericCapabilityManifest({ adapterId, requiredScopes = [], support = "unsupported" }) {
+  const adapterName = adapterId.replace(/^adapter_/, "");
+  return {
+    schemaVersion: SCHEMA_VERSION,
+    capabilityId: `cap_${adapterName}_tool_gateway`,
+    ownerPackage: "@jami-studio/harness-tools",
+    capabilityClass: "adapter",
+    features: [
+      { featureId: "registry", support: "supported", notes: "Tool metadata is registered through the harness registry." },
+      { featureId: "policy_gate", support: "supported", notes: "Policy decision is required before handler invocation." },
+      { featureId: "execution_envelope", support: support === "supported" ? "supported" : "unsupported", notes: "Tool output is normalized into trace, audit, evidence, and artifact records." },
+      { featureId: "streaming", support: "unsupported", notes: "Streaming is not implemented in this foundation pass." },
+      { featureId: "cancellation", support: support === "supported" ? "supported" : "unsupported", notes: "Cancellation is supported only for executable local adapters." },
+      { featureId: "resumability", support: "unsupported", notes: "Checkpoint/resume store is not implemented yet." },
+      { featureId: "auth_model", support: "requires_adapter", notes: "Auth is represented by secret refs and policy scopes; protocol auth adapters are not implemented." },
+    ],
+    requiredScopes,
+    failureModes: [
+      { mode: "policy_denied", observableAs: "audit_event" },
+      { mode: "adapter_unsupported", observableAs: "typed_result" },
+      { mode: "timeout_or_cancelled", observableAs: "trace_event" },
+      { mode: "redacted_payload", observableAs: "evidence_packet" },
+    ],
+    replacementCompatibility: {
+      portId: "harness.tools.adapter",
+      contractVersion: SCHEMA_VERSION,
+      mustPreserve: ["policy", "audit", "artifact", "evidence", "redaction"],
+    },
+  };
+}
 
 function mcpCapabilityManifest({ requiredScopes = [], sourceLock = MCP_SOURCE_LOCK, support = "supported" } = {}) {
   return {
@@ -729,29 +950,56 @@ function mcpCapabilityManifest({ requiredScopes = [], sourceLock = MCP_SOURCE_LO
   };
 }
 
-function unsupportedCapabilityManifest(id) {
+function unsupportedCapabilityManifest(adapter, options = {}) {
   return {
     schemaVersion: SCHEMA_VERSION,
-    capabilityId: `cap_${id}_tool_gateway`,
+    capabilityId: capabilityIdForAdapter(adapter),
     ownerPackage: "@jami-studio/harness-tools",
     capabilityClass: "adapter",
     features: [
-      { featureId: `${id}_adapter`, support: "unsupported", notes: "Not implemented until repo-local current source-lock evidence is refreshed." },
+      { featureId: `${adapter.shortId}.source_lock`, support: "unsupported", notes: adapter.sourceLock.requiredBefore ?? "Repo-local current source-lock evidence is required before implementation." },
+      { featureId: `${adapter.shortId}.dry_run`, support: "supported", notes: "Dry-run inspection records typed unsupported evidence without invoking an external protocol, process, browser, code runner, provider, or agent." },
+      { featureId: `${adapter.shortId}.execute`, support: "unsupported", notes: adapter.unsupportedReason },
       { featureId: "policy_gate", support: "supported", notes: "Unsupported requests still fail through typed policy/audit/evidence records." },
       { featureId: "streaming", support: "unsupported", notes: "No protocol streaming support is claimed." },
       { featureId: "cancellation", support: "unsupported", notes: "No protocol cancellation support is claimed." },
       { featureId: "resumability", support: "unsupported", notes: "No protocol resume support is claimed." },
     ],
-    requiredScopes: [],
+    requiredScopes: options.requiredScopes ?? [],
     failureModes: [
       { mode: "adapter_unsupported", observableAs: "typed_result" },
       { mode: "source_lock_missing", observableAs: "evidence_packet" },
+      { mode: "external_side_effect_blocked", observableAs: "audit_event" },
     ],
     replacementCompatibility: {
-      portId: `harness.tools.adapter.${id}`,
+      portId: `harness.tools.adapter.${adapter.shortId}`,
       contractVersion: SCHEMA_VERSION,
       mustPreserve: ["policy", "audit", "artifact", "evidence", "redaction"],
     },
+  };
+}
+
+function capabilityIdForAdapter(adapter) {
+  return `cap_${adapter.shortId}_tool_gateway`;
+}
+
+function adapterForId(adapterId) {
+  const normalized = String(adapterId ?? "").startsWith("adapter_") ? String(adapterId) : `adapter_${adapterId}`;
+  const adapter = TOOL_ADAPTER_CATALOG.find((item) => item.adapterId === normalized);
+  if (!adapter) {
+    throw new ToolGatewayError("unknown_adapter", `unknown tool adapter: ${String(adapterId)}`);
+  }
+  return adapter;
+}
+
+function missingSourceLock(sourceId, requiredBefore) {
+  return {
+    sourceId,
+    status: "missing",
+    evidenceDate: "unavailable",
+    provenance: "No repo-local source-lock evidence is recorded for this adapter surface.",
+    requiredBefore,
+    refreshTrigger: "Before any executable adapter implementation or public support claim.",
   };
 }
 

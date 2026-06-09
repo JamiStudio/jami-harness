@@ -136,7 +136,11 @@ evidence and adapter tests exist. Workstream 4 MCP source-lock pass 1 adds repo-
 trace, evidence, artifact, and redaction envelope. Stdio subprocess transport, remote
 Streamable HTTP, OAuth, resources, prompts, roots, sampling, elicitation, tasks,
 resumability, and full SDK parity remain unsupported and are named in the MCP capability
-manifest. The contracts package now emits checked
+manifest. The current adapter-readiness pass exposes CLI/SDK source inspection for tool
+adapter manifests and source-lock states. OpenAPI, shell, browser, code, provider-as-tool,
+and A2A have fail-closed dry-run evidence only; they do not execute external protocols,
+local processes, browsers, code runners, hosted provider APIs, or agent interop. The
+contracts package now emits checked
 generated artifacts in `packages/contracts/generated/`: TypeScript schema exports, an
 OpenAPI 3.1 component reference, and a compact reference manifest with the Studio UI
 handshake. Studio UI should consume those generated outputs or the same schema ids and

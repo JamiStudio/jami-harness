@@ -6,6 +6,9 @@ import {
   createToolGateway,
   createToolRegistry,
   createTrustedMcpFixtureServer,
+  createUnsupportedAdapterTool,
+  dryRunUnsupportedAdapter,
+  listToolAdapterCapabilities,
   registerMcpServerTools,
   validateMcpStreamableHttpRequest,
 } from "../src/index.mjs";
@@ -128,6 +131,46 @@ test("unsupported adapters fail closed with capability manifests and no handler 
       .find((manifest) => manifest.capabilityId === "cap_mcp_tool_gateway")
       .features.some((feature) => feature.featureId === "mcp.stdio_client" && feature.support === "unsupported"),
     true,
+  );
+});
+
+test("adapter inspection names supported and unavailable source-lock states", () => {
+  const adapters = listToolAdapterCapabilities();
+  const functionAdapter = adapters.find((adapter) => adapter.adapterId === "adapter_function");
+  const openApiAdapter = adapters.find((adapter) => adapter.adapterId === "adapter_openapi");
+  const shellAdapter = adapters.find((adapter) => adapter.adapterId === "adapter_shell");
+  const registry = createToolRegistry();
+  const capabilities = registry.capabilities();
+
+  assert.equal(functionAdapter.support, "supported");
+  assert.equal(functionAdapter.sourceLock.status, "first_party");
+  assert.equal(openApiAdapter.support, "unsupported");
+  assert.equal(openApiAdapter.sourceLock.status, "missing");
+  assert.equal(shellAdapter.dryRunToolId, "tool_shell_dry_run");
+  assert.equal(capabilities.supportedAdapters.includes("adapter_function"), true);
+  assert.equal(capabilities.supportedAdapters.includes("adapter_mcp"), true);
+  assert.equal(capabilities.unsupportedAdapters.includes("adapter_openapi"), true);
+  assert.equal(capabilities.adapterSourceLocks.find((source) => source.adapterId === "adapter_shell").status, "missing");
+  assert.equal(registry.manifests().some((manifest) => manifest.capabilityId === "cap_openapi_tool_gateway"), true);
+});
+
+test("unsupported adapter dry-runs produce typed evidence without external execution", async () => {
+  const openApi = await dryRunUnsupportedAdapter({ adapterId: "adapter_openapi", now });
+  const shell = await dryRunUnsupportedAdapter({ adapterId: "shell", now });
+
+  assert.equal(openApi.executable, false);
+  assert.equal(openApi.status, "unsupported");
+  assert.equal(openApi.execution.toolId, "tool_openapi_dry_run");
+  assert.equal(openApi.execution.capabilityManifestRef, "cap_openapi_tool_gateway");
+  assert.equal(openApi.trace.attributes.input.sourceLockStatus, "missing");
+  assert.equal(openApi.evidence.commands[0].status, "failed");
+  assert.equal(shell.execution.toolId, "tool_shell_dry_run");
+  assert.equal(shell.execution.capabilityManifestRef, "cap_shell_tool_gateway");
+  assert.equal(shell.execution.error.code, "adapter_unsupported");
+
+  assert.throws(
+    () => createUnsupportedAdapterTool("adapter_function"),
+    /adapter_function has an executable local fixture path/,
   );
 });
 

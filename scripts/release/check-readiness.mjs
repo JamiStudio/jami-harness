@@ -100,6 +100,15 @@ const claims = [
     "pnpm tools:test",
     "pnpm contracts:validate",
   ]),
+  claim("Tool adapter source inspection reports function and trusted MCP fixture support plus fail-closed OpenAPI, shell, browser, code, provider-as-tool, and A2A dry-run evidence", "supported", [
+    "packages/tools/src/index.mjs",
+    "packages/tools/test/tools.test.mjs",
+    "packages/sdk/src/index.mjs",
+    "apps/cli/src/cli.mjs",
+    "pnpm tools:test",
+    "pnpm sdk:test",
+    "pnpm cli:test",
+  ]),
   claim("SDK composes current runtime, policy, artifacts, observability, and memory defaults", "supported", [
     "packages/sdk/src/index.mjs",
     "packages/sdk/test/sdk.test.mjs",
@@ -128,10 +137,11 @@ const claims = [
     "pnpm sbom:generate",
     "pnpm sbom:check",
   ]),
-  claim("Release publishing, hosted Mintlify build, hosted workbench, hosted stores, hosted provider runtime, and full MCP/OpenAPI/shell/browser/code/A2A adapters are available", "unsupported", [
+  claim("Release publishing, hosted Mintlify build, hosted workbench, hosted stores, hosted provider runtime, and executable full MCP/OpenAPI/shell/browser/code/provider-as-tool/A2A adapters are available", "unsupported", [
     "apps/cli/README.md",
     "packages/sdk/README.md",
     "packages/provider-local/README.md",
+    "packages/tools/README.md",
     "docs/roadmaps/2026-06-07-jami-harness-production-plan.md",
   ]),
 ];

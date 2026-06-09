@@ -55,6 +55,7 @@ function collectSourceRecords() {
     "docs/architecture/modular-responsibility-map.md",
     "docs/architecture/product-architecture.md",
     "apps/cli/README.md",
+    "packages/tools/README.md",
     "packages/sdk/README.md",
     "packages/provider-local/README.md",
   ];
@@ -295,7 +296,8 @@ function evidenceIndex(model) {
     "- Local docs generation exists and has check mode.",
     "- Local CLI/SDK evidence smoke exists.",
     "- Local deterministic provider workflow exists and routes tool calls through the policy-gated tool gateway.",
-    "- Release publishing, hosted docs, hosted model providers, attestation, and SBOM artifacts remain unavailable until their gates close.",
+    "- Tool adapter source inspection exists for supported function and trusted MCP fixture paths plus fail-closed OpenAPI, shell, browser, code, provider-as-tool, and A2A dry-run evidence.",
+    "- Release publishing, hosted docs, hosted model providers, executable full protocol/local tool adapters, attestation, and package release artifacts remain unavailable until their gates close.",
     "",
     "## Evidence Inputs",
     "",

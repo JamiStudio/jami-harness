@@ -34,6 +34,10 @@ test("creates a local run with evidence, artifacts, traces, and inspectable modu
   assert.equal(inspection.modules.some((module) => module.name === "provider" && module.available), true);
   assert.equal(inspection.boundaries.providerRuntime, "local_deterministic_only");
   assert.equal(inspection.boundaries.hostedProviders, "not_implemented");
+  assert.equal(inspection.toolAdapters.some((adapter) => adapter.adapterId === "adapter_function" && adapter.support === "supported"), true);
+  assert.equal(inspection.toolAdapters.some((adapter) => adapter.adapterId === "adapter_openapi" && adapter.sourceLock.status === "missing"), true);
+  assert.equal(inspection.toolAdapterManifests.some((manifest) => manifest.capabilityId === "cap_shell_tool_gateway"), true);
+  assert.equal(inspection.sourceLocks.some((sourceLock) => sourceLock.adapterId === "adapter_mcp" && sourceLock.status === "locked"), true);
 });
 
 test("external provider requests fail closed without hosted provider execution", async () => {

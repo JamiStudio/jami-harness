@@ -520,23 +520,29 @@ Pass status:
   Origin/session/protocol-version/local-binding guards as fail-closed validation. This is
   not stdio subprocess transport, remote Streamable HTTP, OAuth, resources, prompts,
   roots, sampling, elicitation, tasks, resumability, or full MCP SDK parity.
+- 2026-06-09 adapter-readiness pass added explicit tool adapter source inspection and
+  unsupported dry-run evidence for OpenAPI, shell, browser, code, provider-as-tool, and
+  A2A. `packages/tools`, SDK inspection, and `jami tools --json` now expose per-adapter
+  manifests and source-lock states; unsupported dry-runs produce typed tool execution,
+  audit, trace, evidence, and artifact records without invoking external protocols, local
+  processes, browsers, code runners, provider APIs, or agent interop endpoints.
 
 Implementation tasks:
 
 - [x] Implement tool registry and risk labels.
-- [~] Normalize MCP, OpenAPI, function, shell, browser, code, and provider-as-tool requests through one execution envelope for status reporting; function tools and trusted in-process MCP fixture tools have executable adapter paths, while OpenAPI/shell/browser/code/provider-as-tool/A2A and remote MCP surfaces fail closed as unsupported. Model-provider routing is owned by `packages/provider-local`.
+- [~] Normalize MCP, OpenAPI, function, shell, browser, code, and provider-as-tool requests through one execution envelope for status reporting; function tools and trusted in-process MCP fixture tools have executable adapter paths, while OpenAPI/shell/browser/code/provider-as-tool/A2A and remote MCP surfaces fail closed as unsupported with dry-run evidence. Model-provider routing is owned by `packages/provider-local`.
 - [~] Add MCP client support for stdio and Streamable HTTP; trusted in-process fixture discovery/call mapping is implemented, while stdio subprocess and remote Streamable HTTP transports remain unsupported.
 - [ ] Add A2A agent-card/task interop where cross-agent communication is required.
 - [~] Add origin/session/auth controls for HTTP transports, including MCP Streamable HTTP origin and localhost-binding safeguards where applicable; guard validation exists for Origin, visible-ASCII session id, protocol version, and public local binding, while remote HTTP transport and OAuth remain unsupported.
 - [~] Add OpenAPI/function tool adapters; function tools are implemented, OpenAPI remains unsupported until current source-lock evidence and fixtures exist.
 - [ ] Add local shell/browser/code wrappers with sandbox policy.
 - [~] Add tool-call approval, timeout, cancellation, trace, and audit events; the foundation covers approval through the policy seam and represents timeout/cancellation status, but streaming and resume semantics remain open.
-- [~] Add adapter capability manifests for streaming, cancellation, resumability, auth model, tool result shape, artifact support, error taxonomy, trace propagation, policy hooks, and unsupported states; the MCP manifest now distinguishes trusted fixture support from unsupported stdio, Streamable HTTP, OAuth, resources, prompts, roots, sampling, elicitation, tasks, and resumability.
+- [~] Add adapter capability manifests for streaming, cancellation, resumability, auth model, tool result shape, artifact support, error taxonomy, trace propagation, policy hooks, and unsupported states; the MCP manifest now distinguishes trusted fixture support from unsupported stdio, Streamable HTTP, OAuth, resources, prompts, roots, sampling, elicitation, tasks, and resumability, and unsupported OpenAPI/shell/browser/code/provider-as-tool/A2A manifests carry missing-source-lock dry-run evidence.
 
 Exit criteria:
 
 - [~] Tools execute only through policy, emit traces/audit, and produce typed artifacts for the current function-tool and trusted MCP fixture foundations.
-- [~] Every adapter has positive, denied, unsupported, and trace/evidence fixtures for the current foundation; the MCP trusted fixture path now has positive and denied coverage, while remote protocol support remains open.
+- [~] Every adapter has positive, denied, unsupported, and trace/evidence fixtures for the current foundation; the MCP trusted fixture path now has positive and denied coverage, and OpenAPI/shell/browser/code/provider-as-tool/A2A dry-runs have unsupported trace/evidence coverage while executable adapter support remains open.
 
 Suggested verification:
 
@@ -768,6 +774,11 @@ Pass status:
   fail-closed path so unsupported provider routes still write evidence and summaries but
   return `ok: false` with a nonzero exit code instead of looking successful to
   automation. Hosted provider execution remains unsupported.
+- 2026-06-09 adapter-readiness pass extended SDK `inspect()` plus CLI `tools` and `map`
+  JSON output with tool adapter manifests and source-lock states. This closes only local
+  source inspection for adapter readiness; it does not add executable OpenAPI, shell,
+  browser, code, provider-as-tool, A2A, remote MCP, hosted workbench, or release publishing
+  support.
 
 Implementation tasks:
 
@@ -776,7 +787,7 @@ Implementation tasks:
 - [~] Add SDK for run creation, local deterministic provider execution, checkpoint/resume, approval records, tool registration, policy hooks, artifact reads, and trace reads.
 - [~] Add SDK configuration APIs for injecting custom memory, context, store, policy, local provider, tool, artifact, observability, and docs-output modules.
 - [~] Add CLI doctor/inspect commands that show active modules, defaults, replacements, missing optional capabilities, and exact next setup steps.
-- [~] Add CLI/source-lock inspection for active adapters, package/protocol versions, optional capability support, and provenance evidence.
+- [~] Add CLI/source-lock inspection for active adapters, package/protocol versions, optional capability support, and provenance evidence; tool adapter manifests and source-lock states now appear in SDK inspection and CLI `tools`/`map` output, while provider/release/docs-hosting source inspection remains open.
 - [ ] Add workbench views for run timeline, tool approvals, artifacts, traces, memory, docs preview, system map.
 - [ ] Integrate Studio UI packages only through stable published package boundaries and typed shared contracts.
 - [~] Add examples and smoke tests.
@@ -873,7 +884,7 @@ Suggested verification:
 - [ ] Root docs read back.
 - [ ] Contracts generate and validate.
 - [ ] Runtime/tool/provider/policy/memory/artifact/observability tests pass.
-- [~] CLI local smoke passes for init/run/provider-route-fail-closed nonzero/provider-fail-once/resume/approve/inspect/doctor/map/verify; workbench smoke remains unavailable until a workbench exists.
+- [~] CLI local smoke passes for init/run/provider-route-fail-closed nonzero/provider-fail-once/resume/approve/inspect/doctor/tools-source-inspection/map/verify; workbench smoke remains unavailable until a workbench exists.
 - [~] Docs generation passes locally through `pnpm docs:generate -- --check`; Mintlify build remains unavailable until the CLI/package is source-locked and installed.
 - [~] SBOM/provenance release dry-run pass has local SBOM generation/check and
   non-publishing release audit evidence; npm provenance, package contents dry-run,

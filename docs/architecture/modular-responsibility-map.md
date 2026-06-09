@@ -284,7 +284,10 @@ adds repo-local MCP `2025-11-25` evidence and a trusted in-process fixture adapt
 maps MCP `initialize`, `tools/list`, and `tools/call` into that same execution envelope.
 The MCP manifest still marks stdio subprocess transport, remote Streamable HTTP, OAuth,
 resources, prompts, roots, sampling, elicitation, tasks, resumability, and full SDK
-parity as unsupported.
+parity as unsupported. The current adapter-readiness pass adds per-adapter source-lock
+inspection and dry-run unsupported evidence for OpenAPI, shell, browser, code,
+provider-as-tool, and A2A. Those dry-runs prove fail-closed behavior and do not invoke
+HTTP clients, shells, browsers, code runners, provider APIs, or agent interop endpoints.
 
 ## Storage Strategy
 
@@ -367,7 +370,9 @@ workbench, Studio UI install flows, and release publishing until their owning pa
 exist. Workstream 6 / Workstream 9 docs-source pass 1 adds
 `@jami-studio/harness-docs` as a repo-level generated docs/manual/system-map/changelog
 foundation with check mode and Mintlify-ready draft output; hosted docs publishing and
-Mintlify build remain unavailable.
+Mintlify build remain unavailable. The current CLI/source-inspection pass extends
+`jami tools --json` and `jami map --json` with tool adapter manifests and source-lock
+states, including missing-source-lock evidence for unsupported executable adapters.
 
 ## Workstream Implications
 

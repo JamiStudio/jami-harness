@@ -183,12 +183,15 @@ async function capabilityCommand(cwd, command, parsed, io) {
   const selected = command === "map"
     ? inspection.modules
     : inspection.modules.filter((module) => module.name === command || (command === "tools" && module.name === "tools") || (command === "docs" && module.name === "docsOutput"));
+  const includeToolInspection = command === "tools" || command === "map";
   io.out(formatOutput({
     ok: true,
     command,
     statePath: join(cwd, STATE_DIR),
     modules: selected,
     sourceLocks: inspection.sourceLocks,
+    toolAdapters: includeToolInspection ? inspection.toolAdapters : undefined,
+    toolAdapterManifests: includeToolInspection ? inspection.toolAdapterManifests : undefined,
     note: command === "map" ? "Active module map only; hosted control plane and workbench are not implemented." : undefined,
   }, parsed));
   return 0;
@@ -225,7 +228,7 @@ function help() {
       approve: "Record a local approval decision for a run/action.",
       inspect: "Show latest run evidence plus active module capabilities.",
       doctor: "Show module, checkpoint, resume, and missing optional capability diagnostics.",
-      tools: "Show tool gateway availability and missing setup.",
+      tools: "Show tool gateway adapter manifests, source-lock state, and missing setup.",
       memory: "Show memory module capabilities.",
       docs: "Show docs output availability and missing setup.",
       map: "Show all active module capabilities.",
