@@ -5,7 +5,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:6400e308ed09ef9180e01e1267047346b35bbbe95ef72fae44c4dd1bc8f7684c`
+- Source input hash: `sha256:1187e422c18695b5577585e2b7f048065fec22823a19c92bca4798f536886fbe`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -16,10 +16,12 @@
 - Local docs generation exists and has check mode.
 - Local CLI/SDK evidence smoke exists.
 - Full local source-checkout install and modular replacement paths are recorded in a generated install-readiness manifest.
+- Release and hosted capability readiness is recorded in a generated manifest with official-source prerequisites and fail-closed unsupported states.
 - Local deterministic provider workflow exists and routes tool calls through the policy-gated tool gateway.
 - Local redacted metric records exist for latency, token-estimate, external-billable-cost, and tool-call measurements.
 - Local deterministic regression eval smoke exists for tool safety, docs generation, memory recall, and recovery.
 - Tool adapter source inspection exists for supported function and trusted MCP fixture paths plus fail-closed OpenAPI, shell, browser, code, provider-as-tool, and A2A dry-run evidence.
+- Release and hosted capability readiness is generated into `docs/generated/release-capability-manifest.json`, with unsupported npm publish/provenance, package contents dry-runs, GitHub attestations, Mintlify validation/publishing, hosted docs, hosted providers, hosted stores, and hosted workbench surfaces marked fail-closed.
 - Release publishing, hosted docs, hosted model providers, executable full protocol/local tool adapters, attestation, and package release artifacts remain unavailable until their gates close.
 
 ## Evidence Inputs
@@ -45,6 +47,7 @@
 - `.changes/2026-06-09-observability-redaction-confirmation.md` (sha256:fd4a5f5206709fcdc5564ec4925f48c4db714138cb10793e2e4a42bd7f3cf921)
 - `.changes/2026-06-09-policy-gate-hardening.md` (sha256:694a8595564c3407e93306ef5e66123976e13c599157d72666d8c5e88b99a578)
 - `.changes/2026-06-09-policy-runtime-spine.md` (sha256:b137d170a88e336bd3245c97f5ed69ab27957784653012491804c428a06278ad)
+- `.changes/2026-06-09-release-capability-manifest.md` (sha256:1ad01fe8bb980d034a33d06bdd696224d89e3b464ebf4c4b592ffbc40ff57a31)
 - `.changes/2026-06-09-release-readiness-audit.md` (sha256:77c2537ce9dfb3f7f2289f6df7e4a49c7a91f02d161acf9d50679b3710f3587f)
 - `.changes/2026-06-09-release-readiness-verify-gate.md` (sha256:c8aae0d21e2bc29818d7de60f33b5dbef24ed22cc4dcfd0a276a6b6a7a125398)
 - `.changes/2026-06-09-runtime-kernel-spine.md` (sha256:dd8b9a002e72eb27bf8b8a155b4775b33e7c54f960b9a11c1dd8837673594117)
@@ -66,9 +69,11 @@
 - `apps/cli/test/cli.test.mjs` (sha256:a69348cd132c7f79adfb922953389c7e4dc0c2a36f76b7318fda2eff5a368b0f)
 - `docs/architecture/modular-responsibility-map.md` (sha256:c52e2d08578bb4060130d98b3ffa561533164b4275ce6f3e8346cf9f88158241)
 - `docs/architecture/product-architecture.md` (sha256:d9b30effc258fc3d4164596fd9bf81902330706254f24d9da7c0e01b2cdff968)
-- `docs/operations/release-readiness.md` (sha256:a88fb74699c1b6d644a8a5b661d13b1654c446212477d80a3951cc70ebc1bd72)
+- `docs/generated/release-capability-manifest.json` (sha256:9748b543465a5ac6784bce337d69937d1c80af10cd74aa937197d640b8efc8cb)
+- `docs/operations/release-capability-source-lock.md` (sha256:7a07ced556c323aff323d930c35e69fe5afef9a33da86c68f34237921a6bfff3)
+- `docs/operations/release-readiness.md` (sha256:e41a8e26bc34afa713e0a76d5abb0a9c790314296c9141eb6805f7de59a790dc)
 - `evals/smoke.mjs` (sha256:af584c4b94ca943837f91f3be25a48c174339d016ea0bb5c82633f4151f1b674)
-- `package.json` (sha256:e9dfc3e28ee6222efd05af8ddfa69f51528a7caf71218886071b0676c7362c79)
+- `package.json` (sha256:a81969d83b5324ea95ab6892bb6b82d1aabdbfcb3669ff647f0fc456592eb3f0)
 - `packages/artifacts/package.json` (sha256:f96fc1b6ecd6b7a34ce447c803759ac810b89f6d83bd8251f4b134801f97daa4)
 - `packages/contracts/fixtures/artifacts/valid-artifact-record.json` (sha256:98eab29dc50fcf9f57f517abba2d44c67e9b6fdfca65be0f6e5af2edb341f91b)
 - `packages/contracts/fixtures/compatibility/denied-action-ref.json` (sha256:542b2e6e266a5a9b3d77d76f19969c907384a532129cfd90ce6069c8e186ba87)
@@ -131,7 +136,7 @@
 - `packages/contracts/schemas/trace-event.schema.json` (sha256:384da496e3b58fa3e206ff384243855608259f0c795cd1ce4f7f2b87ab45fdb4)
 - `packages/contracts/schemas/ui-payload.schema.json` (sha256:4f668d65e42bf3e50bb0e7a7c065bb070856992f7961cf49d7f21ba99132192b)
 - `packages/docs/package.json` (sha256:4a071a3ebf99fad5c2411aa0143da3465d782ab483c7ebd9bf663f2d9f608af6)
-- `packages/docs/scripts/generate-docs.mjs` (sha256:dd3f08b7c157a2f0eecc023c4a4f49f3a3156d7472229b9391dd42bdd22c74f7)
+- `packages/docs/scripts/generate-docs.mjs` (sha256:e462986be3df00f080a6974ba9678e7286d7a2bc8097e785bb8497daf9ffe1d2)
 - `packages/memory/package.json` (sha256:72a3b591f27be1200b4eb5469cd1eed853554b4657f685dcb56a850544ae85fe)
 - `packages/observability/README.md` (sha256:281039af89c4ee8ace8d3d074175693d404898fb352f7b6fa06fb8862997dd80)
 - `packages/observability/package.json` (sha256:a137e0e08648f061a35124e28f76e51c7e35f1f4fb070afcb289d2d1efe92ba4)
@@ -149,4 +154,5 @@
 - `packages/tools/README.md` (sha256:f2e6e87d1098c665cc813eb98f109d7650e944112c1f599fb4e470217a60fc85)
 - `packages/tools/package.json` (sha256:33d602f8aa67c000525aa603a1c4c3834f0f91a1385180fd61e7e29a00ccc53c)
 - `pnpm-workspace.yaml` (sha256:316f2a0038d464f103abd64d7338dacefc35d0d09e57c8296defa0d5ddb898fe)
-- `scripts/release/check-readiness.mjs` (sha256:a29508151200bf0a534834950f0fa035ae1f843652e4f76a09e95c403e23ad68)
+- `scripts/release/check-readiness.mjs` (sha256:cb562cc61bffe46ecc514726e19e05452c508140a8f39f00e20c964594936928)
+- `scripts/release/generate-capability-manifest.mjs` (sha256:fdc2d7f3ef79d36b1076659d7ddb5192052e9455119b8f06f5522b5c05e0b7c7)

@@ -68,6 +68,9 @@ function collectSourceRecords() {
     "evals/smoke.mjs",
     "packages/docs/scripts/generate-docs.mjs",
     "scripts/release/check-readiness.mjs",
+    "scripts/release/generate-capability-manifest.mjs",
+    "docs/operations/release-capability-source-lock.md",
+    "docs/generated/release-capability-manifest.json",
   ];
   files.push(...listFiles("packages/contracts/schemas", ".json"));
   files.push(...listFiles("packages/contracts/fixtures", ".json"));
@@ -224,7 +227,7 @@ function quickstart(model) {
     "",
     "- Packages are not publish-ready.",
     "- Hosted docs are not deployed.",
-    "- Mintlify build/publish has not run in this repo.",
+    "- Mintlify validation/build/publish has not run in this repo.",
     "- Hosted model providers are not implemented; the provider foundation is local deterministic only.",
     "- Hosted observability and external eval backends are not implemented; eval smoke is local deterministic only.",
   ].join("\n");
@@ -251,6 +254,8 @@ function userManual(model) {
     "## Evidence Handling",
     "",
     "Generated docs and evidence records are tied to accepted source records, contract references, command result, freshness class, and generated output paths in `docs/generated/docs-source-manifest.json`.",
+    "",
+    "`docs/generated/release-capability-manifest.json` is the executable local release/hosted capability ledger. It keeps unsupported publish, provenance, attestation, Mintlify validation, hosted docs, hosted provider, hosted store, and hosted workbench claims fail-closed until command evidence exists.",
     "",
     "Local metric records and `pnpm eval:smoke` provide deterministic regression coverage for tool safety, docs generation, memory recall, and recovery without a hosted observability or external eval backend.",
     "",
@@ -348,10 +353,12 @@ function evidenceIndex(model) {
     "- Local docs generation exists and has check mode.",
     "- Local CLI/SDK evidence smoke exists.",
     "- Full local source-checkout install and modular replacement paths are recorded in a generated install-readiness manifest.",
+    "- Release and hosted capability readiness is recorded in a generated manifest with official-source prerequisites and fail-closed unsupported states.",
     "- Local deterministic provider workflow exists and routes tool calls through the policy-gated tool gateway.",
     "- Local redacted metric records exist for latency, token-estimate, external-billable-cost, and tool-call measurements.",
     "- Local deterministic regression eval smoke exists for tool safety, docs generation, memory recall, and recovery.",
     "- Tool adapter source inspection exists for supported function and trusted MCP fixture paths plus fail-closed OpenAPI, shell, browser, code, provider-as-tool, and A2A dry-run evidence.",
+    "- Release and hosted capability readiness is generated into `docs/generated/release-capability-manifest.json`, with unsupported npm publish/provenance, package contents dry-runs, GitHub attestations, Mintlify validation/publishing, hosted docs, hosted providers, hosted stores, and hosted workbench surfaces marked fail-closed.",
     "- Release publishing, hosted docs, hosted model providers, executable full protocol/local tool adapters, attestation, and package release artifacts remain unavailable until their gates close.",
     "",
     "## Evidence Inputs",

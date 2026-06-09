@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:6400e308ed09ef9180e01e1267047346b35bbbe95ef72fae44c4dd1bc8f7684c",
+  "sourceInputHash": "sha256:1187e422c18695b5577585e2b7f048065fec22823a19c92bca4798f536886fbe",
   "generatedAt": "deterministic:git-head-plus-input-hash",
   "freshnessClass": "deterministic_current_source_tree",
   "command": "pnpm docs:generate -- --check",
@@ -122,6 +122,11 @@
       "bytes": 473
     },
     {
+      "path": ".changes/2026-06-09-release-capability-manifest.md",
+      "sha256": "sha256:1ad01fe8bb980d034a33d06bdd696224d89e3b464ebf4c4b592ffbc40ff57a31",
+      "bytes": 403
+    },
+    {
       "path": ".changes/2026-06-09-release-readiness-audit.md",
       "sha256": "sha256:77c2537ce9dfb3f7f2289f6df7e4a49c7a91f02d161acf9d50679b3710f3587f",
       "bytes": 419
@@ -227,9 +232,19 @@
       "bytes": 6098
     },
     {
+      "path": "docs/generated/release-capability-manifest.json",
+      "sha256": "sha256:9748b543465a5ac6784bce337d69937d1c80af10cd74aa937197d640b8efc8cb",
+      "bytes": 23688
+    },
+    {
+      "path": "docs/operations/release-capability-source-lock.md",
+      "sha256": "sha256:7a07ced556c323aff323d930c35e69fe5afef9a33da86c68f34237921a6bfff3",
+      "bytes": 4972
+    },
+    {
       "path": "docs/operations/release-readiness.md",
-      "sha256": "sha256:a88fb74699c1b6d644a8a5b661d13b1654c446212477d80a3951cc70ebc1bd72",
-      "bytes": 15585
+      "sha256": "sha256:e41a8e26bc34afa713e0a76d5abb0a9c790314296c9141eb6805f7de59a790dc",
+      "bytes": 18356
     },
     {
       "path": "evals/smoke.mjs",
@@ -238,8 +253,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "sha256:e9dfc3e28ee6222efd05af8ddfa69f51528a7caf71218886071b0676c7362c79",
-      "bytes": 2896
+      "sha256": "sha256:a81969d83b5324ea95ab6892bb6b82d1aabdbfcb3669ff647f0fc456592eb3f0",
+      "bytes": 3145
     },
     {
       "path": "packages/artifacts/package.json",
@@ -553,8 +568,8 @@
     },
     {
       "path": "packages/docs/scripts/generate-docs.mjs",
-      "sha256": "sha256:dd3f08b7c157a2f0eecc023c4a4f49f3a3156d7472229b9391dd42bdd22c74f7",
-      "bytes": 25187
+      "sha256": "sha256:e462986be3df00f080a6974ba9678e7286d7a2bc8097e785bb8497daf9ffe1d2",
+      "bytes": 26171
     },
     {
       "path": "packages/memory/package.json",
@@ -643,8 +658,13 @@
     },
     {
       "path": "scripts/release/check-readiness.mjs",
-      "sha256": "sha256:a29508151200bf0a534834950f0fa035ae1f843652e4f76a09e95c403e23ad68",
-      "bytes": 14123
+      "sha256": "sha256:cb562cc61bffe46ecc514726e19e05452c508140a8f39f00e20c964594936928",
+      "bytes": 18054
+    },
+    {
+      "path": "scripts/release/generate-capability-manifest.mjs",
+      "sha256": "sha256:fdc2d7f3ef79d36b1076659d7ddb5192052e9455119b8f06f5522b5c05e0b7c7",
+      "bytes": 18805
     }
   ],
   "acceptedContractReferences": [

@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:6400e308ed09ef9180e01e1267047346b35bbbe95ef72fae44c4dd1bc8f7684c`
+- Source input hash: `sha256:1187e422c18695b5577585e2b7f048065fec22823a19c92bca4798f536886fbe`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -43,8 +43,10 @@ The docs-output path is intentionally split: repo-level generation is supported 
 
 Generated docs and evidence records are tied to accepted source records, contract references, command result, freshness class, and generated output paths in `docs/generated/docs-source-manifest.json`.
 
+`docs/generated/release-capability-manifest.json` is the executable local release/hosted capability ledger. It keeps unsupported publish, provenance, attestation, Mintlify validation, hosted docs, hosted provider, hosted store, and hosted workbench claims fail-closed until command evidence exists.
+
 Local metric records and `pnpm eval:smoke` provide deterministic regression coverage for tool safety, docs generation, memory recall, and recovery without a hosted observability or external eval backend.
 
 ## Changelog
 
-The current generated changelog consumes 35 accepted changelog fragments from `.changes/`.
+The current generated changelog consumes 36 accepted changelog fragments from `.changes/`.

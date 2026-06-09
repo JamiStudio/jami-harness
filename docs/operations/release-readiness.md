@@ -26,6 +26,11 @@ ledger below is closed.
   and verify a local CycloneDX `1.7` workspace package-manifest inventory at
   `docs/generated/sbom.cdx.json`; this is not a publish tarball SBOM, attestation, or
   provenance claim.
+- Release/hosted capability manifest commands exist as `pnpm release:capabilities` and
+  `pnpm release:capabilities:check`. They emit and verify
+  `docs/generated/release-capability-manifest.json` from package metadata, release docs,
+  local SBOM/docs evidence, release scripts, and official-source links in
+  `docs/operations/release-capability-source-lock.md`.
 - All package manifests remain `private: true`. That is intentional until package scope,
   publish metadata, npm provenance, and account permissions are accepted.
 - `packages/docs` now generates local docs artifacts from accepted source records into
@@ -57,6 +62,8 @@ pnpm contracts:generate:check
 pnpm contracts:validate
 pnpm sbom:generate
 pnpm sbom:check
+pnpm release:capabilities
+pnpm release:capabilities:check
 pnpm policy:test
 pnpm runtime:test
 pnpm tools:test
@@ -90,7 +97,7 @@ results.
 | --- | --- | --- |
 | `npm publish --dry-run --provenance` | Packages remain private and npm automation scope is not recorded. | Confirm npm account/org access, package scope, `publishConfig`, provenance, and package contents. |
 | GitHub release attestation | Artifact attestation workflow is not implemented. | Add a release workflow or local attestation procedure and verify it against a dry-run artifact. |
-| Mintlify build/publish | Mintlify-ready `docs.json` and MDX drafts are generated locally, but the Mintlify CLI/package is not installed or source-locked in this repo. | Add source-lock evidence for the exact Mintlify CLI/package, install it intentionally, and run a local build check before public docs hosting claims. |
+| Mintlify validation/build/publish | Mintlify-ready `docs.json` and MDX drafts are generated locally, but the Mintlify CLI/package is not installed or source-locked in this repo. Current official CLI docs list `mint validate` as the strict local documentation build validation command. | Add source-lock evidence for the exact Mintlify CLI/package, install it intentionally, and run `mint validate` or the accepted current local build check before public docs hosting claims. |
 | Vercel or Cloudflare deploy dry run | Hosted target is not selected or authorized. | Record account/project target and dry-run/deploy evidence. |
 
 ## Public Claims Matrix
@@ -108,6 +115,7 @@ results.
 | Local docs generation can produce quickstart, user manual, API/reference summary, system map, changelog draft, evidence index, docs-source manifest, and Mintlify-ready navigation draft. | Supported for current source records | `packages/docs/scripts/generate-docs.mjs`, `docs/generated/docs-source-manifest.json`, `apps/docs/docs.json`, `pnpm docs:generate -- --check`. | "The repo includes local generated docs artifacts and a Mintlify-ready draft; hosted docs are not published." |
 | Full local source-checkout install and modular BYO paths are inspectable and generated into release docs. | Supported for current local foundations | `packages/sdk/src/index.mjs`, `apps/cli/src/cli.mjs`, `docs/generated/install-readiness-manifest.json`, `packages/sdk/test/sdk.test.mjs`, `apps/cli/test/cli.test.mjs`, `pnpm sdk:test`, `pnpm cli:test`, `pnpm docs:generate -- --check`. | "The repo documents and exposes the current local source-checkout install path plus modular replacement paths; public package installation remains unavailable." |
 | Local SBOM dry-run generation can produce and drift-check a CycloneDX workspace package-manifest inventory. | Supported for current source records | `scripts/release/generate-sbom.mjs`, `docs/operations/sbom-source-lock.md`, `docs/generated/sbom.cdx.json`, `pnpm sbom:generate`, `pnpm sbom:check`. | "The repo includes a local SBOM dry-run artifact for workspace package manifests; release artifacts are not signed, attested, or publish-ready." |
+| Release and hosted capability readiness can be generated and drift-checked from current package metadata, official-source links, and local evidence. | Supported for current local evidence | `scripts/release/generate-capability-manifest.mjs`, `docs/operations/release-capability-source-lock.md`, `docs/generated/release-capability-manifest.json`, `pnpm release:capabilities`, `pnpm release:capabilities:check`. | "The repo includes a generated release capability manifest; unsupported publish, provenance, attestation, Mintlify, hosted docs, hosted provider, hosted store, and hosted workbench surfaces fail closed." |
 | Hosted provider runtime, executable full MCP/OpenAPI/shell/browser/code/provider-as-tool/A2A adapters, hosted workbench, hosted stores, release publishing, Mintlify build/publish, or public docs hosting exist. | Unsupported | CLI, SDK, tools, and provider README files state unavailable hosted/protocol surfaces; this release gate records hosted docs and publishing blockers; roadmap Workstreams 4, 6, 8, and 9 remain open. | "Those surfaces are planned and currently unavailable." |
 | Release artifacts are signed, attested, externally published, or publish-ready. | Unsupported | This release gate, `private: true` package manifests, and unavailable command ledger. | "The repo has release-readiness policy, local SBOM dry-run evidence, and audit commands; publishable artifacts are not ready." |
 
@@ -137,6 +145,37 @@ Current local implementation:
   `docs/operations/sbom-source-lock.md`.
 - The local SBOM dry-run artifact remains non-publishing evidence until package contents
   dry-runs, provenance, and attestation gates are implemented.
+
+## Hosted And Release Capability Manifest
+
+Current local implementation:
+
+- `pnpm release:capabilities` writes
+  `docs/generated/release-capability-manifest.json`.
+- `pnpm release:capabilities:check` fails when the checked manifest drifts from package
+  metadata, release-readiness docs, SBOM evidence, generated docs config, release scripts,
+  or official-source links recorded in
+  `docs/operations/release-capability-source-lock.md`.
+- `pnpm verify` runs the release capability manifest drift check before generated docs and
+  release readiness audits.
+- `pnpm release:readiness` and `pnpm release:dry-run` verify that the generated manifest
+  keeps npm publishing/provenance, package contents dry-runs, GitHub attestations,
+  Mintlify validation/publishing, hosted public docs, hosted provider runtime, hosted
+  durable stores, and hosted workbench surfaces fail-closed unsupported.
+
+Current unsupported surfaces:
+
+- npm publish/provenance/trusted publishing.
+- npm package contents dry-runs.
+- GitHub release artifact attestations.
+- Mintlify CLI validation or hosted docs publishing.
+- Hosted public docs on Mintlify, Vercel, Cloudflare, or any other target.
+- Hosted provider runtime.
+- Hosted durable stores.
+- Hosted workbench.
+
+This manifest is evidence that unsupported surfaces stay blocked. It is not evidence that
+those surfaces work.
 
 ## Install And Module Replacement Readiness
 
@@ -187,6 +226,9 @@ Before removing `private: true` from any publishable manifest:
 - Use npm provenance/OIDC where npm publishing is used.
 - Produce or verify GitHub artifact attestations for release archives before claiming
   signed or attested artifacts.
+- Keep `docs/generated/release-capability-manifest.json` in sync and fail-closed until
+  the specific publish, provenance, attestation, docs hosting, provider, store, or
+  workbench capability has executable local evidence.
 - Record the Git commit, tag, package versions, changelog fragments consumed, and
   verification commands in the release packet.
 

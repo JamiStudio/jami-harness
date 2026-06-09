@@ -15,6 +15,7 @@ const manifests = packageFiles.map((file) => ({
   path: file,
   manifest: JSON.parse(readFileSync(join(repoRoot, file), "utf8")),
 }));
+const releaseCapabilityManifest = readReleaseCapabilityManifest();
 
 const git = gitInfo();
 const checks = [
@@ -26,6 +27,8 @@ const checks = [
   checkScript("contracts:validate", "contract and fixture validation"),
   checkScript("sbom:generate", "local SBOM generation command"),
   checkScript("sbom:check", "local SBOM drift check command"),
+  checkScript("release:capabilities", "release capability manifest generation command"),
+  checkScript("release:capabilities:check", "release capability manifest drift check command"),
   checkScript("eval:smoke", "local regression eval smoke command"),
   checkScript("release:readiness", "release readiness audit command"),
   checkScript("release:dry-run", "non-publishing release dry-run command"),
@@ -34,17 +37,21 @@ const checks = [
   checkFile("NOTICE", "source and third-party provenance notice"),
   checkFile("docs/operations/release-readiness.md", "release, claims, SBOM, and attestation policy"),
   checkFile("docs/operations/sbom-source-lock.md", "repo-local SBOM source-lock evidence"),
+  checkFile("docs/operations/release-capability-source-lock.md", "repo-local release capability source-lock evidence"),
   checkFile("docs/generated/docs-source-manifest.json", "generated docs-source manifest"),
   checkFile("docs/generated/install-readiness-manifest.json", "generated install-readiness manifest"),
   checkFile("docs/generated/sbom.cdx.json", "generated local CycloneDX SBOM dry-run artifact"),
+  checkFile("docs/generated/release-capability-manifest.json", "generated release capability manifest"),
   checkFile("apps/docs/docs.json", "Mintlify-ready navigation draft"),
   checkFile(".github/workflows/manual-check.yml", "manual GitHub fallback workflow"),
   checkWorkflow(),
+  checkReleaseCapabilityManifest(),
   checkNoTrackedEnv(),
   checkPackageMetadata(),
   checkPrivatePublishBlock(),
   checkDocsPolicy("Public Claims Matrix", "public claims matrix"),
   checkDocsPolicy("SBOM Policy", "SBOM policy"),
+  checkDocsPolicy("Hosted And Release Capability Manifest", "hosted and release capability manifest policy"),
   checkDocsPolicy("Package Provenance And Attestation Policy", "package provenance and attestation policy"),
   checkDocsPolicy("Install And Module Replacement Readiness", "install and module replacement readiness policy"),
   checkDocsPolicy("Human Interventions", "human/account intervention ledger"),
@@ -62,9 +69,9 @@ const unavailableCommands = [
     reason: "GitHub release artifact attestation workflow is not implemented or authorized yet",
   },
   {
-    command: "mintlify build",
+    command: "mint validate / hosted Mintlify publish",
     status: "unavailable",
-    reason: "Mintlify-ready docs.json and MDX drafts are generated locally, but the Mintlify CLI/package is not installed or source-locked in this repo",
+    reason: "Mintlify-ready docs.json and MDX drafts are generated locally, but the Mintlify CLI/package is not installed or source-locked in this repo and no hosted project is selected",
   },
   {
     command: "vercel/cloudflare deploy --dry-run",
@@ -155,12 +162,20 @@ const claims = [
     "pnpm sbom:generate",
     "pnpm sbom:check",
   ]),
+  claim("Release and hosted capability manifest exists with fail-closed unsupported surfaces backed by repo-local official-source evidence", "supported", [
+    "scripts/release/generate-capability-manifest.mjs",
+    "docs/operations/release-capability-source-lock.md",
+    "docs/generated/release-capability-manifest.json",
+    "pnpm release:capabilities",
+    "pnpm release:capabilities:check",
+  ]),
   claim("Release publishing, hosted Mintlify build, hosted workbench, hosted stores, hosted provider runtime, and executable full MCP/OpenAPI/shell/browser/code/provider-as-tool/A2A adapters are available", "unsupported", [
     "apps/cli/README.md",
     "packages/sdk/README.md",
     "packages/provider-local/README.md",
     "packages/tools/README.md",
     "docs/roadmaps/2026-06-07-jami-harness-production-plan.md",
+    "docs/generated/release-capability-manifest.json",
   ]),
 ];
 
@@ -194,6 +209,17 @@ const readiness = {
   })),
   checks,
   publicClaims: claims,
+  releaseCapabilities: releaseCapabilityManifest ? {
+    sourceInputHash: releaseCapabilityManifest.sourceInputHash,
+    freshnessClass: releaseCapabilityManifest.freshnessClass,
+    capabilities: releaseCapabilityManifest.capabilities.map((capability) => ({
+      capabilityId: capability.capabilityId,
+      surface: capability.surface,
+      status: capability.status,
+      claimable: capability.claimable,
+      failClosed: capability.failClosed,
+    })),
+  } : undefined,
   unavailableCommands,
   humanInterventions,
 };
@@ -277,6 +303,48 @@ function checkPrivatePublishBlock() {
   };
 }
 
+function checkReleaseCapabilityManifest() {
+  if (!releaseCapabilityManifest) {
+    return failed("release capability manifest fail-closed surface coverage", "docs/generated/release-capability-manifest.json is missing or invalid");
+  }
+  const requiredSupported = [
+    "cap_release_readiness_audit",
+    "cap_release_capability_manifest",
+    "cap_local_sbom_dry_run",
+    "cap_local_docs_generation",
+  ];
+  const requiredUnsupported = [
+    "cap_npm_publish_provenance",
+    "cap_package_contents_dry_run",
+    "cap_github_release_attestations",
+    "cap_mintlify_validate_publish",
+    "cap_hosted_public_docs",
+    "cap_hosted_provider_runtime",
+    "cap_hosted_durable_stores",
+    "cap_hosted_workbench",
+  ];
+  const byId = new Map((releaseCapabilityManifest.capabilities ?? []).map((capability) => [capability.capabilityId, capability]));
+  const missingSupported = requiredSupported.filter((id) => byId.get(id)?.status !== "supported_local_evidence");
+  const missingUnsupported = requiredUnsupported.filter((id) => {
+    const capability = byId.get(id);
+    return capability?.status !== "fail_closed_unsupported" || capability?.claimable !== false || capability?.failClosed !== true;
+  });
+  const missingOfficialSources = (releaseCapabilityManifest.officialSources ?? [])
+    .filter((source) => source.official !== true || !source.url || !source.verifiedOn)
+    .map((source) => source.id ?? "unknown");
+  const failures = [
+    ...missingSupported.map((id) => `${id}: missing supported local evidence status`),
+    ...missingUnsupported.map((id) => `${id}: missing fail-closed unsupported status`),
+    ...missingOfficialSources.map((id) => `${id}: missing official source metadata`),
+  ];
+  return failures.length === 0
+    ? passed("release capability manifest fail-closed surface coverage", {
+      path: "docs/generated/release-capability-manifest.json",
+      capabilities: releaseCapabilityManifest.capabilities.length,
+    })
+    : failed("release capability manifest fail-closed surface coverage", failures.join("; "));
+}
+
 function checkDocsPolicy(section, label) {
   const path = join(repoRoot, "docs/operations/release-readiness.md");
   if (!existsSync(path)) return failed(label, "docs/operations/release-readiness.md is missing");
@@ -284,6 +352,16 @@ function checkDocsPolicy(section, label) {
   return text.includes(`## ${section}`)
     ? passed(label, { path: "docs/operations/release-readiness.md", section })
     : failed(label, `missing section: ${section}`);
+}
+
+function readReleaseCapabilityManifest() {
+  const path = join(repoRoot, "docs/generated/release-capability-manifest.json");
+  if (!existsSync(path)) return undefined;
+  try {
+    return JSON.parse(readFileSync(path, "utf8"));
+  } catch {
+    return undefined;
+  }
 }
 
 function gitInfo() {

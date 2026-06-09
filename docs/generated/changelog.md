@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:6400e308ed09ef9180e01e1267047346b35bbbe95ef72fae44c4dd1bc8f7684c`
+- Source input hash: `sha256:1187e422c18695b5577585e2b7f048065fec22823a19c92bca4798f536886fbe`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -35,6 +35,7 @@
 - Observability Redaction Confirmation Fix (`.changes/2026-06-09-observability-redaction-confirmation.md`)
 - Policy gate hardening (`.changes/2026-06-09-policy-gate-hardening.md`)
 - Policy runtime spine (`.changes/2026-06-09-policy-runtime-spine.md`)
+- Release Capability Manifest (`.changes/2026-06-09-release-capability-manifest.md`)
 - 2026-06-09-release-readiness-audit (`.changes/2026-06-09-release-readiness-audit.md`)
 - 2026-06-09-release-readiness-verify-gate (`.changes/2026-06-09-release-readiness-verify-gate.md`)
 - 2026-06-09-runtime-kernel-spine (`.changes/2026-06-09-runtime-kernel-spine.md`)
