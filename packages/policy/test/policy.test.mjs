@@ -127,3 +127,50 @@ test("policy-gated run kernel emits audit evidence without executing denied acti
   assert.equal(auditEvents[0].outcome, "deny");
   assert.equal(auditEvents[0].redactionMode, "redacted");
 });
+
+test("malformed requests fail closed with typed denial evidence", async () => {
+  const auditEvents = [];
+  const kernel = createPolicyGatedRunKernel({
+    policyEngine: createDefaultPolicyEngine({ now }),
+    auditSink: {
+      write(event) {
+        auditEvents.push(event);
+      },
+    },
+  });
+
+  const result = await kernel.gateAction({
+    action: {
+      actionId: "invalid publish action",
+      risk: "network_admin",
+    },
+    requiredScopes: "release:publish",
+    actor: {
+      scopes: "release:publish",
+    },
+  });
+
+  assert.equal(result.executable, false);
+  assert.equal(result.decision.decision, "deny");
+  assert.equal(result.decision.runId, "run_unknown");
+  assert.equal(result.decision.actorId, "actor_unknown");
+  assert.equal(result.decision.projectId, "proj_unknown");
+  assert.equal(result.decision.environment, "unknown");
+  assert.equal(result.decision.risk, "unknown");
+  assert.match(result.decision.auditRef, /^aud_[a-z0-9][a-z0-9_-]*$/);
+  assert.match(result.decision.evidenceRef, /^ev_[a-z0-9][a-z0-9_-]*$/);
+  assert.match(result.decision.reasons.join("\n"), /actor identity is required/);
+  assert.match(result.decision.reasons.join("\n"), /project identity is required/);
+  assert.match(result.decision.reasons.join("\n"), /environment is required/);
+  assert.match(result.decision.reasons.join("\n"), /required scopes must be an array/);
+  assert.match(result.decision.reasons.join("\n"), /actor scopes must be an array/);
+  assert.match(result.decision.reasons.join("\n"), /unsupported action risk/);
+
+  assert.equal(auditEvents.length, 1);
+  assert.equal(auditEvents[0].runId, "run_unknown");
+  assert.equal(auditEvents[0].actorId, "actor_unknown");
+  assert.equal(auditEvents[0].projectId, "proj_unknown");
+  assert.equal(auditEvents[0].environment, "unknown");
+  assert.equal(auditEvents[0].outcome, "deny");
+  assert.equal(auditEvents[0].redactionMode, "redacted");
+});

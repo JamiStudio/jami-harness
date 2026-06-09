@@ -22,7 +22,7 @@
     "runId": { "type": "string", "pattern": "^run_[a-z0-9][a-z0-9_-]*$" },
     "actorId": { "type": "string", "pattern": "^actor_[a-z0-9][a-z0-9_-]*$" },
     "projectId": { "type": "string", "pattern": "^proj_[a-z0-9][a-z0-9_-]*$" },
-    "environment": { "type": "string", "enum": ["local", "preview", "production"] },
+    "environment": { "type": "string", "enum": ["local", "preview", "production", "unknown"] },
     "eventType": { "type": "string", "enum": ["policy.decision", "approval.requested", "approval.resolved", "tool.denied", "secret.redacted"] },
     "outcome": { "type": "string", "enum": ["allow", "deny", "needs_approval", "needs_owner", "redacted"] },
     "policyDecisionRef": { "type": "string", "pattern": "^pol_[a-z0-9][a-z0-9_-]*$" },

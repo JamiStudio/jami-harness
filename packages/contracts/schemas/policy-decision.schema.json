@@ -25,9 +25,9 @@
     "runId": { "type": "string", "pattern": "^run_[a-z0-9][a-z0-9_-]*$" },
     "actorId": { "type": "string", "pattern": "^actor_[a-z0-9][a-z0-9_-]*$" },
     "projectId": { "type": "string", "pattern": "^proj_[a-z0-9][a-z0-9_-]*$" },
-    "environment": { "type": "string", "enum": ["local", "preview", "production"] },
+    "environment": { "type": "string", "enum": ["local", "preview", "production", "unknown"] },
     "decision": { "type": "string", "enum": ["allow", "deny", "needs_approval", "needs_owner"] },
-    "risk": { "type": "string", "enum": ["read", "write", "destructive", "external", "secret_adjacent"] },
+    "risk": { "type": "string", "enum": ["read", "write", "destructive", "external", "secret_adjacent", "unknown"] },
     "requestedScopes": {
       "type": "array",
       "items": { "type": "string" }

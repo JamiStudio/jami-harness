@@ -2,7 +2,7 @@
 // Do not edit by hand; run pnpm --filter @jami-studio/harness-contracts generate.
 
 export const generatedContractMetadata = {
-  generatedAt: "2026-06-09T05:42:27.212Z",
+  generatedAt: "2026-06-09T05:53:20.821Z",
   generatorVersion: "2026-06-09.contracts.1",
   source: "packages/contracts/schemas/*.schema.json"
 } as const;
@@ -333,7 +333,8 @@ export const AuditEventSchema = {
       "enum": [
         "local",
         "preview",
-        "production"
+        "production",
+        "unknown"
       ],
       "type": "string"
     },
@@ -746,7 +747,8 @@ export const PolicyDecisionSchema = {
       "enum": [
         "local",
         "preview",
-        "production"
+        "production",
+        "unknown"
       ],
       "type": "string"
     },
@@ -811,7 +813,8 @@ export const PolicyDecisionSchema = {
         "write",
         "destructive",
         "external",
-        "secret_adjacent"
+        "secret_adjacent",
+        "unknown"
       ],
       "type": "string"
     },

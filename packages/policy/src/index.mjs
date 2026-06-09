@@ -1,5 +1,7 @@
 const DEFAULT_APPROVAL_WINDOW_MS = 15 * 60 * 1000;
+const ALLOWED_RISKS = new Set(["read", "write", "destructive", "external", "secret_adjacent", "unknown"]);
 const ELEVATED_RISKS = new Set(["write", "destructive", "external", "secret_adjacent"]);
+const ALLOWED_ENVIRONMENTS = new Set(["local", "preview", "production", "unknown"]);
 
 export function createDefaultPolicyEngine(options = {}) {
   const now = options.now ?? (() => new Date());
@@ -39,6 +41,12 @@ export function evaluatePolicyRequest(request, options = {}) {
   if (!request.actor?.actorId) reasons.push("actor identity is required");
   if (!request.projectId) reasons.push("project identity is required");
   if (!request.environment) reasons.push("environment is required");
+  if (request.requiredScopes !== undefined && !Array.isArray(request.requiredScopes)) {
+    reasons.push("required scopes must be an array");
+  }
+  if (request.actor?.scopes !== undefined && !Array.isArray(request.actor.scopes)) {
+    reasons.push("actor scopes must be an array");
+  }
 
   const missingScopes = requestedScopes.filter((scope) => !actorScopes.has(scope));
   if (missingScopes.length > 0) {
@@ -56,7 +64,10 @@ export function evaluatePolicyRequest(request, options = {}) {
     }
   }
 
-  const risk = request.action?.risk ?? "read";
+  const risk = normalizeRisk(request.action?.risk);
+  if (request.action?.risk !== undefined && request.action.risk !== risk) {
+    reasons.push(`unsupported action risk: ${String(request.action.risk)}`);
+  }
   const approval = request.approval;
   const approvalCheck = validateApproval(approval, request, { now, approvalWindowMs });
   if (approvalCheck.reason) {
@@ -81,10 +92,10 @@ export function evaluatePolicyRequest(request, options = {}) {
   return {
     schemaVersion: "2026-06-09",
     decisionId: request.decisionId ?? makeId("pol", request.runId, request.action?.actionId, decision),
-    runId: request.runId,
-    actorId: request.actor?.actorId,
-    projectId: request.projectId,
-    environment: request.environment,
+    runId: normalizeRef("run", request.runId),
+    actorId: normalizeRef("actor", request.actor?.actorId),
+    projectId: normalizeRef("proj", request.projectId),
+    environment: normalizeEnvironment(request.environment),
     decision,
     risk,
     requestedScopes,
@@ -102,10 +113,10 @@ export function toAuditEvent(request, decision) {
   return {
     schemaVersion: "2026-06-09",
     auditId: decision.auditRef,
-    runId: request.runId,
-    actorId: request.actor?.actorId,
-    projectId: request.projectId,
-    environment: request.environment,
+    runId: decision.runId,
+    actorId: decision.actorId,
+    projectId: decision.projectId,
+    environment: decision.environment,
     eventType: decision.decision === "allow" ? "policy.decision" : "tool.denied",
     outcome: decision.decision,
     policyDecisionRef: decision.decisionId,
@@ -191,6 +202,19 @@ function findSecretValuePaths(value, path = "$") {
 
 function asArray(value) {
   return Array.isArray(value) ? value : [];
+}
+
+function normalizeEnvironment(value) {
+  return ALLOWED_ENVIRONMENTS.has(value) ? value : "unknown";
+}
+
+function normalizeRisk(value) {
+  return ALLOWED_RISKS.has(value) ? value : "unknown";
+}
+
+function normalizeRef(prefix, value) {
+  const pattern = new RegExp(`^${prefix}_[a-z0-9][a-z0-9_-]*$`);
+  return typeof value === "string" && pattern.test(value) ? value : `${prefix}_unknown`;
 }
 
 function dedupeRedactions(redactions) {

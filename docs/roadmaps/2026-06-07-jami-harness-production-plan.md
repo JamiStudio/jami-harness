@@ -263,6 +263,10 @@ Pass status:
   and negative fixtures for prompt injection, tool metadata poisoning, MCP transport
   abuse, secret exfiltration, cross-scope actions, approval replay, denied action audit state, and
   secret-reference redaction.
+- 2026-06-09 Stream 3 policy runtime and safe rendering, harness lane, pass 2 hardened
+  malformed policy request handling so default-deny decisions still produce typed
+  denial/audit evidence when run, actor, project, environment, risk, or scope inputs
+  are missing or invalid.
 - Root verification now runs `pnpm contracts:validate` through `pnpm verify`.
 - The workstream remains open because broad run/task/policy/memory/evidence schemas,
   core ports, primitive lifecycle/versioning docs, and cross-repo Studio UI consumer
@@ -384,6 +388,10 @@ Pass status:
   run helper, and tests for scope denial, approval requirements, approval replay/expiry,
   prompt injection, tool metadata poisoning, MCP Streamable HTTP transport controls,
   secret exfiltration, secret value redaction, and denied-action audit emission.
+- 2026-06-09 Stream 3 policy runtime and safe rendering, harness lane, pass 2 added
+  closed-state evidence sentinels for malformed policy requests and tests proving the
+  helper returns non-executable, typed denial/audit references instead of malformed
+  contract records.
 - The contract spine now includes `policyDecision`, `approvalRequest`, `auditEvent`, and
   `secretRef` anchors and generated outputs. Studio UI still needs matching renderer-side
   denied-state consumer fixtures in its lane; this harness pass did not edit Studio UI.

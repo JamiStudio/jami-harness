@@ -1,6 +1,6 @@
 {
   "generated": {
-    "generatedAt": "2026-06-09T05:42:27.212Z",
+    "generatedAt": "2026-06-09T05:53:20.821Z",
     "generatorVersion": "2026-06-09.contracts.1",
     "source": "packages/contracts/schemas/*.schema.json"
   },
