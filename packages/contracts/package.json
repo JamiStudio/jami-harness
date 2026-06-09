@@ -5,10 +5,15 @@
   "description": "Harness-owned shared contracts, JSON Schema anchors, and compatibility fixtures.",
   "type": "module",
   "exports": {
+    "./generated/contracts": "./generated/contracts.ts",
+    "./generated/openapi": "./generated/openapi.json",
+    "./generated/reference": "./generated/reference.json",
     "./schemas/*": "./schemas/*.schema.json",
-    "./fixtures/*": "./fixtures/*.json"
+    "./fixtures/*": "./fixtures/*"
   },
   "scripts": {
+    "generate": "node scripts/generate-contracts.mjs",
+    "generate:check": "node scripts/generate-contracts.mjs --check",
     "validate": "node scripts/validate-contracts.mjs"
   }
 }

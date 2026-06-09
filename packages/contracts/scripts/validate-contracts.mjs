@@ -1,4 +1,5 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
+import { spawnSync } from "node:child_process";
 import { dirname, isAbsolute, join, normalize, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -15,6 +16,8 @@ const requiredAnchors = new Map([
   ["suiteRef", "suite-ref.schema.json"],
   ["capabilityManifest", "capability-manifest.schema.json"],
   ["primitiveManifest", "primitive-manifest.schema.json"],
+  ["evidencePacket", "evidence-packet.schema.json"],
+  ["threatModelFixtureCatalog", "threat-model-fixture-catalog.schema.json"],
 ]);
 
 const requiredFixtureAnchors = new Set(requiredAnchors.keys());
@@ -23,6 +26,7 @@ const requiredNegativeCaseIds = new Set([
   "invalid-renderer-error-run-event",
   "invalid-ui-payload",
   "invalid-ui-unsafe-prop",
+  "invalid-evidence-packet-no-command",
 ]);
 const fixtureCoverage = new Map();
 const negativeCaseCoverage = new Set();
@@ -212,7 +216,38 @@ function validateSemantics(schemaTitle, value) {
     }
   }
 
+  if (schemaTitle === "evidencePacket") {
+    if (value.redaction.containsSecrets && value.redaction.privatePayloadPolicy === "none") {
+      errors.push("$.redaction.privatePayloadPolicy cannot be none when $.redaction.containsSecrets is true");
+    }
+    for (const [index, command] of value.commands.entries()) {
+      if (command.status === "unavailable" && !command.unavailableReason) {
+        errors.push(`$.commands[${index}].unavailableReason is required when status is unavailable`);
+      }
+      if (command.status !== "unavailable" && command.unavailableReason) {
+        errors.push(`$.commands[${index}].unavailableReason is only allowed when status is unavailable`);
+      }
+    }
+  }
+
+  if (schemaTitle === "threatModelFixtureCatalog") {
+    const risks = new Set(value.risks.map((risk) => risk.riskId));
+    for (const [index, fixture] of value.fixtures.entries()) {
+      if (!risks.has(fixture.riskId)) {
+        errors.push(`$.fixtures[${index}].riskId must reference a catalog risk`);
+      }
+    }
+  }
+
   return errors;
+}
+
+const generationCheck = spawnSync(process.execPath, [join(packageRoot, "scripts", "generate-contracts.mjs"), "--check"], {
+  cwd: packageRoot,
+  encoding: "utf8",
+});
+if (generationCheck.status !== 0) {
+  failures.push((generationCheck.stderr || generationCheck.stdout || "contracts generated artifacts are out of date").trim());
 }
 
 for (const [title, file] of requiredAnchors) {

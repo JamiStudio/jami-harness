@@ -254,10 +254,14 @@ Pass status:
   reference containment, fixture metadata checks, and semantic negative cases for
   denied-action evidence, renderer error state, unsafe UI payload props, and Studio UI
   suite item references.
+- 2026-06-09 Stream 2 contract spine, harness lane, pass 4 added checked generated
+  contract artifacts (`contracts.ts`, OpenAPI components, and reference manifest),
+  first evidence packet and threat-model fixture catalog anchors, and drift checks in
+  the contract validation/verify path.
 - Root verification now runs `pnpm contracts:validate` through `pnpm verify`.
 - The workstream remains open because broad run/task/policy/memory/evidence schemas,
-  generated TypeScript exports, OpenAPI/reference generation, and cross-repo Studio UI
-  consumer fixtures are not implemented yet.
+  core ports, primitive lifecycle/versioning docs, and cross-repo Studio UI consumer
+  fixtures are not implemented yet.
 
 Depends on:
 
@@ -279,16 +283,16 @@ Implementation tasks:
 - [x] Add harness-side schema anchors for `runEvent`, `uiPayload`, `artifactView`, `actionRef`, `themeRef`, and `suiteRef` references without importing UI implementation ownership.
 - [ ] Define core ports for model, store, policy, tools, memory, context, search, artifacts, observability, secrets, docs output, and UI references.
 - [x] Define capability manifest format so modules can declare supported features, required scopes, failure modes, and replacement compatibility.
-- [ ] Generate JSON Schema and TypeScript exports.
+- [x] Generate JSON Schema and TypeScript exports.
 - [x] Define primitive registry manifest format.
 - [~] Add contract tests and schema compatibility checks, including shared fixtures for unsupported UI components, invalid payloads, denied actions, and renderer error states.
-- [ ] Define the initial threat model fixture catalog for policy/tool/UI/action/memory/evidence risks.
-- [ ] Define the evidence packet schema before docs-generation work consumes evidence claims.
+- [x] Define the initial threat model fixture catalog for policy/tool/UI/action/memory/evidence risks.
+- [x] Define the evidence packet schema before docs-generation work consumes evidence claims.
 - [ ] Document primitive lifecycle and versioning.
 
 Exit criteria:
 
-- [ ] Contracts build, validate, and generate docs/reference artifacts.
+- [~] Contracts build, validate, and generate docs/reference artifacts.
 - [ ] Ports make module replacement explicit without weakening core policy, audit, artifact, evidence, or checkpoint contracts.
 - [ ] Shared harness/UI compatibility fixtures can be consumed by both this repo and `studio-ui`.
 - [ ] Evidence packet and threat model schemas exist before runtime, gateway, memory, or docs generation work builds on them.
@@ -297,6 +301,7 @@ Suggested verification:
 
 - `pnpm test --filter @jami-harness/contracts`
 - `pnpm docs:generate -- --check`
+- `pnpm contracts:generate:check`
 
 ## Workstream 2: Runtime Kernel And Checkpointing
 

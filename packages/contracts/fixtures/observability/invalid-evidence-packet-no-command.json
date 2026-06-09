@@ -1,0 +1,26 @@
+{
+  "$schema": "../../schemas/evidence-packet.schema.json",
+  "expectedValid": false,
+  "caseId": "invalid-evidence-packet-no-command",
+  "description": "Evidence packets cannot support generated claims without at least one command result.",
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "evidenceId": "ev_missing_command",
+    "subject": "Incomplete evidence",
+    "freshnessClass": "current_run",
+    "source": {
+      "repo": "jami-harness",
+      "commit": "working-tree",
+      "recordedAt": "2026-06-09T12:00:00.000Z"
+    },
+    "commands": [],
+    "artifacts": [],
+    "redaction": {
+      "containsSecrets": false,
+      "privatePayloadPolicy": "none"
+    },
+    "acceptedContracts": [
+      "evidencePacket"
+    ]
+  }
+}

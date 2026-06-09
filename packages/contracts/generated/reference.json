@@ -1,0 +1,172 @@
+{
+  "generated": {
+    "generatedAt": "2026-06-09T05:11:26.953Z",
+    "generatorVersion": "2026-06-09.contracts.1",
+    "source": "packages/contracts/schemas/*.schema.json"
+  },
+  "package": "@jami-studio/harness-contracts",
+  "schemas": [
+    {
+      "file": "schemas/action-ref.schema.json",
+      "id": "https://jami.studio/schemas/harness/action-ref.schema.json",
+      "required": [
+        "schemaVersion",
+        "actionId",
+        "label",
+        "route",
+        "risk",
+        "policyScope",
+        "confirmationMode",
+        "state"
+      ],
+      "title": "actionRef"
+    },
+    {
+      "file": "schemas/artifact-view.schema.json",
+      "id": "https://jami.studio/schemas/harness/artifact-view.schema.json",
+      "required": [
+        "schemaVersion",
+        "artifactViewId",
+        "artifactId",
+        "kind",
+        "promotionState",
+        "renderers",
+        "provenance"
+      ],
+      "title": "artifactView"
+    },
+    {
+      "file": "schemas/capability-manifest.schema.json",
+      "id": "https://jami.studio/schemas/harness/capability-manifest.schema.json",
+      "required": [
+        "schemaVersion",
+        "capabilityId",
+        "ownerPackage",
+        "capabilityClass",
+        "features",
+        "requiredScopes",
+        "failureModes",
+        "replacementCompatibility"
+      ],
+      "title": "capabilityManifest"
+    },
+    {
+      "file": "schemas/evidence-packet.schema.json",
+      "id": "https://jami.studio/schemas/harness/evidence-packet.schema.json",
+      "required": [
+        "schemaVersion",
+        "evidenceId",
+        "subject",
+        "freshnessClass",
+        "source",
+        "commands",
+        "artifacts",
+        "redaction",
+        "acceptedContracts"
+      ],
+      "title": "evidencePacket"
+    },
+    {
+      "file": "schemas/primitive-manifest.schema.json",
+      "id": "https://jami.studio/schemas/harness/primitive-manifest.schema.json",
+      "required": [
+        "schemaVersion",
+        "primitiveId",
+        "version",
+        "ownerPackage",
+        "primitiveClass",
+        "inputSchemaRef",
+        "outputSchemaRef",
+        "policyRequirements",
+        "auditEventShape",
+        "traceSpanShape",
+        "docs",
+        "verification"
+      ],
+      "title": "primitiveManifest"
+    },
+    {
+      "file": "schemas/run-event.schema.json",
+      "id": "https://jami.studio/schemas/harness/run-event.schema.json",
+      "required": [
+        "schemaVersion",
+        "eventId",
+        "runId",
+        "sequence",
+        "occurredAt",
+        "eventType"
+      ],
+      "title": "runEvent"
+    },
+    {
+      "file": "schemas/suite-ref.schema.json",
+      "id": "https://jami.studio/schemas/harness/suite-ref.schema.json",
+      "required": [
+        "schemaVersion",
+        "suiteId",
+        "lane",
+        "installedItems",
+        "routeMap",
+        "optionalHarnessCapabilities"
+      ],
+      "title": "suiteRef"
+    },
+    {
+      "file": "schemas/theme-ref.schema.json",
+      "id": "https://jami.studio/schemas/harness/theme-ref.schema.json",
+      "required": [
+        "schemaVersion",
+        "themeId",
+        "tokenSchemaVersion",
+        "source",
+        "restoreTarget"
+      ],
+      "title": "themeRef"
+    },
+    {
+      "file": "schemas/threat-model-fixture-catalog.schema.json",
+      "id": "https://jami.studio/schemas/harness/threat-model-fixture-catalog.schema.json",
+      "required": [
+        "schemaVersion",
+        "catalogId",
+        "surface",
+        "risks",
+        "fixtures"
+      ],
+      "title": "threatModelFixtureCatalog"
+    },
+    {
+      "file": "schemas/ui-payload.schema.json",
+      "id": "https://jami.studio/schemas/harness/ui-payload.schema.json",
+      "required": [
+        "schemaVersion",
+        "payloadId",
+        "componentRef",
+        "props",
+        "fallback"
+      ],
+      "title": "uiPayload"
+    }
+  ],
+  "studioUiHandshake": {
+    "consume": [
+      "generated/contracts.ts for schema ids and anchor names",
+      "generated/openapi.json for component schema import",
+      "fixtures/** for positive and negative compatibility cases"
+    ],
+    "ownedByHarness": [
+      "policy-gated actionRef",
+      "artifactView provenance",
+      "runEvent evidence and renderer states",
+      "evidencePacket provenance and redaction",
+      "threatModelFixtureCatalog risk-to-fixture mapping"
+    ],
+    "ownedByStudioUi": [
+      "resident component implementation",
+      "token output",
+      "registry packaging",
+      "renderer execution behavior",
+      "suite install behavior"
+    ]
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "../../schemas/evidence-packet.schema.json",
+  "expectedValid": true,
+  "caseId": "valid-evidence-packet",
+  "description": "Evidence packets bind claims to source, commands, accepted contracts, artifacts, freshness, and redaction state.",
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "evidenceId": "ev_contract_generation",
+    "subject": "Harness contract generation and validation",
+    "freshnessClass": "current_run",
+    "source": {
+      "repo": "jami-harness",
+      "commit": "working-tree",
+      "recordedAt": "2026-06-09T12:00:00.000Z"
+    },
+    "commands": [
+      {
+        "command": "pnpm contracts:validate",
+        "status": "passed",
+        "recordedAt": "2026-06-09T12:00:00.000Z",
+        "evidenceRef": "ev_contract_generation"
+      }
+    ],
+    "artifacts": [
+      {
+        "artifactId": "art_contract_reference",
+        "path": "packages/contracts/generated/reference.json",
+        "kind": "generated_reference"
+      }
+    ],
+    "redaction": {
+      "containsSecrets": false,
+      "privatePayloadPolicy": "none"
+    },
+    "acceptedContracts": [
+      "evidencePacket",
+      "runEvent"
+    ]
+  }
+}

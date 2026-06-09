@@ -1,0 +1,76 @@
+{
+  "$schema": "../../schemas/threat-model-fixture-catalog.schema.json",
+  "expectedValid": true,
+  "caseId": "threat-model-fixture-catalog",
+  "description": "Initial threat-model fixture catalog for downstream policy, tool, UI action, memory, and evidence streams.",
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "catalogId": "tmc_contract_spine",
+    "surface": "cross_surface",
+    "risks": [
+      {
+        "riskId": "risk_prompt_injection",
+        "category": "prompt_injection",
+        "expectedControl": "Policy-gated tool execution ignores untrusted prompt instructions."
+      },
+      {
+        "riskId": "risk_tool_metadata_poisoning",
+        "category": "tool_metadata_poisoning",
+        "expectedControl": "Tool manifests are validated before exposure to the runtime."
+      },
+      {
+        "riskId": "risk_transport_abuse",
+        "category": "transport_abuse",
+        "expectedControl": "Transport adapters declare origin, auth, and session controls."
+      },
+      {
+        "riskId": "risk_secret_exfiltration",
+        "category": "secret_exfiltration",
+        "expectedControl": "Secret references never resolve into evidence or renderer payloads."
+      },
+      {
+        "riskId": "risk_approval_replay",
+        "category": "approval_replay",
+        "expectedControl": "Approvals bind actor, scope, action, and expiry."
+      },
+      {
+        "riskId": "risk_denied_action",
+        "category": "denied_action",
+        "expectedControl": "Denied actions render as denied states and never execute side effects."
+      },
+      {
+        "riskId": "risk_redaction_failure",
+        "category": "redaction_failure",
+        "expectedControl": "Evidence packets record redaction policy and reject secret-bearing public packets."
+      },
+      {
+        "riskId": "risk_memory_leakage",
+        "category": "memory_leakage",
+        "expectedControl": "Memory reads are actor, project, freshness, and policy scoped."
+      }
+    ],
+    "fixtures": [
+      {
+        "caseId": "invalid-denied-action-ref",
+        "riskId": "risk_denied_action",
+        "expectedValid": false,
+        "expectedOutcome": "deny",
+        "fixturePath": "fixtures/compatibility/invalid-denied-action-ref.json"
+      },
+      {
+        "caseId": "invalid-ui-unsafe-prop",
+        "riskId": "risk_prompt_injection",
+        "expectedValid": false,
+        "expectedOutcome": "error_state",
+        "fixturePath": "fixtures/compatibility/invalid-ui-unsafe-prop.json"
+      },
+      {
+        "caseId": "invalid-evidence-packet-no-command",
+        "riskId": "risk_redaction_failure",
+        "expectedValid": false,
+        "expectedOutcome": "deny",
+        "fixturePath": "fixtures/observability/invalid-evidence-packet-no-command.json"
+      }
+    ]
+  }
+}
