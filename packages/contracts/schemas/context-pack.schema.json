@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jami.studio/schemas/harness/context-pack.schema.json",
+  "title": "contextPack",
+  "type": "object",
+  "required": ["schemaVersion", "contextPackId", "runId", "assembledAt", "deterministicHash", "items", "droppedItems"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "2026-06-09" },
+    "contextPackId": { "type": "string", "pattern": "^ctx_[a-z0-9][a-z0-9_-]*$" },
+    "runId": { "type": "string", "pattern": "^run_[a-z0-9][a-z0-9_-]*$" },
+    "assembledAt": { "type": "string", "format": "date-time" },
+    "deterministicHash": { "type": "string" },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["sourceRef", "kind", "priority", "inclusionReason", "citationId", "freshnessClass"],
+        "additionalProperties": false,
+        "properties": {
+          "sourceRef": { "type": "string" },
+          "kind": {
+            "type": "string",
+            "enum": ["pinned", "system_required", "retrieved", "compressed", "tool_output", "artifact", "user_provided"]
+          },
+          "priority": { "type": "integer", "minimum": 0 },
+          "inclusionReason": { "type": "string" },
+          "citationId": { "type": "string", "pattern": "^cit_[a-z0-9][a-z0-9_-]*$" },
+          "freshnessClass": { "type": "string", "enum": ["current_run", "same_day", "source_locked", "stale"] },
+          "tokenEstimate": { "type": "integer", "minimum": 0 }
+        }
+      }
+    },
+    "droppedItems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["sourceRef", "reason"],
+        "additionalProperties": false,
+        "properties": {
+          "sourceRef": { "type": "string" },
+          "reason": { "type": "string", "enum": ["permission_denied", "retention_expired", "token_budget", "redacted", "duplicate"] }
+        }
+      }
+    }
+  }
+}

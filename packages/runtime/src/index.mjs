@@ -184,6 +184,7 @@ function toPolicyRequest({ actionRef, validationErrors, request, runId, actor, p
       toolMetadataPoisoning: request.threatSignals?.toolMetadataPoisoning === true || validationErrors.some((error) => error.includes("metadata")),
       secretExfiltration: request.threatSignals?.secretExfiltration === true || validationErrors.some((error) => error.includes("secret")),
     },
+    secretRefs: Array.isArray(action.secretRefs) ? action.secretRefs : request.secretRefs,
   };
 }
 
@@ -273,6 +274,7 @@ function hasExecutableMetadata(value) {
 }
 
 function hasForbiddenSecretValue(value) {
+  if (Array.isArray(value)) return value.some((child) => hasForbiddenSecretValue(child));
   if (!isObject(value)) return false;
   return Object.entries(value).some(([key, child]) =>
     ["value", "plaintext", "tokenValue", "apiKey", "secret"].includes(key) || hasForbiddenSecretValue(child)

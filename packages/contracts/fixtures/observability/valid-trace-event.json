@@ -1,0 +1,28 @@
+{
+  "$schema": "../../schemas/trace-event.schema.json",
+  "expectedValid": true,
+  "caseId": "valid-trace-event",
+  "description": "Trace events bind run events, audit refs, artifacts, and redacted attributes without selecting a hosted sink.",
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "traceId": "trc_stream4_foundation",
+    "spanId": "spn_stream4_export",
+    "runId": "run_stream4_foundation",
+    "name": "evidence.export",
+    "kind": "evidence",
+    "startedAt": "2026-06-09T12:00:00.000Z",
+    "endedAt": "2026-06-09T12:00:01.000Z",
+    "status": "ok",
+    "eventRef": "evt_run_stream4_foundation_0_run_started",
+    "auditRef": "aud_stream4_foundation",
+    "artifactRef": "art_stream4_evidence",
+    "attributes": {
+      "eventCount": 4,
+      "sink": "memory"
+    },
+    "redaction": {
+      "payloadPolicy": "redacted",
+      "redactedFields": []
+    }
+  }
+}

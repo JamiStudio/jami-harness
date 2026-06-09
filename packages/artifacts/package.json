@@ -1,0 +1,13 @@
+{
+  "name": "@jami-studio/harness-artifacts",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Harness-owned artifact provenance records and replaceable storage port defaults.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  }
+}

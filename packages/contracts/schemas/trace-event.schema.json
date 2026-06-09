@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jami.studio/schemas/harness/trace-event.schema.json",
+  "title": "traceEvent",
+  "type": "object",
+  "required": ["schemaVersion", "traceId", "spanId", "runId", "name", "kind", "startedAt", "redaction"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "2026-06-09" },
+    "traceId": { "type": "string", "pattern": "^trc_[a-z0-9][a-z0-9_-]*$" },
+    "spanId": { "type": "string", "pattern": "^spn_[a-z0-9][a-z0-9_-]*$" },
+    "parentSpanId": { "type": "string", "pattern": "^spn_[a-z0-9][a-z0-9_-]*$" },
+    "runId": { "type": "string", "pattern": "^run_[a-z0-9][a-z0-9_-]*$" },
+    "name": { "type": "string" },
+    "kind": { "type": "string", "enum": ["run", "policy", "tool", "artifact", "memory", "context", "evidence"] },
+    "startedAt": { "type": "string", "format": "date-time" },
+    "endedAt": { "type": "string", "format": "date-time" },
+    "status": { "type": "string", "enum": ["ok", "error", "unset"] },
+    "eventRef": { "type": "string", "pattern": "^evt_[a-z0-9][a-z0-9_-]*$" },
+    "auditRef": { "type": "string", "pattern": "^aud_[a-z0-9][a-z0-9_-]*$" },
+    "artifactRef": { "type": "string", "pattern": "^art_[a-z0-9][a-z0-9_-]*$" },
+    "attributes": {
+      "type": "object"
+    },
+    "redaction": {
+      "type": "object",
+      "required": ["payloadPolicy"],
+      "additionalProperties": false,
+      "properties": {
+        "payloadPolicy": { "type": "string", "enum": ["none", "redacted", "omitted"] },
+        "redactedFields": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

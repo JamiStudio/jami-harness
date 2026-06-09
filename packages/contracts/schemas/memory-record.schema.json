@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jami.studio/schemas/harness/memory-record.schema.json",
+  "title": "memoryRecord",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "memoryId",
+    "kind",
+    "scope",
+    "source",
+    "freshness",
+    "retention",
+    "redaction",
+    "citation"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "2026-06-09" },
+    "memoryId": { "type": "string", "pattern": "^mem_[a-z0-9][a-z0-9_-]*$" },
+    "kind": { "type": "string", "enum": ["project", "task", "artifact", "user_note", "tool_output"] },
+    "summary": { "type": "string" },
+    "content": { "type": "string" },
+    "scope": {
+      "type": "object",
+      "required": ["projectId", "allowedActorIds", "allowedScopes"],
+      "additionalProperties": false,
+      "properties": {
+        "projectId": { "type": "string", "pattern": "^proj_[a-z0-9][a-z0-9_-]*$" },
+        "allowedActorIds": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^actor_[a-z0-9][a-z0-9_-]*$" }
+        },
+        "allowedScopes": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": ["runId", "recordedAt"],
+      "additionalProperties": false,
+      "properties": {
+        "runId": { "type": "string", "pattern": "^run_[a-z0-9][a-z0-9_-]*$" },
+        "artifactRef": { "type": "string", "pattern": "^art_[a-z0-9][a-z0-9_-]*$" },
+        "recordedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "freshness": {
+      "type": "object",
+      "required": ["class", "asOf"],
+      "additionalProperties": false,
+      "properties": {
+        "class": { "type": "string", "enum": ["current_run", "same_day", "source_locked", "stale"] },
+        "asOf": { "type": "string", "format": "date-time" }
+      }
+    },
+    "retention": {
+      "type": "object",
+      "required": ["policy", "forgetAfter"],
+      "additionalProperties": false,
+      "properties": {
+        "policy": { "type": "string", "enum": ["session", "project", "pinned", "ephemeral"] },
+        "forgetAfter": { "type": "string", "format": "date-time" }
+      }
+    },
+    "redaction": {
+      "type": "object",
+      "required": ["classification", "mode"],
+      "additionalProperties": false,
+      "properties": {
+        "classification": { "type": "string", "enum": ["public", "internal", "private", "secret_adjacent"] },
+        "mode": { "type": "string", "enum": ["none", "redacted", "omitted"] },
+        "redactedFields": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "citation": {
+      "type": "object",
+      "required": ["citationId", "label", "freshnessClass"],
+      "additionalProperties": false,
+      "properties": {
+        "citationId": { "type": "string", "pattern": "^cit_[a-z0-9][a-z0-9_-]*$" },
+        "label": { "type": "string" },
+        "freshnessClass": { "type": "string", "enum": ["current_run", "same_day", "source_locked", "stale"] }
+      }
+    }
+  }
+}

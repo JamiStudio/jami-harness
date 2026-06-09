@@ -1,0 +1,13 @@
+{
+  "name": "@jami-studio/harness-observability",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Harness-owned trace, audit, and evidence packet export foundations.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  }
+}

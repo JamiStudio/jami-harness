@@ -1,6 +1,6 @@
 {
   "generated": {
-    "generatedAt": "2026-06-09T05:53:20.821Z",
+    "generatedAt": "2026-06-09T06:40:27.708Z",
     "generatorVersion": "2026-06-09.contracts.1",
     "source": "packages/contracts/schemas/*.schema.json"
   },
@@ -40,6 +40,20 @@
         "auditRef"
       ],
       "title": "approvalRequest"
+    },
+    {
+      "file": "schemas/artifact-record.schema.json",
+      "id": "https://jami.studio/schemas/harness/artifact-record.schema.json",
+      "required": [
+        "schemaVersion",
+        "artifactId",
+        "kind",
+        "promotionState",
+        "provenance",
+        "storage",
+        "redaction"
+      ],
+      "title": "artifactRecord"
     },
     {
       "file": "schemas/artifact-view.schema.json",
@@ -88,6 +102,20 @@
       "title": "capabilityManifest"
     },
     {
+      "file": "schemas/context-pack.schema.json",
+      "id": "https://jami.studio/schemas/harness/context-pack.schema.json",
+      "required": [
+        "schemaVersion",
+        "contextPackId",
+        "runId",
+        "assembledAt",
+        "deterministicHash",
+        "items",
+        "droppedItems"
+      ],
+      "title": "contextPack"
+    },
+    {
       "file": "schemas/evidence-packet.schema.json",
       "id": "https://jami.studio/schemas/harness/evidence-packet.schema.json",
       "required": [
@@ -102,6 +130,22 @@
         "acceptedContracts"
       ],
       "title": "evidencePacket"
+    },
+    {
+      "file": "schemas/memory-record.schema.json",
+      "id": "https://jami.studio/schemas/harness/memory-record.schema.json",
+      "required": [
+        "schemaVersion",
+        "memoryId",
+        "kind",
+        "scope",
+        "source",
+        "freshness",
+        "retention",
+        "redaction",
+        "citation"
+      ],
+      "title": "memoryRecord"
     },
     {
       "file": "schemas/policy-decision.schema.json",
@@ -204,6 +248,21 @@
         "fixtures"
       ],
       "title": "threatModelFixtureCatalog"
+    },
+    {
+      "file": "schemas/trace-event.schema.json",
+      "id": "https://jami.studio/schemas/harness/trace-event.schema.json",
+      "required": [
+        "schemaVersion",
+        "traceId",
+        "spanId",
+        "runId",
+        "name",
+        "kind",
+        "startedAt",
+        "redaction"
+      ],
+      "title": "traceEvent"
     },
     {
       "file": "schemas/ui-payload.schema.json",

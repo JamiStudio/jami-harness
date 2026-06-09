@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jami.studio/schemas/harness/artifact-record.schema.json",
+  "title": "artifactRecord",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "artifactId",
+    "kind",
+    "promotionState",
+    "provenance",
+    "storage",
+    "redaction"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "2026-06-09" },
+    "artifactId": { "type": "string", "pattern": "^art_[a-z0-9][a-z0-9_-]*$" },
+    "kind": {
+      "type": "string",
+      "enum": ["report", "patch", "document", "image", "trace", "evidence", "release_packet", "memory_snapshot", "context_pack"]
+    },
+    "title": { "type": "string" },
+    "promotionState": { "type": "string", "enum": ["draft", "reviewed", "accepted", "rejected", "promoted"] },
+    "provenance": {
+      "type": "object",
+      "required": ["runId", "sourceCommit", "evidenceRef", "createdAt"],
+      "additionalProperties": false,
+      "properties": {
+        "runId": { "type": "string", "pattern": "^run_[a-z0-9][a-z0-9_-]*$" },
+        "sourceCommit": { "type": "string" },
+        "evidenceRef": { "type": "string", "pattern": "^ev_[a-z0-9][a-z0-9_-]*$" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "commandRef": { "type": "string" },
+        "traceRef": { "type": "string", "pattern": "^trc_[a-z0-9][a-z0-9_-]*$" },
+        "auditRefs": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^aud_[a-z0-9][a-z0-9_-]*$" }
+        }
+      }
+    },
+    "storage": {
+      "type": "object",
+      "required": ["mode", "locator"],
+      "additionalProperties": false,
+      "properties": {
+        "mode": { "type": "string", "enum": ["memory", "local_port", "external_port"] },
+        "locator": { "type": "string" },
+        "contentHash": { "type": "string" }
+      }
+    },
+    "redaction": {
+      "type": "object",
+      "required": ["classification", "privatePayloadPolicy"],
+      "additionalProperties": false,
+      "properties": {
+        "classification": { "type": "string", "enum": ["public", "internal", "private", "secret_adjacent"] },
+        "privatePayloadPolicy": { "type": "string", "enum": ["none", "redacted", "omitted"] },
+        "redactedFields": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

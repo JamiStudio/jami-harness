@@ -1,0 +1,40 @@
+{
+  "$schema": "../../schemas/memory-record.schema.json",
+  "expectedValid": false,
+  "caseId": "invalid-memory-cross-actor-leakage",
+  "description": "Secret-adjacent memory cannot be exported without a redaction mode.",
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "memoryId": "mem_secret_adjacent_note",
+    "kind": "project",
+    "summary": "Private credentials",
+    "content": "Do not leak private payloads into recall.",
+    "scope": {
+      "projectId": "proj_jami_harness",
+      "allowedActorIds": ["actor_developer"],
+      "allowedScopes": ["memory:read"]
+    },
+    "source": {
+      "runId": "run_stream4_foundation",
+      "recordedAt": "2026-06-09T12:00:00.000Z"
+    },
+    "freshness": {
+      "class": "current_run",
+      "asOf": "2026-06-09T12:00:00.000Z"
+    },
+    "retention": {
+      "policy": "project",
+      "forgetAfter": "2026-07-09T12:00:00.000Z"
+    },
+    "redaction": {
+      "classification": "secret_adjacent",
+      "mode": "none",
+      "redactedFields": []
+    },
+    "citation": {
+      "citationId": "cit_secret_adjacent_note",
+      "label": "Secret adjacent note",
+      "freshnessClass": "current_run"
+    }
+  }
+}

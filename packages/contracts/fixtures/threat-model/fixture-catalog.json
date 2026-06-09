@@ -124,6 +124,13 @@
         "expectedValid": false,
         "expectedOutcome": "deny",
         "fixturePath": "fixtures/policy/invalid-secret-ref-value-leak.json"
+      },
+      {
+        "caseId": "invalid-memory-cross-actor-leakage",
+        "riskId": "risk_memory_leakage",
+        "expectedValid": false,
+        "expectedOutcome": "deny",
+        "fixturePath": "fixtures/memory/invalid-memory-cross-actor-leakage.json"
       }
     ]
   }

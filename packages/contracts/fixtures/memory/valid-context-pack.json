@@ -1,0 +1,30 @@
+{
+  "$schema": "../../schemas/context-pack.schema.json",
+  "expectedValid": true,
+  "caseId": "valid-context-pack",
+  "description": "Context packs record deterministic inclusion, citation freshness, and dropped-item reasons.",
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "contextPackId": "ctx_stream4_foundation",
+    "runId": "run_stream4_foundation",
+    "assembledAt": "2026-06-09T12:00:00.000Z",
+    "deterministicHash": "sha256:fixture",
+    "items": [
+      {
+        "sourceRef": "mem_stream4_contract_note",
+        "kind": "retrieved",
+        "priority": 10,
+        "inclusionReason": "permission and query matched",
+        "citationId": "cit_stream4_contract_note",
+        "freshnessClass": "current_run",
+        "tokenEstimate": 10
+      }
+    ],
+    "droppedItems": [
+      {
+        "sourceRef": "mem_secret_adjacent_note",
+        "reason": "permission_denied"
+      }
+    ]
+  }
+}

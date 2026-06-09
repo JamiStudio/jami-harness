@@ -197,6 +197,12 @@ Replaceable strategies:
 - Manual context provider.
 - Domain-specific retrieval pipeline.
 
+Current foundation status: Stream 4 pass 1 adds a dependency-free
+`@jami-studio/harness-memory` package with a no-op port, in-memory development port,
+permission-filtered search, citation freshness, retention filtering, redaction defaults,
+and deterministic context pack hashes. It intentionally does not add durable storage,
+vector retrieval, hosted search, compression, or external RAG adapters yet.
+
 ## Policy Strategy
 
 Policy is a core invariant. The engine behind the policy seam is replaceable.
@@ -274,6 +280,11 @@ Default modules:
 - Local evidence packet writer.
 - OTel bridge.
 - Console/dev sink.
+
+Current foundation status: Stream 4 pass 1 adds a local evidence packet exporter, event
+and audit sinks for the runtime spine, minimal trace records, and artifact-backed
+evidence packet artifacts. It intentionally does not add an OpenTelemetry bridge, hosted
+trace backend, metrics pipeline, eval sink, CLI, or workbench view yet.
 
 Replaceable sinks:
 

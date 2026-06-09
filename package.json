@@ -10,9 +10,12 @@
     "contracts:generate": "node packages/contracts/scripts/generate-contracts.mjs",
     "contracts:generate:check": "node packages/contracts/scripts/generate-contracts.mjs --check",
     "contracts:validate": "node packages/contracts/scripts/validate-contracts.mjs",
+    "artifacts:test": "node --test packages/artifacts/test/*.test.mjs",
+    "observability:test": "node --test packages/observability/test/*.test.mjs",
+    "memory:test": "node --test packages/memory/test/*.test.mjs",
     "policy:test": "node --test packages/policy/test/*.test.mjs",
     "runtime:test": "node --test packages/runtime/test/*.test.mjs",
-    "verify": "node scripts/docs/check-docs.mjs && node packages/contracts/scripts/generate-contracts.mjs --check && node packages/contracts/scripts/validate-contracts.mjs && node --test packages/policy/test/*.test.mjs && node --test packages/runtime/test/*.test.mjs"
+    "verify": "node scripts/docs/check-docs.mjs && node packages/contracts/scripts/generate-contracts.mjs --check && node packages/contracts/scripts/validate-contracts.mjs && node --test packages/policy/test/*.test.mjs && node --test packages/runtime/test/*.test.mjs && node --test packages/artifacts/test/*.test.mjs && node --test packages/observability/test/*.test.mjs && node --test packages/memory/test/*.test.mjs"
   },
   "engines": {
     "node": ">=24.0.0",

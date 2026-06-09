@@ -1,0 +1,41 @@
+{
+  "$schema": "../../schemas/memory-record.schema.json",
+  "expectedValid": true,
+  "caseId": "valid-memory-record",
+  "description": "Memory records include permission scope, retention, redaction, citation, and freshness metadata.",
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "memoryId": "mem_stream4_contract_note",
+    "kind": "project",
+    "summary": "Stream 4 owns evidence and memory contracts, not hosted backends.",
+    "content": "Stream 4 pass 1 adds local, replaceable foundations only.",
+    "scope": {
+      "projectId": "proj_jami_harness",
+      "allowedActorIds": ["actor_developer"],
+      "allowedScopes": ["memory:read"]
+    },
+    "source": {
+      "runId": "run_stream4_foundation",
+      "artifactRef": "art_stream4_evidence",
+      "recordedAt": "2026-06-09T12:00:00.000Z"
+    },
+    "freshness": {
+      "class": "current_run",
+      "asOf": "2026-06-09T12:00:00.000Z"
+    },
+    "retention": {
+      "policy": "project",
+      "forgetAfter": "2026-07-09T12:00:00.000Z"
+    },
+    "redaction": {
+      "classification": "internal",
+      "mode": "redacted",
+      "redactedFields": []
+    },
+    "citation": {
+      "citationId": "cit_stream4_contract_note",
+      "label": "Stream 4 foundation note",
+      "freshnessClass": "current_run"
+    }
+  }
+}

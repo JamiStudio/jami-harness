@@ -26,6 +26,7 @@
               "transport_abuse",
               "secret_exfiltration",
               "approval_replay",
+              "scope_escalation",
               "denied_action",
               "redaction_failure",
               "memory_leakage"

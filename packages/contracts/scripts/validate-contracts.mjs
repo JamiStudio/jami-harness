@@ -21,6 +21,10 @@ const requiredAnchors = new Map([
   ["auditEvent", "audit-event.schema.json"],
   ["secretRef", "secret-ref.schema.json"],
   ["evidencePacket", "evidence-packet.schema.json"],
+  ["artifactRecord", "artifact-record.schema.json"],
+  ["traceEvent", "trace-event.schema.json"],
+  ["memoryRecord", "memory-record.schema.json"],
+  ["contextPack", "context-pack.schema.json"],
   ["threatModelFixtureCatalog", "threat-model-fixture-catalog.schema.json"],
 ]);
 
@@ -34,6 +38,7 @@ const requiredNegativeCaseIds = new Set([
   "invalid-secret-ref-value-leak",
   "invalid-approval-replay-token",
   "invalid-policy-decision-without-audit",
+  "invalid-memory-cross-actor-leakage",
 ]);
 const fixtureCoverage = new Map();
 const negativeCaseCoverage = new Set();
@@ -280,6 +285,36 @@ function validateSemantics(schemaTitle, value) {
     }
   }
 
+  if (schemaTitle === "artifactRecord") {
+    if (value.redaction.classification === "secret_adjacent" && value.redaction.privatePayloadPolicy === "none") {
+      errors.push("$.redaction.privatePayloadPolicy cannot be none for secret-adjacent artifacts");
+    }
+  }
+
+  if (schemaTitle === "traceEvent") {
+    if (value.redaction.payloadPolicy === "none" && value.attributes && findSecretLookingPath(value.attributes, "$.attributes")) {
+      errors.push("$.redaction.payloadPolicy cannot be none when trace attributes contain secret-looking fields");
+    }
+  }
+
+  if (schemaTitle === "memoryRecord") {
+    if (value.redaction.classification === "secret_adjacent" && value.redaction.mode === "none") {
+      errors.push("$.redaction.mode cannot be none for secret-adjacent memory");
+    }
+    if (Date.parse(value.retention.forgetAfter) <= Date.parse(value.source.recordedAt)) {
+      errors.push("$.retention.forgetAfter must be after $.source.recordedAt");
+    }
+  }
+
+  if (schemaTitle === "contextPack") {
+    const included = new Set(value.items.map((item) => item.sourceRef));
+    for (const [index, droppedItem] of value.droppedItems.entries()) {
+      if (included.has(droppedItem.sourceRef)) {
+        errors.push(`$.droppedItems[${index}].sourceRef cannot also be included`);
+      }
+    }
+  }
+
   if (schemaTitle === "threatModelFixtureCatalog") {
     const risks = new Set(value.risks.map((risk) => risk.riskId));
     for (const [index, fixture] of value.fixtures.entries()) {
@@ -290,6 +325,19 @@ function validateSemantics(schemaTitle, value) {
   }
 
   return errors;
+}
+
+function findSecretLookingPath(value, path) {
+  if (value === null || typeof value !== "object") return undefined;
+  for (const [key, child] of Object.entries(value)) {
+    const childPath = `${path}.${key}`;
+    if (/secret|token|apiKey|credential|password|privatePayload/i.test(key)) {
+      return childPath;
+    }
+    const nested = findSecretLookingPath(child, childPath);
+    if (nested) return nested;
+  }
+  return undefined;
 }
 
 const generationCheck = spawnSync(process.execPath, [join(packageRoot, "scripts", "generate-contracts.mjs"), "--check"], {

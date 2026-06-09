@@ -84,6 +84,10 @@ The initial checkable anchors are:
 - `auditEvent`
 - `secretRef`
 - `evidencePacket`
+- `artifactRecord`
+- `traceEvent`
+- `memoryRecord`
+- `contextPack`
 - `threatModelFixtureCatalog`
 
 The first compatibility cases cover unsupported UI components, invalid payloads,
@@ -98,7 +102,14 @@ secret-reference value leakage as harness-owned typed references. The first
 `packages/runtime` spine emits typed `runEvent` records for lifecycle progress,
 `uiPayload` and `artifactView` references, and policy-gated `actionRef` requests. It
 fails closed on malformed, poisoned, replayed, secret-inline, or denied action requests
-and does not execute tools or render UI. The contracts package now emits checked
+and does not execute tools or render UI. Stream 4 pass 1 adds harness-owned
+`artifactRecord`, `traceEvent`, `memoryRecord`, and `contextPack` anchors plus fixtures
+for artifact provenance, trace/audit references, evidence redaction, memory retention,
+permission-scoped citation freshness, and deterministic context replay. The new
+`packages/artifacts`, `packages/observability`, and `packages/memory` defaults are local
+and replaceable foundations only; they are not hosted stores, OpenTelemetry backends,
+vector search, docs generators, CLI surfaces, or workbench implementations. The contracts
+package now emits checked
 generated artifacts in `packages/contracts/generated/`: TypeScript schema exports, an
 OpenAPI 3.1 component reference, and a compact reference manifest with the Studio UI
 handshake. Studio UI should consume those generated outputs or the same schema ids and

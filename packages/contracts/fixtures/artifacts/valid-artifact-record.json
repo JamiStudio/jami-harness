@@ -1,0 +1,31 @@
+{
+  "$schema": "../../schemas/artifact-record.schema.json",
+  "expectedValid": true,
+  "caseId": "valid-artifact-record",
+  "description": "Artifact records carry provenance, storage-port locator data, and default redaction state.",
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "artifactId": "art_stream4_evidence",
+    "kind": "evidence",
+    "title": "Stream 4 evidence packet",
+    "promotionState": "draft",
+    "provenance": {
+      "runId": "run_stream4_foundation",
+      "sourceCommit": "working-tree",
+      "evidenceRef": "ev_stream4_foundation",
+      "createdAt": "2026-06-09T12:00:00.000Z",
+      "traceRef": "trc_stream4_foundation",
+      "auditRefs": ["aud_stream4_foundation"]
+    },
+    "storage": {
+      "mode": "memory",
+      "locator": "memory://art_stream4_evidence",
+      "contentHash": "sha256:fixture"
+    },
+    "redaction": {
+      "classification": "internal",
+      "privatePayloadPolicy": "redacted",
+      "redactedFields": []
+    }
+  }
+}

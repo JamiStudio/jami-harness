@@ -2,7 +2,7 @@
 // Do not edit by hand; run pnpm --filter @jami-studio/harness-contracts generate.
 
 export const generatedContractMetadata = {
-  generatedAt: "2026-06-09T05:53:20.821Z",
+  generatedAt: "2026-06-09T06:40:27.708Z",
   generatorVersion: "2026-06-09.contracts.1",
   source: "packages/contracts/schemas/*.schema.json"
 } as const;
@@ -199,6 +199,157 @@ export const ApprovalRequestSchema = {
     "auditRef"
   ],
   "title": "approvalRequest",
+  "type": "object"
+} as const;
+
+export const ArtifactRecordSchema = {
+  "$id": "https://jami.studio/schemas/harness/artifact-record.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "artifactId": {
+      "pattern": "^art_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "kind": {
+      "enum": [
+        "report",
+        "patch",
+        "document",
+        "image",
+        "trace",
+        "evidence",
+        "release_packet",
+        "memory_snapshot",
+        "context_pack"
+      ],
+      "type": "string"
+    },
+    "promotionState": {
+      "enum": [
+        "draft",
+        "reviewed",
+        "accepted",
+        "rejected",
+        "promoted"
+      ],
+      "type": "string"
+    },
+    "provenance": {
+      "additionalProperties": false,
+      "properties": {
+        "auditRefs": {
+          "items": {
+            "pattern": "^aud_[a-z0-9][a-z0-9_-]*$",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "commandRef": {
+          "type": "string"
+        },
+        "createdAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "evidenceRef": {
+          "pattern": "^ev_[a-z0-9][a-z0-9_-]*$",
+          "type": "string"
+        },
+        "runId": {
+          "pattern": "^run_[a-z0-9][a-z0-9_-]*$",
+          "type": "string"
+        },
+        "sourceCommit": {
+          "type": "string"
+        },
+        "traceRef": {
+          "pattern": "^trc_[a-z0-9][a-z0-9_-]*$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "runId",
+        "sourceCommit",
+        "evidenceRef",
+        "createdAt"
+      ],
+      "type": "object"
+    },
+    "redaction": {
+      "additionalProperties": false,
+      "properties": {
+        "classification": {
+          "enum": [
+            "public",
+            "internal",
+            "private",
+            "secret_adjacent"
+          ],
+          "type": "string"
+        },
+        "privatePayloadPolicy": {
+          "enum": [
+            "none",
+            "redacted",
+            "omitted"
+          ],
+          "type": "string"
+        },
+        "redactedFields": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "classification",
+        "privatePayloadPolicy"
+      ],
+      "type": "object"
+    },
+    "schemaVersion": {
+      "const": "2026-06-09"
+    },
+    "storage": {
+      "additionalProperties": false,
+      "properties": {
+        "contentHash": {
+          "type": "string"
+        },
+        "locator": {
+          "type": "string"
+        },
+        "mode": {
+          "enum": [
+            "memory",
+            "local_port",
+            "external_port"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "mode",
+        "locator"
+      ],
+      "type": "object"
+    },
+    "title": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "artifactId",
+    "kind",
+    "promotionState",
+    "provenance",
+    "storage",
+    "redaction"
+  ],
+  "title": "artifactRecord",
   "type": "object"
 } as const;
 
@@ -549,6 +700,125 @@ export const CapabilityManifestSchema = {
   "type": "object"
 } as const;
 
+export const ContextPackSchema = {
+  "$id": "https://jami.studio/schemas/harness/context-pack.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "assembledAt": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "contextPackId": {
+      "pattern": "^ctx_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "deterministicHash": {
+      "type": "string"
+    },
+    "droppedItems": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "reason": {
+            "enum": [
+              "permission_denied",
+              "retention_expired",
+              "token_budget",
+              "redacted",
+              "duplicate"
+            ],
+            "type": "string"
+          },
+          "sourceRef": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "sourceRef",
+          "reason"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "items": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "citationId": {
+            "pattern": "^cit_[a-z0-9][a-z0-9_-]*$",
+            "type": "string"
+          },
+          "freshnessClass": {
+            "enum": [
+              "current_run",
+              "same_day",
+              "source_locked",
+              "stale"
+            ],
+            "type": "string"
+          },
+          "inclusionReason": {
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "pinned",
+              "system_required",
+              "retrieved",
+              "compressed",
+              "tool_output",
+              "artifact",
+              "user_provided"
+            ],
+            "type": "string"
+          },
+          "priority": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "sourceRef": {
+            "type": "string"
+          },
+          "tokenEstimate": {
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "sourceRef",
+          "kind",
+          "priority",
+          "inclusionReason",
+          "citationId",
+          "freshnessClass"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "runId": {
+      "pattern": "^run_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": "2026-06-09"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "contextPackId",
+    "runId",
+    "assembledAt",
+    "deterministicHash",
+    "items",
+    "droppedItems"
+  ],
+  "title": "contextPack",
+  "type": "object"
+} as const;
+
 export const EvidencePacketSchema = {
   "$id": "https://jami.studio/schemas/harness/evidence-packet.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -706,6 +976,206 @@ export const EvidencePacketSchema = {
     "acceptedContracts"
   ],
   "title": "evidencePacket",
+  "type": "object"
+} as const;
+
+export const MemoryRecordSchema = {
+  "$id": "https://jami.studio/schemas/harness/memory-record.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "citation": {
+      "additionalProperties": false,
+      "properties": {
+        "citationId": {
+          "pattern": "^cit_[a-z0-9][a-z0-9_-]*$",
+          "type": "string"
+        },
+        "freshnessClass": {
+          "enum": [
+            "current_run",
+            "same_day",
+            "source_locked",
+            "stale"
+          ],
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "citationId",
+        "label",
+        "freshnessClass"
+      ],
+      "type": "object"
+    },
+    "content": {
+      "type": "string"
+    },
+    "freshness": {
+      "additionalProperties": false,
+      "properties": {
+        "asOf": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "class": {
+          "enum": [
+            "current_run",
+            "same_day",
+            "source_locked",
+            "stale"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "class",
+        "asOf"
+      ],
+      "type": "object"
+    },
+    "kind": {
+      "enum": [
+        "project",
+        "task",
+        "artifact",
+        "user_note",
+        "tool_output"
+      ],
+      "type": "string"
+    },
+    "memoryId": {
+      "pattern": "^mem_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "redaction": {
+      "additionalProperties": false,
+      "properties": {
+        "classification": {
+          "enum": [
+            "public",
+            "internal",
+            "private",
+            "secret_adjacent"
+          ],
+          "type": "string"
+        },
+        "mode": {
+          "enum": [
+            "none",
+            "redacted",
+            "omitted"
+          ],
+          "type": "string"
+        },
+        "redactedFields": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "classification",
+        "mode"
+      ],
+      "type": "object"
+    },
+    "retention": {
+      "additionalProperties": false,
+      "properties": {
+        "forgetAfter": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "policy": {
+          "enum": [
+            "session",
+            "project",
+            "pinned",
+            "ephemeral"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "policy",
+        "forgetAfter"
+      ],
+      "type": "object"
+    },
+    "schemaVersion": {
+      "const": "2026-06-09"
+    },
+    "scope": {
+      "additionalProperties": false,
+      "properties": {
+        "allowedActorIds": {
+          "items": {
+            "pattern": "^actor_[a-z0-9][a-z0-9_-]*$",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "allowedScopes": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "projectId": {
+          "pattern": "^proj_[a-z0-9][a-z0-9_-]*$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "projectId",
+        "allowedActorIds",
+        "allowedScopes"
+      ],
+      "type": "object"
+    },
+    "source": {
+      "additionalProperties": false,
+      "properties": {
+        "artifactRef": {
+          "pattern": "^art_[a-z0-9][a-z0-9_-]*$",
+          "type": "string"
+        },
+        "recordedAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "runId": {
+          "pattern": "^run_[a-z0-9][a-z0-9_-]*$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "runId",
+        "recordedAt"
+      ],
+      "type": "object"
+    },
+    "summary": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "memoryId",
+    "kind",
+    "scope",
+    "source",
+    "freshness",
+    "retention",
+    "redaction",
+    "citation"
+  ],
+  "title": "memoryRecord",
   "type": "object"
 } as const;
 
@@ -1324,6 +1794,7 @@ export const ThreatModelFixtureCatalogSchema = {
               "transport_abuse",
               "secret_exfiltration",
               "approval_replay",
+              "scope_escalation",
               "denied_action",
               "redaction_failure",
               "memory_leakage"
@@ -1371,6 +1842,114 @@ export const ThreatModelFixtureCatalogSchema = {
     "fixtures"
   ],
   "title": "threatModelFixtureCatalog",
+  "type": "object"
+} as const;
+
+export const TraceEventSchema = {
+  "$id": "https://jami.studio/schemas/harness/trace-event.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "artifactRef": {
+      "pattern": "^art_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "attributes": {
+      "type": "object"
+    },
+    "auditRef": {
+      "pattern": "^aud_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "endedAt": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "eventRef": {
+      "pattern": "^evt_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "kind": {
+      "enum": [
+        "run",
+        "policy",
+        "tool",
+        "artifact",
+        "memory",
+        "context",
+        "evidence"
+      ],
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "parentSpanId": {
+      "pattern": "^spn_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "redaction": {
+      "additionalProperties": false,
+      "properties": {
+        "payloadPolicy": {
+          "enum": [
+            "none",
+            "redacted",
+            "omitted"
+          ],
+          "type": "string"
+        },
+        "redactedFields": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "payloadPolicy"
+      ],
+      "type": "object"
+    },
+    "runId": {
+      "pattern": "^run_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": "2026-06-09"
+    },
+    "spanId": {
+      "pattern": "^spn_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "startedAt": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "ok",
+        "error",
+        "unset"
+      ],
+      "type": "string"
+    },
+    "traceId": {
+      "pattern": "^trc_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "traceId",
+    "spanId",
+    "runId",
+    "name",
+    "kind",
+    "startedAt",
+    "redaction"
+  ],
+  "title": "traceEvent",
   "type": "object"
 } as const;
 
@@ -1514,6 +2093,12 @@ export const harnessContractSchemas = {
     schema: ApprovalRequestSchema,
     typeName: "ApprovalRequest"
   },
+  "artifactRecord": {
+    file: "schemas/artifact-record.schema.json",
+    id: "https://jami.studio/schemas/harness/artifact-record.schema.json",
+    schema: ArtifactRecordSchema,
+    typeName: "ArtifactRecord"
+  },
   "artifactView": {
     file: "schemas/artifact-view.schema.json",
     id: "https://jami.studio/schemas/harness/artifact-view.schema.json",
@@ -1532,11 +2117,23 @@ export const harnessContractSchemas = {
     schema: CapabilityManifestSchema,
     typeName: "CapabilityManifest"
   },
+  "contextPack": {
+    file: "schemas/context-pack.schema.json",
+    id: "https://jami.studio/schemas/harness/context-pack.schema.json",
+    schema: ContextPackSchema,
+    typeName: "ContextPack"
+  },
   "evidencePacket": {
     file: "schemas/evidence-packet.schema.json",
     id: "https://jami.studio/schemas/harness/evidence-packet.schema.json",
     schema: EvidencePacketSchema,
     typeName: "EvidencePacket"
+  },
+  "memoryRecord": {
+    file: "schemas/memory-record.schema.json",
+    id: "https://jami.studio/schemas/harness/memory-record.schema.json",
+    schema: MemoryRecordSchema,
+    typeName: "MemoryRecord"
   },
   "policyDecision": {
     file: "schemas/policy-decision.schema.json",
@@ -1580,6 +2177,12 @@ export const harnessContractSchemas = {
     schema: ThreatModelFixtureCatalogSchema,
     typeName: "ThreatModelFixtureCatalog"
   },
+  "traceEvent": {
+    file: "schemas/trace-event.schema.json",
+    id: "https://jami.studio/schemas/harness/trace-event.schema.json",
+    schema: TraceEventSchema,
+    typeName: "TraceEvent"
+  },
   "uiPayload": {
     file: "schemas/ui-payload.schema.json",
     id: "https://jami.studio/schemas/harness/ui-payload.schema.json",
@@ -1591,10 +2194,13 @@ export const harnessContractSchemas = {
 export type HarnessContractName = keyof typeof harnessContractSchemas;
 export type ActionRef = Record<string, unknown>;
 export type ApprovalRequest = Record<string, unknown>;
+export type ArtifactRecord = Record<string, unknown>;
 export type ArtifactView = Record<string, unknown>;
 export type AuditEvent = Record<string, unknown>;
 export type CapabilityManifest = Record<string, unknown>;
+export type ContextPack = Record<string, unknown>;
 export type EvidencePacket = Record<string, unknown>;
+export type MemoryRecord = Record<string, unknown>;
 export type PolicyDecision = Record<string, unknown>;
 export type PrimitiveManifest = Record<string, unknown>;
 export type RunEvent = Record<string, unknown>;
@@ -1602,4 +2208,5 @@ export type SecretRef = Record<string, unknown>;
 export type SuiteRef = Record<string, unknown>;
 export type ThemeRef = Record<string, unknown>;
 export type ThreatModelFixtureCatalog = Record<string, unknown>;
+export type TraceEvent = Record<string, unknown>;
 export type UiPayload = Record<string, unknown>;

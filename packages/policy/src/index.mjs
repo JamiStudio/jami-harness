@@ -101,7 +101,7 @@ export function evaluatePolicyRequest(request, options = {}) {
     requestedScopes,
     matchedScopes,
     reasons,
-    approvalRef: approvalCheck.valid ? approval.approvalId : undefined,
+    approvalRef: approvalCheck.valid ? approval?.approvalId : undefined,
     auditRef: makeId("aud", request.runId, request.action?.actionId, decision),
     evidenceRef: makeId("ev", request.runId, request.action?.actionId, decision),
     redactions: dedupeRedactions(redactions),
@@ -187,6 +187,9 @@ function validateApproval(approval, request, options) {
 }
 
 function findSecretValuePaths(value, path = "$") {
+  if (Array.isArray(value)) {
+    return value.flatMap((child, index) => findSecretValuePaths(child, `${path}[${index}]`));
+  }
   if (value === null || typeof value !== "object") return [];
   const matches = [];
   for (const [key, child] of Object.entries(value)) {

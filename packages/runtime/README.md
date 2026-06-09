@@ -13,5 +13,7 @@ This package currently owns only:
 - Failing-closed denial records for malformed, denied, replayed, poisoned, or
   secret-inline action requests.
 
-It does not implement the tool gateway, provider runtime, memory/context/search,
-observability sinks, durable checkpoint store, CLI, or real agent execution loop yet.
+It can write to injected event and audit sinks, including the initial
+`@jami-studio/harness-observability` local evidence exporter. It does not implement the
+tool gateway, provider runtime, memory/context/search integration, durable checkpoint
+store, CLI, or real agent execution loop yet.

@@ -272,10 +272,17 @@ Pass status:
   `uiPayload` and `artifactView` emission, and policy-gated `actionRef` emission that
   fails closed on malformed, poisoned, replayed, secret-inline, or denied action
   requests.
+- 2026-06-09 Stream 4 memory/context/observability/artifacts/evidence, harness lane,
+  pass 1 added `artifactRecord`, `traceEvent`, `memoryRecord`, and `contextPack`
+  contract anchors with generated references and fixtures. The pass also added local
+  package foundations for artifact provenance, runtime evidence export, trace/audit
+  references, memory permission filtering, citation freshness, retention/redaction, and
+  deterministic context replay. These are not full hosted artifact stores, OpenTelemetry
+  exporters, vector search backends, docs generators, CLI surfaces, or workbench views.
 - Root verification now runs `pnpm contracts:validate` through `pnpm verify`.
-- The workstream remains open because broad run/task/policy/memory/evidence schemas,
-  core ports, primitive lifecycle/versioning docs, and cross-repo Studio UI consumer
-  fixtures are not implemented yet.
+- The workstream remains open because broad run/task/tool/docs/release schemas, core
+  ports, primitive lifecycle/versioning docs, and cross-repo Studio UI consumer fixtures
+  are not implemented yet.
 
 Depends on:
 
@@ -302,6 +309,8 @@ Implementation tasks:
 - [~] Add contract tests and schema compatibility checks, including shared fixtures for unsupported UI components, invalid payloads, denied actions, and renderer error states.
 - [x] Define the initial threat model fixture catalog for policy/tool/UI/action/memory/evidence risks.
 - [x] Define the evidence packet schema before docs-generation work consumes evidence claims.
+- [~] Define artifact, trace, memory, and context record schemas before hosted backends or
+  docs generation consume them.
 - [ ] Document primitive lifecycle and versioning.
 
 Exit criteria:
@@ -331,6 +340,11 @@ Pass status:
   requests stay display-only. This is not the full provider runtime, tool gateway,
   durable checkpoint store, memory/context/search integration, observability sink, CLI,
   or real agent execution loop.
+- 2026-06-09 Stream 4 pass 1 connected the runtime spine to injectable event and audit
+  sinks through `@jami-studio/harness-observability` tests, so a local evidence packet can
+  be exported from captured runtime events without hosted observability. Runtime call
+  sites still do not own memory/context/search integration, tools, providers, durable
+  checkpointing, CLI, or real agent execution.
 
 Depends on:
 
@@ -486,19 +500,28 @@ Primary areas:
 - `packages/context`
 - `packages/search`
 
+Pass status:
+
+- 2026-06-09 Stream 4 memory/context/observability/artifacts/evidence, harness lane,
+  pass 1 added `@jami-studio/harness-memory` with a no-op memory port, in-memory
+  development port, permission-scoped search, citation freshness, retention filtering,
+  redaction defaults, and deterministic context pack hashes. This is a replaceable local
+  foundation only; durable memory stores, vector search, hosted retrieval, compression,
+  external RAG adapters, policy-engine integration, and recall evals remain open.
+
 Implementation tasks:
 
-- [ ] Define project/task/artifact memory taxonomy.
-- [ ] Define context source taxonomy for pinned, system-required, retrieved, compressed, tool-output, artifact, and user-provided context.
-- [ ] Add write policy, retention, redaction, and source attribution.
-- [ ] Add no-op memory and no-op search adapters for stateless users.
-- [ ] Add local default memory/search modules for development.
+- [~] Define project/task/artifact memory taxonomy.
+- [~] Define context source taxonomy for pinned, system-required, retrieved, compressed, tool-output, artifact, and user-provided context.
+- [~] Add write policy, retention, redaction, and source attribution.
+- [x] Add no-op memory and no-op search adapters for stateless users.
+- [~] Add local default memory/search modules for development.
 - [ ] Add external memory/search adapter interfaces for user-owned RAG, vector database, graph, or retrieval systems.
 - [ ] Add context assembly strategy interface with token budget, freshness, permission, priority, inclusion/exclusion reason, and citation metadata.
 - [ ] Add retrieval adapters for local and hosted search.
-- [ ] Add citation and freshness metadata to every recalled item.
-- [ ] Add eval fixtures for recall precision and permission filtering.
-- [ ] Add privacy and replay fixtures for data classes, retention, forgetting/redaction, permission leakage, inclusion reasons, and deterministic context pack hashes.
+- [x] Add citation and freshness metadata to every recalled item.
+- [~] Add eval fixtures for recall precision and permission filtering.
+- [~] Add privacy and replay fixtures for data classes, retention, forgetting/redaction, permission leakage, inclusion reasons, and deterministic context pack hashes.
 
 Exit criteria:
 
@@ -533,10 +556,19 @@ Primary areas:
 - `packages/store-*`
 - `docs/operations`
 
+Pass status:
+
+- 2026-06-09 Stream 4 memory/context/observability/artifacts/evidence, harness lane,
+  pass 1 added `@jami-studio/harness-artifacts` with an in-memory storage port default,
+  artifact provenance records, secret-adjacent payload omission, and `artifactView`
+  projection for Studio UI display. This is not the full filesystem/object storage,
+  artifact promotion workflow, docs/changelog/system-map generation, hosted store, or
+  release-packet implementation.
+
 Implementation tasks:
 
-- [ ] Define artifact promotion states and provenance metadata.
-- [ ] Define artifact storage port and default local storage module.
+- [~] Define artifact promotion states and provenance metadata.
+- [~] Define artifact storage port and default local storage module.
 - [ ] Generate changelog entries, user guide deltas, system maps, and API references from accepted artifacts.
 - [ ] Keep docs/changelog/system-map publishing outputs replaceable while preserving provenance.
 - [ ] Add docs-source manifests and verification gates.
@@ -575,16 +607,25 @@ Primary areas:
 - `tests`
 - `evals`
 
+Pass status:
+
+- 2026-06-09 Stream 4 memory/context/observability/artifacts/evidence, harness lane,
+  pass 1 added `@jami-studio/harness-observability` with runtime event/audit sinks,
+  minimal trace records, default redaction, artifact-backed local evidence packet export,
+  and tests proving evidence export can consume the existing runtime run-event spine. This
+  is not the OpenTelemetry bridge, hosted trace/audit/metric backend, eval sink, CLI
+  inspector, workbench view, or complete metrics pipeline.
+
 Implementation tasks:
 
-- [ ] Implement OpenTelemetry-compatible traces with GenAI span vocabulary.
-- [ ] Add audit event stream and evidence-packet export.
-- [ ] Separate trace/audit/metric/evidence event contracts from sink adapters.
-- [ ] Add local evidence packet sink and OTel bridge as defaults.
+- [~] Implement OpenTelemetry-compatible traces with GenAI span vocabulary.
+- [~] Add audit event stream and evidence-packet export.
+- [~] Separate trace/audit/metric/evidence event contracts from sink adapters.
+- [~] Add local evidence packet sink and OTel bridge as defaults.
 - [ ] Add cost/latency/token/tool metrics.
 - [ ] Add regression eval scenarios for tool safety, docs generation, memory recall, and recovery.
-- [ ] Add redaction defaults for sensitive payloads.
-- [ ] Add evidence packet fixture validation against the Workstream 1 schema.
+- [x] Add redaction defaults for sensitive payloads.
+- [x] Add evidence packet fixture validation against the Workstream 1 schema.
 
 Exit criteria:
 
