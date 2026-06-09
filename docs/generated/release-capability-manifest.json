@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:cd69825d85eea8fc01ccd64213d8814deeee4a202b6c660c40a6c9a45a2b5708",
+  "sourceInputHash": "sha256:c1f9f3fc92b5e2b3e5084bc113c246da08bf30dc9e667f6996256acb7a032cec",
   "generatedAt": "deterministic:git-head-plus-release-capability-input-hash",
   "command": "pnpm release:capabilities:check",
   "commandResult": "passed",
@@ -221,7 +221,7 @@
       "official": true,
       "verifiedOn": "2026-06-09",
       "observations": [
-        "docs.json is the current Mintlify configuration file, with required theme, name, and navigation fields.",
+        "docs.json is the current Mintlify configuration file, with required theme, name, colors, and navigation fields.",
         "Referenced files must stay inside the docs project root."
       ]
     }
@@ -234,8 +234,8 @@
     },
     {
       "path": "apps/docs/docs.json",
-      "sha256": "sha256:69781cb8fe0c80a19c9941478f485c71609a6beb0c8c6d48dbae605c5c17372c",
-      "bytes": 535
+      "sha256": "sha256:2545fc59a67d4c71b172e48dca93ade198cffbab5698f72c74936549932ab6ee",
+      "bytes": 626
     },
     {
       "path": "docs/generated/sbom.cdx.json",
@@ -244,8 +244,8 @@
     },
     {
       "path": "docs/operations/release-capability-source-lock.md",
-      "sha256": "sha256:7a07ced556c323aff323d930c35e69fe5afef9a33da86c68f34237921a6bfff3",
-      "bytes": 4972
+      "sha256": "sha256:05e7f15fd43115d24c1a2a4d47f0d08ede6ed3bb4500cd118d3957bb17d215cc",
+      "bytes": 5060
     },
     {
       "path": "docs/operations/release-readiness.md",
@@ -329,8 +329,8 @@
     },
     {
       "path": "scripts/release/generate-capability-manifest.mjs",
-      "sha256": "sha256:fdc2d7f3ef79d36b1076659d7ddb5192052e9455119b8f06f5522b5c05e0b7c7",
-      "bytes": 18805
+      "sha256": "sha256:1762f3c0763b56b8881c6d58f655d19f0218a4845af5fcad86aa8c4332e31d47",
+      "bytes": 18813
     },
     {
       "path": "scripts/release/generate-sbom.mjs",

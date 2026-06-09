@@ -572,6 +572,11 @@ function mintlifyConfig() {
     "$schema": "https://mintlify.com/docs.json",
     theme: "mint",
     name: "Jami Harness",
+    colors: {
+      primary: "#2563eb",
+      light: "#3b82f6",
+      dark: "#1d4ed8",
+    },
     navigation: {
       tabs: [
         {

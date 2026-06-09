@@ -51,7 +51,8 @@ Verified on 2026-06-09:
   validation command. The repo currently generates `apps/docs/docs.json`, but the Mintlify
   CLI/package is not installed or source-locked, and no hosted Mintlify project is
   selected.
-- Mintlify `docs.json` is the current configuration file shape for generated docs. The
+- Mintlify `docs.json` is the current configuration file shape for generated docs, and
+  current required root fields include `theme`, `name`, `colors`, and `navigation`. The
   local generated `apps/docs/docs.json` is only a draft until `mint validate` or an
   accepted hosted-docs build runs.
 

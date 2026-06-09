@@ -42,7 +42,7 @@ const officialSources = [
     "Mintlify hosted scoring and workflow commands require authenticated hosted project state.",
   ]),
   source("mintlify_docs_json", "Mintlify docs.json settings", "https://www.mintlify.com/docs/organize/settings-reference", [
-    "docs.json is the current Mintlify configuration file, with required theme, name, and navigation fields.",
+    "docs.json is the current Mintlify configuration file, with required theme, name, colors, and navigation fields.",
     "Referenced files must stay inside the docs project root.",
   ]),
 ];
