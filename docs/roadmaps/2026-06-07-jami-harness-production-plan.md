@@ -24,7 +24,11 @@ Define the full production-shaped implementation plan for `@jami-studio/harness`
 - [x] Imported `evals` docs provide reusable orchestration, planning, docs, and report standards.
 - [x] Prior harness framing established the owned-core thesis: own product grammar and contracts; put vendors behind adapters.
 - [x] `docs/architecture/modular-responsibility-map.md` establishes the packaging thesis: core owns grammar, modules own behavior, adapters own vendor specifics, and users can replace modules without breaking harness contracts.
-- [x] Official MCP latest spec is `2025-11-25`; Streamable HTTP, authorization, tool safety, elicitation, sampling, roots, and consent are directly relevant.
+- [x] The registry-root source-lock record dated 2026-06-09 selects MCP baseline `2025-06-18`
+  for implementation intake; Streamable HTTP, authorization, tool safety, elicitation,
+  sampling, roots, consent, origin validation, and local-binding safeguards are directly
+  relevant. Re-check the registry-root record before any MCP implementation work because
+  protocol currentness is drift-prone.
 - [x] Master canon identifies `@jami-studio/harness`, `@jami-studio/ui`, and `@jami-studio/orchestra` as the `jami.studio` foundation repos.
 - [x] `docs/architecture/foundation-alignment.md` records the repo split: Jami Harness owns governed agent execution, tools, policy, memory, artifacts, traces, and agent-facing runtime surfaces; Studio UI owns UI, tokens, renderer, registry, workbench, suites, and UI install surfaces.
 - [x] Master canon selects agent-native as the preferred OSS foundation substrate, pending current lock-time verification.
@@ -69,6 +73,26 @@ Define the full production-shaped implementation plan for `@jami-studio/harness`
 - Create implementation packages only after the plan is accepted or explicitly started.
 - Preserve cross-repo alignment by linking sibling docs instead of duplicating full plans. When a shared contract changes, update `docs/architecture/foundation-alignment.md` here and the matching Studio UI doc.
 - Preserve modular responsibility boundaries from `docs/architecture/modular-responsibility-map.md`. Do not hardwire optional defaults into runtime call sites.
+- Use `C:\Users\james\dev\orgs\oss\registry\docs\operations\source-lock-evidence.md`
+  as the registry-root current-source intake record. It does not close implementation gates
+  by itself; code lanes must add repo-local, command-backed source-lock evidence for the
+  exact dependency or protocol surface used.
+
+## Verification Ladder
+
+Run the narrowest complete check set for the touched surface.
+
+- Docs-only changes: read back changed Markdown, run `pnpm docs:check`, and run
+  `git diff --check`.
+- Package metadata, script, generated-surface, or CI changes: run the docs-only checks,
+  the touched command or generator, and `pnpm verify`.
+- Contracts and schemas: run generation, drift checks, schema validation, and shared
+  compatibility fixtures once those commands exist.
+- Runtime, policy, tools, memory, context, search, artifacts, observability, CLI, SDK, or
+  workbench code: run lint, typecheck, tests, targeted integration/security fixtures, and
+  `pnpm verify` once those commands exist.
+- GitHub Actions are a manual fallback while minutes are limited. Local verification is
+  required before push.
 
 ## Target Harness Shape
 
@@ -607,6 +631,10 @@ Suggested verification:
 - [ ] No secrets in tracked files or generated artifacts.
 - [ ] Changelog and decision records updated.
 - [ ] Git commit and push when the root becomes a Git repo with remote.
+- [ ] Docs-only closeout has read back changed Markdown, `pnpm docs:check`, and
+  `git diff --check`.
+- [ ] Package/script/generated/code closeout has run the touched-surface command set and
+  `pnpm verify` in addition to docs checks.
 
 ## Acceptance Criteria
 

@@ -20,6 +20,13 @@ The repo should converge on a unified source registry rather than hand-maintaine
   system maps, API references, and release notes must trace back to accepted source records.
 - A generated surface is not accepted unless it records source inputs, generation time, generator version,
   verification state, and source commit.
+- The registry-root current-source intake record is
+  `C:\Users\james\dev\orgs\oss\registry\docs\operations\source-lock-evidence.md`. It is
+  evidence for planning and dispatch, not proof that a harness implementation gate is closed.
+- When harness code depends on a drift-prone protocol, package, hosted service, registry format,
+  guidance document, or release tool, add repo-local source-lock evidence for the exact surface
+  used: official URL, version or spec id, license/NOTICE/provenance status, hash or tarball
+  integrity when applicable, command evidence, unresolved risks, and the next refresh trigger.
 
 Until implementation packages exist, `docs/` is the source canon. As packages land, promote truth into
 machine-readable manifests and generate outward-facing surfaces from those manifests.
@@ -29,6 +36,8 @@ machine-readable manifests and generate outward-facing surfaces from those manif
 Run the narrowest complete checks for the touched surface:
 
 - Docs and plans: read back changed Markdown, `pnpm docs:check`, `git diff --check`.
+- Package metadata, scripts, generated surfaces, or CI: docs checks plus the touched command or
+  generator and `pnpm verify`.
 - Contracts and schemas: generation, drift check, schema validation, compatibility fixtures.
 - Runtime/policy/tools/memory/artifacts/observability: lint, typecheck, unit tests, targeted integration
   tests, recovery or policy regression fixtures as applicable.
