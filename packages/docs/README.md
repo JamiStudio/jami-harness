@@ -19,6 +19,7 @@ Current outputs:
 - system map
 - changelog draft
 - claims/manual evidence index
+- install-readiness manifest for the full local source-checkout path and modular BYO paths
 - docs-source manifest
 - Mintlify-ready `apps/docs/docs.json` and MDX page draft
 

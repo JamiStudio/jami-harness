@@ -22,6 +22,8 @@ Current capabilities:
   evidence, adapter manifests, and adapter source-lock state.
 - Inspect the provider foundation: local deterministic workflow support, model
   replacement port, hosted-provider fail-closed behavior, and recovery fixture support.
+- Inspect the full local source-checkout install path and modular BYO memory, context,
+  search, store, provider, policy, tools, artifacts, observability, and docs-output paths.
 - Inject replacement modules such as memory, context, search, checkpoint store, policy,
   provider, tools, artifacts, and observability without changing the run grammar.
 
@@ -32,8 +34,9 @@ This package does not implement OpenAI, Anthropic, Google, xAI, Azure OpenAI, Be
 other hosted provider execution. It also does not implement executable full
 MCP/OpenAPI/shell/browser/code/provider-as-tool/A2A adapters beyond the current function
 tool, trusted MCP fixture, and fail-closed adapter inspection foundations, durable hosted
-stores, SDK-level docs-output injection, release publishing, or a hosted control plane.
-Repo-level docs generation exists through `pnpm docs:generate`.
+stores, public package installation, SDK-level docs-output injection, release publishing,
+or a hosted control plane. Repo-level docs generation exists through `pnpm docs:generate`
+and is recorded in `docs/generated/install-readiness-manifest.json`.
 
 ```js
 import { createHarness } from "@jami-studio/harness-sdk";

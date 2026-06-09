@@ -34,6 +34,7 @@ const checks = [
   checkFile("docs/operations/release-readiness.md", "release, claims, SBOM, and attestation policy"),
   checkFile("docs/operations/sbom-source-lock.md", "repo-local SBOM source-lock evidence"),
   checkFile("docs/generated/docs-source-manifest.json", "generated docs-source manifest"),
+  checkFile("docs/generated/install-readiness-manifest.json", "generated install-readiness manifest"),
   checkFile("docs/generated/sbom.cdx.json", "generated local CycloneDX SBOM dry-run artifact"),
   checkFile("apps/docs/docs.json", "Mintlify-ready navigation draft"),
   checkFile(".github/workflows/manual-check.yml", "manual GitHub fallback workflow"),
@@ -44,6 +45,7 @@ const checks = [
   checkDocsPolicy("Public Claims Matrix", "public claims matrix"),
   checkDocsPolicy("SBOM Policy", "SBOM policy"),
   checkDocsPolicy("Package Provenance And Attestation Policy", "package provenance and attestation policy"),
+  checkDocsPolicy("Install And Module Replacement Readiness", "install and module replacement readiness policy"),
   checkDocsPolicy("Human Interventions", "human/account intervention ledger"),
 ];
 
@@ -128,6 +130,14 @@ const claims = [
     "packages/docs/scripts/generate-docs.mjs",
     "docs/generated/docs-source-manifest.json",
     "apps/docs/docs.json",
+    "pnpm docs:generate -- --check",
+  ]),
+  claim("Full local source-checkout install and modular BYO paths are documented with generated manifest evidence", "supported", [
+    "packages/sdk/src/index.mjs",
+    "apps/cli/src/cli.mjs",
+    "docs/generated/install-readiness-manifest.json",
+    "pnpm sdk:test",
+    "pnpm cli:test",
     "pnpm docs:generate -- --check",
   ]),
   claim("Local SBOM dry-run generation and drift check exist for workspace package manifests", "supported", [

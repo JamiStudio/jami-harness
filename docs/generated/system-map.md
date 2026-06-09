@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:3f7bb7d2923b9be2981862e1a3705b831e625898302090f16c7df45b68ff9a90`
+- Source input hash: `sha256:279101dabd9ea1684df8f93425c981ca5750678c0ac2eb7ef8acfb226c8193bd`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -42,6 +42,10 @@ flowchart LR
   artifacts --> sdk
   observability --> sdk
   sdk --> cli
+  install[docs/generated/install-readiness-manifest.json]
+  install --> sdk
+  install --> cli
+  install --> docs
   contracts --> docs
   artifacts --> docs
   observability --> docs
@@ -52,4 +56,4 @@ flowchart LR
 - Contract schemas: 19
 - Contract fixtures: 36
 - Package manifests: 13
-- Changelog fragments: 31
+- Changelog fragments: 32

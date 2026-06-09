@@ -38,6 +38,11 @@ test("creates a local run with evidence, artifacts, traces, and inspectable modu
   assert.equal(inspection.toolAdapters.some((adapter) => adapter.adapterId === "adapter_openapi" && adapter.sourceLock.status === "missing"), true);
   assert.equal(inspection.toolAdapterManifests.some((manifest) => manifest.capabilityId === "cap_shell_tool_gateway"), true);
   assert.equal(inspection.sourceLocks.some((sourceLock) => sourceLock.adapterId === "adapter_mcp" && sourceLock.status === "locked"), true);
+  assert.equal(inspection.installPaths.fullLocalHarness.status, "supported_local_source_checkout");
+  assert.equal(inspection.installPaths.fullLocalHarness.packageInstallStatus, "unavailable_private_manifests");
+  assert.equal(inspection.installPaths.modularPaths.some((path) => path.pathId === "byo_memory" && path.status === "supported_port"), true);
+  assert.equal(inspection.installPaths.modularPaths.some((path) => path.pathId === "byo_docs_output" && path.status === "repo_generator_supported_sdk_output_unavailable"), true);
+  assert.equal(inspection.installPaths.unsupportedSurfaces.includes("Mintlify build/publish"), true);
 });
 
 test("external provider requests fail closed without hosted provider execution", async () => {
@@ -135,6 +140,8 @@ test("supports configurable module injection without changing run grammar", asyn
   assert.equal(harness.inspect().modules.find((module) => module.name === "memory").mode, "custom_memory");
   assert.equal(harness.inspect().modules.find((module) => module.name === "checkpointStore").mode, "custom_store");
   assert.equal(harness.inspect().modules.find((module) => module.name === "provider").mode, "custom_provider");
+  assert.equal(harness.inspect().installPaths.modularPaths.find((path) => path.pathId === "byo_memory").defaultMode, "custom_memory");
+  assert.equal(harness.inspect().installPaths.modularPaths.find((path) => path.pathId === "byo_provider").defaultMode, "custom_provider");
   assert.deepEqual(writes, []);
   assert.equal(checkpoints.length, 1);
 });

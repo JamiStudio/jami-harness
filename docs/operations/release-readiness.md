@@ -32,6 +32,9 @@ ledger below is closed.
   `docs/generated/` and a Mintlify-ready draft under `apps/docs/`.
 - `docs/generated/docs-source-manifest.json` records source records, accepted contracts
   and evidence references, command result, freshness class, and generated output paths.
+- `docs/generated/install-readiness-manifest.json` records the full local
+  source-checkout install path and modular BYO memory, context, search, store, provider,
+  policy, tools, artifact, observability, and docs-output paths.
 - CLI/SDK source inspection now reports tool adapter manifests and source-lock states for
   supported function/trusted MCP fixture paths plus fail-closed OpenAPI, shell, browser,
   code, provider-as-tool, and A2A dry-run evidence.
@@ -97,6 +100,7 @@ results.
 | Local deterministic provider workflow executes through the SDK, tool gateway, policy, traces, artifacts, checkpoints, memory/context, and evidence. | Supported for current fixtures | `packages/provider-local/src/index.mjs`, `packages/provider-local/test/provider-local.test.mjs`, `packages/sdk/test/sdk.test.mjs`, `apps/cli/test/cli.test.mjs`, `pnpm provider:test`, `pnpm sdk:test`, `pnpm cli:test`. | "The repo includes a local deterministic provider foundation for workflow and recovery fixtures; hosted providers remain unsupported." |
 | Policy, runtime, memory, artifacts, and observability fail closed on current negative fixtures. | Supported for current fixtures | Package tests and contract fixtures listed in `packages/contracts/README.md`. | "Current foundation fixtures cover fail-closed policy/runtime/evidence cases." |
 | Local docs generation can produce quickstart, user manual, API/reference summary, system map, changelog draft, evidence index, docs-source manifest, and Mintlify-ready navigation draft. | Supported for current source records | `packages/docs/scripts/generate-docs.mjs`, `docs/generated/docs-source-manifest.json`, `apps/docs/docs.json`, `pnpm docs:generate -- --check`. | "The repo includes local generated docs artifacts and a Mintlify-ready draft; hosted docs are not published." |
+| Full local source-checkout install and modular BYO paths are inspectable and generated into release docs. | Supported for current local foundations | `packages/sdk/src/index.mjs`, `apps/cli/src/cli.mjs`, `docs/generated/install-readiness-manifest.json`, `packages/sdk/test/sdk.test.mjs`, `apps/cli/test/cli.test.mjs`, `pnpm sdk:test`, `pnpm cli:test`, `pnpm docs:generate -- --check`. | "The repo documents and exposes the current local source-checkout install path plus modular replacement paths; public package installation remains unavailable." |
 | Local SBOM dry-run generation can produce and drift-check a CycloneDX workspace package-manifest inventory. | Supported for current source records | `scripts/release/generate-sbom.mjs`, `docs/operations/sbom-source-lock.md`, `docs/generated/sbom.cdx.json`, `pnpm sbom:generate`, `pnpm sbom:check`. | "The repo includes a local SBOM dry-run artifact for workspace package manifests; release artifacts are not signed, attested, or publish-ready." |
 | Hosted provider runtime, executable full MCP/OpenAPI/shell/browser/code/provider-as-tool/A2A adapters, hosted workbench, hosted stores, release publishing, Mintlify build/publish, or public docs hosting exist. | Unsupported | CLI, SDK, tools, and provider README files state unavailable hosted/protocol surfaces; this release gate records hosted docs and publishing blockers; roadmap Workstreams 4, 6, 8, and 9 remain open. | "Those surfaces are planned and currently unavailable." |
 | Release artifacts are signed, attested, externally published, or publish-ready. | Unsupported | This release gate, `private: true` package manifests, and unavailable command ledger. | "The repo has release-readiness policy, local SBOM dry-run evidence, and audit commands; publishable artifacts are not ready." |
@@ -127,6 +131,34 @@ Current local implementation:
   `docs/operations/sbom-source-lock.md`.
 - The local SBOM dry-run artifact remains non-publishing evidence until package contents
   dry-runs, provenance, and attestation gates are implemented.
+
+## Install And Module Replacement Readiness
+
+The current supported install path is a local source checkout:
+
+```powershell
+pnpm install --frozen-lockfile
+node apps/cli/src/cli.mjs init --json
+node apps/cli/src/cli.mjs run --json
+node apps/cli/src/cli.mjs inspect --json
+```
+
+This is not a public npm package install. All manifests remain `private: true` until
+package contents, provenance, scope, and account interventions close.
+
+Current module replacement evidence is exposed by `harness.inspect().installPaths`,
+`jami map --json`, `jami docs --json`, and
+`docs/generated/install-readiness-manifest.json`:
+
+| Path | Status | Current boundary |
+| --- | --- | --- |
+| BYO memory/context/search | Supported port foundation | Local/no-op and memory-backed paths exist; hosted/vector retrieval remains unavailable. |
+| BYO checkpoint store | Supported port foundation | In-memory and filesystem local stores exist; hosted stores remain unavailable. |
+| BYO provider | Supported local provider port | Local deterministic provider exists; hosted providers fail closed. |
+| BYO policy engine | Supported port foundation | Replacement stays behind the default-deny policy seam and audit evidence requirements. |
+| BYO tools | Supported current adapters only | Function tools and trusted MCP fixtures exist; broader protocol/local adapters remain fail-closed unsupported. |
+| BYO artifacts and observability | Supported port foundations | Local stores/sinks exist; hosted artifact and observability backends remain unavailable. |
+| BYO docs output | Repo generator supported; SDK output unavailable | `pnpm docs:generate` works locally; SDK docs-output injection and hosted docs publishing remain unavailable. |
 
 ## Source And License Provenance
 

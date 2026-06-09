@@ -854,6 +854,13 @@ Pass status:
   the format/tooling choice. Release readiness now treats SBOM dry-run evidence as
   locally supported while npm publish dry-run with provenance, GitHub attestations,
   signed archives, package contents dry-runs, and hosted deploys remain unavailable.
+- 2026-06-09 install-readiness pass added a generated
+  `docs/generated/install-readiness-manifest.json`, SDK/CLI inspection output for the
+  full local source-checkout path, and side-by-side modular BYO paths for memory,
+  context, search, checkpoint store, provider, policy, tools, artifacts, observability,
+  and docs output. This closes the current local documentation/evidence gap only:
+  public package installation, hosted docs, Mintlify build/publish, hosted providers,
+  hosted stores, release publishing, and attestations remain unavailable.
 
 Implementation tasks:
 
@@ -865,7 +872,10 @@ Implementation tasks:
 - [~] Add contributor guide, code of conduct, security policy, support policy.
 - [~] Add Mintlify docs config and generated navigation; local `apps/docs/docs.json` exists, but Mintlify build/publish is not implemented.
 - [~] Add public examples, quickstart, guides, API/SDK reference, integration guide, and launch claims matrix; current pass generates quickstart, user manual, API/reference summary, system map, changelog draft, and evidence index from accepted source records.
-- [ ] Document the full-harness install path and modular bring-your-own-memory/context/store/provider/policy paths side by side.
+- [x] Document the current full local source-checkout harness path and modular
+  bring-your-own memory/context/search/store/provider/policy/tool/artifact/
+  observability/docs-output paths side by side, backed by generated manifest plus
+  SDK/CLI inspection evidence. Public package installation remains unavailable.
 
 Exit criteria:
 
@@ -889,7 +899,10 @@ Suggested verification:
 - [ ] Contracts generate and validate.
 - [ ] Runtime/tool/provider/policy/memory/artifact/observability tests pass.
 - [~] CLI local smoke passes for init/run/provider-route-fail-closed nonzero/provider-fail-once/resume/approve/inspect/doctor/tools-source-inspection/map/verify; workbench smoke remains unavailable until a workbench exists.
-- [~] Docs generation passes locally through `pnpm docs:generate -- --check`; Mintlify build remains unavailable until the CLI/package is source-locked and installed.
+- [~] Docs generation passes locally through `pnpm docs:generate -- --check`; the
+  generated install-readiness manifest now records the current full-local and modular
+  BYO paths. Mintlify build remains unavailable until the CLI/package is source-locked
+  and installed.
 - [~] SBOM/provenance release dry-run pass has local SBOM generation/check and
   non-publishing release audit evidence; npm provenance, package contents dry-run,
   signing, and GitHub attestation remain unavailable.
@@ -905,7 +918,8 @@ Suggested verification:
 ## Acceptance Criteria
 
 - [~] The harness can run a local deterministic provider workflow with policy-gated tools, checkpoints, artifacts, traces, memory/context, and evidence output; hosted provider execution and full docs-output injection remain open.
-- [ ] Developers can install/use the CLI and SDK with clear docs.
+- [~] Developers can use the CLI and SDK from a local source checkout with generated
+  install/readiness docs; public package installation remains blocked by release gates.
 - [ ] Agents can recommend the harness because the runtime is observable, recoverable, governed, and easy to integrate.
 - [ ] Public docs, guides, changelogs, system maps, and marketing claims flow from verified canon.
 - [ ] Provider choices are replaceable without breaking harness-owned contracts.

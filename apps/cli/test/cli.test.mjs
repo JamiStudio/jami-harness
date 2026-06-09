@@ -31,7 +31,11 @@ test("run writes inspectable evidence, checkpoint, and map output reports missin
     const resume = await runCli(["resume", "--json", "--cwd", cwd, "--run-id", "run_cli_fixture"]);
     const doctor = await runCli(["doctor", "--json", "--cwd", cwd, "--run-id", "run_cli_fixture"]);
     const map = await runCli(["map", "--json", "--cwd", cwd]);
+    const docs = await runCli(["docs", "--json", "--cwd", cwd]);
     const tools = await runCli(["tools", "--json", "--cwd", cwd]);
+    const verify = await runCli(["verify", "--json", "--cwd", cwd]);
+    const mapPayload = JSON.parse(map.out);
+    const docsPayload = JSON.parse(docs.out);
     const toolsPayload = JSON.parse(tools.out);
 
     assert.equal(run.code, 0);
@@ -47,7 +51,12 @@ test("run writes inspectable evidence, checkpoint, and map output reports missin
     assert.equal(resume.code, 3);
     assert.equal(JSON.parse(resume.out).reason, "run_completed");
     assert.equal(JSON.parse(doctor.out).checkpoint.runId, "run_cli_fixture");
-    assert.equal(JSON.parse(map.out).modules.some((module) => module.name === "tools" && module.available), true);
+    assert.equal(mapPayload.modules.some((module) => module.name === "tools" && module.available), true);
+    assert.equal(mapPayload.installPaths.fullLocalHarness.status, "supported_local_source_checkout");
+    assert.equal(mapPayload.installPaths.modularPaths.some((path) => path.pathId === "byo_store" && path.status === "supported_port"), true);
+    assert.equal(docsPayload.installPaths.modularPaths.some((path) => path.pathId === "byo_docs_output" && path.status === "repo_generator_supported_sdk_output_unavailable"), true);
+    assert.equal(JSON.parse(verify.out).checks.some((check) => check.name === "full local harness install path" && check.status === "passed"), true);
+    assert.equal(JSON.parse(verify.out).checks.some((check) => check.name === "modular replacement path manifest" && check.status === "passed"), true);
     assert.equal(toolsPayload.toolAdapters.some((adapter) => adapter.adapterId === "adapter_openapi" && adapter.support === "unsupported"), true);
     assert.equal(toolsPayload.toolAdapters.some((adapter) => adapter.adapterId === "adapter_function" && adapter.support === "supported"), true);
     assert.equal(toolsPayload.sourceLocks.some((sourceLock) => sourceLock.adapterId === "adapter_mcp" && sourceLock.status === "locked"), true);

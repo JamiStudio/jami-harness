@@ -174,6 +174,7 @@ async function doctorCommand(cwd, parsed, io) {
     } : undefined,
     doctor: doctor(inspection, Boolean(checkpoint)),
     harness: inspection,
+    installPaths: inspection.installPaths,
   }, parsed));
   return 0;
 }
@@ -189,6 +190,7 @@ async function capabilityCommand(cwd, command, parsed, io) {
     command,
     statePath: join(cwd, STATE_DIR),
     modules: selected,
+    installPaths: inspection.installPaths,
     sourceLocks: inspection.sourceLocks,
     toolAdapters: includeToolInspection ? inspection.toolAdapters : undefined,
     toolAdapterManifests: includeToolInspection ? inspection.toolAdapterManifests : undefined,
@@ -202,6 +204,9 @@ async function verifyCommand(cwd, parsed, io) {
   const configPath = join(statePath, CONFIG_FILE);
   const initialized = existsSync(configPath);
   const inspection = createHarness().inspect();
+  const fullInstallPathSupported = inspection.installPaths?.fullLocalHarness?.status === "supported_local_source_checkout";
+  const modularPathsSupported = inspection.installPaths?.modularPaths?.some((path) => path.pathId === "byo_memory" && path.status === "supported_port") === true
+    && inspection.installPaths?.modularPaths?.some((path) => path.pathId === "byo_docs_output" && path.status === "repo_generator_supported_sdk_output_unavailable") === true;
   io.out(formatOutput({
     ok: initialized,
     command: "verify",
@@ -210,6 +215,8 @@ async function verifyCommand(cwd, parsed, io) {
       { name: "local state", status: initialized ? "passed" : "failed", path: configPath },
       { name: "runtime module", status: inspection.modules.find((module) => module.name === "runtime")?.available ? "passed" : "failed" },
       { name: "policy module", status: inspection.modules.find((module) => module.name === "policy")?.available ? "passed" : "failed" },
+      { name: "full local harness install path", status: fullInstallPathSupported ? "passed" : "failed" },
+      { name: "modular replacement path manifest", status: modularPathsSupported ? "passed" : "failed" },
     ],
     next: initialized ? ["jami run --json", "jami inspect --json"] : ["jami init --json"],
   }, parsed));

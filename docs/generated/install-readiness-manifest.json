@@ -1,0 +1,199 @@
+{
+  "schemaVersion": "2026-06-09.install-readiness",
+  "sourceRepo": "jami-harness",
+  "sourceRemote": "https://github.com/JamiStudio/jami-harness.git",
+  "sourceCommit": "git:HEAD",
+  "sourceRef": "main",
+  "sourceCommitResolutionCommand": "git rev-parse HEAD",
+  "sourceInputHash": "sha256:279101dabd9ea1684df8f93425c981ca5750678c0ac2eb7ef8acfb226c8193bd",
+  "generatedAt": "deterministic:git-head-plus-input-hash",
+  "freshnessClass": "deterministic_current_source_tree",
+  "command": "pnpm docs:generate -- --check",
+  "commandResult": "passed",
+  "generator": {
+    "package": "@jami-studio/harness-docs",
+    "version": "2026-06-09.docs-source-manifest",
+    "entrypoint": "packages/docs/scripts/generate-docs.mjs"
+  },
+  "fullLocalHarness": {
+    "pathId": "full_local_source_checkout",
+    "status": "supported_local_source_checkout",
+    "packageInstallStatus": "unavailable_private_manifests",
+    "installCommands": [
+      "pnpm install --frozen-lockfile",
+      "node apps/cli/src/cli.mjs init --json",
+      "node apps/cli/src/cli.mjs run --json",
+      "node apps/cli/src/cli.mjs inspect --json"
+    ],
+    "evidenceCommands": [
+      "pnpm sdk:test",
+      "pnpm cli:test",
+      "pnpm docs:generate -- --check",
+      "pnpm release:readiness"
+    ],
+    "sourceEvidence": [
+      "packages/sdk/src/index.mjs",
+      "apps/cli/src/cli.mjs",
+      "packages/docs/scripts/generate-docs.mjs",
+      "docs/operations/release-readiness.md"
+    ],
+    "unavailableReasons": [
+      "Package manifests remain private:true.",
+      "Hosted providers, hosted stores, hosted workbench, release publishing, Mintlify build/publish, hosted public docs, and attestations remain unavailable."
+    ]
+  },
+  "modularPaths": [
+    {
+      "pathId": "byo_memory",
+      "module": "memory",
+      "sdkOption": "memory",
+      "defaultPackage": "@jami-studio/harness-memory",
+      "packageManifest": "packages/memory/package.json",
+      "status": "supported_port",
+      "commandEvidence": [
+        "pnpm sdk:test",
+        "jami map --json"
+      ],
+      "inspection": "harness.inspect().installPaths.modularPaths[pathId=byo_memory]",
+      "notes": "Use no-op, local, or user-owned memory modules while preserving citation, freshness, scope, and replay metadata."
+    },
+    {
+      "pathId": "byo_context",
+      "module": "context",
+      "sdkOption": "context",
+      "defaultPackage": "@jami-studio/harness-memory",
+      "packageManifest": "packages/memory/package.json",
+      "status": "supported_port",
+      "commandEvidence": [
+        "pnpm sdk:test",
+        "jami map --json"
+      ],
+      "inspection": "harness.inspect().installPaths.modularPaths[pathId=byo_context]",
+      "notes": "Replace context assembly without changing run grammar; context packs preserve inclusion reasons and deterministic hashes."
+    },
+    {
+      "pathId": "byo_search",
+      "module": "search",
+      "sdkOption": "search",
+      "defaultPackage": "@jami-studio/harness-memory",
+      "packageManifest": "packages/memory/package.json",
+      "status": "supported_port",
+      "commandEvidence": [
+        "pnpm sdk:test",
+        "jami map --json"
+      ],
+      "inspection": "harness.inspect().installPaths.modularPaths[pathId=byo_search]",
+      "notes": "Use the no-op or memory-backed adapter today; hosted/vector search remains unavailable."
+    },
+    {
+      "pathId": "byo_store",
+      "module": "checkpointStore",
+      "sdkOption": "checkpointStore",
+      "defaultPackage": "@jami-studio/harness-store-local",
+      "packageManifest": "packages/store-local/package.json",
+      "status": "supported_port",
+      "commandEvidence": [
+        "pnpm sdk:test",
+        "pnpm cli:test",
+        "jami doctor --json"
+      ],
+      "inspection": "harness.inspect().installPaths.modularPaths[pathId=byo_store]",
+      "notes": "Use in-memory or filesystem checkpoint stores today; hosted stores remain unavailable."
+    },
+    {
+      "pathId": "byo_provider",
+      "module": "provider",
+      "sdkOption": "provider",
+      "defaultPackage": "@jami-studio/harness-provider-local",
+      "packageManifest": "packages/provider-local/package.json",
+      "status": "supported_port_local_only",
+      "commandEvidence": [
+        "pnpm provider:test",
+        "pnpm sdk:test",
+        "pnpm cli:test"
+      ],
+      "inspection": "harness.inspect().installPaths.modularPaths[pathId=byo_provider]",
+      "notes": "The local deterministic provider is supported; hosted providers fail closed until source-lock, auth, redaction, policy, trace, and adapter fixtures land."
+    },
+    {
+      "pathId": "byo_policy",
+      "module": "policy",
+      "sdkOption": "policyEngine",
+      "defaultPackage": "@jami-studio/harness-policy",
+      "packageManifest": "packages/policy/package.json",
+      "status": "supported_port",
+      "commandEvidence": [
+        "pnpm policy:test",
+        "pnpm sdk:test"
+      ],
+      "inspection": "harness.inspect().installPaths.modularPaths[pathId=byo_policy]",
+      "notes": "Replace the policy engine behind the harness seam without weakening default-deny and audit evidence requirements."
+    },
+    {
+      "pathId": "byo_tools",
+      "module": "tools",
+      "sdkOption": "tools",
+      "defaultPackage": "@jami-studio/harness-tools",
+      "packageManifest": "packages/tools/package.json",
+      "status": "supported_port_current_adapters_only",
+      "commandEvidence": [
+        "pnpm tools:test",
+        "pnpm sdk:test",
+        "jami tools --json"
+      ],
+      "inspection": "harness.inspect().installPaths.modularPaths[pathId=byo_tools]",
+      "notes": "Function tools and trusted MCP fixtures are supported; OpenAPI, shell, browser, code, provider-as-tool, A2A, stdio MCP, and remote MCP remain fail-closed unsupported surfaces."
+    },
+    {
+      "pathId": "byo_artifacts",
+      "module": "artifacts",
+      "sdkOption": "artifactStore",
+      "defaultPackage": "@jami-studio/harness-artifacts",
+      "packageManifest": "packages/artifacts/package.json",
+      "status": "supported_port",
+      "commandEvidence": [
+        "pnpm artifacts:test",
+        "pnpm sdk:test"
+      ],
+      "inspection": "harness.inspect().installPaths.modularPaths[pathId=byo_artifacts]",
+      "notes": "Replace artifact storage while preserving provenance, evidence refs, and artifact view projection."
+    },
+    {
+      "pathId": "byo_observability",
+      "module": "observability",
+      "sdkOption": "observability",
+      "defaultPackage": "@jami-studio/harness-observability",
+      "packageManifest": "packages/observability/package.json",
+      "status": "supported_port",
+      "commandEvidence": [
+        "pnpm observability:test",
+        "pnpm sdk:test"
+      ],
+      "inspection": "harness.inspect().installPaths.modularPaths[pathId=byo_observability]",
+      "notes": "Replace trace/audit/evidence sinks while preserving redaction and evidence packet shape."
+    },
+    {
+      "pathId": "byo_docs_output",
+      "module": "docsOutput",
+      "sdkOption": "docsOutput",
+      "defaultPackage": "@jami-studio/harness-docs",
+      "packageManifest": "packages/docs/package.json",
+      "status": "repo_generator_supported_sdk_output_unavailable",
+      "commandEvidence": [
+        "pnpm docs:generate -- --check"
+      ],
+      "inspection": "harness.inspect().installPaths.modularPaths[pathId=byo_docs_output]",
+      "notes": "Repo-level docs generation is supported; SDK docs-output injection and hosted docs publishing remain unavailable."
+    }
+  ],
+  "unsupportedSurfaces": [
+    "public npm install",
+    "hosted provider runtime",
+    "hosted durable stores",
+    "hosted workbench",
+    "release publishing",
+    "Mintlify build/publish",
+    "hosted public docs",
+    "release attestations"
+  ]
+}

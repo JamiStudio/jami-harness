@@ -54,10 +54,16 @@ function collectSourceRecords() {
     "docs/operations/release-readiness.md",
     "docs/architecture/modular-responsibility-map.md",
     "docs/architecture/product-architecture.md",
+    "apps/cli/src/cli.mjs",
+    "apps/cli/test/cli.test.mjs",
     "apps/cli/README.md",
+    "packages/sdk/src/index.mjs",
+    "packages/sdk/test/sdk.test.mjs",
     "packages/tools/README.md",
     "packages/sdk/README.md",
     "packages/provider-local/README.md",
+    "packages/docs/scripts/generate-docs.mjs",
+    "scripts/release/check-readiness.mjs",
   ];
   files.push(...listFiles("packages/contracts/schemas", ".json"));
   files.push(...listFiles("packages/contracts/fixtures", ".json"));
@@ -107,6 +113,7 @@ function buildModel(records) {
       "docs/generated/system-map.md",
       "docs/generated/changelog.md",
       "docs/generated/evidence-index.md",
+      "docs/generated/install-readiness-manifest.json",
       "docs/generated/docs-source-manifest.json",
       "apps/docs/docs.json",
       "apps/docs/index.mdx",
@@ -125,6 +132,7 @@ function buildOutputs(model, baseProvenance) {
   const systemMapDoc = markdown("Generated System Map", baseProvenance, systemMap(model));
   const changelogDoc = markdown("Generated Changelog Draft", baseProvenance, changelog(model));
   const evidenceIndexDoc = markdown("Generated Claims And Evidence Index", baseProvenance, evidenceIndex(model));
+  const installManifest = installReadinessManifest(model, baseProvenance);
   const manifest = {
     ...baseProvenance,
     acceptedSourceRecords: model.records,
@@ -147,6 +155,10 @@ function buildOutputs(model, baseProvenance) {
         surface: "Hosted public docs",
         reason: "No hosted docs target has been selected or authorized.",
       },
+      {
+        surface: "Public package installation",
+        reason: "All package manifests remain private:true, so generated install guidance is limited to the local source-checkout path.",
+      },
     ],
   };
 
@@ -157,6 +169,7 @@ function buildOutputs(model, baseProvenance) {
     out("docs/generated/system-map.md", systemMapDoc),
     out("docs/generated/changelog.md", changelogDoc),
     out("docs/generated/evidence-index.md", evidenceIndexDoc),
+    out("docs/generated/install-readiness-manifest.json", `${JSON.stringify(installManifest, null, 2)}\n`),
     out("docs/generated/docs-source-manifest.json", `${JSON.stringify(manifest, null, 2)}\n`),
     out("apps/docs/docs.json", `${JSON.stringify(mintlifyConfig(), null, 2)}\n`),
     out("apps/docs/index.mdx", mdx("Jami Harness Quickstart", quickstartDoc)),
@@ -184,6 +197,20 @@ function quickstart(model) {
     "node apps/cli/src/cli.mjs inspect --json",
     "```",
     "",
+    "## Full Local Harness Path",
+    "",
+    "The supported install path today is a local source checkout. Public package installation remains unavailable because package manifests are still private.",
+    "",
+    "```powershell",
+    ...installReadinessManifest(model, {}).fullLocalHarness.installCommands,
+    "```",
+    "",
+    "## Modular Replacement Paths",
+    "",
+    installPathTable(model),
+    "",
+    "The same evidence is emitted as structured JSON in `docs/generated/install-readiness-manifest.json` and through SDK/CLI inspection.",
+    "",
     "## Available Foundations",
     "",
     ...model.packageManifests.map(({ path, manifest }) => `- \`${manifest.name}\` from \`${path}\`: ${manifest.description}`),
@@ -206,6 +233,14 @@ function userManual(model) {
     "## Module Inspection",
     "",
     "`jami map --json` reports active runtime, policy, provider, tools, memory, artifacts, observability, and docs-output capability state.",
+    "",
+    "## Full Harness And Modular Paths",
+    "",
+    "Use the full local source-checkout path when you want the complete current foundation. Use SDK module injection when you need to bring your own memory, context, search, checkpoint store, provider, policy engine, tools, artifact store, observability sink, or docs-output path.",
+    "",
+    installPathTable(model),
+    "",
+    "The docs-output path is intentionally split: repo-level generation is supported through `pnpm docs:generate`, while SDK docs-output injection remains unavailable.",
     "",
     "## Evidence Handling",
     "",
@@ -266,6 +301,10 @@ function systemMap(model) {
     "  artifacts --> sdk",
     "  observability --> sdk",
     "  sdk --> cli",
+    "  install[docs/generated/install-readiness-manifest.json]",
+    "  install --> sdk",
+    "  install --> cli",
+    "  install --> docs",
     "  contracts --> docs",
     "  artifacts --> docs",
     "  observability --> docs",
@@ -295,6 +334,7 @@ function evidenceIndex(model) {
     "- Local contract schemas, generated references, and fixtures exist.",
     "- Local docs generation exists and has check mode.",
     "- Local CLI/SDK evidence smoke exists.",
+    "- Full local source-checkout install and modular replacement paths are recorded in a generated install-readiness manifest.",
     "- Local deterministic provider workflow exists and routes tool calls through the policy-gated tool gateway.",
     "- Tool adapter source inspection exists for supported function and trusted MCP fixture paths plus fail-closed OpenAPI, shell, browser, code, provider-as-tool, and A2A dry-run evidence.",
     "- Release publishing, hosted docs, hosted model providers, executable full protocol/local tool adapters, attestation, and package release artifacts remain unavailable until their gates close.",
@@ -303,6 +343,176 @@ function evidenceIndex(model) {
     "",
     ...model.records.map((record) => `- \`${record.path}\` (${record.sha256})`),
   ].join("\n");
+}
+
+function installReadinessManifest(model, provenance) {
+  return {
+    ...provenance,
+    schemaVersion: "2026-06-09.install-readiness",
+    sourceRepo: "jami-harness",
+    fullLocalHarness: {
+      pathId: "full_local_source_checkout",
+      status: "supported_local_source_checkout",
+      packageInstallStatus: "unavailable_private_manifests",
+      installCommands: [
+        "pnpm install --frozen-lockfile",
+        "node apps/cli/src/cli.mjs init --json",
+        "node apps/cli/src/cli.mjs run --json",
+        "node apps/cli/src/cli.mjs inspect --json",
+      ],
+      evidenceCommands: [
+        "pnpm sdk:test",
+        "pnpm cli:test",
+        "pnpm docs:generate -- --check",
+        "pnpm release:readiness",
+      ],
+      sourceEvidence: [
+        "packages/sdk/src/index.mjs",
+        "apps/cli/src/cli.mjs",
+        "packages/docs/scripts/generate-docs.mjs",
+        "docs/operations/release-readiness.md",
+      ],
+      unavailableReasons: [
+        "Package manifests remain private:true.",
+        "Hosted providers, hosted stores, hosted workbench, release publishing, Mintlify build/publish, hosted public docs, and attestations remain unavailable.",
+      ],
+    },
+    modularPaths: installPathRecords(model),
+    unsupportedSurfaces: [
+      "public npm install",
+      "hosted provider runtime",
+      "hosted durable stores",
+      "hosted workbench",
+      "release publishing",
+      "Mintlify build/publish",
+      "hosted public docs",
+      "release attestations",
+    ],
+  };
+}
+
+function installPathRecords(model) {
+  return [
+    installPathRecord(model, {
+      pathId: "byo_memory",
+      module: "memory",
+      sdkOption: "memory",
+      defaultPackage: "@jami-studio/harness-memory",
+      status: "supported_port",
+      commandEvidence: ["pnpm sdk:test", "jami map --json"],
+      notes: "Use no-op, local, or user-owned memory modules while preserving citation, freshness, scope, and replay metadata.",
+    }),
+    installPathRecord(model, {
+      pathId: "byo_context",
+      module: "context",
+      sdkOption: "context",
+      defaultPackage: "@jami-studio/harness-memory",
+      status: "supported_port",
+      commandEvidence: ["pnpm sdk:test", "jami map --json"],
+      notes: "Replace context assembly without changing run grammar; context packs preserve inclusion reasons and deterministic hashes.",
+    }),
+    installPathRecord(model, {
+      pathId: "byo_search",
+      module: "search",
+      sdkOption: "search",
+      defaultPackage: "@jami-studio/harness-memory",
+      status: "supported_port",
+      commandEvidence: ["pnpm sdk:test", "jami map --json"],
+      notes: "Use the no-op or memory-backed adapter today; hosted/vector search remains unavailable.",
+    }),
+    installPathRecord(model, {
+      pathId: "byo_store",
+      module: "checkpointStore",
+      sdkOption: "checkpointStore",
+      defaultPackage: "@jami-studio/harness-store-local",
+      status: "supported_port",
+      commandEvidence: ["pnpm sdk:test", "pnpm cli:test", "jami doctor --json"],
+      notes: "Use in-memory or filesystem checkpoint stores today; hosted stores remain unavailable.",
+    }),
+    installPathRecord(model, {
+      pathId: "byo_provider",
+      module: "provider",
+      sdkOption: "provider",
+      defaultPackage: "@jami-studio/harness-provider-local",
+      status: "supported_port_local_only",
+      commandEvidence: ["pnpm provider:test", "pnpm sdk:test", "pnpm cli:test"],
+      notes: "The local deterministic provider is supported; hosted providers fail closed until source-lock, auth, redaction, policy, trace, and adapter fixtures land.",
+    }),
+    installPathRecord(model, {
+      pathId: "byo_policy",
+      module: "policy",
+      sdkOption: "policyEngine",
+      defaultPackage: "@jami-studio/harness-policy",
+      status: "supported_port",
+      commandEvidence: ["pnpm policy:test", "pnpm sdk:test"],
+      notes: "Replace the policy engine behind the harness seam without weakening default-deny and audit evidence requirements.",
+    }),
+    installPathRecord(model, {
+      pathId: "byo_tools",
+      module: "tools",
+      sdkOption: "tools",
+      defaultPackage: "@jami-studio/harness-tools",
+      status: "supported_port_current_adapters_only",
+      commandEvidence: ["pnpm tools:test", "pnpm sdk:test", "jami tools --json"],
+      notes: "Function tools and trusted MCP fixtures are supported; OpenAPI, shell, browser, code, provider-as-tool, A2A, stdio MCP, and remote MCP remain fail-closed unsupported surfaces.",
+    }),
+    installPathRecord(model, {
+      pathId: "byo_artifacts",
+      module: "artifacts",
+      sdkOption: "artifactStore",
+      defaultPackage: "@jami-studio/harness-artifacts",
+      status: "supported_port",
+      commandEvidence: ["pnpm artifacts:test", "pnpm sdk:test"],
+      notes: "Replace artifact storage while preserving provenance, evidence refs, and artifact view projection.",
+    }),
+    installPathRecord(model, {
+      pathId: "byo_observability",
+      module: "observability",
+      sdkOption: "observability",
+      defaultPackage: "@jami-studio/harness-observability",
+      status: "supported_port",
+      commandEvidence: ["pnpm observability:test", "pnpm sdk:test"],
+      notes: "Replace trace/audit/evidence sinks while preserving redaction and evidence packet shape.",
+    }),
+    installPathRecord(model, {
+      pathId: "byo_docs_output",
+      module: "docsOutput",
+      sdkOption: "docsOutput",
+      defaultPackage: "@jami-studio/harness-docs",
+      status: "repo_generator_supported_sdk_output_unavailable",
+      commandEvidence: ["pnpm docs:generate -- --check"],
+      notes: "Repo-level docs generation is supported; SDK docs-output injection and hosted docs publishing remain unavailable.",
+    }),
+  ];
+}
+
+function installPathRecord(model, { pathId, module, sdkOption, defaultPackage, status, commandEvidence, notes }) {
+  return {
+    pathId,
+    module,
+    sdkOption,
+    defaultPackage,
+    packageManifest: packagePath(model, defaultPackage),
+    status,
+    commandEvidence,
+    inspection: `harness.inspect().installPaths.modularPaths[pathId=${pathId}]`,
+    notes,
+  };
+}
+
+function installPathTable(model) {
+  const rows = installPathRecords(model).map((path) => (
+    `| \`${path.pathId}\` | \`${path.sdkOption}\` | \`${path.status}\` | ${path.notes} |`
+  ));
+  return [
+    "| Path | SDK option | Current status | Evidence boundary |",
+    "| --- | --- | --- | --- |",
+    ...rows,
+  ].join("\n");
+}
+
+function packagePath(model, packageName) {
+  return model.packageManifests.find(({ manifest }) => manifest.name === packageName)?.path;
 }
 
 function markdown(title, provenance, body) {

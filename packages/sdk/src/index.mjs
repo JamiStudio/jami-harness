@@ -119,6 +119,7 @@ export function createHarness(options = {}) {
     ], tools.reason ? [tools.reason] : []),
     docsOutput: capability("docsOutput", "optional_surface", moduleMode(docsOutput), false, [], [docsOutput.reason]),
   };
+  const installPaths = buildInstallPaths(modules);
 
   return {
     modules,
@@ -171,6 +172,7 @@ export function createHarness(options = {}) {
         schemaVersion: SCHEMA_VERSION,
         generatedAt: now().toISOString(),
         modules: Object.values(modules),
+        installPaths,
         sourceLocks,
         toolAdapters,
         toolAdapterManifests,
@@ -185,6 +187,157 @@ export function createHarness(options = {}) {
         },
       };
     },
+  };
+}
+
+function buildInstallPaths(modules) {
+  return {
+    schemaVersion: SCHEMA_VERSION,
+    fullLocalHarness: {
+      pathId: "full_local_source_checkout",
+      status: "supported_local_source_checkout",
+      packageInstallStatus: "unavailable_private_manifests",
+      installCommands: [
+        "pnpm install --frozen-lockfile",
+        "node apps/cli/src/cli.mjs init --json",
+        "node apps/cli/src/cli.mjs run --json",
+        "node apps/cli/src/cli.mjs inspect --json",
+      ],
+      evidenceCommands: [
+        "pnpm sdk:test",
+        "pnpm cli:test",
+        "pnpm docs:generate -- --check",
+        "pnpm release:readiness",
+      ],
+      activeModules: [
+        "runtime",
+        "policy",
+        "artifacts",
+        "observability",
+        "memory",
+        "search",
+        "context",
+        "checkpointStore",
+        "provider",
+        "tools",
+      ].map((name) => ({
+        name,
+        mode: modules[name]?.mode,
+        available: modules[name]?.available === true,
+      })),
+      unavailableReasons: [
+        "Workspace package manifests remain private:true, so public npm installation is not claimed.",
+        "Hosted providers, hosted stores, hosted workbench, release publishing, hosted docs, and SDK docs-output injection remain unavailable.",
+      ],
+    },
+    modularPaths: [
+      modularPath({
+        pathId: "byo_memory",
+        moduleName: "memory",
+        sdkOption: "memory",
+        status: "supported_port",
+        defaultMode: modules.memory.mode,
+        evidence: ["packages/sdk/test/sdk.test.mjs", "jami map --json"],
+      }),
+      modularPath({
+        pathId: "byo_context",
+        moduleName: "context",
+        sdkOption: "context",
+        status: "supported_port",
+        defaultMode: modules.context.mode,
+        evidence: ["packages/sdk/test/sdk.test.mjs", "jami map --json"],
+      }),
+      modularPath({
+        pathId: "byo_search",
+        moduleName: "search",
+        sdkOption: "search",
+        status: "supported_port",
+        defaultMode: modules.search.mode,
+        evidence: ["packages/sdk/test/sdk.test.mjs", "jami map --json"],
+      }),
+      modularPath({
+        pathId: "byo_store",
+        moduleName: "checkpointStore",
+        sdkOption: "checkpointStore",
+        status: "supported_port",
+        defaultMode: modules.checkpointStore.mode,
+        evidence: ["packages/sdk/test/sdk.test.mjs", "apps/cli/test/cli.test.mjs", "jami doctor --json"],
+      }),
+      modularPath({
+        pathId: "byo_provider",
+        moduleName: "provider",
+        sdkOption: "provider",
+        status: "supported_port_local_only",
+        defaultMode: modules.provider.mode,
+        evidence: ["packages/sdk/test/sdk.test.mjs", "apps/cli/test/cli.test.mjs"],
+        unavailableReason: "Hosted provider adapters fail closed until source-lock, auth, redaction, policy, trace, and adapter fixtures land.",
+      }),
+      modularPath({
+        pathId: "byo_policy",
+        moduleName: "policy",
+        sdkOption: "policyEngine",
+        status: "supported_port",
+        defaultMode: modules.policy.mode,
+        evidence: ["packages/sdk/test/sdk.test.mjs", "pnpm policy:test"],
+      }),
+      modularPath({
+        pathId: "byo_tools",
+        moduleName: "tools",
+        sdkOption: "tools",
+        status: "supported_port_current_adapters_only",
+        defaultMode: modules.tools.mode,
+        evidence: ["packages/sdk/test/sdk.test.mjs", "pnpm tools:test", "jami tools --json"],
+        unavailableReason: "OpenAPI, shell, browser, code, provider-as-tool, A2A, stdio MCP, and remote MCP remain fail-closed unsupported surfaces.",
+      }),
+      modularPath({
+        pathId: "byo_artifacts",
+        moduleName: "artifacts",
+        sdkOption: "artifactStore",
+        status: "supported_port",
+        defaultMode: modules.artifacts.mode,
+        evidence: ["packages/sdk/test/sdk.test.mjs", "pnpm artifacts:test"],
+      }),
+      modularPath({
+        pathId: "byo_observability",
+        moduleName: "observability",
+        sdkOption: "observability",
+        status: "supported_port",
+        defaultMode: modules.observability.mode,
+        evidence: ["packages/sdk/test/sdk.test.mjs", "pnpm observability:test"],
+      }),
+      modularPath({
+        pathId: "byo_docs_output",
+        moduleName: "docsOutput",
+        sdkOption: "docsOutput",
+        status: "repo_generator_supported_sdk_output_unavailable",
+        defaultMode: modules.docsOutput.mode,
+        evidence: ["packages/docs/scripts/generate-docs.mjs", "pnpm docs:generate -- --check"],
+        unavailableReason: modules.docsOutput.unavailableReasons[0],
+      }),
+    ],
+    unsupportedSurfaces: [
+      "public npm install",
+      "hosted provider runtime",
+      "hosted durable stores",
+      "hosted workbench",
+      "release publishing",
+      "Mintlify build/publish",
+      "hosted public docs",
+      "release attestations",
+    ],
+  };
+}
+
+function modularPath({ pathId, moduleName, sdkOption, status, defaultMode, evidence, unavailableReason }) {
+  return {
+    pathId,
+    moduleName,
+    sdkOption,
+    status,
+    defaultMode,
+    inspection: `harness.inspect().modules[name=${moduleName}]`,
+    evidence,
+    unavailableReason,
   };
 }
 

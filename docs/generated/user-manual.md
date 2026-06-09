@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:3f7bb7d2923b9be2981862e1a3705b831e625898302090f16c7df45b68ff9a90`
+- Source input hash: `sha256:279101dabd9ea1684df8f93425c981ca5750678c0ac2eb7ef8acfb226c8193bd`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -20,10 +20,29 @@ Use the CLI for local state and evidence inspection. The CLI writes local `.jami
 
 `jami map --json` reports active runtime, policy, provider, tools, memory, artifacts, observability, and docs-output capability state.
 
+## Full Harness And Modular Paths
+
+Use the full local source-checkout path when you want the complete current foundation. Use SDK module injection when you need to bring your own memory, context, search, checkpoint store, provider, policy engine, tools, artifact store, observability sink, or docs-output path.
+
+| Path | SDK option | Current status | Evidence boundary |
+| --- | --- | --- | --- |
+| `byo_memory` | `memory` | `supported_port` | Use no-op, local, or user-owned memory modules while preserving citation, freshness, scope, and replay metadata. |
+| `byo_context` | `context` | `supported_port` | Replace context assembly without changing run grammar; context packs preserve inclusion reasons and deterministic hashes. |
+| `byo_search` | `search` | `supported_port` | Use the no-op or memory-backed adapter today; hosted/vector search remains unavailable. |
+| `byo_store` | `checkpointStore` | `supported_port` | Use in-memory or filesystem checkpoint stores today; hosted stores remain unavailable. |
+| `byo_provider` | `provider` | `supported_port_local_only` | The local deterministic provider is supported; hosted providers fail closed until source-lock, auth, redaction, policy, trace, and adapter fixtures land. |
+| `byo_policy` | `policyEngine` | `supported_port` | Replace the policy engine behind the harness seam without weakening default-deny and audit evidence requirements. |
+| `byo_tools` | `tools` | `supported_port_current_adapters_only` | Function tools and trusted MCP fixtures are supported; OpenAPI, shell, browser, code, provider-as-tool, A2A, stdio MCP, and remote MCP remain fail-closed unsupported surfaces. |
+| `byo_artifacts` | `artifactStore` | `supported_port` | Replace artifact storage while preserving provenance, evidence refs, and artifact view projection. |
+| `byo_observability` | `observability` | `supported_port` | Replace trace/audit/evidence sinks while preserving redaction and evidence packet shape. |
+| `byo_docs_output` | `docsOutput` | `repo_generator_supported_sdk_output_unavailable` | Repo-level docs generation is supported; SDK docs-output injection and hosted docs publishing remain unavailable. |
+
+The docs-output path is intentionally split: repo-level generation is supported through `pnpm docs:generate`, while SDK docs-output injection remains unavailable.
+
 ## Evidence Handling
 
 Generated docs and evidence records are tied to accepted source records, contract references, command result, freshness class, and generated output paths in `docs/generated/docs-source-manifest.json`.
 
 ## Changelog
 
-The current generated changelog consumes 31 accepted changelog fragments from `.changes/`.
+The current generated changelog consumes 32 accepted changelog fragments from `.changes/`.

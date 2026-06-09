@@ -26,9 +26,10 @@ Current commands:
 - `jami tools --json` reports tool adapter manifests, source-lock states, supported
   function/trusted MCP fixture paths, and fail-closed unavailable adapters.
 - `jami memory --json`, `jami docs --json`, and `jami map --json` report current
-  capability availability; `jami map --json` also includes tool adapter inspection.
+  capability availability plus the full local source-checkout install path and modular
+  BYO replacement paths; `jami map --json` also includes tool adapter inspection.
 - `jami verify --json` checks local CLI state and core module availability with clean
-  exit codes.
+  exit codes, including the generated full-local and modular replacement path manifest.
 
 Malformed run and action identifiers are rejected with structured JSON errors before the
 CLI reads or writes run state.
@@ -38,8 +39,9 @@ for provider replacement-port inspection, policy-gated function execution, trust
 fixture execution, and unsupported adapter/provider manifests with source-lock evidence.
 Local filesystem checkpoint/resume and approval evidence are available through
 `@jami-studio/harness-store-local`. Repo-level docs generation exists through
-`pnpm docs:generate`; the CLI `docs` capability still reports SDK docs-output injection
-as not wired. Hosted workbench, hosted stores, hosted provider runtime, release publishing,
-Mintlify build/publish, and full
+`pnpm docs:generate` and is recorded in
+`docs/generated/install-readiness-manifest.json`; the CLI `docs` capability still reports
+SDK docs-output injection as not wired. Public package installation, hosted workbench,
+hosted stores, hosted provider runtime, release publishing, Mintlify build/publish, and full
 MCP/OpenAPI/shell/browser/code/provider-as-tool/A2A execution remain unavailable until
 those surfaces exist with current source-lock evidence.
