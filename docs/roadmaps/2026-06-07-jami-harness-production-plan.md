@@ -180,19 +180,40 @@ contracts can express provenance and policy.
 These gates convert the crossflow adversarial review into execution criteria. They are part of the
 active plan, not optional research notes.
 
+- `path-lock`: active plans, boundary docs, package metadata, and dispatch prompts must point to the
+  registry-root `jami-harness` and `studio-ui` checkouts and canonical `JamiStudio/*` remotes; closure
+  requires a search/readback or equivalent path-lock evidence note.
 - `source-lock`: before runtime, protocol, package, or third-party source implementation, capture the
   official/current source, package/spec name, version or spec identifier, date, license/provenance state,
-  tarball or commit evidence where applicable, and unresolved risks.
+  tarball or commit evidence where applicable, and unresolved risks. The root current-source record is
+  `C:\Users\james\dev\orgs\oss\registry\docs\operations\source-lock-evidence.md`; implementation rows
+  must become checked-in source-lock records before code depends on the source.
 - `compat-lock`: shared UI/action/artifact/theme/suite references must have machine-readable schemas or
-  fixtures consumed by both this repo and `studio-ui`.
+  fixtures consumed by both this repo and `studio-ui`; the gate is closed only by commands that fail on
+  schema drift or missing negative fixtures once those commands exist.
 - `policy-lock`: prompt-injection, tool-metadata poisoning, MCP transport abuse, secret exfiltration,
-  approval replay, denied action, and redaction fixtures must fail closed.
+  approval replay, denied action, and redaction fixtures must fail closed and produce audit/evidence
+  records.
 - `adapter-lock`: every adapter declares supported, unsupported, denied, trace, auth, streaming,
-  cancellation, and resumability behavior.
+  cancellation, and resumability behavior, with one positive, denied, unsupported, and trace/evidence
+  fixture per adapter.
+- `token-lock`: harness-side `themeRef` and `suiteRef` compatibility cannot close until Studio UI token
+  schema/version, alias, deprecation, composite-token, invalid-reference, and deterministic-output
+  fixtures are represented in the shared compatibility set.
+- `renderer-lock`: harness-originated UI payload/action/artifact refs must prove that Studio UI renders
+  only resident allowlisted components, fails closed on unknown or unsafe payloads, and displays denied
+  action states without executing policy-owned side effects.
+- `cli-lifecycle-lock`: harness CLI/workbench integration cannot assume Studio UI install state unless
+  install, update, remove, migrate, doctor, pin/lock, conflict handling, rollback guidance, and provenance
+  inspection are covered by Studio UI temp-project smokes or shared evidence.
+- `a11y-visual-lock`: harness workbench or artifact UI integration cannot close on prose-only UI quality;
+  accepted Studio UI fixtures must cover keyboard, focus, ARIA, contrast, reduced motion, responsive,
+  long-content, disabled/loading/invalid/empty/error states, and multi-theme evidence.
 - `evidence-lock`: generated docs, changelogs, system maps, and public claims must link to source commit,
   accepted contract, command evidence, timestamp, and freshness class once evidence schemas exist.
 - `supply-chain-lock`: source/license provenance, SBOM policy, and release attestation requirements start
-  before code is lifted or forked, not only during final release.
+  before code is lifted or forked, not only during final release; package publishing, static registry
+  hosting, and release attestation tooling need dry-run or capability evidence before public claims.
 
 ## Workstream 1: Canonical Contracts And Primitive Registry
 
@@ -571,6 +592,9 @@ Suggested verification:
 ## Final Verification And Closeout
 
 - [ ] Source-lock reports are current for drift-prone packages, protocols, providers, and release tools.
+- [ ] Source-lock records satisfy the root current-source record for Agent-Native, MCP, A2A, AG-UI, OpenTelemetry,
+  OWASP/NIST guidance, package publishing, and release attestation tooling before those implementation
+  lanes depend on them.
 - [ ] Shared harness/UI compatibility fixtures pass in both repos.
 - [ ] Threat model and policy negative fixtures pass.
 - [ ] Root docs read back.
