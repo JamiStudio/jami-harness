@@ -1,0 +1,31 @@
+{
+  "$schema": "../../schemas/tool-execution.schema.json",
+  "caseId": "valid-tool-execution-unsupported",
+  "description": "An unsupported adapter fails closed while still emitting typed trace, audit, evidence, and artifact references.",
+  "expectedValid": true,
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "executionId": "tex_mcp_unsupported",
+    "runId": "run_tool_gateway",
+    "toolId": "tool_mcp_fixture",
+    "adapterId": "adapter_mcp",
+    "status": "unsupported",
+    "policyDecisionRef": "pol_tool_gateway_mcp_deny",
+    "auditRef": "aud_tool_gateway_mcp_deny",
+    "traceRef": "trc_tool_gateway_mcp",
+    "evidenceRef": "ev_tool_gateway_mcp",
+    "artifactRef": "art_tool_gateway_mcp",
+    "startedAt": "2026-06-09T12:00:00.000Z",
+    "endedAt": "2026-06-09T12:00:00.000Z",
+    "capabilityManifestRef": "cap_mcp_tool_gateway",
+    "redaction": {
+      "inputPolicy": "redacted",
+      "resultPolicy": "omitted",
+      "redactedFields": []
+    },
+    "error": {
+      "code": "adapter_unsupported",
+      "message": "adapter is declared unsupported until current source-lock evidence is refreshed"
+    }
+  }
+}

@@ -95,13 +95,20 @@ const claims = [
     "pnpm cli:test",
     "pnpm examples:smoke",
   ]),
+  claim("Narrow tool gateway foundation supports policy-gated function tools with typed execution evidence", "supported", [
+    "packages/tools/src/index.mjs",
+    "packages/tools/test/tools.test.mjs",
+    "packages/contracts/schemas/tool-execution.schema.json",
+    "pnpm tools:test",
+    "pnpm contracts:validate",
+  ]),
   claim("SDK composes current runtime, policy, artifacts, observability, and memory defaults", "supported", [
     "packages/sdk/src/index.mjs",
     "packages/sdk/test/sdk.test.mjs",
     "packages/sdk/README.md",
     "pnpm sdk:test",
   ]),
-  claim("Docs generation, release publishing, hosted workbench, hosted stores, provider runtime, and tool gateway are available", "unsupported", [
+  claim("Docs generation, release publishing, hosted workbench, hosted stores, provider runtime, and full MCP/OpenAPI/shell/browser/code/A2A adapters are available", "unsupported", [
     "apps/cli/README.md",
     "packages/sdk/README.md",
     "docs/roadmaps/2026-06-07-jami-harness-production-plan.md",

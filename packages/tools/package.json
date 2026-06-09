@@ -1,0 +1,19 @@
+{
+  "name": "@jami-studio/harness-tools",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Harness-owned tool registry, execution envelope, adapter manifests, and policy-gated function tool gateway foundation.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JamiStudio/jami-harness.git",
+    "directory": "packages/tools"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  }
+}

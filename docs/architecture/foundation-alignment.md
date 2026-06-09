@@ -88,6 +88,7 @@ The initial checkable anchors are:
 - `traceEvent`
 - `memoryRecord`
 - `contextPack`
+- `toolExecution`
 - `threatModelFixtureCatalog`
 
 The first compatibility cases cover unsupported UI components, invalid payloads,
@@ -111,9 +112,15 @@ and replaceable foundations only; they are not hosted stores, OpenTelemetry back
 vector search, docs generators, or workbench implementations. Stream 5 pass 1 adds the
 first local `packages/sdk` and `apps/cli` foundations so developers and agents can create
 local evidence runs, inspect artifacts/traces/capabilities, and see missing optional
-modules through JSON output. Those surfaces are not provider runtimes, tool gateways,
-docs generators, hosted stores, hosted workbenches, Studio UI installers, or release
-publishing tools. The contracts package now emits checked
+modules through JSON output. Those surfaces are not provider runtimes, full protocol
+tool gateways, docs generators, hosted stores, hosted workbenches, Studio UI installers,
+or release publishing tools. Workstream 4 pass 1 after the overclaim audit adds a narrow
+`packages/tools` foundation and `toolExecution` contract for registry inspection,
+policy-gated function tool execution, timeout/cancellation status, typed trace/audit/
+evidence/artifact output, redaction, and unsupported adapter manifests. That foundation
+does not implement MCP, OpenAPI, shell, browser, code, provider, or A2A adapters; those
+remain explicit unsupported capabilities until current repo-local source-lock evidence
+and adapter tests exist. The contracts package now emits checked
 generated artifacts in `packages/contracts/generated/`: TypeScript schema exports, an
 OpenAPI 3.1 component reference, and a compact reference manifest with the Studio UI
 handshake. Studio UI should consume those generated outputs or the same schema ids and

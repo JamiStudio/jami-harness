@@ -19,5 +19,8 @@ Current commands:
 Malformed run identifiers are rejected with structured JSON errors before the CLI reads
 or writes run state.
 
-The CLI intentionally reports tool gateway, docs generation, hosted workbench, hosted
-stores, provider runtime, and release publishing as unavailable until those packages exist.
+The CLI reports the tool gateway foundation as available for registry inspection,
+policy-gated function execution, and unsupported adapter manifests. It still reports
+docs generation, hosted workbench, hosted stores, provider runtime, release publishing,
+and full MCP/OpenAPI/shell/browser/code/A2A adapters as unavailable until those
+surfaces exist with current source-lock evidence.

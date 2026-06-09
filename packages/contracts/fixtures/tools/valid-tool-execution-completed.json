@@ -1,0 +1,28 @@
+{
+  "$schema": "../../schemas/tool-execution.schema.json",
+  "caseId": "valid-tool-execution-completed",
+  "description": "A completed policy-gated function tool execution carries audit, trace, evidence, artifact, and redaction references.",
+  "expectedValid": true,
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "executionId": "tex_local_echo",
+    "runId": "run_tool_gateway",
+    "toolId": "tool_echo",
+    "adapterId": "adapter_function",
+    "status": "completed",
+    "policyDecisionRef": "pol_tool_gateway_echo_allow",
+    "auditRef": "aud_tool_gateway_echo_allow",
+    "traceRef": "trc_tool_gateway_echo",
+    "evidenceRef": "ev_tool_gateway_echo",
+    "artifactRef": "art_tool_gateway_echo",
+    "startedAt": "2026-06-09T12:00:00.000Z",
+    "endedAt": "2026-06-09T12:00:01.000Z",
+    "timeoutMs": 1000,
+    "capabilityManifestRef": "cap_function_tool_gateway",
+    "redaction": {
+      "inputPolicy": "redacted",
+      "resultPolicy": "redacted",
+      "redactedFields": ["$.input.apiKey", "$.result.token"]
+    }
+  }
+}

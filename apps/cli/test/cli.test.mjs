@@ -32,7 +32,7 @@ test("run writes inspectable evidence and map output reports missing optional su
     assert.equal(run.code, 0);
     assert.equal(evidence.source.commit, "d6cd77e");
     assert.equal(JSON.parse(inspect.out).latestRun.runId, "run_cli_fixture");
-    assert.equal(JSON.parse(map.out).modules.some((module) => module.name === "tools" && !module.available), true);
+    assert.equal(JSON.parse(map.out).modules.some((module) => module.name === "tools" && module.available), true);
   } finally {
     await rm(cwd, { recursive: true, force: true });
   }

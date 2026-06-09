@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jami.studio/schemas/harness/tool-execution.schema.json",
+  "title": "toolExecution",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "executionId",
+    "runId",
+    "toolId",
+    "adapterId",
+    "status",
+    "policyDecisionRef",
+    "auditRef",
+    "traceRef",
+    "evidenceRef",
+    "artifactRef",
+    "redaction"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "2026-06-09" },
+    "executionId": { "type": "string", "pattern": "^tex_[a-z0-9][a-z0-9_-]*$" },
+    "runId": { "type": "string", "pattern": "^run_[a-z0-9][a-z0-9_-]*$" },
+    "toolId": { "type": "string", "pattern": "^tool_[a-z0-9][a-z0-9_-]*$" },
+    "adapterId": { "type": "string", "pattern": "^adapter_[a-z0-9][a-z0-9_-]*$" },
+    "status": { "type": "string", "enum": ["completed", "denied", "unsupported", "timeout", "cancelled", "failed"] },
+    "policyDecisionRef": { "type": "string", "pattern": "^pol_[a-z0-9][a-z0-9_-]*$" },
+    "auditRef": { "type": "string", "pattern": "^aud_[a-z0-9][a-z0-9_-]*$" },
+    "traceRef": { "type": "string", "pattern": "^trc_[a-z0-9][a-z0-9_-]*$" },
+    "evidenceRef": { "type": "string", "pattern": "^ev_[a-z0-9][a-z0-9_-]*$" },
+    "artifactRef": { "type": "string", "pattern": "^art_[a-z0-9][a-z0-9_-]*$" },
+    "startedAt": { "type": "string", "format": "date-time" },
+    "endedAt": { "type": "string", "format": "date-time" },
+    "timeoutMs": { "type": "integer", "minimum": 1 },
+    "capabilityManifestRef": { "type": "string", "pattern": "^cap_[a-z0-9][a-z0-9_-]*$" },
+    "redaction": {
+      "type": "object",
+      "required": ["inputPolicy", "resultPolicy", "redactedFields"],
+      "additionalProperties": false,
+      "properties": {
+        "inputPolicy": { "type": "string", "enum": ["none", "redacted", "omitted"] },
+        "resultPolicy": { "type": "string", "enum": ["none", "redacted", "omitted"] },
+        "redactedFields": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "error": {
+      "type": "object",
+      "required": ["code", "message"],
+      "additionalProperties": false,
+      "properties": {
+        "code": { "type": "string" },
+        "message": { "type": "string" }
+      }
+    }
+  }
+}

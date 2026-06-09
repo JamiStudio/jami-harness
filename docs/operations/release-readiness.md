@@ -38,6 +38,7 @@ pnpm contracts:generate:check
 pnpm contracts:validate
 pnpm policy:test
 pnpm runtime:test
+pnpm tools:test
 pnpm artifacts:test
 pnpm observability:test
 pnpm memory:test
@@ -78,8 +79,9 @@ results.
 | Harness contracts, compatibility fixtures, generated references, and validation exist. | Supported | `packages/contracts/schemas/`, `packages/contracts/fixtures/`, `packages/contracts/generated/`, `pnpm contracts:generate:check`, `pnpm contracts:validate`. | "The repo includes an initial generated contract and fixture spine." |
 | Local SDK composes runtime, policy, artifacts, observability, and memory defaults. | Supported | `packages/sdk/src/index.mjs`, `packages/sdk/test/sdk.test.mjs`, `packages/sdk/README.md`, `pnpm sdk:test`. | "The SDK supports local evidence runs and module inspection for current foundations." |
 | CLI supports local init, evidence run, inspect, module map, and verify commands. | Supported | `apps/cli/src/cli.mjs`, `apps/cli/test/cli.test.mjs`, `apps/cli/README.md`, `pnpm cli:test`, `pnpm examples:smoke`. | "The CLI can run and inspect the local evidence smoke." |
+| Tool gateway foundation supports registry inspection, policy-gated function execution, typed trace/audit/evidence/artifact output, redaction, and unsupported adapter manifests. | Supported for current fixtures | `packages/tools/src/index.mjs`, `packages/tools/test/tools.test.mjs`, `packages/contracts/schemas/tool-execution.schema.json`, `pnpm tools:test`, `pnpm contracts:validate`. | "The repo includes a narrow policy-gated tool gateway foundation for function tools; protocol adapters remain unsupported." |
 | Policy, runtime, memory, artifacts, and observability fail closed on current negative fixtures. | Supported for current fixtures | Package tests and contract fixtures listed in `packages/contracts/README.md`. | "Current foundation fixtures cover fail-closed policy/runtime/evidence cases." |
-| Provider runtime, tool gateway, hosted workbench, hosted stores, docs generation, release publishing, or public docs hosting exist. | Unsupported | CLI and SDK README files state these are unavailable; roadmap Workstreams 4, 6, 8, and 9 remain open. | "Those surfaces are planned and currently unavailable." |
+| Provider runtime, full MCP/OpenAPI/shell/browser/code/A2A adapters, hosted workbench, hosted stores, docs generation, release publishing, or public docs hosting exist. | Unsupported | CLI and SDK README files state these are unavailable; roadmap Workstreams 4, 6, 8, and 9 remain open. | "Those surfaces are planned and currently unavailable." |
 | Release artifacts are signed, attested, SBOM-backed, or publish-ready. | Unsupported | This release gate, `private: true` package manifests, and unavailable command ledger. | "The repo has release-readiness policy and audit commands; publishable artifacts are not ready." |
 
 ## SBOM Policy

@@ -1,0 +1,23 @@
+{
+  "$schema": "../../schemas/tool-execution.schema.json",
+  "caseId": "invalid-tool-execution-missing-audit",
+  "description": "Tool execution records must carry audit evidence even for unsupported or denied attempts.",
+  "expectedValid": false,
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "executionId": "tex_invalid_gateway",
+    "runId": "run_tool_gateway",
+    "toolId": "tool_invalid",
+    "adapterId": "adapter_function",
+    "status": "denied",
+    "policyDecisionRef": "pol_tool_gateway_invalid_deny",
+    "traceRef": "trc_tool_gateway_invalid",
+    "evidenceRef": "ev_tool_gateway_invalid",
+    "artifactRef": "art_tool_gateway_invalid",
+    "redaction": {
+      "inputPolicy": "redacted",
+      "resultPolicy": "omitted",
+      "redactedFields": []
+    }
+  }
+}

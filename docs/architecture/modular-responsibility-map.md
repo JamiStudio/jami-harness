@@ -247,6 +247,14 @@ Default modules:
 - OpenAPI adapter.
 - Local shell/browser/code adapters with policy controls.
 
+Current foundation status: Workstream 4 pass 1 after the overclaim audit adds
+`@jami-studio/harness-tools` with a replaceable in-memory registry, one policy-gated
+execution envelope, a real function-tool adapter path, timeout/cancellation status,
+typed trace/audit/evidence/artifact output, redaction, and unsupported capability
+manifests for MCP, OpenAPI, shell, browser, code, provider, and A2A adapters. The
+unsupported adapters intentionally do not claim protocol support until repo-local
+source-lock evidence and adapter fixtures are added.
+
 ## Storage Strategy
 
 Storage is replaceable behind ports.

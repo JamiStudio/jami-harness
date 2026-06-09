@@ -358,7 +358,7 @@ Pass status:
   `runEvent` records for start/progress/complete/fail, `ui.payload.emitted`,
   `artifact.created`, `policy.decision`, and allowed `tool.call.requested` references.
   Action emission runs through the existing policy kernel and denied or malformed action
-  requests stay display-only. This is not the full provider runtime, tool gateway,
+  requests stay display-only. This is not the full provider runtime, full tool gateway,
   durable checkpoint store, memory/context/search integration, observability sink, CLI,
   or real agent execution loop.
 - 2026-06-09 Stream 4 pass 1 connected the runtime spine to injectable event and audit
@@ -479,27 +479,39 @@ Primary areas:
 - `packages/runtime`
 - `docs/operations`
 
+Pass status:
+
+- 2026-06-09 Workstream 4 pass 1 after the overclaim audit added the first
+  `@jami-studio/harness-tools` foundation: an in-memory replaceable tool registry, risk
+  labels, one policy-gated execution envelope, a real function-tool adapter path,
+  timeout/cancellation status, typed `toolExecution` contract records, trace/audit/
+  evidence/artifact output, redaction for secret-like inputs and results, SDK/CLI
+  capability inspection, and adapter capability manifests. MCP, OpenAPI, shell, browser,
+  code, provider, and A2A adapters are explicit unsupported capability manifests and
+  fail closed until repo-local source-lock evidence and adapter fixtures exist.
+
 Implementation tasks:
 
-- [ ] Implement tool registry and risk labels.
-- [ ] Normalize MCP, OpenAPI, function, shell, browser, code, and provider tools through one execution envelope.
+- [x] Implement tool registry and risk labels.
+- [~] Normalize MCP, OpenAPI, function, shell, browser, code, and provider tools through one execution envelope for status reporting; only function tools have an executable adapter in this pass, while MCP/OpenAPI/shell/browser/code/provider adapters fail closed as unsupported.
 - [ ] Add MCP client support for stdio and Streamable HTTP.
 - [ ] Add A2A agent-card/task interop where cross-agent communication is required.
 - [ ] Add origin/session/auth controls for HTTP transports, including MCP Streamable HTTP origin and localhost-binding safeguards where applicable.
-- [ ] Add OpenAPI/function tool adapters.
+- [~] Add OpenAPI/function tool adapters; function tools are implemented, OpenAPI remains unsupported until current source-lock evidence and fixtures exist.
 - [ ] Add local shell/browser/code wrappers with sandbox policy.
-- [ ] Add tool-call approval, timeout, cancellation, trace, and audit events.
-- [ ] Add adapter capability manifests for streaming, cancellation, resumability, auth model, tool result shape, artifact support, error taxonomy, trace propagation, policy hooks, and unsupported states.
+- [~] Add tool-call approval, timeout, cancellation, trace, and audit events; the foundation covers approval through the policy seam and represents timeout/cancellation status, but streaming and resume semantics remain open.
+- [~] Add adapter capability manifests for streaming, cancellation, resumability, auth model, tool result shape, artifact support, error taxonomy, trace propagation, policy hooks, and unsupported states.
 
 Exit criteria:
 
-- [ ] Tools execute only through policy, emit traces/audit, and produce typed artifacts.
-- [ ] Every adapter has positive, denied, unsupported, and trace/evidence fixtures.
+- [~] Tools execute only through policy, emit traces/audit, and produce typed artifacts for the current function-tool foundation.
+- [~] Every adapter has positive, denied, unsupported, and trace/evidence fixtures for the current foundation; protocol-specific positive fixtures remain open because those adapters are unsupported.
 
 Suggested verification:
 
-- `pnpm test --filter @jami-harness/tools`
-- MCP compatibility smoke against trusted local fixture server.
+- `pnpm tools:test`
+- `pnpm contracts:validate`
+- MCP compatibility smoke against trusted local fixture server after MCP source-lock evidence and adapter implementation exist.
 
 ## Workstream 5: Memory, Context, Search, And Citation
 
@@ -688,9 +700,9 @@ Pass status:
   creates local runs; and exposes artifact, trace, evidence, and capability inspection.
   The CLI adds idempotent `init`, local evidence `run`, `inspect`, `tools`, `memory`,
   `docs`, `map`, and `verify` commands with JSON output and clean exit codes. This is not
-  a provider runtime, tool gateway, approval executor, resume/checkpoint store, docs
-  generator, hosted workbench, hosted control plane, Studio UI installer, or release
-  publishing surface.
+  a provider runtime, full protocol tool gateway, approval executor, resume/checkpoint
+  store, docs generator, hosted workbench, hosted control plane, Studio UI installer, or
+  release publishing surface.
 
 Implementation tasks:
 

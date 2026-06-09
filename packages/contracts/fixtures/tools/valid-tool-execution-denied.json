@@ -1,0 +1,31 @@
+{
+  "$schema": "../../schemas/tool-execution.schema.json",
+  "caseId": "valid-tool-execution-denied",
+  "description": "A denied tool execution records policy and evidence references without running the handler.",
+  "expectedValid": true,
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "executionId": "tex_release_publish_denied",
+    "runId": "run_tool_gateway",
+    "toolId": "tool_publish_release",
+    "adapterId": "adapter_function",
+    "status": "denied",
+    "policyDecisionRef": "pol_tool_gateway_publish_deny",
+    "auditRef": "aud_tool_gateway_publish_deny",
+    "traceRef": "trc_tool_gateway_publish",
+    "evidenceRef": "ev_tool_gateway_publish",
+    "artifactRef": "art_tool_gateway_publish",
+    "startedAt": "2026-06-09T12:00:00.000Z",
+    "endedAt": "2026-06-09T12:00:00.000Z",
+    "capabilityManifestRef": "cap_function_tool_gateway",
+    "redaction": {
+      "inputPolicy": "redacted",
+      "resultPolicy": "omitted",
+      "redactedFields": []
+    },
+    "error": {
+      "code": "policy_denied",
+      "message": "tool execution denied by policy"
+    }
+  }
+}

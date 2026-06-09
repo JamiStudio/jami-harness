@@ -3,6 +3,7 @@ import { createInMemoryMemoryPort, createNoopMemoryPort } from "../../memory/src
 import { createRunObservability } from "../../observability/src/index.mjs";
 import { createDefaultPolicyEngine } from "../../policy/src/index.mjs";
 import { createRunLifecycleKernel } from "../../runtime/src/index.mjs";
+import { createToolRegistry } from "../../tools/src/index.mjs";
 
 const SCHEMA_VERSION = "2026-06-09";
 const ID_PATTERNS = {
@@ -31,7 +32,7 @@ export function createHarness(options = {}) {
   const policyEngine = options.policyEngine ?? createDefaultPolicyEngine({ now });
   assertPort("policyEngine", policyEngine, ["evaluate"]);
   const docsOutput = options.docsOutput ?? createUnavailableModule("docsOutput", "docs generation package is not implemented yet");
-  const tools = options.tools ?? createUnavailableModule("tools", "tool gateway package is not implemented yet");
+  const tools = options.tools ?? createToolRegistry();
   const sourceLocks = options.sourceLocks ?? [];
 
   const modules = {
@@ -59,7 +60,12 @@ export function createHarness(options = {}) {
       "citation freshness",
       "deterministic context packs",
     ], memory.capabilities?.mode === "noop" ? ["memory module disabled"] : []),
-    tools: capability("tools", "optional_surface", moduleMode(tools), false, [], [tools.reason]),
+    tools: capability("tools", "replaceable_module", moduleMode(tools), true, [
+      "tool registry",
+      "policy-gated execution envelope",
+      "function tool adapter",
+      "unsupported adapter capability manifests",
+    ], tools.reason ? [tools.reason] : []),
     docsOutput: capability("docsOutput", "optional_surface", moduleMode(docsOutput), false, [], [docsOutput.reason]),
   };
 
@@ -105,7 +111,7 @@ export function createHarness(options = {}) {
         sourceLocks,
         boundaries: {
           providerRuntime: "not_implemented",
-          toolGateway: "not_implemented",
+          toolGateway: "foundation_only",
           hostedControlPlane: "not_implemented",
           workbench: "not_implemented",
           docsGeneration: "not_implemented",

@@ -25,6 +25,7 @@ const requiredAnchors = new Map([
   ["traceEvent", "trace-event.schema.json"],
   ["memoryRecord", "memory-record.schema.json"],
   ["contextPack", "context-pack.schema.json"],
+  ["toolExecution", "tool-execution.schema.json"],
   ["threatModelFixtureCatalog", "threat-model-fixture-catalog.schema.json"],
 ]);
 
@@ -39,6 +40,7 @@ const requiredNegativeCaseIds = new Set([
   "invalid-approval-replay-token",
   "invalid-policy-decision-without-audit",
   "invalid-memory-cross-actor-leakage",
+  "invalid-tool-execution-missing-audit",
 ]);
 const fixtureCoverage = new Map();
 const negativeCaseCoverage = new Set();
@@ -312,6 +314,21 @@ function validateSemantics(schemaTitle, value) {
       if (included.has(droppedItem.sourceRef)) {
         errors.push(`$.droppedItems[${index}].sourceRef cannot also be included`);
       }
+    }
+  }
+
+  if (schemaTitle === "toolExecution") {
+    if (value.status !== "completed" && !value.error) {
+      errors.push("$.error is required for denied, unsupported, timeout, cancelled, and failed tool executions");
+    }
+    if (value.status === "completed" && value.error) {
+      errors.push("$.error is only allowed for non-completed tool executions");
+    }
+    if (["denied", "unsupported", "timeout", "cancelled", "failed"].includes(value.status) && value.redaction.resultPolicy === "none") {
+      errors.push("$.redaction.resultPolicy cannot be none for non-completed tool executions");
+    }
+    if (value.status === "unsupported" && value.error?.code !== "adapter_unsupported") {
+      errors.push("$.error.code must be adapter_unsupported for unsupported adapters");
     }
   }
 

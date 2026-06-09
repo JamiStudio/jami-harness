@@ -1,6 +1,6 @@
 {
   "generated": {
-    "generatedAt": "2026-06-09T06:55:56.814Z",
+    "generatedAt": "2026-06-09T11:40:13.093Z",
     "generatorVersion": "2026-06-09.contracts.1",
     "source": "packages/contracts/schemas/*.schema.json"
   },
@@ -248,6 +248,25 @@
         "fixtures"
       ],
       "title": "threatModelFixtureCatalog"
+    },
+    {
+      "file": "schemas/tool-execution.schema.json",
+      "id": "https://jami.studio/schemas/harness/tool-execution.schema.json",
+      "required": [
+        "schemaVersion",
+        "executionId",
+        "runId",
+        "toolId",
+        "adapterId",
+        "status",
+        "policyDecisionRef",
+        "auditRef",
+        "traceRef",
+        "evidenceRef",
+        "artifactRef",
+        "redaction"
+      ],
+      "title": "toolExecution"
     },
     {
       "file": "schemas/trace-event.schema.json",

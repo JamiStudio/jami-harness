@@ -20,7 +20,8 @@ test("creates a local run with evidence, artifacts, traces, and inspectable modu
 
   const inspection = harness.inspect();
   assert.equal(inspection.modules.some((module) => module.name === "runtime" && module.available), true);
-  assert.equal(inspection.boundaries.toolGateway, "not_implemented");
+  assert.equal(inspection.modules.some((module) => module.name === "tools" && module.available), true);
+  assert.equal(inspection.boundaries.toolGateway, "foundation_only");
 });
 
 test("supports configurable module injection without changing run grammar", async () => {

@@ -1856,6 +1856,144 @@
         "title": "threatModelFixtureCatalog",
         "type": "object"
       },
+      "ToolExecution": {
+        "$id": "https://jami.studio/schemas/harness/tool-execution.schema.json",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "adapterId": {
+            "pattern": "^adapter_[a-z0-9][a-z0-9_-]*$",
+            "type": "string"
+          },
+          "artifactRef": {
+            "pattern": "^art_[a-z0-9][a-z0-9_-]*$",
+            "type": "string"
+          },
+          "auditRef": {
+            "pattern": "^aud_[a-z0-9][a-z0-9_-]*$",
+            "type": "string"
+          },
+          "capabilityManifestRef": {
+            "pattern": "^cap_[a-z0-9][a-z0-9_-]*$",
+            "type": "string"
+          },
+          "endedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "error": {
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "type": "object"
+          },
+          "evidenceRef": {
+            "pattern": "^ev_[a-z0-9][a-z0-9_-]*$",
+            "type": "string"
+          },
+          "executionId": {
+            "pattern": "^tex_[a-z0-9][a-z0-9_-]*$",
+            "type": "string"
+          },
+          "policyDecisionRef": {
+            "pattern": "^pol_[a-z0-9][a-z0-9_-]*$",
+            "type": "string"
+          },
+          "redaction": {
+            "additionalProperties": false,
+            "properties": {
+              "inputPolicy": {
+                "enum": [
+                  "none",
+                  "redacted",
+                  "omitted"
+                ],
+                "type": "string"
+              },
+              "redactedFields": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "resultPolicy": {
+                "enum": [
+                  "none",
+                  "redacted",
+                  "omitted"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "inputPolicy",
+              "resultPolicy",
+              "redactedFields"
+            ],
+            "type": "object"
+          },
+          "runId": {
+            "pattern": "^run_[a-z0-9][a-z0-9_-]*$",
+            "type": "string"
+          },
+          "schemaVersion": {
+            "const": "2026-06-09"
+          },
+          "startedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "denied",
+              "unsupported",
+              "timeout",
+              "cancelled",
+              "failed"
+            ],
+            "type": "string"
+          },
+          "timeoutMs": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "toolId": {
+            "pattern": "^tool_[a-z0-9][a-z0-9_-]*$",
+            "type": "string"
+          },
+          "traceRef": {
+            "pattern": "^trc_[a-z0-9][a-z0-9_-]*$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "executionId",
+          "runId",
+          "toolId",
+          "adapterId",
+          "status",
+          "policyDecisionRef",
+          "auditRef",
+          "traceRef",
+          "evidenceRef",
+          "artifactRef",
+          "redaction"
+        ],
+        "title": "toolExecution",
+        "type": "object"
+      },
       "TraceEvent": {
         "$id": "https://jami.studio/schemas/harness/trace-event.schema.json",
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -2095,7 +2233,7 @@
     "title": "Jami Harness Contracts",
     "version": "2026-06-09",
     "x-jami-generated": {
-      "generatedAt": "2026-06-09T06:55:56.814Z",
+      "generatedAt": "2026-06-09T11:40:13.093Z",
       "generatorVersion": "2026-06-09.contracts.1",
       "source": "packages/contracts/schemas/*.schema.json"
     }
