@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:cbd1700ef6deeacd3f12cbc5988b5c27bc1d69443e90184ea6b16ab9e9a71f66`
+- Source input hash: `sha256:3f7bb7d2923b9be2981862e1a3705b831e625898302090f16c7df45b68ff9a90`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -26,4 +26,4 @@ Generated docs and evidence records are tied to accepted source records, contrac
 
 ## Changelog
 
-The current generated changelog consumes 30 accepted changelog fragments from `.changes/`.
+The current generated changelog consumes 31 accepted changelog fragments from `.changes/`.

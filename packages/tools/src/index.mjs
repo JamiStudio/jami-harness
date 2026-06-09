@@ -14,6 +14,7 @@ const MCP_TOOL_NAME_PATTERN = /^[A-Za-z0-9_.-]{1,128}$/;
 const ALLOWED_RISKS = new Set(["read", "write", "destructive", "external", "secret_adjacent"]);
 const ELEVATED_RISKS = new Set(["write", "destructive", "external", "secret_adjacent"]);
 const EXECUTABLE_ADAPTER_IDS = new Set(["adapter_function", "adapter_mcp"]);
+const TRUSTED_MCP_FIXTURE_TOOL = Symbol("trustedMcpFixtureTool");
 const SENSITIVE_FIELD_PATTERN = /secret|token|apiKey|credential|password|privatePayload|plaintext|value|authorization|cookie|session|prompt|systemPrompt|developerPrompt|userPrompt|toolMetadata|toolSchema|toolDescription/i;
 const MCP_METADATA_POISON_PATTERN = /ignore\s+(policy|approval|instructions)|bypass\s+(policy|approval)|exfiltrate|leak\s+(secret|token|credential)|send\s+.*(secret|token|credential)/i;
 
@@ -275,6 +276,7 @@ export async function discoverMcpServerTools(options = {}) {
         transport: "in_process_fixture",
       },
       capabilityManifest: mcpCapabilityManifest({ requiredScopes, sourceLock }),
+      [TRUSTED_MCP_FIXTURE_TOOL]: true,
       async handler(input) {
         return mcpRequest(server, "tools/call", { name: metadata.name, arguments: input ?? {} });
       },
@@ -641,7 +643,7 @@ function normalizeToolDefinition(tool) {
     throw new ToolGatewayError("invalid_tool", "requiredScopes must be an array");
   }
 
-  const support = EXECUTABLE_ADAPTER_IDS.has(adapterId) && typeof tool.handler === "function" ? "supported" : "unsupported";
+  const support = isExecutableAdapterTool(tool, adapterId) ? "supported" : "unsupported";
   if (support === "supported" && typeof tool.handler !== "function") {
     throw new ToolGatewayError("invalid_tool", "supported tools must provide a handler");
   }
@@ -662,6 +664,18 @@ function normalizeToolDefinition(tool) {
     handler: tool.handler,
     capabilityManifest: tool.capabilityManifest ?? capabilityManifestForTool(tool, adapterId, support),
   };
+}
+
+function isExecutableAdapterTool(tool, adapterId) {
+  if (!EXECUTABLE_ADAPTER_IDS.has(adapterId) || typeof tool.handler !== "function") return false;
+  if (adapterId === "adapter_function") return true;
+  if (adapterId === "adapter_mcp") {
+    return tool[TRUSTED_MCP_FIXTURE_TOOL] === true
+      && tool.mcp?.transport === "in_process_fixture"
+      && tool.mcp?.protocolVersion === MCP_PROTOCOL_VERSION
+      && MCP_TOOL_NAME_PATTERN.test(tool.mcp?.toolName ?? "");
+  }
+  return false;
 }
 
 function toPolicyRequest({ input, tool, runId, actor, projectId, environment }) {

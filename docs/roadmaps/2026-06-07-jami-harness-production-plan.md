@@ -526,6 +526,10 @@ Pass status:
   manifests and source-lock states; unsupported dry-runs produce typed tool execution,
   audit, trace, evidence, and artifact records without invoking external protocols, local
   processes, browsers, code runners, provider APIs, or agent interop endpoints.
+- 2026-06-09 adapter-readiness confirmation pass hardened the trusted MCP fixture path:
+  directly registered `adapter_mcp` handlers now fail closed as unsupported evidence unless
+  they were produced by trusted in-process fixture discovery after source-lock and metadata
+  validation.
 
 Implementation tasks:
 

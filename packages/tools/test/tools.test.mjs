@@ -134,6 +134,44 @@ test("unsupported adapters fail closed with capability manifests and no handler 
   );
 });
 
+test("direct MCP handler registration fails closed outside trusted fixture discovery", async () => {
+  let invoked = 0;
+  const registry = createToolRegistry();
+  registry.register({
+    toolId: "tool_mcp_direct",
+    label: "Direct MCP handler",
+    adapterId: "adapter_mcp",
+    risk: "read",
+    requiredScopes: ["repo:read"],
+    mcp: {
+      serverId: "untrusted_direct",
+      toolName: "fixture.direct",
+      protocolVersion: MCP_PROTOCOL_VERSION,
+      transport: "in_process_fixture",
+    },
+    handler() {
+      invoked += 1;
+      return { ok: true };
+    },
+  });
+  const gateway = createToolGateway({ now, registry });
+
+  const result = await gateway.execute({
+    runId: "run_tool_gateway",
+    toolId: "tool_mcp_direct",
+    actor: actor(["repo:read"]),
+    projectId: "proj_jami_harness",
+    environment: "local",
+    input: { query: "blocked" },
+  });
+
+  assert.equal(invoked, 0);
+  assert.equal(result.executable, false);
+  assert.equal(result.status, "unsupported");
+  assert.equal(result.execution.error.code, "adapter_unsupported");
+  assert.equal(result.execution.capabilityManifestRef, "cap_mcp_tool_gateway");
+});
+
 test("adapter inspection names supported and unavailable source-lock states", () => {
   const adapters = listToolAdapterCapabilities();
   const functionAdapter = adapters.find((adapter) => adapter.adapterId === "adapter_function");

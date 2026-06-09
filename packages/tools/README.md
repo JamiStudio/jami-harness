@@ -29,6 +29,10 @@ remain unsupported and are named as unsupported in the MCP capability manifest. 
 provider routing lives in `@jami-studio/harness-provider-local`; this package does not
 claim hosted provider execution.
 
+Direct `adapter_mcp` tool registration is not an executable MCP path. MCP handlers execute
+only when produced by the trusted in-process fixture discovery helper; direct MCP-shaped
+registrations fail closed as unsupported evidence.
+
 `listToolAdapterCapabilities()` and `listToolAdapterSourceLocks()` expose the current
 adapter readiness inventory for SDK and CLI inspection. `dryRunUnsupportedAdapter()` can
 produce typed unsupported evidence for OpenAPI, shell, browser, code, provider-as-tool, and

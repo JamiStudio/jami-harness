@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:cbd1700ef6deeacd3f12cbc5988b5c27bc1d69443e90184ea6b16ab9e9a71f66`
+- Source input hash: `sha256:3f7bb7d2923b9be2981862e1a3705b831e625898302090f16c7df45b68ff9a90`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -27,6 +27,7 @@
 - Docs source generator foundation (`.changes/2026-06-09-docs-source-generator.md`)
 - 2026-06-09-harness-readiness-boundary (`.changes/2026-06-09-harness-readiness-boundary.md`)
 - Local Deterministic Provider Foundation (`.changes/2026-06-09-local-deterministic-provider.md`)
+- MCP Direct Registration Hardening (`.changes/2026-06-09-mcp-direct-registration-hardening.md`)
 - MCP source-lock and fixture adapter (`.changes/2026-06-09-mcp-source-lock-fixture-adapter.md`)
 - Policy gate hardening (`.changes/2026-06-09-policy-gate-hardening.md`)
 - Policy runtime spine (`.changes/2026-06-09-policy-runtime-spine.md`)

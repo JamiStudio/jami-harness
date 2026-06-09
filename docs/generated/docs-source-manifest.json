@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:cbd1700ef6deeacd3f12cbc5988b5c27bc1d69443e90184ea6b16ab9e9a71f66",
+  "sourceInputHash": "sha256:3f7bb7d2923b9be2981862e1a3705b831e625898302090f16c7df45b68ff9a90",
   "generatedAt": "deterministic:git-head-plus-input-hash",
   "freshnessClass": "deterministic_current_source_tree",
   "command": "pnpm docs:generate -- --check",
@@ -80,6 +80,11 @@
       "path": ".changes/2026-06-09-local-deterministic-provider.md",
       "sha256": "sha256:42a42c7f954d386bb917f8022a0082328e5ab5207b415a8afb498ab3be9b45e8",
       "bytes": 387
+    },
+    {
+      "path": ".changes/2026-06-09-mcp-direct-registration-hardening.md",
+      "sha256": "sha256:57fd1839984abe6942df1743fcf4c21e45ab74721505171bc83c420c1fa6c7aa",
+      "bytes": 341
     },
     {
       "path": ".changes/2026-06-09-mcp-source-lock-fixture-adapter.md",
@@ -548,8 +553,8 @@
     },
     {
       "path": "packages/tools/README.md",
-      "sha256": "sha256:5ec08d063cefde1bf120fd2d583669f20f9b123026c93dfe226fc731347942f8",
-      "bytes": 2369
+      "sha256": "sha256:f2e6e87d1098c665cc813eb98f109d7650e944112c1f599fb4e470217a60fc85",
+      "bytes": 2601
     },
     {
       "path": "packages/tools/package.json",

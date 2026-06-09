@@ -175,7 +175,6 @@ export function createHarness(options = {}) {
         toolAdapters,
         toolAdapterManifests,
         boundaries: {
-          providerRuntime: "not_implemented",
           toolGateway: "foundation_only",
           hostedControlPlane: "not_implemented",
           workbench: "not_implemented",
