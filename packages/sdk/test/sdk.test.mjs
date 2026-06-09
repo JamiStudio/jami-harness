@@ -13,6 +13,10 @@ test("creates a local run with evidence, artifacts, traces, and inspectable modu
   });
 
   assert.equal(result.status, "completed");
+  assert.equal(result.providerResult.status, "completed");
+  assert.equal(result.providerResult.providerId, "provider_local_deterministic");
+  assert.equal(result.toolExecutions.length, 1);
+  assert.equal(result.toolExecutions[0].status, "completed");
   assert.equal(result.events.at(0).eventType, "run.started");
   assert.equal(result.evidence.source.commit, "d6cd77e");
   assert.equal(result.checkpoint.status, "completed");
@@ -20,14 +24,47 @@ test("creates a local run with evidence, artifacts, traces, and inspectable modu
   assert.equal(result.contextPack.runId, "run_sdk_fixture");
   assert.equal(harness.resume("run_sdk_fixture").reason, "run_completed");
   assert.equal(harness.readArtifact(result.artifact.artifactId).artifactId, result.artifact.artifactId);
-  assert.equal(harness.readTraces()[0].name, "sdk.run");
+  assert.equal(harness.readTraces().some((trace) => trace.name === "sdk.run"), true);
 
   const inspection = harness.inspect();
   assert.equal(inspection.modules.some((module) => module.name === "runtime" && module.available), true);
   assert.equal(inspection.modules.some((module) => module.name === "checkpointStore" && module.available), true);
   assert.equal(inspection.modules.some((module) => module.name === "context" && module.available), true);
   assert.equal(inspection.modules.some((module) => module.name === "tools" && module.available), true);
-  assert.equal(inspection.boundaries.toolGateway, "foundation_only");
+  assert.equal(inspection.modules.some((module) => module.name === "provider" && module.available), true);
+  assert.equal(inspection.boundaries.providerRuntime, "local_deterministic_only");
+  assert.equal(inspection.boundaries.hostedProviders, "not_implemented");
+});
+
+test("external provider requests fail closed without hosted provider execution", async () => {
+  const harness = createHarness({ now });
+  const result = await harness.run({
+    runId: "run_external_provider",
+    providerId: "provider_openai",
+    sourceCommit: "d6cd77e",
+  });
+
+  assert.equal(result.status, "unsupported");
+  assert.equal(result.providerResult.status, "unsupported");
+  assert.equal(result.providerResult.output.structured.failClosed, true);
+  assert.equal(result.toolExecutions, undefined);
+  assert.equal(result.checkpoint.status, "unsupported");
+  assert.equal(result.evidence.commands[0].status, "failed");
+});
+
+test("recoverable provider failure records checkpoint evidence and completes on retry", async () => {
+  const harness = createHarness({ now });
+  const result = await harness.run({
+    runId: "run_provider_recovery",
+    providerFailureMode: "fail_once",
+    workflowId: "workflow_sdk_retry",
+  });
+
+  assert.equal(result.status, "completed");
+  assert.equal(result.providerResult.status, "completed");
+  assert.equal(result.toolExecutions[0].status, "completed");
+  assert.equal(harness.readArtifacts().some((artifact) => artifact.title.includes("failed_recoverable")), true);
+  assert.equal(result.checkpoint.status, "completed");
 });
 
 test("supports configurable module injection without changing run grammar", async () => {
@@ -65,13 +102,35 @@ test("supports configurable module injection without changing run grammar", asyn
       return [];
     },
   };
+  const customProvider = {
+    capabilities: { mode: "custom_provider", provider: true },
+    async generate(input) {
+      return {
+        schemaVersion: "2026-06-09",
+        providerRunId: "prv_custom",
+        runId: input.runId,
+        providerId: "provider_custom",
+        status: "completed",
+        reason: "custom provider",
+        generatedAt: "2026-06-09T12:00:00.000Z",
+        output: { text: "custom", structured: {} },
+        toolCalls: [],
+        evidenceRef: "ev_custom_provider",
+        traceName: "provider.completed",
+        redaction: { privatePayloadPolicy: "none", redactedFields: [] },
+        retryable: false,
+        executable: true,
+      };
+    },
+  };
 
-  const harness = createHarness({ now, memory: customMemory, checkpointStore: customCheckpointStore });
+  const harness = createHarness({ now, memory: customMemory, checkpointStore: customCheckpointStore, provider: customProvider });
   const result = await harness.run({ runId: "run_custom_memory" });
 
   assert.equal(result.runId, "run_custom_memory");
   assert.equal(harness.inspect().modules.find((module) => module.name === "memory").mode, "custom_memory");
   assert.equal(harness.inspect().modules.find((module) => module.name === "checkpointStore").mode, "custom_store");
+  assert.equal(harness.inspect().modules.find((module) => module.name === "provider").mode, "custom_provider");
   assert.deepEqual(writes, []);
   assert.equal(checkpoints.length, 1);
 });

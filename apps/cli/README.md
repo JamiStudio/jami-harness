@@ -8,9 +8,14 @@ existing harness packages.
 Current commands:
 
 - `jami init --json` creates `.jami-harness/harness.json` idempotently.
-- `jami run --json` executes the local SDK evidence smoke and writes run evidence under
-  `.jami-harness/runs/<runId>/` plus a redacted checkpoint under
+- `jami run --json` executes the local deterministic provider workflow through the SDK,
+  policy-gated local tool gateway, evidence packet export, and checkpoint store. It
+  writes run evidence under `.jami-harness/runs/<runId>/` plus a redacted checkpoint under
   `.jami-harness/checkpoints/`.
+- `jami run --json --provider-id provider_openai` fails closed as an unsupported external
+  provider route; no hosted provider API is called.
+- `jami run --json --provider-failure-mode fail_once` records recoverable provider failure
+  evidence before deterministic retry.
 - `jami resume --json --run-id <runId>` reports checkpoint replay status and replay hash.
 - `jami approve --json --run-id <runId> --action-id <actionId>` records a local approval
   decision through the checkpoint store.
@@ -26,12 +31,12 @@ Current commands:
 Malformed run and action identifiers are rejected with structured JSON errors before the
 CLI reads or writes run state.
 
-The CLI reports the tool gateway foundation as available for registry inspection,
-policy-gated function execution, and unsupported adapter manifests. Local filesystem
-checkpoint/resume and approval evidence are available through
+The CLI reports the local deterministic provider and tool gateway foundations as available
+for provider replacement-port inspection, policy-gated function execution, and unsupported
+adapter/provider manifests. Local filesystem checkpoint/resume and approval evidence are available through
 `@jami-studio/harness-store-local`. Repo-level docs generation exists through
 `pnpm docs:generate`; the CLI `docs` capability still reports SDK docs-output injection
-as not wired. Hosted workbench, hosted stores, provider runtime, release publishing,
+as not wired. Hosted workbench, hosted stores, hosted provider runtime, release publishing,
 Mintlify build/publish, and full
 MCP/OpenAPI/shell/browser/code/A2A adapters remain unavailable until those surfaces exist
 with current source-lock evidence.

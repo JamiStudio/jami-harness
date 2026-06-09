@@ -5,7 +5,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:a6fb700c75f28437d773b42ab05882ea65d4dfa8e7afb0f6da4a8f163de36d24`
+- Source input hash: `sha256:2b210fd0bbc091bd7a32aa4f8e9b9ac61e8df0c9f4eacd82086c70b0ca7eb2eb`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -35,6 +35,7 @@ node apps/cli/src/cli.mjs inspect --json
 - `@jami-studio/harness-memory` from `packages/memory/package.json`: Harness-owned memory, search, citation, permission filtering, and context replay foundations.
 - `@jami-studio/harness-observability` from `packages/observability/package.json`: Harness-owned trace, audit, and evidence packet export foundations.
 - `@jami-studio/harness-policy` from `packages/policy/package.json`: Harness-owned policy, approval, identity, secret-reference, and audit runtime spine.
+- `@jami-studio/harness-provider-local` from `packages/provider-local/package.json`: Local deterministic provider adapter foundation for Jami Harness workflow execution.
 - `@jami-studio/harness-runtime` from `packages/runtime/package.json`: Harness-owned dependency-light run lifecycle and policy-gated emission kernel.
 - `@jami-studio/harness-sdk` from `packages/sdk/package.json`: Harness SDK foundation for local run creation, evidence inspection, and module injection.
 - `@jami-studio/harness-store-local` from `packages/store-local/package.json`: Local replaceable checkpoint store ports for Jami Harness runtime state.
@@ -45,3 +46,4 @@ node apps/cli/src/cli.mjs inspect --json
 - Packages are not publish-ready.
 - Hosted docs are not deployed.
 - Mintlify build/publish has not run in this repo.
+- Hosted model providers are not implemented; the provider foundation is local deterministic only.

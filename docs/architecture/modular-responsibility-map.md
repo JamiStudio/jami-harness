@@ -145,6 +145,29 @@ The package graph should support that simple default while preserving modular us
 - `@jami-studio/harness-mcp`: MCP support.
 - `@jami-studio/harness-openapi`: OpenAPI tool support.
 
+## Provider Strategy
+
+Model providers are replaceable behind `harness.provider.model`.
+
+Harness-owned requirements:
+
+- Provider output is typed and observable.
+- Provider-requested tool calls still execute only through the harness tool gateway and
+  policy seam.
+- Provider routes declare capability manifests, unsupported features, auth posture,
+  retry behavior, trace/evidence behavior, and replacement compatibility.
+- Unsupported external providers fail closed without reading credentials or calling
+  hosted APIs.
+
+Current foundation status: post-audit implementation pass 1 adds
+`@jami-studio/harness-provider-local` with `provider_local_deterministic`, a first-party
+local provider for deterministic workflow and recovery fixtures. The SDK default run now
+uses that provider to request `tool_local_echo` through the policy-gated tool gateway,
+records provider/tool traces and artifacts, writes checkpoint/evidence output, and
+supports a fail-once recovery fixture. Hosted OpenAI, Anthropic, Google, xAI, Azure
+OpenAI, Bedrock, and other cloud provider adapters remain unsupported until repo-local
+source-lock evidence, auth controls, redaction, policy, trace, and adapter fixtures land.
+
 ## Memory Strategy
 
 Memory is a core contract but not a forced implementation.
@@ -332,13 +355,14 @@ Replaceable sinks:
 
 Current foundation status: Stream 5 pass 1 adds `@jami-studio/harness-sdk` and
 `@jami-studio/harness-cli` as local developer foundations. The SDK composes current
-runtime, policy, artifact, observability, memory, context, search, and checkpoint store
-modules; creates a local evidence run; writes redacted checkpoints; reads artifacts,
-traces, checkpoint state, and approval records; and exposes module injection and
-capability inspection. The CLI exposes idempotent local `init`, evidence `run`,
+runtime, policy, local deterministic provider, tool gateway, artifact, observability,
+memory, context, search, and checkpoint store modules; creates a local evidence run;
+writes redacted checkpoints; reads artifacts, traces, checkpoint state, and approval
+records; and exposes module injection and capability inspection. The CLI exposes
+idempotent local `init`, evidence `run`,
 `resume`, `approve`, `inspect`, `doctor`, `tools`, `memory`, `docs`, `map`, and `verify`
 commands with JSON output and clean exit codes. These surfaces intentionally report
-missing provider runtime, SDK-level docs-output injection, hosted stores, hosted
+missing hosted provider runtime, SDK-level docs-output injection, hosted stores, hosted
 workbench, Studio UI install flows, and release publishing until their owning packages
 exist. Workstream 6 / Workstream 9 docs-source pass 1 adds
 `@jami-studio/harness-docs` as a repo-level generated docs/manual/system-map/changelog

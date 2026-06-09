@@ -117,15 +117,20 @@ adds the first local `packages/sdk` and `apps/cli` foundations so developers and
 can create local evidence runs, inspect artifacts/traces/capabilities, and see missing
 optional modules through JSON output; post-audit implementation pass 1 extends those
 surfaces with SDK checkpoint/resume/approve APIs and CLI `resume`, `approve`, and
-`doctor`. Those surfaces are not provider runtimes, full protocol tool gateways, docs
-generators, hosted stores, hosted workbenches, Studio UI installers, or release
-publishing tools. Workstream 4 pass 1 after the overclaim audit adds a narrow
+`doctor`. The next post-audit pass adds `packages/provider-local` as the first
+replaceable model-provider port implementation. The SDK/CLI default path now uses a
+local deterministic provider to request a registered local tool through the policy-gated
+tool gateway, records provider/tool traces and artifacts, writes checkpoint/evidence
+output, supports fail-once recovery evidence, and fails closed for external provider ids
+such as `provider_openai` without calling hosted APIs. Those surfaces are not hosted
+provider runtimes, full protocol tool gateways, docs generators, hosted stores, hosted
+workbenches, Studio UI installers, or release publishing tools. Workstream 4 pass 1 after the overclaim audit adds a narrow
 `packages/tools` foundation and `toolExecution` contract for registry inspection,
 policy-gated function tool execution, timeout/cancellation status, typed trace/audit/
 evidence/artifact output, redaction, and unsupported adapter manifests. That foundation
-does not implement MCP, OpenAPI, shell, browser, code, provider, or A2A adapters; those
-remain explicit unsupported capabilities until current repo-local source-lock evidence
-and adapter tests exist. Workstream 4 MCP source-lock pass 1 adds repo-local MCP
+does not implement OpenAPI, shell, browser, code, provider-as-tool, or A2A adapters;
+those remain explicit unsupported capabilities until current repo-local source-lock
+evidence and adapter tests exist. Workstream 4 MCP source-lock pass 1 adds repo-local MCP
 `2025-11-25` source-lock evidence plus a trusted in-process MCP fixture adapter for
 `initialize`, `tools/list`, and `tools/call` mapping through the same policy, audit,
 trace, evidence, artifact, and redaction envelope. Stdio subprocess transport, remote

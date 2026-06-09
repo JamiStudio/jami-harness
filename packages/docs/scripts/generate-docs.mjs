@@ -56,6 +56,7 @@ function collectSourceRecords() {
     "docs/architecture/product-architecture.md",
     "apps/cli/README.md",
     "packages/sdk/README.md",
+    "packages/provider-local/README.md",
   ];
   files.push(...listFiles("packages/contracts/schemas", ".json"));
   files.push(...listFiles("packages/contracts/fixtures", ".json"));
@@ -191,6 +192,7 @@ function quickstart(model) {
     "- Packages are not publish-ready.",
     "- Hosted docs are not deployed.",
     "- Mintlify build/publish has not run in this repo.",
+    "- Hosted model providers are not implemented; the provider foundation is local deterministic only.",
   ].join("\n");
 }
 
@@ -202,7 +204,7 @@ function userManual(model) {
     "",
     "## Module Inspection",
     "",
-    "`jami map --json` reports active runtime, policy, tools, memory, artifacts, observability, and docs-output capability state.",
+    "`jami map --json` reports active runtime, policy, provider, tools, memory, artifacts, observability, and docs-output capability state.",
     "",
     "## Evidence Handling",
     "",
@@ -241,6 +243,7 @@ function systemMap(model) {
     "  runtime[packages/runtime]",
     "  policy[packages/policy]",
     "  tools[packages/tools]",
+    "  provider[packages/provider-local]",
     "  memory[packages/memory]",
     "  artifacts[packages/artifacts]",
     "  observability[packages/observability]",
@@ -250,12 +253,14 @@ function systemMap(model) {
     "  contracts --> runtime",
     "  contracts --> policy",
     "  contracts --> tools",
+    "  contracts --> provider",
     "  contracts --> memory",
     "  contracts --> artifacts",
     "  contracts --> observability",
     "  runtime --> sdk",
     "  policy --> sdk",
     "  tools --> sdk",
+    "  provider --> sdk",
     "  memory --> sdk",
     "  artifacts --> sdk",
     "  observability --> sdk",
@@ -289,7 +294,8 @@ function evidenceIndex(model) {
     "- Local contract schemas, generated references, and fixtures exist.",
     "- Local docs generation exists and has check mode.",
     "- Local CLI/SDK evidence smoke exists.",
-    "- Release publishing, hosted docs, attestation, and SBOM artifacts remain unavailable until their gates close.",
+    "- Local deterministic provider workflow exists and routes tool calls through the policy-gated tool gateway.",
+    "- Release publishing, hosted docs, hosted model providers, attestation, and SBOM artifacts remain unavailable until their gates close.",
     "",
     "## Evidence Inputs",
     "",

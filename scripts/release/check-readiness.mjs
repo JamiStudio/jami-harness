@@ -107,15 +107,25 @@ const claims = [
     "packages/sdk/README.md",
     "pnpm sdk:test",
   ]),
+  claim("Local deterministic provider workflow executes through the SDK, tool gateway, policy, traces, artifacts, checkpoints, and evidence", "supported", [
+    "packages/provider-local/src/index.mjs",
+    "packages/provider-local/test/provider-local.test.mjs",
+    "packages/sdk/test/sdk.test.mjs",
+    "apps/cli/test/cli.test.mjs",
+    "pnpm provider:test",
+    "pnpm sdk:test",
+    "pnpm cli:test",
+  ]),
   claim("Generated docs, changelog, system map, evidence index, and Mintlify-ready navigation draft exist locally", "supported", [
     "packages/docs/scripts/generate-docs.mjs",
     "docs/generated/docs-source-manifest.json",
     "apps/docs/docs.json",
     "pnpm docs:generate -- --check",
   ]),
-  claim("Release publishing, hosted Mintlify build, hosted workbench, hosted stores, provider runtime, and full MCP/OpenAPI/shell/browser/code/A2A adapters are available", "unsupported", [
+  claim("Release publishing, hosted Mintlify build, hosted workbench, hosted stores, hosted provider runtime, and full MCP/OpenAPI/shell/browser/code/A2A adapters are available", "unsupported", [
     "apps/cli/README.md",
     "packages/sdk/README.md",
+    "packages/provider-local/README.md",
     "docs/roadmaps/2026-06-07-jami-harness-production-plan.md",
   ]),
 ];

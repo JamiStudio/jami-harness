@@ -10,8 +10,9 @@ Jami Harness. It records what can be claimed from current evidence and what must
 blocked until the repo has real command evidence or a human account intervention.
 
 No command in this repo publishes to npm, creates a GitHub release, deploys public docs,
-or calls a hosted provider. Those actions remain blocked until the intervention ledger
-below is closed.
+or calls a hosted provider. The current provider path is a first-party local
+deterministic adapter only. Hosted-provider actions remain blocked until the intervention
+ledger below is closed.
 
 ## Current Release Posture
 
@@ -43,6 +44,7 @@ pnpm contracts:validate
 pnpm policy:test
 pnpm runtime:test
 pnpm tools:test
+pnpm provider:test
 pnpm artifacts:test
 pnpm observability:test
 pnpm memory:test
@@ -83,9 +85,10 @@ results.
 | Local SDK composes runtime, policy, artifacts, observability, and memory defaults. | Supported | `packages/sdk/src/index.mjs`, `packages/sdk/test/sdk.test.mjs`, `packages/sdk/README.md`, `pnpm sdk:test`. | "The SDK supports local evidence runs and module inspection for current foundations." |
 | CLI supports local init, evidence run, inspect, module map, and verify commands. | Supported | `apps/cli/src/cli.mjs`, `apps/cli/test/cli.test.mjs`, `apps/cli/README.md`, `pnpm cli:test`, `pnpm examples:smoke`. | "The CLI can run and inspect the local evidence smoke." |
 | Tool gateway foundation supports registry inspection, policy-gated function execution, typed trace/audit/evidence/artifact output, redaction, and unsupported adapter manifests. | Supported for current fixtures | `packages/tools/src/index.mjs`, `packages/tools/test/tools.test.mjs`, `packages/contracts/schemas/tool-execution.schema.json`, `pnpm tools:test`, `pnpm contracts:validate`. | "The repo includes a narrow policy-gated tool gateway foundation for function tools; protocol adapters remain unsupported." |
+| Local deterministic provider workflow executes through the SDK, tool gateway, policy, traces, artifacts, checkpoints, memory/context, and evidence. | Supported for current fixtures | `packages/provider-local/src/index.mjs`, `packages/provider-local/test/provider-local.test.mjs`, `packages/sdk/test/sdk.test.mjs`, `apps/cli/test/cli.test.mjs`, `pnpm provider:test`, `pnpm sdk:test`, `pnpm cli:test`. | "The repo includes a local deterministic provider foundation for workflow and recovery fixtures; hosted providers remain unsupported." |
 | Policy, runtime, memory, artifacts, and observability fail closed on current negative fixtures. | Supported for current fixtures | Package tests and contract fixtures listed in `packages/contracts/README.md`. | "Current foundation fixtures cover fail-closed policy/runtime/evidence cases." |
 | Local docs generation can produce quickstart, user manual, API/reference summary, system map, changelog draft, evidence index, docs-source manifest, and Mintlify-ready navigation draft. | Supported for current source records | `packages/docs/scripts/generate-docs.mjs`, `docs/generated/docs-source-manifest.json`, `apps/docs/docs.json`, `pnpm docs:generate -- --check`. | "The repo includes local generated docs artifacts and a Mintlify-ready draft; hosted docs are not published." |
-| Provider runtime, full MCP/OpenAPI/shell/browser/code/A2A adapters, hosted workbench, hosted stores, release publishing, Mintlify build/publish, or public docs hosting exist. | Unsupported | CLI and SDK README files state unavailable runtime surfaces; this release gate records hosted docs and publishing blockers; roadmap Workstreams 4, 6, 8, and 9 remain open. | "Those surfaces are planned and currently unavailable." |
+| Hosted provider runtime, full MCP/OpenAPI/shell/browser/code/A2A adapters, hosted workbench, hosted stores, release publishing, Mintlify build/publish, or public docs hosting exist. | Unsupported | CLI, SDK, and provider README files state unavailable hosted/protocol surfaces; this release gate records hosted docs and publishing blockers; roadmap Workstreams 4, 6, 8, and 9 remain open. | "Those surfaces are planned and currently unavailable." |
 | Release artifacts are signed, attested, SBOM-backed, or publish-ready. | Unsupported | This release gate, `private: true` package manifests, and unavailable command ledger. | "The repo has release-readiness policy and audit commands; publishable artifacts are not ready." |
 
 ## SBOM Policy

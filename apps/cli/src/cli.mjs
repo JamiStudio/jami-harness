@@ -65,10 +65,11 @@ async function runCommand(cwd, parsed, io) {
   const harness = createHarness({ checkpointStore });
   const result = await harness.run({
     runId,
+    providerId: parsed.options["provider-id"] ?? parsed.options.providerId,
+    providerFailureMode: parsed.options["provider-failure-mode"] ?? parsed.options.providerFailureMode,
     sourceRepo: "jami-harness",
     sourceCommit: parsed.options.commit ?? "working-tree",
     sourceRef: parsed.options.ref ?? "refs/heads/main",
-    commands: [{ command: "jami run", status: "passed", recordedAt: new Date().toISOString() }],
   });
   const runPath = join(cwd, STATE_DIR, "runs", runId);
   await mkdir(runPath, { recursive: true });
@@ -79,6 +80,9 @@ async function runCommand(cwd, parsed, io) {
     command: "run",
     runId,
     status: result.status,
+    providerStatus: result.providerResult?.status,
+    providerId: result.providerResult?.providerId,
+    toolExecutionStatuses: result.toolExecutions?.map((execution) => execution.status) ?? [],
     checkpointId: result.checkpoint.checkpointId,
     replayHash: result.checkpoint.replayHash,
     evidencePath: join(runPath, "evidence.json"),
@@ -304,12 +308,23 @@ function toRunSummary(result) {
     runId: result.runId,
     status: result.status,
     eventCount: result.events.length,
-    artifactId: result.artifact.artifactId,
+    artifactId: result.artifact?.artifactId,
     evidenceId: result.evidence.evidenceId,
     checkpointId: result.checkpoint.checkpointId,
     replayHash: result.checkpoint.replayHash,
     traceCount: result.traces.length,
     auditCount: result.audits.length,
+    provider: result.providerResult ? {
+      providerId: result.providerResult.providerId,
+      status: result.providerResult.status,
+      evidenceRef: result.providerResult.evidenceRef,
+    } : undefined,
+    tools: result.toolExecutions?.map(({ execution }) => ({
+      toolId: execution.toolId,
+      status: execution.status,
+      evidenceRef: execution.evidenceRef,
+      artifactRef: execution.artifactRef,
+    })) ?? [],
   };
 }
 

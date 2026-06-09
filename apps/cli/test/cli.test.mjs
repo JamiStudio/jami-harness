@@ -33,14 +33,71 @@ test("run writes inspectable evidence, checkpoint, and map output reports missin
     const map = await runCli(["map", "--json", "--cwd", cwd]);
 
     assert.equal(run.code, 0);
+    assert.equal(runPayload.providerStatus, "completed");
+    assert.equal(runPayload.providerId, "provider_local_deterministic");
+    assert.deepEqual(runPayload.toolExecutionStatuses, ["completed"]);
     assert.equal(evidence.source.commit, "d6cd77e");
     assert.match(summary.replayHash, /^sha256:/);
+    assert.equal(summary.provider.status, "completed");
+    assert.equal(summary.tools[0].status, "completed");
     assert.equal(JSON.parse(inspect.out).latestRun.runId, "run_cli_fixture");
     assert.equal(JSON.parse(inspect.out).checkpoint.status, "completed");
     assert.equal(resume.code, 3);
     assert.equal(JSON.parse(resume.out).reason, "run_completed");
     assert.equal(JSON.parse(doctor.out).checkpoint.runId, "run_cli_fixture");
     assert.equal(JSON.parse(map.out).modules.some((module) => module.name === "tools" && module.available), true);
+  } finally {
+    await rm(cwd, { recursive: true, force: true });
+  }
+});
+
+test("run fails closed for unsupported external provider routes", async () => {
+  const cwd = await mkdtemp(join(tmpdir(), "jami-cli-"));
+  try {
+    const run = await runCli([
+      "run",
+      "--json",
+      "--cwd",
+      cwd,
+      "--run-id",
+      "run_cli_external_provider",
+      "--provider-id",
+      "provider_openai",
+    ]);
+    const runPayload = JSON.parse(run.out);
+    const summary = JSON.parse(await readFile(runPayload.summaryPath, "utf8"));
+
+    assert.equal(run.code, 0);
+    assert.equal(runPayload.status, "unsupported");
+    assert.equal(runPayload.providerStatus, "unsupported");
+    assert.equal(summary.provider.status, "unsupported");
+    assert.equal(summary.tools.length, 0);
+  } finally {
+    await rm(cwd, { recursive: true, force: true });
+  }
+});
+
+test("run records recoverable local provider retry evidence", async () => {
+  const cwd = await mkdtemp(join(tmpdir(), "jami-cli-"));
+  try {
+    const run = await runCli([
+      "run",
+      "--json",
+      "--cwd",
+      cwd,
+      "--run-id",
+      "run_cli_provider_retry",
+      "--provider-failure-mode",
+      "fail_once",
+    ]);
+    const runPayload = JSON.parse(run.out);
+    const summary = JSON.parse(await readFile(runPayload.summaryPath, "utf8"));
+
+    assert.equal(run.code, 0);
+    assert.equal(runPayload.status, "completed");
+    assert.equal(summary.provider.status, "completed");
+    assert.equal(summary.tools[0].status, "completed");
+    assert.match(summary.replayHash, /^sha256:/);
   } finally {
     await rm(cwd, { recursive: true, force: true });
   }

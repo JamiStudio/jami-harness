@@ -8,9 +8,10 @@ import {
 } from "../../memory/src/index.mjs";
 import { createRunObservability } from "../../observability/src/index.mjs";
 import { createDefaultPolicyEngine } from "../../policy/src/index.mjs";
+import { createDeterministicProvider } from "../../provider-local/src/index.mjs";
 import { createRunLifecycleKernel } from "../../runtime/src/index.mjs";
 import { createInMemoryCheckpointStore } from "../../store-local/src/index.mjs";
-import { createToolRegistry } from "../../tools/src/index.mjs";
+import { createFunctionTool, createToolGateway, createToolRegistry } from "../../tools/src/index.mjs";
 
 const SCHEMA_VERSION = "2026-06-09";
 const ID_PATTERNS = {
@@ -44,8 +45,14 @@ export function createHarness(options = {}) {
   assertPort("checkpointStore", checkpointStore, ["writeCheckpoint", "readCheckpoint", "resume", "writeApproval", "listApprovals"]);
   const policyEngine = options.policyEngine ?? createDefaultPolicyEngine({ now });
   assertPort("policyEngine", policyEngine, ["evaluate"]);
+  const provider = options.provider ?? createDeterministicProvider({ now });
+  assertPort("provider", provider, ["generate"]);
+  assertCapabilities("provider", provider);
   const docsOutput = options.docsOutput ?? createUnavailableModule("docsOutput", "repo-level docs generation exists through pnpm docs:generate; SDK docs-output injection is not wired yet");
   const tools = options.tools ?? createToolRegistry();
+  ensureDefaultLocalTools(tools);
+  const toolGateway = options.toolGateway ?? createToolGateway({ registry: tools, artifactStore, observability, policyEngine, now });
+  assertPort("toolGateway", toolGateway, ["execute"]);
   const sourceLocks = options.sourceLocks ?? [];
 
   const modules = {
@@ -88,6 +95,12 @@ export function createHarness(options = {}) {
       "approval record storage",
       "redacted replay hash",
     ], checkpointStore.capabilities?.durable ? [] : ["checkpoint store is in-memory and not durable"]),
+    provider: capability("provider", "replaceable_module", moduleMode(provider), provider.capabilities?.provider === true, [
+      "local deterministic provider workflow",
+      "model replacement port",
+      "fail-closed external provider routes",
+      "recoverable fail-once fixture",
+    ], provider.capabilities?.provider === true ? [] : ["provider route is unsupported"]),
     tools: capability("tools", "replaceable_module", moduleMode(tools), true, [
       "tool registry",
       "policy-gated execution envelope",
@@ -113,6 +126,8 @@ export function createHarness(options = {}) {
         context,
         checkpointStore,
         policyEngine,
+        provider,
+        toolGateway,
       });
     },
 
@@ -154,15 +169,17 @@ export function createHarness(options = {}) {
           workbench: "not_implemented",
           docsGeneration: "repo_generator_available_sdk_output_not_wired",
           checkpointStore: checkpointStore.capabilities?.durable ? "durable_local" : "memory_only",
+          providerRuntime: provider.capabilities?.provider === true ? "local_deterministic_only" : "unsupported",
+          hostedProviders: "not_implemented",
         },
       };
     },
   };
 }
 
-function createSdkRun({ now, artifactStore, observability, memory, context, checkpointStore, policyEngine, ...input }) {
+function createSdkRun({ now, artifactStore, observability, memory, context, checkpointStore, policyEngine, provider, toolGateway, ...input }) {
   const runId = normalizeId("run", input.runId, "run_local");
-  const actor = input.actor ?? { actorId: "actor_developer", scopes: ["repo:read"] };
+  const actor = input.actor ?? { actorId: "actor_developer", scopes: ["repo:read", "tool:local:execute"] };
   const projectId = normalizeId("project", input.projectId, "proj_jami_harness");
   const environment = input.environment ?? "local";
   const kernel = createRunLifecycleKernel({
@@ -192,15 +209,96 @@ function createSdkRun({ now, artifactStore, observability, memory, context, chec
         actor,
         now,
       });
+      const providerResult = await runProviderWithRecovery({
+        provider,
+        checkpointStore,
+        artifactStore,
+        observability,
+        now,
+        runId,
+        projectId,
+        environment,
+        actor,
+        contextPack,
+        executeInput,
+      });
+      if (providerResult.status === "unsupported") {
+        kernel.fail(providerResult.reason);
+        const checkpoint = checkpointStore.writeCheckpoint({
+          runId,
+          status: "unsupported",
+          sequence: kernel.events.length,
+          events: kernel.events,
+          artifacts: artifactStore.list(),
+          sourceRepo: executeInput.sourceRepo ?? "jami-harness",
+          sourceCommit: executeInput.sourceCommit ?? "working-tree",
+          sourceRef: executeInput.sourceRef ?? "refs/heads/main",
+          pendingApprovals: [],
+        }).checkpoint;
+        const evidence = observability.exportEvidencePacket({
+          runId,
+          evidenceId: providerResult.evidenceRef,
+          subject: "Unsupported provider route evidence",
+          repo: executeInput.sourceRepo ?? "jami-harness",
+          commit: executeInput.sourceCommit ?? "working-tree",
+          ref: executeInput.sourceRef ?? "refs/heads/main",
+          commands: [{
+            command: `provider.generate ${providerResult.providerId}`,
+            status: "failed",
+            recordedAt: providerResult.generatedAt,
+            evidenceRef: providerResult.evidenceRef,
+          }],
+          acceptedContracts: [
+            { name: "runEvent", version: SCHEMA_VERSION },
+            { name: "traceEvent", version: SCHEMA_VERSION },
+            { name: "artifactRecord", version: SCHEMA_VERSION },
+            { name: "evidencePacket", version: SCHEMA_VERSION },
+          ],
+        });
+        return {
+          schemaVersion: SCHEMA_VERSION,
+          runId,
+          status: "unsupported",
+          reason: providerResult.reason,
+          providerResult,
+          events: kernel.events,
+          checkpoint,
+          contextPack,
+          evidence: evidence.packet,
+          evidenceArtifact: evidence.artifact,
+          traces: observability.traces,
+          audits: observability.audits,
+        };
+      }
+
+      const toolExecutions = [];
+      for (const toolCall of providerResult.toolCalls ?? []) {
+        const execution = await toolGateway.execute({
+          runId,
+          projectId,
+          environment,
+          actor,
+          toolId: toolCall.toolId,
+          input: toolCall.input,
+        });
+        toolExecutions.push(execution);
+        if (execution.status !== "completed") {
+          kernel.fail(`tool execution failed: ${execution.status}`);
+          break;
+        }
+      }
       const trace = observability.trace("sdk.run", {
         runId,
         kind: "run",
-        status: "ok",
+        status: toolExecutions.every((execution) => execution.status === "completed") ? "ok" : "error",
         attributes: {
           projectId,
           environment,
+          providerId: providerResult.providerId,
+          providerStatus: providerResult.status,
           memoryMode: memory.capabilities?.mode ?? "unknown",
           contextHash: contextPack.deterministicHash,
+          toolExecutionStatuses: toolExecutions.map((execution) => execution.status),
         },
       });
       const artifact = artifactStore.write({
@@ -220,7 +318,22 @@ function createSdkRun({ now, artifactStore, observability, memory, context, chec
             memory: memory.capabilities?.mode ?? "unknown",
             context: context.capabilities?.mode ?? "unknown",
             artifacts: artifactStore.capabilities?.mode ?? "unknown",
+            provider: provider.capabilities?.mode ?? "unknown",
+            tools: toolGateway.registry?.capabilities?.().mode ?? "unknown",
           },
+          provider: {
+            providerRunId: providerResult.providerRunId,
+            providerId: providerResult.providerId,
+            status: providerResult.status,
+            output: providerResult.output,
+          },
+          tools: toolExecutions.map(({ execution }) => ({
+            executionId: execution.executionId,
+            toolId: execution.toolId,
+            status: execution.status,
+            artifactRef: execution.artifactRef,
+            evidenceRef: execution.evidenceRef,
+          })),
           context: {
             contextPackId: contextPack.contextPackId,
             deterministicHash: contextPack.deterministicHash,
@@ -248,16 +361,26 @@ function createSdkRun({ now, artifactStore, observability, memory, context, chec
         repo: executeInput.sourceRepo ?? "jami-harness",
         commit: executeInput.sourceCommit ?? "working-tree",
         ref: executeInput.sourceRef ?? "refs/heads/main",
-        commands: executeInput.commands,
+        commands: executeInput.commands ?? [
+          { command: `provider.generate ${providerResult.providerId}`, status: "passed", recordedAt: providerResult.generatedAt, evidenceRef: providerResult.evidenceRef },
+          ...toolExecutions.map(({ execution }) => ({
+            command: `tool.execute ${execution.toolId}`,
+            status: execution.status === "completed" ? "passed" : "failed",
+            recordedAt: execution.endedAt,
+            evidenceRef: execution.evidenceRef,
+          })),
+        ],
       });
 
       return {
         schemaVersion: SCHEMA_VERSION,
         runId,
-        status: "completed",
+        status: toolExecutions.every((execution) => execution.status === "completed") ? "completed" : "failed",
         events: kernel.events,
         checkpoint,
         contextPack,
+        providerResult,
+        toolExecutions,
         artifact,
         artifactView: artifactResult.artifactView,
         evidence: evidence.packet,
@@ -267,6 +390,73 @@ function createSdkRun({ now, artifactStore, observability, memory, context, chec
       };
     },
   };
+}
+
+async function runProviderWithRecovery({ provider, checkpointStore, artifactStore, observability, runId, projectId, environment, actor, contextPack, executeInput }) {
+  const baseInput = {
+    runId,
+    providerId: executeInput.providerId,
+    workflowId: executeInput.workflowId,
+    failureMode: executeInput.providerFailureMode,
+    instruction: executeInput.instruction,
+    contextHash: contextPack.deterministicHash,
+    memoryItemCount: contextPack.items.length,
+  };
+  const first = await provider.generate(baseInput);
+  recordProviderTraceAndArtifact({ providerResult: first, artifactStore, observability, runId, projectId, environment, actor, executeInput });
+  if (!first.retryable) return first;
+
+  checkpointStore.writeCheckpoint({
+    runId,
+    status: "failed_recoverable",
+    sequence: 0,
+    events: [],
+    artifacts: artifactStore.list(),
+    sourceRepo: executeInput.sourceRepo ?? "jami-harness",
+    sourceCommit: executeInput.sourceCommit ?? "working-tree",
+    sourceRef: executeInput.sourceRef ?? "refs/heads/main",
+    pendingApprovals: [],
+  });
+  const second = await provider.generate(baseInput);
+  recordProviderTraceAndArtifact({ providerResult: second, artifactStore, observability, runId, projectId, environment, actor, executeInput });
+  return second;
+}
+
+function recordProviderTraceAndArtifact({ providerResult, artifactStore, observability, runId, projectId, environment, actor, executeInput }) {
+  const trace = observability.trace(providerResult.traceName, {
+    runId,
+    kind: "provider",
+    status: providerResult.status === "completed" ? "ok" : "error",
+    attributes: {
+      projectId,
+      environment,
+      actorId: actor.actorId,
+      providerId: providerResult.providerId,
+      providerStatus: providerResult.status,
+      reason: providerResult.reason,
+      output: providerResult.output,
+      toolCalls: providerResult.toolCalls,
+    },
+  });
+  artifactStore.write({
+    artifactId: `art_${providerResult.providerRunId.replace(/^prv_/, "")}`,
+    kind: providerResult.status === "completed" ? "report" : "evidence",
+    title: `Provider execution ${providerResult.status}: ${providerResult.providerId}`,
+    runId,
+    sourceRepo: executeInput.sourceRepo ?? "jami-harness",
+    sourceCommit: executeInput.sourceCommit ?? "working-tree",
+    sourceRef: executeInput.sourceRef ?? "refs/heads/main",
+    evidenceRef: providerResult.evidenceRef,
+    traceRef: trace.traceId,
+    payload: {
+      providerRunId: providerResult.providerRunId,
+      providerId: providerResult.providerId,
+      status: providerResult.status,
+      reason: providerResult.reason,
+      output: providerResult.output,
+      toolCalls: providerResult.toolCalls,
+    },
+  });
 }
 
 function capability(name, capabilityClass, mode, available, features = [], unavailableReasons = []) {
@@ -284,6 +474,29 @@ function capability(name, capabilityClass, mode, available, features = [], unava
 
 function createUnavailableModule(name, reason) {
   return { name, capabilities: { mode: "absent" }, reason };
+}
+
+function ensureDefaultLocalTools(tools) {
+  if (typeof tools.get !== "function" || typeof tools.register !== "function") return;
+  if (tools.get("tool_local_echo")) return;
+  tools.register(createFunctionTool({
+    toolId: "tool_local_echo",
+    label: "Local echo evidence tool",
+    risk: "read",
+    sideEffect: "none",
+    requiredScopes: ["repo:read"],
+    timeoutMs: 5_000,
+    resultShape: "json",
+    artifactKind: "report",
+    handler(input = {}) {
+      return {
+        ok: true,
+        message: input.message ?? "local deterministic provider workflow",
+        contextHash: input.contextHash,
+        memoryItemCount: input.memoryItemCount ?? 0,
+      };
+    },
+  }));
 }
 
 function moduleMode(module) {

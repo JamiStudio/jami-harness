@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:a6fb700c75f28437d773b42ab05882ea65d4dfa8e7afb0f6da4a8f163de36d24`
+- Source input hash: `sha256:2b210fd0bbc091bd7a32aa4f8e9b9ac61e8df0c9f4eacd82086c70b0ca7eb2eb`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -25,12 +25,14 @@
 - 2026-06-09-current-source-agent-rule (`.changes/2026-06-09-current-source-agent-rule.md`)
 - Docs source generator foundation (`.changes/2026-06-09-docs-source-generator.md`)
 - 2026-06-09-harness-readiness-boundary (`.changes/2026-06-09-harness-readiness-boundary.md`)
+- Local Deterministic Provider Foundation (`.changes/2026-06-09-local-deterministic-provider.md`)
 - MCP source-lock and fixture adapter (`.changes/2026-06-09-mcp-source-lock-fixture-adapter.md`)
 - Policy gate hardening (`.changes/2026-06-09-policy-gate-hardening.md`)
 - Policy runtime spine (`.changes/2026-06-09-policy-runtime-spine.md`)
 - 2026-06-09-release-readiness-audit (`.changes/2026-06-09-release-readiness-audit.md`)
 - 2026-06-09-release-readiness-verify-gate (`.changes/2026-06-09-release-readiness-verify-gate.md`)
 - 2026-06-09-runtime-kernel-spine (`.changes/2026-06-09-runtime-kernel-spine.md`)
+- 2026-06-09-store-approval-validation (`.changes/2026-06-09-store-approval-validation.md`)
 - Stream 4 foundations (`.changes/2026-06-09-stream4-foundations.md`)
 - 2026-06-09-stream4-pass2-provenance-hardening (`.changes/2026-06-09-stream4-pass2-provenance-hardening.md`)
 - 2026-06-09-stream4-pass3-observability-redaction (`.changes/2026-06-09-stream4-pass3-observability-redaction.md`)

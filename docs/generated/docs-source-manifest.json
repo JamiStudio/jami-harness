@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:a6fb700c75f28437d773b42ab05882ea65d4dfa8e7afb0f6da4a8f163de36d24",
+  "sourceInputHash": "sha256:2b210fd0bbc091bd7a32aa4f8e9b9ac61e8df0c9f4eacd82086c70b0ca7eb2eb",
   "generatedAt": "deterministic:git-head-plus-input-hash",
   "freshnessClass": "deterministic_current_source_tree",
   "command": "pnpm docs:generate -- --check",
@@ -72,6 +72,11 @@
       "bytes": 334
     },
     {
+      "path": ".changes/2026-06-09-local-deterministic-provider.md",
+      "sha256": "sha256:42a42c7f954d386bb917f8022a0082328e5ab5207b415a8afb498ab3be9b45e8",
+      "bytes": 387
+    },
+    {
       "path": ".changes/2026-06-09-mcp-source-lock-fixture-adapter.md",
       "sha256": "sha256:ae76aaf59bdc90edf563e1f4d79dbbbbac71da85ae41d0c3ff04f35080d8e218",
       "bytes": 500
@@ -100,6 +105,11 @@
       "path": ".changes/2026-06-09-runtime-kernel-spine.md",
       "sha256": "sha256:dd8b9a002e72eb27bf8b8a155b4775b33e7c54f960b9a11c1dd8837673594117",
       "bytes": 272
+    },
+    {
+      "path": ".changes/2026-06-09-store-approval-validation.md",
+      "sha256": "sha256:d3449912eccc7380aa18b2a132414ec0db06e6e9019efda972a54270a8916c50",
+      "bytes": 332
     },
     {
       "path": ".changes/2026-06-09-stream4-foundations.md",
@@ -143,8 +153,8 @@
     },
     {
       "path": "apps/cli/README.md",
-      "sha256": "sha256:48c85028b43f90776efc4598ff581d248770fc7755f589a447414751de626d00",
-      "bytes": 1881
+      "sha256": "sha256:e47c801f80003b28cd55e581f33aa3c521e038a1b1b3f92a77fe84661bfdd1ef",
+      "bytes": 2330
     },
     {
       "path": "apps/cli/package.json",
@@ -153,8 +163,8 @@
     },
     {
       "path": "docs/architecture/modular-responsibility-map.md",
-      "sha256": "sha256:ee6c75f82ec46f575569f194d400f03bcc67647f28cf84b192f535fc833a813a",
-      "bytes": 15933
+      "sha256": "sha256:86923c4dcedd85af62cf6c80f7faf06f8f1af8973e99006b20a5ffc8b98a0b2d",
+      "bytes": 17180
     },
     {
       "path": "docs/architecture/product-architecture.md",
@@ -163,13 +173,13 @@
     },
     {
       "path": "docs/operations/release-readiness.md",
-      "sha256": "sha256:b614e239bb5e7d1d8db12bd434abca67d49bf4980ea868981a3b5f0db7fd9320",
-      "bytes": 9308
+      "sha256": "sha256:66d2641b8d16508aeadbb545a99a111b665e39027b9466102ca329917036ca51",
+      "bytes": 9981
     },
     {
       "path": "package.json",
-      "sha256": "sha256:d9e920c39655882f50fc55d0d0de797f12451518846fc25900e10d2e2b672eb7",
-      "bytes": 2518
+      "sha256": "sha256:952474f364c90fd475fe8fb77e0b8bcf00941eb82748055bdcd176f68aec098e",
+      "bytes": 2649
     },
     {
       "path": "packages/artifacts/package.json",
@@ -487,14 +497,24 @@
       "bytes": 488
     },
     {
+      "path": "packages/provider-local/README.md",
+      "sha256": "sha256:913e0d5d43942d837565b97eba77a1467eb521c3d57e54d18d7daf6a20ab165e",
+      "bytes": 1223
+    },
+    {
+      "path": "packages/provider-local/package.json",
+      "sha256": "sha256:ecac070957387e06582ca9a8e121dc46c28a86ad3ce90189339ee748ed9ace58",
+      "bytes": 442
+    },
+    {
       "path": "packages/runtime/package.json",
       "sha256": "sha256:41df6a93f6e8fa3afb89dad2dbfd3136932520a855647753ef43ca0650b9900a",
       "bytes": 484
     },
     {
       "path": "packages/sdk/README.md",
-      "sha256": "sha256:e2762f98dd1c820bbb72f14c4d0d0257a43fda320e14d33800802474c556cd32",
-      "bytes": 1700
+      "sha256": "sha256:7e2a3010d3d4788399ea59180a71df6569f7712b7cfa70e9bc924ac1cc873594",
+      "bytes": 2180
     },
     {
       "path": "packages/sdk/package.json",

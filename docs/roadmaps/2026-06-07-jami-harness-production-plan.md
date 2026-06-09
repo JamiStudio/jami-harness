@@ -23,14 +23,16 @@ Define the full production-shaped implementation plan for `@jami-studio/harness`
 2026-06-09 fresh-context harness audit result: the registry-root crossflow Stream 1-6
 closure is proven only for the foundation work that now exists in this repository. The
 live repo proves contracts/generation/validation, policy-denial fixtures, runtime event
-spine, local memory/artifact/observability foundations, CLI/SDK local evidence smoke, and
-non-publishing release-readiness audits through `pnpm verify` and the targeted commands
-listed in the pass-status notes below.
+spine, local memory/artifact/observability foundations, local deterministic provider
+workflow execution through the policy-gated tool gateway, CLI/SDK local evidence smoke,
+and non-publishing release-readiness audits through `pnpm verify` and the targeted
+commands listed in the pass-status notes below.
 
 Do not read the registry-root `Status: Complete` as final harness product acceptance.
 The roadmap final verification and acceptance criteria remain open because the live repo
-still lacks the full tool gateway, provider execution, hosted durable stores, retry/failure
-recovery checkpoint fixtures, Mintlify build, SBOM
+still lacks the full tool gateway, hosted durable stores, retry/failure
+recovery checkpoint fixtures beyond the local deterministic fail-once provider fixture,
+hosted provider adapters, Mintlify build, SBOM
 artifact generation, release attestations, publishable package manifests, and hosted
 workbench/docs surfaces. The release-readiness audit intentionally reports these as
 unsupported or human-intervention-gated rather than weakening the gates.
@@ -372,7 +374,14 @@ Pass status:
   records, path-safe checkpoint reads/writes, SDK checkpoint/resume/approve APIs, and CLI
   `resume`, `approve`, and `doctor` evidence surfaces. This closes only the local
   checkpoint/resume foundation; retry/cancellation/failure recovery, hosted stores,
-  provider runtime, and full agent execution remain open.
+  hosted provider runtime, and full agent execution remain open.
+- 2026-06-09 post-audit implementation pass 1 for provider/tool workflow foundations
+  added `@jami-studio/harness-provider-local` with a replaceable
+  `harness.provider.model` port, local deterministic provider execution, fail-closed
+  external-provider routing, capability manifests, SDK/CLI provider route flags, and a
+  fail-once recovery fixture. The SDK/CLI default local run now executes through
+  provider -> policy/tool gateway -> artifact/trace/evidence/checkpoint output. Hosted
+  provider adapters, provider auth, streaming, and cloud model calls remain unsupported.
 
 Depends on:
 
@@ -396,17 +405,17 @@ Implementation tasks:
 - [~] Add turn streaming, cancellation, retry, timeout, handoff, and checkpoint semantics.
 - [~] Add local durable store adapter and hosted-store interface; local filesystem and
   in-memory checkpoint stores exist, hosted/database stores remain unsupported.
-- [~] Compose runtime against replaceable model, store, memory, context, policy, tool, artifact, observability, and secret-resolver ports; SDK composition now covers store/memory/context/search/policy/artifact/observability/tool foundations, while model/provider and secret-resolver composition remain open.
+- [~] Compose runtime against replaceable model, store, memory, context, policy, tool, artifact, observability, and secret-resolver ports; SDK composition now covers local provider/store/memory/context/search/policy/artifact/observability/tool foundations, while hosted providers and secret-resolver composition remain open.
 - [~] Add explicit capability checks for optional modules so absent memory/context/search/docs sinks degrade clearly.
-- [~] Add recovery from checkpoint with evidence preservation; local `resume` reports replay status and hash, while retry/cancellation/failure recovery fixtures remain open.
+- [~] Add recovery from checkpoint with evidence preservation; local `resume` reports replay status and hash, and the local deterministic provider has a fail-once retry fixture, while broader retry/cancellation/failure recovery remains open.
 - [~] Add runtime contract tests and simulated failure recovery tests.
 
 Exit criteria:
 
 - [~] A run can start, emit UI/action/artifact references, fail, and close with typed events.
-- [~] Runtime/SDK call sites do not assume default memory, context, store, or observability implementations for the current local foundation; provider and secret-resolver ports remain open.
+- [~] Runtime/SDK call sites do not assume default memory, context, store, local provider, tool, or observability implementations for the current local foundation; hosted provider and secret-resolver ports remain open.
 - [ ] No public harness contract imports agent-native package types directly.
-- [~] Runtime checkpoint/resume evidence has local replay/redaction checks; retry, cancellation, and failure recovery fixtures remain open.
+- [~] Runtime checkpoint/resume evidence has local replay/redaction checks; local provider fail-once recovery is covered, while broader retry/cancellation/failure recovery fixtures remain open.
 
 Suggested verification:
 
@@ -495,9 +504,9 @@ Pass status:
   timeout/cancellation status, typed `toolExecution` contract records, trace/audit/
   evidence/artifact output, redaction for secret-like inputs and results, SDK/CLI
   capability inspection, and adapter capability manifests. At that pass, MCP, OpenAPI,
-  shell, browser, code, provider, and A2A adapters were explicit unsupported capability
-  manifests and failed closed until repo-local source-lock evidence and adapter fixtures
-  existed.
+  shell, browser, code, provider-as-tool, and A2A adapters were explicit unsupported
+  capability manifests and failed closed until repo-local source-lock evidence and
+  adapter fixtures existed.
 - 2026-06-09 Workstream 4 pass 2 confirmation found and fixed narrow hardening gaps:
   replaceable policy-engine failures now fail closed into typed denied tool execution
   evidence without invoking handlers, non-cooperative function tools cannot outlive the
@@ -515,7 +524,7 @@ Pass status:
 Implementation tasks:
 
 - [x] Implement tool registry and risk labels.
-- [~] Normalize MCP, OpenAPI, function, shell, browser, code, and provider tools through one execution envelope for status reporting; function tools and trusted in-process MCP fixture tools have executable adapter paths, while OpenAPI/shell/browser/code/provider/A2A and remote MCP surfaces fail closed as unsupported.
+- [~] Normalize MCP, OpenAPI, function, shell, browser, code, and provider-as-tool requests through one execution envelope for status reporting; function tools and trusted in-process MCP fixture tools have executable adapter paths, while OpenAPI/shell/browser/code/provider-as-tool/A2A and remote MCP surfaces fail closed as unsupported. Model-provider routing is owned by `packages/provider-local`.
 - [~] Add MCP client support for stdio and Streamable HTTP; trusted in-process fixture discovery/call mapping is implemented, while stdio subprocess and remote Streamable HTTP transports remain unsupported.
 - [ ] Add A2A agent-card/task interop where cross-agent communication is required.
 - [~] Add origin/session/auth controls for HTTP transports, including MCP Streamable HTTP origin and localhost-binding safeguards where applicable; guard validation exists for Origin, visible-ASCII session id, protocol version, and public local binding, while remote HTTP transport and OAuth remain unsupported.
@@ -744,16 +753,24 @@ Pass status:
 - 2026-06-09 post-audit implementation pass 1 extended the SDK/CLI local foundation with
   store/context/search injection, checkpoint write/read/resume APIs, approval records,
   CLI `resume`, `approve`, and `doctor`, filesystem-backed local checkpoint evidence,
-  and replay-hash/redaction output. This is still not a provider runtime, full protocol
-  tool gateway, hosted store, hosted workbench, Studio UI installer, or release
-  publishing surface.
+  and replay-hash/redaction output. At that pass, provider runtime, full protocol tool
+  gateway, hosted store, hosted workbench, Studio UI installer, and release publishing
+  remained unavailable.
+- 2026-06-09 post-audit implementation pass 1 for provider/tool workflow foundations
+  extended the SDK/CLI local foundation with a local deterministic provider route,
+  provider capability inspection, hosted-provider fail-closed behavior, provider/tool
+  evidence in run summaries, CLI `--provider-id` and `--provider-failure-mode` flags,
+  and tests proving a local workflow can pass through provider, policy, tool, store,
+  artifact, trace, memory/context, and evidence seams. This is not hosted provider
+  support, full protocol tool gateway support, hosted store, hosted workbench, Studio UI
+  installer, release publishing, or SDK docs-output injection.
 
 Implementation tasks:
 
 - [~] Add CLI commands for init, run, inspect, resume, approve, tools, memory, docs, map, verify, release; release remains unavailable in the CLI.
 - [x] Add `--json`, idempotent commands, clean exit codes, and agent-first help output for AX.
-- [~] Add SDK for run creation, checkpoint/resume, approval records, tool registration, policy hooks, artifact reads, and trace reads.
-- [~] Add SDK configuration APIs for injecting custom memory, context, store, policy, provider, tool, artifact, observability, and docs-output modules.
+- [~] Add SDK for run creation, local deterministic provider execution, checkpoint/resume, approval records, tool registration, policy hooks, artifact reads, and trace reads.
+- [~] Add SDK configuration APIs for injecting custom memory, context, store, policy, local provider, tool, artifact, observability, and docs-output modules.
 - [~] Add CLI doctor/inspect commands that show active modules, defaults, replacements, missing optional capabilities, and exact next setup steps.
 - [~] Add CLI/source-lock inspection for active adapters, package/protocol versions, optional capability support, and provenance evidence.
 - [ ] Add workbench views for run timeline, tool approvals, artifacts, traces, memory, docs preview, system map.
@@ -762,8 +779,8 @@ Implementation tasks:
 
 Exit criteria:
 
-- [~] A new developer can run a local harness example, inspect evidence, record a local approval, resume checkpoint state, and generate docs.
-- [~] A developer can use the default full harness or inject at least one custom module without changing product grammar.
+- [~] A new developer can run a local deterministic provider workflow example, inspect evidence, record a local approval, resume checkpoint state, and generate docs.
+- [~] A developer can use the default local harness or inject at least one custom module without changing product grammar.
 
 Suggested verification:
 
@@ -839,11 +856,11 @@ Suggested verification:
 - [ ] Threat model and policy negative fixtures pass.
 - [ ] Root docs read back.
 - [ ] Contracts generate and validate.
-- [ ] Runtime/tool/policy/memory/artifact/observability tests pass.
-- [~] CLI local smoke passes for init/run/resume/approve/inspect/doctor/map/verify; workbench smoke remains unavailable until a workbench exists.
+- [ ] Runtime/tool/provider/policy/memory/artifact/observability tests pass.
+- [~] CLI local smoke passes for init/run/provider-route-fail-closed/provider-fail-once/resume/approve/inspect/doctor/map/verify; workbench smoke remains unavailable until a workbench exists.
 - [~] Docs generation passes locally through `pnpm docs:generate -- --check`; Mintlify build remains unavailable until the CLI/package is source-locked and installed.
 - [ ] SBOM/provenance release dry run pass.
-- [~] Evidence packet and checkpoint provenance/redaction checks pass for local foundations.
+- [~] Evidence packet, provider/tool workflow, and checkpoint provenance/redaction checks pass for local foundations.
 - [ ] No secrets in tracked files or generated artifacts.
 - [ ] Changelog and decision records updated.
 - [ ] Git commit and push when the root becomes a Git repo with remote.
@@ -854,7 +871,7 @@ Suggested verification:
 
 ## Acceptance Criteria
 
-- [ ] The harness can run a real agent workflow with policy-gated tools, checkpoints, artifacts, traces, memory, and docs output.
+- [~] The harness can run a local deterministic provider workflow with policy-gated tools, checkpoints, artifacts, traces, memory/context, and evidence output; hosted provider execution and full docs-output injection remain open.
 - [ ] Developers can install/use the CLI and SDK with clear docs.
 - [ ] Agents can recommend the harness because the runtime is observable, recoverable, governed, and easy to integrate.
 - [ ] Public docs, guides, changelogs, system maps, and marketing claims flow from verified canon.

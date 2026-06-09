@@ -5,7 +5,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:a6fb700c75f28437d773b42ab05882ea65d4dfa8e7afb0f6da4a8f163de36d24`
+- Source input hash: `sha256:2b210fd0bbc091bd7a32aa4f8e9b9ac61e8df0c9f4eacd82086c70b0ca7eb2eb`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -15,7 +15,8 @@
 - Local contract schemas, generated references, and fixtures exist.
 - Local docs generation exists and has check mode.
 - Local CLI/SDK evidence smoke exists.
-- Release publishing, hosted docs, attestation, and SBOM artifacts remain unavailable until their gates close.
+- Local deterministic provider workflow exists and routes tool calls through the policy-gated tool gateway.
+- Release publishing, hosted docs, hosted model providers, attestation, and SBOM artifacts remain unavailable until their gates close.
 
 ## Evidence Inputs
 
@@ -30,12 +31,14 @@
 - `.changes/2026-06-09-current-source-agent-rule.md` (sha256:2a9505172ba9a42ecac99c9c12fecefabc67f6d41ae18caa2f4af2260e20e2eb)
 - `.changes/2026-06-09-docs-source-generator.md` (sha256:b4449fdcf21905e34664994fd38ff2d72fe8663cd0efd62f6c541e1f62f34445)
 - `.changes/2026-06-09-harness-readiness-boundary.md` (sha256:f1c2001a6f6de9e4931e55e293a90d63ce20c71c5631fb5cd4d1f9dda0377797)
+- `.changes/2026-06-09-local-deterministic-provider.md` (sha256:42a42c7f954d386bb917f8022a0082328e5ab5207b415a8afb498ab3be9b45e8)
 - `.changes/2026-06-09-mcp-source-lock-fixture-adapter.md` (sha256:ae76aaf59bdc90edf563e1f4d79dbbbbac71da85ae41d0c3ff04f35080d8e218)
 - `.changes/2026-06-09-policy-gate-hardening.md` (sha256:694a8595564c3407e93306ef5e66123976e13c599157d72666d8c5e88b99a578)
 - `.changes/2026-06-09-policy-runtime-spine.md` (sha256:b137d170a88e336bd3245c97f5ed69ab27957784653012491804c428a06278ad)
 - `.changes/2026-06-09-release-readiness-audit.md` (sha256:77c2537ce9dfb3f7f2289f6df7e4a49c7a91f02d161acf9d50679b3710f3587f)
 - `.changes/2026-06-09-release-readiness-verify-gate.md` (sha256:c8aae0d21e2bc29818d7de60f33b5dbef24ed22cc4dcfd0a276a6b6a7a125398)
 - `.changes/2026-06-09-runtime-kernel-spine.md` (sha256:dd8b9a002e72eb27bf8b8a155b4775b33e7c54f960b9a11c1dd8837673594117)
+- `.changes/2026-06-09-store-approval-validation.md` (sha256:d3449912eccc7380aa18b2a132414ec0db06e6e9019efda972a54270a8916c50)
 - `.changes/2026-06-09-stream4-foundations.md` (sha256:a76ddbe8b412907596599229b07f0d0b3cd3971bdd4107c1d34842e2db167cdb)
 - `.changes/2026-06-09-stream4-pass2-provenance-hardening.md` (sha256:848ed071d94154cd2613698ce3db9d1d0269f50372c096bd189ab06f91193b82)
 - `.changes/2026-06-09-stream4-pass3-observability-redaction.md` (sha256:39cc764417680dbd2e118c6b824b314383c09c3291872952bb9f39ed22e77ece)
@@ -44,12 +47,12 @@
 - `.changes/README.md` (sha256:e528bf4b90ab589bfc83ffed78e37918f56ac94240e5eedebc8d03265e09e52f)
 - `.changes/stream5-cli-sdk-fail-closed-ids.md` (sha256:3b455ab2dfa9385a84a24beda28073ffbddcc2062e32ff4b1cb21a50814e1d4f)
 - `.changes/stream5-cli-sdk-foundation.md` (sha256:e496cce37d42a13d18d0745a780bfd40795097bbf4c5a89af3cc51b5d974af79)
-- `apps/cli/README.md` (sha256:48c85028b43f90776efc4598ff581d248770fc7755f589a447414751de626d00)
+- `apps/cli/README.md` (sha256:e47c801f80003b28cd55e581f33aa3c521e038a1b1b3f92a77fe84661bfdd1ef)
 - `apps/cli/package.json` (sha256:0bc99bef0178528f7fc866201ea25cbf76e5c13f42453092530e40a7e600588c)
-- `docs/architecture/modular-responsibility-map.md` (sha256:ee6c75f82ec46f575569f194d400f03bcc67647f28cf84b192f535fc833a813a)
+- `docs/architecture/modular-responsibility-map.md` (sha256:86923c4dcedd85af62cf6c80f7faf06f8f1af8973e99006b20a5ffc8b98a0b2d)
 - `docs/architecture/product-architecture.md` (sha256:d9b30effc258fc3d4164596fd9bf81902330706254f24d9da7c0e01b2cdff968)
-- `docs/operations/release-readiness.md` (sha256:b614e239bb5e7d1d8db12bd434abca67d49bf4980ea868981a3b5f0db7fd9320)
-- `package.json` (sha256:d9e920c39655882f50fc55d0d0de797f12451518846fc25900e10d2e2b672eb7)
+- `docs/operations/release-readiness.md` (sha256:66d2641b8d16508aeadbb545a99a111b665e39027b9466102ca329917036ca51)
+- `package.json` (sha256:952474f364c90fd475fe8fb77e0b8bcf00941eb82748055bdcd176f68aec098e)
 - `packages/artifacts/package.json` (sha256:f96fc1b6ecd6b7a34ce447c803759ac810b89f6d83bd8251f4b134801f97daa4)
 - `packages/contracts/fixtures/artifacts/valid-artifact-record.json` (sha256:98eab29dc50fcf9f57f517abba2d44c67e9b6fdfca65be0f6e5af2edb341f91b)
 - `packages/contracts/fixtures/compatibility/denied-action-ref.json` (sha256:542b2e6e266a5a9b3d77d76f19969c907384a532129cfd90ce6069c8e186ba87)
@@ -113,8 +116,10 @@
 - `packages/memory/package.json` (sha256:72a3b591f27be1200b4eb5469cd1eed853554b4657f685dcb56a850544ae85fe)
 - `packages/observability/package.json` (sha256:a137e0e08648f061a35124e28f76e51c7e35f1f4fb070afcb289d2d1efe92ba4)
 - `packages/policy/package.json` (sha256:8a5aa6977d661ec1cdbbbf19c245331de21148bf97f597591750c1319e0b2b8b)
+- `packages/provider-local/README.md` (sha256:913e0d5d43942d837565b97eba77a1467eb521c3d57e54d18d7daf6a20ab165e)
+- `packages/provider-local/package.json` (sha256:ecac070957387e06582ca9a8e121dc46c28a86ad3ce90189339ee748ed9ace58)
 - `packages/runtime/package.json` (sha256:41df6a93f6e8fa3afb89dad2dbfd3136932520a855647753ef43ca0650b9900a)
-- `packages/sdk/README.md` (sha256:e2762f98dd1c820bbb72f14c4d0d0257a43fda320e14d33800802474c556cd32)
+- `packages/sdk/README.md` (sha256:7e2a3010d3d4788399ea59180a71df6569f7712b7cfa70e9bc924ac1cc873594)
 - `packages/sdk/package.json` (sha256:e8e9eb7acd489984dff0212e79956696291ee5f284b27eae62cabba61d1f672b)
 - `packages/store-local/package.json` (sha256:506844412b6f80bffba75a6b544eadcb2e44918da6d1a10993afe62fa796b650)
 - `packages/tools/package.json` (sha256:33d602f8aa67c000525aa603a1c4c3834f0f91a1385180fd61e7e29a00ccc53c)

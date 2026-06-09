@@ -6,7 +6,6 @@ const result = await harness.run({
   sourceRepo: "jami-harness",
   sourceCommit: "working-tree",
   sourceRef: "refs/heads/main",
-  commands: [{ command: "node examples/local-evidence-run.mjs", status: "passed", recordedAt: new Date().toISOString() }],
 });
 
 console.log(JSON.stringify({
@@ -14,5 +13,7 @@ console.log(JSON.stringify({
   status: result.status,
   evidenceId: result.evidence.evidenceId,
   artifactId: result.artifact.artifactId,
+  providerStatus: result.providerResult.status,
+  toolExecutionStatuses: result.toolExecutions.map((execution) => execution.status),
   traceCount: result.traces.length,
 }, null, 2));
