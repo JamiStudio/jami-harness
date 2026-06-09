@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:cb7abdceedb2edcc6dbef915a1bc1601f4830465f01b1866d96c80f7194ed06e`
+- Source input hash: `sha256:6400e308ed09ef9180e01e1267047346b35bbbe95ef72fae44c4dd1bc8f7684c`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -44,6 +44,7 @@
 - `.changes/2026-06-09-mcp-source-lock-fixture-adapter.md` (sha256:ae76aaf59bdc90edf563e1f4d79dbbbbac71da85ae41d0c3ff04f35080d8e218)
 - `.changes/2026-06-09-metric-redaction-contract-audit.md` (sha256:8f4683e1e169e12df2a0b18264e89d7bc1610e27d0031289524d8bc835ddac3c)
 - `.changes/2026-06-09-observability-metrics-eval-smoke.md` (sha256:75779e853c96ecfb275b7754dcc1a3ae5e2035cefb5e94955f453d6a6013be75)
+- `.changes/2026-06-09-observability-redaction-confirmation.md` (sha256:fd4a5f5206709fcdc5564ec4925f48c4db714138cb10793e2e4a42bd7f3cf921)
 - `.changes/2026-06-09-policy-gate-hardening.md` (sha256:694a8595564c3407e93306ef5e66123976e13c599157d72666d8c5e88b99a578)
 - `.changes/2026-06-09-policy-runtime-spine.md` (sha256:b137d170a88e336bd3245c97f5ed69ab27957784653012491804c428a06278ad)
 - `.changes/2026-06-09-release-readiness-audit.md` (sha256:77c2537ce9dfb3f7f2289f6df7e4a49c7a91f02d161acf9d50679b3710f3587f)
@@ -136,7 +137,7 @@
 - `packages/memory/package.json` (sha256:72a3b591f27be1200b4eb5469cd1eed853554b4657f685dcb56a850544ae85fe)
 - `packages/observability/README.md` (sha256:281039af89c4ee8ace8d3d074175693d404898fb352f7b6fa06fb8862997dd80)
 - `packages/observability/package.json` (sha256:a137e0e08648f061a35124e28f76e51c7e35f1f4fb070afcb289d2d1efe92ba4)
-- `packages/observability/src/index.mjs` (sha256:92e5a3f2de42ee014a695811feca3d24cb3a409cea7f9d20e82ac29fa94a176f)
+- `packages/observability/src/index.mjs` (sha256:b7013c6810d12604717c5176f02b24c08e161841a6313b0d0959d3971842acd1)
 - `packages/observability/test/observability.test.mjs` (sha256:d961514c6c16b3c6f9eb5f131049c56520857d98a3a1c44f21d9443e114f9498)
 - `packages/policy/package.json` (sha256:8a5aa6977d661ec1cdbbbf19c245331de21148bf97f597591750c1319e0b2b8b)
 - `packages/provider-local/README.md` (sha256:913e0d5d43942d837565b97eba77a1467eb521c3d57e54d18d7daf6a20ab165e)

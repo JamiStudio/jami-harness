@@ -1154,6 +1154,7 @@ function redactWalk(value, path, paths) {
 
 function redactSecretLikeString(value) {
   return value
+    .replace(/\b(authorization)\b\s*[:=]\s*(?:[A-Za-z]+\s+)?[^,\s;]+/gi, "$1=[redacted]")
     .replace(/\b(api[_-]?key|token|secret|password|credential|authorization|cookie|session)\b\s*[:=]\s*[^,\s;]+/gi, "$1=[redacted]")
     .replace(/\bBearer\s+[A-Za-z0-9._~+/=-]+/g, "Bearer [redacted]");
 }

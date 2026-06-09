@@ -2,7 +2,8 @@ import { createHash } from "node:crypto";
 import { createInMemoryArtifactStore } from "../../artifacts/src/index.mjs";
 
 const SCHEMA_VERSION = "2026-06-09";
-const SENSITIVE_FIELD_PATTERN = /secret|token|apiKey|credential|password|privatePayload|plaintext|value|prompt|systemPrompt|developerPrompt|userPrompt|toolMetadata|tool_metadata|toolDescription|tool_description|toolSchema|tool_schema/i;
+const SENSITIVE_FIELD_PATTERN = /secret|apiKey|credential|password|privatePayload|plaintext|value|prompt|systemPrompt|developerPrompt|userPrompt|toolMetadata|tool_metadata|toolDescription|tool_description|toolSchema|tool_schema/i;
+const SENSITIVE_TOKEN_FIELD_PATTERN = /^token$|^token(value|secret|credential|key|payload|plaintext)$|[a-z0-9_-]*token$/i;
 const RUN_ID_PATTERN = /^run_[a-z0-9][a-z0-9_-]*$/;
 const METRIC_NAME_PATTERN = /^[a-z][a-z0-9_.-]*$/;
 const METRIC_KINDS = new Set(["latency", "tokens", "cost", "tool_call", "run", "provider", "custom"]);
@@ -275,7 +276,7 @@ function redactWalk(value, path, paths) {
   const output = {};
   for (const [key, child] of Object.entries(value)) {
     const childPath = `${path}.${key}`;
-    if (SENSITIVE_FIELD_PATTERN.test(key)) {
+    if (isSensitiveField(key)) {
       output[key] = "[redacted]";
       paths.push(childPath);
       continue;
@@ -287,8 +288,13 @@ function redactWalk(value, path, paths) {
 
 function redactSecretLikeString(value) {
   return value
+    .replace(/\b(authorization)\b\s*[:=]\s*(?:[A-Za-z]+\s+)?[^,\s;]+/gi, "$1=[redacted]")
     .replace(/\b(api[_-]?key|token|secret|password|credential|authorization|cookie|session)\b\s*[:=]\s*[^,\s;]+/gi, "$1=[redacted]")
     .replace(/\bBearer\s+[A-Za-z0-9._~+/=-]+/g, "Bearer [redacted]");
+}
+
+function isSensitiveField(key) {
+  return SENSITIVE_FIELD_PATTERN.test(key) || SENSITIVE_TOKEN_FIELD_PATTERN.test(key);
 }
 
 function normalizeMetricSource(value) {

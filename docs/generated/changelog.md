@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:cb7abdceedb2edcc6dbef915a1bc1601f4830465f01b1866d96c80f7194ed06e`
+- Source input hash: `sha256:6400e308ed09ef9180e01e1267047346b35bbbe95ef72fae44c4dd1bc8f7684c`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -32,6 +32,7 @@
 - MCP source-lock and fixture adapter (`.changes/2026-06-09-mcp-source-lock-fixture-adapter.md`)
 - 2026-06-09-metric-redaction-contract-audit (`.changes/2026-06-09-metric-redaction-contract-audit.md`)
 - 2026-06-09-observability-metrics-eval-smoke (`.changes/2026-06-09-observability-metrics-eval-smoke.md`)
+- Observability Redaction Confirmation Fix (`.changes/2026-06-09-observability-redaction-confirmation.md`)
 - Policy gate hardening (`.changes/2026-06-09-policy-gate-hardening.md`)
 - Policy runtime spine (`.changes/2026-06-09-policy-runtime-spine.md`)
 - 2026-06-09-release-readiness-audit (`.changes/2026-06-09-release-readiness-audit.md`)

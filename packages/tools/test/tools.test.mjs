@@ -521,7 +521,7 @@ test("failed tool errors are redacted in traces and artifacts", async () => {
     risk: "read",
     requiredScopes: ["repo:read"],
     handler() {
-      throw new Error("upstream rejected token=tool-secret Bearer abc123");
+      throw new Error("upstream rejected token=tool-secret Bearer abc123 Authorization: Bearer auth-secret");
     },
   }));
   const gateway = createToolGateway({ now, registry });
@@ -539,6 +539,7 @@ test("failed tool errors are redacted in traces and artifacts", async () => {
   assert.equal(result.status, "failed");
   assert.equal(result.execution.error.message.includes("tool-secret"), false);
   assert.equal(result.execution.error.message.includes("abc123"), false);
-  assert.equal(result.trace.attributes.error.message, "upstream rejected token=[redacted] Bearer [redacted]");
+  assert.equal(result.execution.error.message.includes("auth-secret"), false);
+  assert.equal(result.trace.attributes.error.message, "upstream rejected token=[redacted] Bearer [redacted] Authorization=[redacted]");
   assert.equal(result.artifact.redaction.privatePayloadPolicy, "redacted");
 });
