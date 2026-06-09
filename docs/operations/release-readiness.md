@@ -16,7 +16,8 @@ below is closed.
 ## Current Release Posture
 
 - Root verification exists as `pnpm verify` and includes docs, contract generation drift,
-  contract validation, package tests, CLI tests, SDK tests, and the local evidence smoke.
+  contract validation, package tests, CLI tests, SDK tests, the local evidence smoke, and
+  both non-publishing release audit commands.
 - Release audit commands exist as `pnpm release:readiness` and `pnpm release:dry-run`.
   They do not publish. They report package, SBOM, provenance, attestation, claims, and
   account-action state.
@@ -52,6 +53,9 @@ git ls-files | Select-String -Pattern '(^|/)\.env(\.|$)|token|secret|credential|
 
 The tracked-file review is a secret scan of tracked paths and names. It does not inspect
 ignored `.env` files and must not print secret values.
+
+The release audit JSON uses the current Git `HEAD` commit date for `generatedAt` so
+local readiness and dry-run output stays deterministic for a given source state.
 
 ## Unavailable Commands
 

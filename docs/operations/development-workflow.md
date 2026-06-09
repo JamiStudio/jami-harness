@@ -45,7 +45,8 @@ Run the narrowest complete checks for the touched surface:
 - Current CLI/SDK package gates: `pnpm sdk:test`, `pnpm cli:test`, and
   `pnpm examples:smoke`.
 - CLI/SDK/workbench: command smoke, idempotency checks, clean temporary-project checks, browser smoke when UI exists.
-- Full gate: `pnpm verify`.
+- Full gate: `pnpm verify`, including the non-publishing release readiness and dry-run
+  audits.
 
 Every agent final response must report the exact checks run, results, unavailable commands, commit SHA,
 and push result.
@@ -82,6 +83,8 @@ intervention needed, alert the human, then continue after it is resolved. Do not
 - `docs/operations/release-readiness.md` owns the current release-readiness gate.
 - `pnpm release:readiness` and `pnpm release:dry-run` are audit commands. They must never
   publish, tag, deploy, or call external account APIs.
+- `pnpm verify` runs both release audit commands after the package and evidence-smoke
+  gates, so release-readiness checks cannot drift away from the full local gate.
 - Public claims must use the release-readiness claims matrix and current command evidence.
   Unsupported surfaces should be named as unavailable instead of softened into marketing
   language.

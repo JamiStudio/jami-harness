@@ -112,7 +112,10 @@ const blockerCount = checks.filter((check) => check.status === "blocked" || chec
 const readiness = {
   schemaVersion: "2026-06-09.release-readiness",
   command: dryRun ? "release:dry-run" : "release:readiness",
-  generatedAt: new Date().toISOString(),
+  generatedAt: git.commitDate ?? "unknown",
+  generatedAtSource: git.commitDate
+    ? "git HEAD commit date for deterministic local audit output"
+    : "unknown",
   repo: {
     name: "jami-harness",
     root: repoRoot,
@@ -232,6 +235,7 @@ function gitInfo() {
     remote: runGit(["remote", "get-url", "origin"]),
     commit: runGit(["rev-parse", "HEAD"]),
     ref: runGit(["rev-parse", "--abbrev-ref", "HEAD"]),
+    commitDate: runGit(["log", "-1", "--format=%cI"]),
   };
 }
 

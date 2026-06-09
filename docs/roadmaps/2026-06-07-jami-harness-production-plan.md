@@ -724,9 +724,11 @@ Pass status:
   `private: true`; `LICENSE` and `NOTICE` record the current license/source posture;
   `pnpm release:readiness` and `pnpm release:dry-run` report package, claims, SBOM,
   provenance, attestation, unavailable-command, and human-intervention state without
-  publishing. `docs/operations/release-readiness.md` is the durable claims matrix and
-  release gate. This is not a package publish, SBOM artifact generator, GitHub
-  attestation workflow, Mintlify build, hosted deploy, or account authorization closeout.
+  publishing. Pass 2 wired both non-publishing release audit commands into `pnpm verify`
+  and made audit output deterministic for a given Git `HEAD`. `docs/operations/release-readiness.md`
+  is the durable claims matrix and release gate. This is not a package publish, SBOM
+  artifact generator, GitHub attestation workflow, Mintlify build, hosted deploy, or
+  account authorization closeout.
 
 Implementation tasks:
 
