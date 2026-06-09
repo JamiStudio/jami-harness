@@ -20,8 +20,8 @@ Malformed run, artifact, and evidence identifiers fail before local artifacts or
 packets are written. Injected core modules must expose the methods their ports require.
 
 This package does not implement provider execution, MCP/OpenAPI/shell/browser/code/A2A
-adapters, durable hosted stores, docs generation, release publishing, or a hosted
-control plane.
+adapters, durable hosted stores, SDK-level docs-output injection, release publishing, or
+a hosted control plane. Repo-level docs generation exists through `pnpm docs:generate`.
 
 ```js
 import { createHarness } from "@jami-studio/harness-sdk";

@@ -16,17 +16,20 @@ below is closed.
 ## Current Release Posture
 
 - Root verification exists as `pnpm verify` and includes docs, contract generation drift,
-  contract validation, package tests, CLI tests, SDK tests, the local evidence smoke, and
-  both non-publishing release audit commands.
+  docs generation drift, contract validation, package tests, CLI tests, SDK tests, the
+  local evidence smoke, and both non-publishing release audit commands.
 - Release audit commands exist as `pnpm release:readiness` and `pnpm release:dry-run`.
   They do not publish. They report package, SBOM, provenance, attestation, claims, and
   account-action state.
 - All package manifests remain `private: true`. That is intentional until package scope,
   publish metadata, npm provenance, and account permissions are accepted.
-- `docs/` remains the canonical public-doc source. Mintlify or other public docs hosting
-  is not configured.
-- Changelog fragments in `.changes/` remain the accepted input for future release notes.
-  Release-note compilation is not implemented yet.
+- `packages/docs` now generates local docs artifacts from accepted source records into
+  `docs/generated/` and a Mintlify-ready draft under `apps/docs/`.
+- `docs/generated/docs-source-manifest.json` records source records, accepted contracts
+  and evidence references, command result, freshness class, and generated output paths.
+- `docs/` remains the canonical public-doc source. Mintlify build/publish and public
+  docs hosting are not configured.
+- Changelog fragments in `.changes/` are consumed by the generated changelog draft.
 
 ## Verification Commands
 
@@ -34,6 +37,7 @@ Run these commands before making any release-readiness claim:
 
 ```powershell
 pnpm docs:check
+pnpm docs:generate -- --check
 pnpm contracts:generate:check
 pnpm contracts:validate
 pnpm policy:test
@@ -65,11 +69,10 @@ results.
 
 | Surface | Current state | Required before claim |
 | --- | --- | --- |
-| `pnpm docs:generate -- --check` | Docs generator package and docs-source manifests are not implemented. | Add docs-source manifests, generator metadata, source commit, freshness class, and drift check. |
 | `pnpm sbom:generate` | SBOM policy is defined here, but no generated SBOM artifact command exists. | Add a local SBOM generator or accepted external tool with source-lock evidence and a check mode. |
 | `npm publish --dry-run --provenance` | Packages remain private and npm automation scope is not recorded. | Confirm npm account/org access, package scope, `publishConfig`, provenance, and package contents. |
 | GitHub release attestation | Artifact attestation workflow is not implemented. | Add a release workflow or local attestation procedure and verify it against a dry-run artifact. |
-| Mintlify build/publish | Mintlify shell and navigation config are not implemented. | Add docs config and local build verification before public docs hosting claims. |
+| Mintlify build/publish | Mintlify-ready `docs.json` and MDX drafts are generated locally, but the Mintlify CLI/package is not installed or source-locked in this repo. | Add source-lock evidence for the exact Mintlify CLI/package, install it intentionally, and run a local build check before public docs hosting claims. |
 | Vercel or Cloudflare deploy dry run | Hosted target is not selected or authorized. | Record account/project target and dry-run/deploy evidence. |
 
 ## Public Claims Matrix
@@ -81,7 +84,8 @@ results.
 | CLI supports local init, evidence run, inspect, module map, and verify commands. | Supported | `apps/cli/src/cli.mjs`, `apps/cli/test/cli.test.mjs`, `apps/cli/README.md`, `pnpm cli:test`, `pnpm examples:smoke`. | "The CLI can run and inspect the local evidence smoke." |
 | Tool gateway foundation supports registry inspection, policy-gated function execution, typed trace/audit/evidence/artifact output, redaction, and unsupported adapter manifests. | Supported for current fixtures | `packages/tools/src/index.mjs`, `packages/tools/test/tools.test.mjs`, `packages/contracts/schemas/tool-execution.schema.json`, `pnpm tools:test`, `pnpm contracts:validate`. | "The repo includes a narrow policy-gated tool gateway foundation for function tools; protocol adapters remain unsupported." |
 | Policy, runtime, memory, artifacts, and observability fail closed on current negative fixtures. | Supported for current fixtures | Package tests and contract fixtures listed in `packages/contracts/README.md`. | "Current foundation fixtures cover fail-closed policy/runtime/evidence cases." |
-| Provider runtime, full MCP/OpenAPI/shell/browser/code/A2A adapters, hosted workbench, hosted stores, docs generation, release publishing, or public docs hosting exist. | Unsupported | CLI and SDK README files state these are unavailable; roadmap Workstreams 4, 6, 8, and 9 remain open. | "Those surfaces are planned and currently unavailable." |
+| Local docs generation can produce quickstart, user manual, API/reference summary, system map, changelog draft, evidence index, docs-source manifest, and Mintlify-ready navigation draft. | Supported for current source records | `packages/docs/scripts/generate-docs.mjs`, `docs/generated/docs-source-manifest.json`, `apps/docs/docs.json`, `pnpm docs:generate -- --check`. | "The repo includes local generated docs artifacts and a Mintlify-ready draft; hosted docs are not published." |
+| Provider runtime, full MCP/OpenAPI/shell/browser/code/A2A adapters, hosted workbench, hosted stores, release publishing, Mintlify build/publish, or public docs hosting exist. | Unsupported | CLI and SDK README files state unavailable runtime surfaces; this release gate records hosted docs and publishing blockers; roadmap Workstreams 4, 6, 8, and 9 remain open. | "Those surfaces are planned and currently unavailable." |
 | Release artifacts are signed, attested, SBOM-backed, or publish-ready. | Unsupported | This release gate, `private: true` package manifests, and unavailable command ledger. | "The repo has release-readiness policy and audit commands; publishable artifacts are not ready." |
 
 ## SBOM Policy

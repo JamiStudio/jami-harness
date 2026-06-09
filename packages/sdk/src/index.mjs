@@ -31,7 +31,7 @@ export function createHarness(options = {}) {
   assertCapabilities("memory", memory);
   const policyEngine = options.policyEngine ?? createDefaultPolicyEngine({ now });
   assertPort("policyEngine", policyEngine, ["evaluate"]);
-  const docsOutput = options.docsOutput ?? createUnavailableModule("docsOutput", "docs generation package is not implemented yet");
+  const docsOutput = options.docsOutput ?? createUnavailableModule("docsOutput", "repo-level docs generation exists through pnpm docs:generate; SDK docs-output injection is not wired yet");
   const tools = options.tools ?? createToolRegistry();
   const sourceLocks = options.sourceLocks ?? [];
 
@@ -114,7 +114,7 @@ export function createHarness(options = {}) {
           toolGateway: "foundation_only",
           hostedControlPlane: "not_implemented",
           workbench: "not_implemented",
-          docsGeneration: "not_implemented",
+          docsGeneration: "repo_generator_available_sdk_output_not_wired",
         },
       };
     },

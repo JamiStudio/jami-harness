@@ -18,8 +18,12 @@ The repo should converge on a unified source registry rather than hand-maintaine
 - Durable docs explain the source registry and generated outputs.
 - Public docs, legal/support pages, marketing claims, user manuals, changelogs, architecture diagrams,
   system maps, API references, and release notes must trace back to accepted source records.
-- A generated surface is not accepted unless it records source inputs, generation time, generator version,
-  verification state, and source commit.
+- A generated surface is not accepted unless it records source inputs, generator version,
+  verification state, source commit reference, freshness class, command result, and
+  generated output paths.
+- Current local docs generation runs through `pnpm docs:generate` and
+  `pnpm docs:generate -- --check`; outputs live under `docs/generated/` with a
+  Mintlify-ready draft under `apps/docs/`.
 - The registry-root current-source intake record is
   `C:\Users\james\dev\orgs\oss\registry\docs\operations\source-lock-evidence.md`. It is
   evidence for planning and dispatch, not proof that a harness implementation gate is closed.
@@ -36,6 +40,8 @@ machine-readable manifests and generate outward-facing surfaces from those manif
 Run the narrowest complete checks for the touched surface:
 
 - Docs and plans: read back changed Markdown, `pnpm docs:check`, `git diff --check`.
+- Generated docs/manual/system-map/changelog surfaces: `pnpm docs:generate -- --check`
+  plus `pnpm docs:check`.
 - Package metadata, scripts, generated surfaces, or CI: docs checks plus the touched command or
   generator and `pnpm verify`.
 - Contracts and schemas: generation, drift check, schema validation, compatibility fixtures.

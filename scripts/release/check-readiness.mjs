@@ -19,6 +19,8 @@ const manifests = packageFiles.map((file) => ({
 const git = gitInfo();
 const checks = [
   checkScript("docs:check", "repo docs check command"),
+  checkScript("docs:generate", "generated docs command"),
+  checkScript("docs:generate:check", "generated docs drift check"),
   checkScript("verify", "full local verification gate"),
   checkScript("contracts:generate:check", "generated contract drift check"),
   checkScript("contracts:validate", "contract and fixture validation"),
@@ -28,6 +30,8 @@ const checks = [
   checkFile("LICENSE", "repository license file"),
   checkFile("NOTICE", "source and third-party provenance notice"),
   checkFile("docs/operations/release-readiness.md", "release, claims, SBOM, and attestation policy"),
+  checkFile("docs/generated/docs-source-manifest.json", "generated docs-source manifest"),
+  checkFile("apps/docs/docs.json", "Mintlify-ready navigation draft"),
   checkFile(".github/workflows/manual-check.yml", "manual GitHub fallback workflow"),
   checkWorkflow(),
   checkNoTrackedEnv(),
@@ -40,11 +44,6 @@ const checks = [
 ];
 
 const unavailableCommands = [
-  {
-    command: "pnpm docs:generate -- --check",
-    status: "unavailable",
-    reason: "docs generation package and docs-source manifests are not implemented yet",
-  },
   {
     command: "pnpm sbom:generate",
     status: "unavailable",
@@ -63,7 +62,7 @@ const unavailableCommands = [
   {
     command: "mintlify build",
     status: "unavailable",
-    reason: "Mintlify docs shell and navigation config are not implemented yet",
+    reason: "Mintlify-ready docs.json and MDX drafts are generated locally, but the Mintlify CLI/package is not installed or source-locked in this repo",
   },
   {
     command: "vercel/cloudflare deploy --dry-run",
@@ -108,7 +107,13 @@ const claims = [
     "packages/sdk/README.md",
     "pnpm sdk:test",
   ]),
-  claim("Docs generation, release publishing, hosted workbench, hosted stores, provider runtime, and full MCP/OpenAPI/shell/browser/code/A2A adapters are available", "unsupported", [
+  claim("Generated docs, changelog, system map, evidence index, and Mintlify-ready navigation draft exist locally", "supported", [
+    "packages/docs/scripts/generate-docs.mjs",
+    "docs/generated/docs-source-manifest.json",
+    "apps/docs/docs.json",
+    "pnpm docs:generate -- --check",
+  ]),
+  claim("Release publishing, hosted Mintlify build, hosted workbench, hosted stores, provider runtime, and full MCP/OpenAPI/shell/browser/code/A2A adapters are available", "unsupported", [
     "apps/cli/README.md",
     "packages/sdk/README.md",
     "docs/roadmaps/2026-06-07-jami-harness-production-plan.md",

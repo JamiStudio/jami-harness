@@ -1,0 +1,16 @@
+{
+  "name": "@jami-studio/harness-docs",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Deterministic docs, changelog, system-map, and evidence-index generator for Jami Harness source records.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JamiStudio/jami-harness.git"
+  },
+  "type": "module",
+  "scripts": {
+    "generate": "node scripts/generate-docs.mjs",
+    "generate:check": "node scripts/generate-docs.mjs --check"
+  }
+}

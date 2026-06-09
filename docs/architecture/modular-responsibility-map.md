@@ -325,9 +325,12 @@ runtime, policy, artifact, observability, and memory modules; creates a local ev
 run; reads artifacts and traces; and exposes module injection and capability inspection.
 The CLI exposes idempotent local `init`, evidence `run`, `inspect`, `tools`, `memory`,
 `docs`, `map`, and `verify` commands with JSON output and clean exit codes. These
-surfaces intentionally report missing tool gateway, provider runtime, docs generation,
+surfaces intentionally report missing provider runtime, SDK-level docs-output injection,
 hosted stores, hosted workbench, Studio UI install flows, and release publishing until
-their owning packages exist.
+their owning packages exist. Workstream 6 / Workstream 9 docs-source pass 1 adds
+`@jami-studio/harness-docs` as a repo-level generated docs/manual/system-map/changelog
+foundation with check mode and Mintlify-ready draft output; hosted docs publishing and
+Mintlify build remain unavailable.
 
 ## Workstream Implications
 

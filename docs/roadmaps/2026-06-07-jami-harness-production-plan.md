@@ -612,17 +612,27 @@ Pass status:
   projection for Studio UI display. This is not the full filesystem/object storage,
   artifact promotion workflow, docs/changelog/system-map generation, hosted store, or
   release-packet implementation.
+- 2026-06-09 Workstream 6 / Workstream 9 docs-source pass 1 added
+  `@jami-studio/harness-docs` as a deterministic local generator. It consumes package
+  manifests, contract schemas and generated references, accepted compatibility/policy/tool/
+  artifact/memory/observability fixtures, `.changes/` fragments, release readiness policy,
+  and CLI/SDK docs. It emits generated quickstart, user manual, API/reference summary,
+  system map, changelog draft, claims/evidence index, docs-source manifest, and a
+  Mintlify-ready `apps/docs/docs.json` plus MDX draft. The pass wires
+  `pnpm docs:generate -- --check` into `pnpm verify` and release-readiness audits. It
+  does not claim Mintlify CLI build, hosted docs publishing, SBOM generation, package
+  publishing, or public docs hosting.
 
 Implementation tasks:
 
 - [~] Define artifact promotion states and provenance metadata.
 - [~] Define artifact storage port and default local storage module.
-- [ ] Generate changelog entries, user guide deltas, system maps, and API references from accepted artifacts.
-- [ ] Keep docs/changelog/system-map publishing outputs replaceable while preserving provenance.
-- [ ] Add docs-source manifests and verification gates.
-- [ ] Add Mintlify-ready navigation generation.
-- [ ] Add claim registry for marketing and public docs.
-- [ ] Require generated docs/changelog/system-map outputs to include source commit, accepted contract, command result, timestamp, freshness class, and generated output paths.
+- [~] Generate changelog entries, user guide deltas, system maps, and API references from accepted artifacts; current pass consumes accepted source records and fixtures, but not completed-run release packets.
+- [~] Keep docs/changelog/system-map publishing outputs replaceable while preserving provenance; current outputs are local generated files and a Mintlify-ready draft.
+- [x] Add docs-source manifests and verification gates.
+- [x] Add Mintlify-ready navigation generation.
+- [~] Add claim registry for marketing and public docs; current claims/evidence index is generated from release-readiness and accepted source records, not a full marketing registry.
+- [~] Require generated docs/changelog/system-map outputs to include source commit, accepted contract, command result, timestamp, freshness class, and generated output paths; current manifest uses symbolic `git:HEAD`, a source input hash, command result, freshness class, accepted contract/evidence references, and output paths to avoid post-commit drift.
 
 Exit criteria:
 
@@ -773,6 +783,12 @@ Pass status:
   is the durable claims matrix and release gate. This is not a package publish, SBOM
   artifact generator, GitHub attestation workflow, Mintlify build, hosted deploy, or
   account authorization closeout.
+- 2026-06-09 Workstream 6 / Workstream 9 docs-source pass 1 moved docs generation from
+  the unavailable ledger into a supported local generation/check surface. Release readiness
+  now checks for `docs:generate`, `docs:generate:check`, `docs/generated/docs-source-manifest.json`,
+  and `apps/docs/docs.json`. Mintlify build/publish remains unavailable because the
+  Mintlify CLI/package is not installed or source-locked in this repo, and no hosted docs
+  target is selected.
 
 Implementation tasks:
 
@@ -780,8 +796,8 @@ Implementation tasks:
 - [~] Add SBOM and artifact attestation release flow.
 - [~] Carry forward source-lock, license/NOTICE, transitive dependency, and fork-delta evidence from runtime/tool/UI integration work.
 - [~] Add contributor guide, code of conduct, security policy, support policy.
-- [ ] Add Mintlify docs config and generated navigation.
-- [ ] Add public examples, quickstart, guides, API/SDK reference, integration guide, and launch claims matrix.
+- [~] Add Mintlify docs config and generated navigation; local `apps/docs/docs.json` exists, but Mintlify build/publish is not implemented.
+- [~] Add public examples, quickstart, guides, API/SDK reference, integration guide, and launch claims matrix; current pass generates quickstart, user manual, API/reference summary, system map, changelog draft, and evidence index from accepted source records.
 - [ ] Document the full-harness install path and modular bring-your-own-memory/context/store/provider/policy paths side by side.
 
 Exit criteria:
@@ -806,7 +822,7 @@ Suggested verification:
 - [ ] Contracts generate and validate.
 - [ ] Runtime/tool/policy/memory/artifact/observability tests pass.
 - [ ] CLI and workbench smoke pass.
-- [ ] Docs generation and Mintlify build pass.
+- [~] Docs generation passes locally through `pnpm docs:generate -- --check`; Mintlify build remains unavailable until the CLI/package is source-locked and installed.
 - [ ] SBOM/provenance release dry run pass.
 - [ ] Evidence packet provenance and redaction checks pass.
 - [ ] No secrets in tracked files or generated artifacts.
