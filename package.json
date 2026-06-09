@@ -17,6 +17,8 @@
     "contracts:generate": "node packages/contracts/scripts/generate-contracts.mjs",
     "contracts:generate:check": "node packages/contracts/scripts/generate-contracts.mjs --check",
     "contracts:validate": "node packages/contracts/scripts/validate-contracts.mjs",
+    "sbom:generate": "node scripts/release/generate-sbom.mjs",
+    "sbom:check": "node scripts/release/generate-sbom.mjs --check",
     "artifacts:test": "node --test packages/artifacts/test/*.test.mjs",
     "observability:test": "node --test packages/observability/test/*.test.mjs",
     "memory:test": "node --test packages/memory/test/*.test.mjs",
@@ -30,7 +32,7 @@
     "tools:test": "node --test packages/tools/test/*.test.mjs",
     "release:readiness": "node scripts/release/check-readiness.mjs",
     "release:dry-run": "node scripts/release/check-readiness.mjs --dry-run",
-    "verify": "node scripts/docs/check-docs.mjs && node packages/docs/scripts/generate-docs.mjs --check && node packages/contracts/scripts/generate-contracts.mjs --check && node packages/contracts/scripts/validate-contracts.mjs && node --test packages/policy/test/*.test.mjs && node --test packages/runtime/test/*.test.mjs && node --test packages/tools/test/*.test.mjs && node --test packages/provider-local/test/*.test.mjs && node --test packages/artifacts/test/*.test.mjs && node --test packages/observability/test/*.test.mjs && node --test packages/memory/test/*.test.mjs && node --test packages/store-local/test/*.test.mjs && node --test packages/sdk/test/*.test.mjs && node --test apps/cli/test/*.test.mjs && node examples/local-evidence-run.mjs && node scripts/release/check-readiness.mjs && node scripts/release/check-readiness.mjs --dry-run"
+    "verify": "node scripts/docs/check-docs.mjs && node packages/docs/scripts/generate-docs.mjs --check && node packages/contracts/scripts/generate-contracts.mjs --check && node packages/contracts/scripts/validate-contracts.mjs && node scripts/release/generate-sbom.mjs --check && node --test packages/policy/test/*.test.mjs && node --test packages/runtime/test/*.test.mjs && node --test packages/tools/test/*.test.mjs && node --test packages/provider-local/test/*.test.mjs && node --test packages/artifacts/test/*.test.mjs && node --test packages/observability/test/*.test.mjs && node --test packages/memory/test/*.test.mjs && node --test packages/store-local/test/*.test.mjs && node --test packages/sdk/test/*.test.mjs && node --test apps/cli/test/*.test.mjs && node examples/local-evidence-run.mjs && node scripts/release/check-readiness.mjs && node scripts/release/check-readiness.mjs --dry-run"
   },
   "engines": {
     "node": ">=24.0.0",

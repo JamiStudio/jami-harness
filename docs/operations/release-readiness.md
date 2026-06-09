@@ -22,6 +22,10 @@ ledger below is closed.
 - Release audit commands exist as `pnpm release:readiness` and `pnpm release:dry-run`.
   They do not publish. They report package, SBOM, provenance, attestation, claims, and
   account-action state.
+- SBOM dry-run commands exist as `pnpm sbom:generate` and `pnpm sbom:check`. They emit
+  and verify a local CycloneDX `1.7` workspace package-manifest inventory at
+  `docs/generated/sbom.cdx.json`; this is not a publish tarball SBOM, attestation, or
+  provenance claim.
 - All package manifests remain `private: true`. That is intentional until package scope,
   publish metadata, npm provenance, and account permissions are accepted.
 - `packages/docs` now generates local docs artifacts from accepted source records into
@@ -41,6 +45,8 @@ pnpm docs:check
 pnpm docs:generate -- --check
 pnpm contracts:generate:check
 pnpm contracts:validate
+pnpm sbom:generate
+pnpm sbom:check
 pnpm policy:test
 pnpm runtime:test
 pnpm tools:test
@@ -71,7 +77,6 @@ results.
 
 | Surface | Current state | Required before claim |
 | --- | --- | --- |
-| `pnpm sbom:generate` | SBOM policy is defined here, but no generated SBOM artifact command exists. | Add a local SBOM generator or accepted external tool with source-lock evidence and a check mode. |
 | `npm publish --dry-run --provenance` | Packages remain private and npm automation scope is not recorded. | Confirm npm account/org access, package scope, `publishConfig`, provenance, and package contents. |
 | GitHub release attestation | Artifact attestation workflow is not implemented. | Add a release workflow or local attestation procedure and verify it against a dry-run artifact. |
 | Mintlify build/publish | Mintlify-ready `docs.json` and MDX drafts are generated locally, but the Mintlify CLI/package is not installed or source-locked in this repo. | Add source-lock evidence for the exact Mintlify CLI/package, install it intentionally, and run a local build check before public docs hosting claims. |
@@ -88,8 +93,9 @@ results.
 | Local deterministic provider workflow executes through the SDK, tool gateway, policy, traces, artifacts, checkpoints, memory/context, and evidence. | Supported for current fixtures | `packages/provider-local/src/index.mjs`, `packages/provider-local/test/provider-local.test.mjs`, `packages/sdk/test/sdk.test.mjs`, `apps/cli/test/cli.test.mjs`, `pnpm provider:test`, `pnpm sdk:test`, `pnpm cli:test`. | "The repo includes a local deterministic provider foundation for workflow and recovery fixtures; hosted providers remain unsupported." |
 | Policy, runtime, memory, artifacts, and observability fail closed on current negative fixtures. | Supported for current fixtures | Package tests and contract fixtures listed in `packages/contracts/README.md`. | "Current foundation fixtures cover fail-closed policy/runtime/evidence cases." |
 | Local docs generation can produce quickstart, user manual, API/reference summary, system map, changelog draft, evidence index, docs-source manifest, and Mintlify-ready navigation draft. | Supported for current source records | `packages/docs/scripts/generate-docs.mjs`, `docs/generated/docs-source-manifest.json`, `apps/docs/docs.json`, `pnpm docs:generate -- --check`. | "The repo includes local generated docs artifacts and a Mintlify-ready draft; hosted docs are not published." |
+| Local SBOM dry-run generation can produce and drift-check a CycloneDX workspace package-manifest inventory. | Supported for current source records | `scripts/release/generate-sbom.mjs`, `docs/operations/sbom-source-lock.md`, `docs/generated/sbom.cdx.json`, `pnpm sbom:generate`, `pnpm sbom:check`. | "The repo includes a local SBOM dry-run artifact for workspace package manifests; release artifacts are not signed, attested, or publish-ready." |
 | Hosted provider runtime, full MCP/OpenAPI/shell/browser/code/A2A adapters, hosted workbench, hosted stores, release publishing, Mintlify build/publish, or public docs hosting exist. | Unsupported | CLI, SDK, and provider README files state unavailable hosted/protocol surfaces; this release gate records hosted docs and publishing blockers; roadmap Workstreams 4, 6, 8, and 9 remain open. | "Those surfaces are planned and currently unavailable." |
-| Release artifacts are signed, attested, SBOM-backed, or publish-ready. | Unsupported | This release gate, `private: true` package manifests, and unavailable command ledger. | "The repo has release-readiness policy and audit commands; publishable artifacts are not ready." |
+| Release artifacts are signed, attested, externally published, or publish-ready. | Unsupported | This release gate, `private: true` package manifests, and unavailable command ledger. | "The repo has release-readiness policy, local SBOM dry-run evidence, and audit commands; publishable artifacts are not ready." |
 
 ## SBOM Policy
 
@@ -104,6 +110,17 @@ Before any package or release artifact is called publish-ready:
 - Treat imported research archives as source context unless a release package actually
   includes their files. If files are promoted, include their upstream license and notice
   material.
+
+Current local implementation:
+
+- `pnpm sbom:generate` writes a CycloneDX `1.7` workspace package-manifest inventory to
+  `docs/generated/sbom.cdx.json`.
+- `pnpm sbom:check` verifies that the checked artifact still matches package manifests,
+  package metadata, workspace dependency edges, and current Git `HEAD`.
+- The source-lock evidence for this local format/tooling choice is
+  `docs/operations/sbom-source-lock.md`.
+- The local SBOM dry-run artifact remains non-publishing evidence until package contents
+  dry-runs, provenance, and attestation gates are implemented.
 
 ## Source And License Provenance
 

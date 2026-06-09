@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:1cb71914b0a9a4be57eac0b8aa0d2a50e8be6ea74ad97c103538f04fcd231925",
+  "sourceInputHash": "sha256:3d47fe5bf462fffcc0eabb102bd55f44f15bff9768ca75ef3826ec77a408f15d",
   "generatedAt": "deterministic:git-head-plus-input-hash",
   "freshnessClass": "deterministic_current_source_tree",
   "command": "pnpm docs:generate -- --check",
@@ -112,6 +112,11 @@
       "bytes": 272
     },
     {
+      "path": ".changes/2026-06-09-sbom-dry-run.md",
+      "sha256": "sha256:8289000f995f8a6880eab8ab1946e1c304aae33415a8a346e05ef032c2e2e00b",
+      "bytes": 300
+    },
+    {
       "path": ".changes/2026-06-09-store-approval-validation.md",
       "sha256": "sha256:d3449912eccc7380aa18b2a132414ec0db06e6e9019efda972a54270a8916c50",
       "bytes": 332
@@ -178,13 +183,13 @@
     },
     {
       "path": "docs/operations/release-readiness.md",
-      "sha256": "sha256:66d2641b8d16508aeadbb545a99a111b665e39027b9466102ca329917036ca51",
-      "bytes": 9981
+      "sha256": "sha256:d7af88ebb02948c6d4647af04468eba538f8b2844c0e151a43f6ffcdc616c69c",
+      "bytes": 11146
     },
     {
       "path": "package.json",
-      "sha256": "sha256:952474f364c90fd475fe8fb77e0b8bcf00941eb82748055bdcd176f68aec098e",
-      "bytes": 2649
+      "sha256": "sha256:0f5b3163bdf7b317f4bd9aa445308e836e8388b8c41dc418bdb2903f1843da36",
+      "bytes": 2830
     },
     {
       "path": "packages/artifacts/package.json",

@@ -24,13 +24,17 @@ const checks = [
   checkScript("verify", "full local verification gate"),
   checkScript("contracts:generate:check", "generated contract drift check"),
   checkScript("contracts:validate", "contract and fixture validation"),
+  checkScript("sbom:generate", "local SBOM generation command"),
+  checkScript("sbom:check", "local SBOM drift check command"),
   checkScript("release:readiness", "release readiness audit command"),
   checkScript("release:dry-run", "non-publishing release dry-run command"),
   checkFile("pnpm-lock.yaml", "lockfile for frozen local and manual CI installs"),
   checkFile("LICENSE", "repository license file"),
   checkFile("NOTICE", "source and third-party provenance notice"),
   checkFile("docs/operations/release-readiness.md", "release, claims, SBOM, and attestation policy"),
+  checkFile("docs/operations/sbom-source-lock.md", "repo-local SBOM source-lock evidence"),
   checkFile("docs/generated/docs-source-manifest.json", "generated docs-source manifest"),
+  checkFile("docs/generated/sbom.cdx.json", "generated local CycloneDX SBOM dry-run artifact"),
   checkFile("apps/docs/docs.json", "Mintlify-ready navigation draft"),
   checkFile(".github/workflows/manual-check.yml", "manual GitHub fallback workflow"),
   checkWorkflow(),
@@ -44,11 +48,6 @@ const checks = [
 ];
 
 const unavailableCommands = [
-  {
-    command: "pnpm sbom:generate",
-    status: "unavailable",
-    reason: "SBOM generator is policy-defined but not implemented as a release artifact command yet",
-  },
   {
     command: "npm publish --dry-run --provenance",
     status: "unavailable",
@@ -121,6 +120,13 @@ const claims = [
     "docs/generated/docs-source-manifest.json",
     "apps/docs/docs.json",
     "pnpm docs:generate -- --check",
+  ]),
+  claim("Local SBOM dry-run generation and drift check exist for workspace package manifests", "supported", [
+    "scripts/release/generate-sbom.mjs",
+    "docs/operations/sbom-source-lock.md",
+    "docs/generated/sbom.cdx.json",
+    "pnpm sbom:generate",
+    "pnpm sbom:check",
   ]),
   claim("Release publishing, hosted Mintlify build, hosted workbench, hosted stores, hosted provider runtime, and full MCP/OpenAPI/shell/browser/code/A2A adapters are available", "unsupported", [
     "apps/cli/README.md",

@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:1cb71914b0a9a4be57eac0b8aa0d2a50e8be6ea74ad97c103538f04fcd231925`
+- Source input hash: `sha256:3d47fe5bf462fffcc0eabb102bd55f44f15bff9768ca75ef3826ec77a408f15d`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -33,6 +33,7 @@
 - 2026-06-09-release-readiness-audit (`.changes/2026-06-09-release-readiness-audit.md`)
 - 2026-06-09-release-readiness-verify-gate (`.changes/2026-06-09-release-readiness-verify-gate.md`)
 - 2026-06-09-runtime-kernel-spine (`.changes/2026-06-09-runtime-kernel-spine.md`)
+- 2026-06-09-sbom-dry-run (`.changes/2026-06-09-sbom-dry-run.md`)
 - 2026-06-09-store-approval-validation (`.changes/2026-06-09-store-approval-validation.md`)
 - Stream 4 foundations (`.changes/2026-06-09-stream4-foundations.md`)
 - 2026-06-09-stream4-pass2-provenance-hardening (`.changes/2026-06-09-stream4-pass2-provenance-hardening.md`)

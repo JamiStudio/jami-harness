@@ -829,11 +829,21 @@ Pass status:
   and `apps/docs/docs.json`. Mintlify build/publish remains unavailable because the
   Mintlify CLI/package is not installed or source-locked in this repo, and no hosted docs
   target is selected.
+- 2026-06-09 post-audit implementation pass 1 added a dependency-free local SBOM
+  dry-run/check surface. `pnpm sbom:generate` writes
+  `docs/generated/sbom.cdx.json` as a CycloneDX `1.7` workspace package-manifest
+  inventory, `pnpm sbom:check` fails on manifest or Git `HEAD` drift, and
+  `docs/operations/sbom-source-lock.md` records current official source evidence for
+  the format/tooling choice. Release readiness now treats SBOM dry-run evidence as
+  locally supported while npm publish dry-run with provenance, GitHub attestations,
+  signed archives, package contents dry-runs, and hosted deploys remain unavailable.
 
 Implementation tasks:
 
 - [~] Add CI, lint, typecheck, unit/integration/security/doc checks.
-- [~] Add SBOM and artifact attestation release flow.
+- [~] Add SBOM and artifact attestation release flow; local SBOM dry-run/check exists,
+  but package contents dry-runs, npm provenance, signing, and GitHub attestations remain
+  unavailable.
 - [~] Carry forward source-lock, license/NOTICE, transitive dependency, and fork-delta evidence from runtime/tool/UI integration work.
 - [~] Add contributor guide, code of conduct, security policy, support policy.
 - [~] Add Mintlify docs config and generated navigation; local `apps/docs/docs.json` exists, but Mintlify build/publish is not implemented.
@@ -863,7 +873,9 @@ Suggested verification:
 - [ ] Runtime/tool/provider/policy/memory/artifact/observability tests pass.
 - [~] CLI local smoke passes for init/run/provider-route-fail-closed nonzero/provider-fail-once/resume/approve/inspect/doctor/map/verify; workbench smoke remains unavailable until a workbench exists.
 - [~] Docs generation passes locally through `pnpm docs:generate -- --check`; Mintlify build remains unavailable until the CLI/package is source-locked and installed.
-- [ ] SBOM/provenance release dry run pass.
+- [~] SBOM/provenance release dry-run pass has local SBOM generation/check and
+  non-publishing release audit evidence; npm provenance, package contents dry-run,
+  signing, and GitHub attestation remain unavailable.
 - [~] Evidence packet, provider/tool workflow, and checkpoint provenance/redaction checks pass for local foundations.
 - [ ] No secrets in tracked files or generated artifacts.
 - [ ] Changelog and decision records updated.
