@@ -32,7 +32,11 @@ The master canon points to a wholesale fork of the MIT `agent-native` foundation
 
 ## External Standards To Track
 
-- MCP specification `2025-11-25` for tool/resource/prompt integration, Streamable HTTP, authorization, elicitation, sampling, roots, and security guidance.
+- MCP specification baseline selected by
+  `C:\Users\james\dev\orgs\oss\registry\docs\operations\source-lock-evidence.md`;
+  the current registry-root source-lock record dated 2026-06-09 selects `2025-06-18`
+  for implementation intake. Re-check the registry-root record and add repo-local
+  command-backed source-lock evidence before any MCP implementation depends on it.
 - A2A official project/docs for agent-to-agent interop.
 - AG-UI official docs for external agent-to-UI event interop.
 - agent-native official docs/package metadata for fork feasibility and exact package versions.
