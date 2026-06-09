@@ -53,3 +53,41 @@ test("filesystem checkpoint store persists checkpoints and approvals without pat
     await rm(cwd, { recursive: true, force: true });
   }
 });
+
+test("approval records reject malformed ids, statuses, and replay-unsafe expiry windows", () => {
+  const store = createInMemoryCheckpointStore({ now });
+
+  assert.throws(
+    () => store.writeApproval({ runId: "run_approval_fixture", actionId: "../bad" }),
+    (error) => error instanceof HarnessStoreError && error.code === "invalid_identifier",
+  );
+  assert.throws(
+    () => store.writeApproval({ runId: "run_approval_fixture", actionId: "act_publish", actorId: "owner" }),
+    (error) => error instanceof HarnessStoreError && error.code === "invalid_identifier",
+  );
+  assert.throws(
+    () => store.writeApproval({ runId: "run_approval_fixture", actionId: "act_publish", approvalId: "../apr_escape" }),
+    (error) => error instanceof HarnessStoreError && error.code === "invalid_identifier",
+  );
+  assert.throws(
+    () => store.writeApproval({ runId: "run_approval_fixture", actionId: "act_publish", evidenceRef: "secret://approval" }),
+    (error) => error instanceof HarnessStoreError && error.code === "invalid_identifier",
+  );
+  assert.throws(
+    () => store.writeApproval({ runId: "run_approval_fixture", actionId: "act_publish", status: "maybe" }),
+    (error) => error instanceof HarnessStoreError && error.code === "invalid_approval_status",
+  );
+  assert.throws(
+    () => store.writeApproval({ runId: "run_approval_fixture", actionId: "act_publish", approvedAt: "not-a-date" }),
+    (error) => error instanceof HarnessStoreError && error.code === "invalid_timestamp",
+  );
+  assert.throws(
+    () => store.writeApproval({
+      runId: "run_approval_fixture",
+      actionId: "act_publish",
+      approvedAt: "2026-06-09T12:00:00.000Z",
+      expiresAt: "2026-06-09T12:00:00.000Z",
+    }),
+    (error) => error instanceof HarnessStoreError && error.code === "invalid_approval_expiry",
+  );
+});

@@ -4,8 +4,13 @@ import { join, resolve } from "node:path";
 
 const SCHEMA_VERSION = "2026-06-09";
 const RUN_ID_PATTERN = /^run_[a-z0-9][a-z0-9_-]*$/;
+const APPROVAL_ID_PATTERN = /^apr_[a-z0-9][a-z0-9_-]*$/;
+const ACTION_ID_PATTERN = /^act_[a-z0-9][a-z0-9_-]*$/;
+const ACTOR_ID_PATTERN = /^actor_[a-z0-9][a-z0-9_-]*$/;
+const EVIDENCE_ID_PATTERN = /^ev_[a-z0-9][a-z0-9_-]*$/;
 const SAFE_FILE_PATTERN = /^run_[a-z0-9][a-z0-9_-]*\.json$/;
 const SENSITIVE_FIELD_PATTERN = /secret|token|apiKey|credential|password|privatePayload|plaintext|value|prompt|systemPrompt|developerPrompt|userPrompt/i;
+const APPROVAL_STATUSES = new Set(["approved", "denied", "revoked", "expired"]);
 
 export class HarnessStoreError extends Error {
   constructor(code, message) {
@@ -190,24 +195,50 @@ export function normalizeCheckpoint(input, options = {}) {
 export function normalizeApproval(input, options = {}) {
   const now = options.now ?? (() => new Date());
   const runId = assertRunId(input.runId);
-  const actionId = safeSegment(input.actionId ?? "act_unspecified");
+  const actionId = assertPattern("action id", input.actionId ?? "act_unspecified", ACTION_ID_PATTERN);
+  const actorId = assertPattern("actor id", input.actorId ?? "actor_developer", ACTOR_ID_PATTERN);
+  const status = input.status ?? "approved";
+  if (!APPROVAL_STATUSES.has(status)) {
+    throw new HarnessStoreError("invalid_approval_status", `approval status must be one of ${[...APPROVAL_STATUSES].join(", ")}`);
+  }
+  const approvedAt = input.approvedAt ?? now().toISOString();
+  const approvedAtMs = Date.parse(approvedAt);
+  if (!Number.isFinite(approvedAtMs)) {
+    throw new HarnessStoreError("invalid_timestamp", "approval approvedAt must be an ISO timestamp");
+  }
+  const expiresAtMs = input.expiresAt ? Date.parse(input.expiresAt) : undefined;
+  if (input.expiresAt && !Number.isFinite(expiresAtMs)) {
+    throw new HarnessStoreError("invalid_timestamp", "approval expiresAt must be an ISO timestamp");
+  }
+  if (expiresAtMs !== undefined && expiresAtMs <= approvedAtMs) {
+    throw new HarnessStoreError("invalid_approval_expiry", "approval expiresAt must be after approvedAt");
+  }
+  const approvalId = input.approvalId ?? makeId("apr", runId, actionId);
+  assertPattern("approval id", approvalId, APPROVAL_ID_PATTERN);
+  const evidenceRef = input.evidenceRef ?? makeId("ev", runId, actionId, "approval");
+  assertPattern("evidence ref", evidenceRef, EVIDENCE_ID_PATTERN);
   return {
     schemaVersion: SCHEMA_VERSION,
-    approvalId: input.approvalId ?? makeId("apr", runId, actionId),
+    approvalId,
     runId,
     actionId,
-    actorId: safeSegment(input.actorId ?? "actor_developer"),
-    status: input.status ?? "approved",
+    actorId,
+    status,
     scopes: Array.isArray(input.scopes) ? input.scopes : [],
-    approvedAt: input.approvedAt ?? now().toISOString(),
+    approvedAt,
     expiresAt: input.expiresAt,
-    evidenceRef: input.evidenceRef ?? makeId("ev", runId, actionId, "approval"),
+    evidenceRef,
   };
 }
 
 function assertRunId(value) {
   if (typeof value === "string" && RUN_ID_PATTERN.test(value)) return value;
   throw new HarnessStoreError("invalid_identifier", `run id must match ${RUN_ID_PATTERN.source}`);
+}
+
+function assertPattern(label, value, pattern) {
+  if (typeof value === "string" && pattern.test(value)) return value;
+  throw new HarnessStoreError("invalid_identifier", `${label} must match ${pattern.source}`);
 }
 
 function safeSegment(value) {
