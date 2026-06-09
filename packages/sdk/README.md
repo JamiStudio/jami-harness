@@ -14,6 +14,9 @@ Current capabilities:
 - Inject replacement modules such as memory, policy, artifacts, and observability without
   changing the run grammar.
 
+Malformed run, artifact, and evidence identifiers fail before local artifacts or evidence
+packets are written. Injected core modules must expose the methods their ports require.
+
 This package does not implement provider execution, a tool gateway, durable hosted
 stores, docs generation, release publishing, or a hosted control plane.
 

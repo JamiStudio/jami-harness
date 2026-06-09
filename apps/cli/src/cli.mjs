@@ -3,10 +3,11 @@ import { existsSync } from "node:fs";
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
-import { createHarness } from "../../../packages/sdk/src/index.mjs";
+import { HarnessInputError, createHarness } from "../../../packages/sdk/src/index.mjs";
 
 const STATE_DIR = ".jami-harness";
 const CONFIG_FILE = "harness.json";
+const RUN_ID_PATTERN = /^run_[a-z0-9][a-z0-9_-]*$/;
 
 export async function main(argv = process.argv.slice(2), env = process.env, io = defaultIo()) {
   const parsed = parseArgs(argv);
@@ -29,8 +30,9 @@ export async function main(argv = process.argv.slice(2), env = process.env, io =
     io.err(formatOutput(errorPayload("unknown_command", `Unknown command: ${command}`, 64), parsed));
     return 64;
   } catch (error) {
-    io.err(formatOutput(errorPayload("command_failed", error.message, 1), parsed));
-    return 1;
+    const exitCode = error instanceof HarnessInputError ? 64 : 1;
+    io.err(formatOutput(errorPayload(error.code ?? "command_failed", error.message, exitCode), parsed));
+    return exitCode;
   }
 }
 
@@ -54,7 +56,7 @@ async function initCommand(cwd, parsed, io) {
 
 async function runCommand(cwd, parsed, io) {
   await initStateIfMissing(cwd);
-  const runId = normalizeRunId(parsed.options["run-id"] ?? parsed.options.runId ?? `run_${Date.now().toString(36)}`);
+  const runId = validateRunId(parsed.options["run-id"] ?? parsed.options.runId ?? `run_${Date.now().toString(36)}`);
   const harness = createHarness();
   const result = await harness.run({
     runId,
@@ -80,7 +82,7 @@ async function runCommand(cwd, parsed, io) {
 
 async function inspectCommand(cwd, parsed, io) {
   const harness = createHarness();
-  const runId = parsed.options["run-id"] ?? parsed.options.runId;
+  const runId = validateOptionalRunId(parsed.options["run-id"] ?? parsed.options.runId);
   const runSummary = runId ? await readRunSummary(cwd, runId) : await readLatestRunSummary(cwd);
   io.out(formatOutput({
     ok: true,
@@ -244,8 +246,14 @@ function defaultConfig() {
   };
 }
 
-function normalizeRunId(value) {
-  return /^run_[a-z0-9][a-z0-9_-]*$/.test(value) ? value : "run_local";
+function validateOptionalRunId(value) {
+  if (value === undefined) return undefined;
+  return validateRunId(value);
+}
+
+function validateRunId(value) {
+  if (typeof value === "string" && RUN_ID_PATTERN.test(value)) return value;
+  throw new HarnessInputError("invalid_identifier", `run id must match ${RUN_ID_PATTERN.source}`);
 }
 
 function errorPayload(code, message, exitCode) {

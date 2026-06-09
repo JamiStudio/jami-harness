@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { createHarness } from "../src/index.mjs";
+import { HarnessInputError, createHarness } from "../src/index.mjs";
 
 const now = () => new Date("2026-06-09T12:00:00.000Z");
 
@@ -45,4 +45,43 @@ test("supports configurable module injection without changing run grammar", asyn
   assert.equal(result.runId, "run_custom_memory");
   assert.equal(harness.inspect().modules.find((module) => module.name === "memory").mode, "custom_memory");
   assert.deepEqual(writes, []);
+});
+
+test("rejects malformed run and evidence identifiers before writing artifacts", async () => {
+  const harness = createHarness({ now });
+
+  await assert.rejects(
+    () => harness.run({ runId: "not-a-run-id" }),
+    (error) => error instanceof HarnessInputError && error.code === "invalid_identifier",
+  );
+
+  await assert.rejects(
+    () => harness.run({ runId: null }),
+    (error) => error instanceof HarnessInputError && error.code === "invalid_identifier",
+  );
+
+  await assert.rejects(
+    () => harness.run({ runId: "run_bad_artifact", artifactId: "report" }),
+    (error) => error instanceof HarnessInputError && error.code === "invalid_identifier",
+  );
+
+  await assert.rejects(
+    () => harness.run({ runId: "run_bad_evidence", evidenceRef: "evidence" }),
+    (error) => error instanceof HarnessInputError && error.code === "invalid_identifier",
+  );
+
+  assert.equal(harness.readArtifacts().length, 0);
+  assert.equal(harness.readTraces().length, 0);
+});
+
+test("rejects invalid injected core modules at construction", () => {
+  assert.throws(
+    () => createHarness({ artifactStore: { capabilities: { mode: "custom" } } }),
+    (error) => error instanceof HarnessInputError && error.code === "invalid_module",
+  );
+
+  assert.throws(
+    () => createHarness({ policyEngine: {} }),
+    (error) => error instanceof HarnessInputError && error.code === "invalid_module",
+  );
 });

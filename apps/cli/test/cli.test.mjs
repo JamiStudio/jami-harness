@@ -54,6 +54,21 @@ test("verify returns a clean nonzero code before init and succeeds after init", 
   }
 });
 
+test("rejects malformed run ids with JSON error output", async () => {
+  const cwd = await mkdtemp(join(tmpdir(), "jami-cli-"));
+  try {
+    const run = await runCli(["run", "--json", "--cwd", cwd, "--run-id", "../outside"]);
+    const inspect = await runCli(["inspect", "--json", "--cwd", cwd, "--run-id", "..\\outside"]);
+
+    assert.equal(run.code, 64);
+    assert.equal(JSON.parse(run.err).code, "invalid_identifier");
+    assert.equal(inspect.code, 64);
+    assert.equal(JSON.parse(inspect.err).code, "invalid_identifier");
+  } finally {
+    await rm(cwd, { recursive: true, force: true });
+  }
+});
+
 async function runCli(args) {
   let out = "";
   let err = "";

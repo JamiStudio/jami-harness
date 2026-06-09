@@ -5,13 +5,31 @@ import { createDefaultPolicyEngine } from "../../policy/src/index.mjs";
 import { createRunLifecycleKernel } from "../../runtime/src/index.mjs";
 
 const SCHEMA_VERSION = "2026-06-09";
+const ID_PATTERNS = {
+  artifact: /^art_[a-z0-9][a-z0-9_-]*$/,
+  evidence: /^ev_[a-z0-9][a-z0-9_-]*$/,
+  project: /^proj_[a-z0-9][a-z0-9_-]*$/,
+  run: /^run_[a-z0-9][a-z0-9_-]*$/,
+};
+
+export class HarnessInputError extends Error {
+  constructor(code, message) {
+    super(message);
+    this.name = "HarnessInputError";
+    this.code = code;
+  }
+}
 
 export function createHarness(options = {}) {
   const now = options.now ?? (() => new Date());
   const artifactStore = options.artifactStore ?? createInMemoryArtifactStore({ now });
+  assertPort("artifactStore", artifactStore, ["write", "read", "list"]);
   const observability = options.observability ?? createRunObservability({ now, artifactStore });
+  assertPort("observability", observability, ["trace", "exportEvidencePacket"]);
   const memory = options.memory ?? (options.disableMemory ? createNoopMemoryPort() : createInMemoryMemoryPort({ now }));
+  assertCapabilities("memory", memory);
   const policyEngine = options.policyEngine ?? createDefaultPolicyEngine({ now });
+  assertPort("policyEngine", policyEngine, ["evaluate"]);
   const docsOutput = options.docsOutput ?? createUnavailableModule("docsOutput", "docs generation package is not implemented yet");
   const tools = options.tools ?? createUnavailableModule("tools", "tool gateway package is not implemented yet");
   const sourceLocks = options.sourceLocks ?? [];
@@ -98,9 +116,9 @@ export function createHarness(options = {}) {
 }
 
 function createSdkRun({ now, artifactStore, observability, memory, policyEngine, ...input }) {
-  const runId = normalizeId("run", input.runId);
+  const runId = normalizeId("run", input.runId, "run_local");
   const actor = input.actor ?? { actorId: "actor_developer", scopes: ["repo:read"] };
-  const projectId = normalizeId("proj", input.projectId ?? "proj_jami_harness");
+  const projectId = normalizeId("project", input.projectId, "proj_jami_harness");
   const environment = input.environment ?? "local";
   const kernel = createRunLifecycleKernel({
     now,
@@ -119,6 +137,8 @@ function createSdkRun({ now, artifactStore, observability, memory, policyEngine,
     kernel,
 
     async execute(executeInput = {}) {
+      const artifactId = normalizeId("artifact", executeInput.artifactId, `art_${runId.replace(/^run_/, "")}_summary`);
+      const evidenceRef = normalizeId("evidence", executeInput.evidenceRef, `ev_${runId.replace(/^run_/, "")}_summary`);
       kernel.start(executeInput.message ?? "local harness run started");
       kernel.progress("capturing local evidence foundation");
       const trace = observability.trace("sdk.run", {
@@ -132,14 +152,14 @@ function createSdkRun({ now, artifactStore, observability, memory, policyEngine,
         },
       });
       const artifact = artifactStore.write({
-        artifactId: executeInput.artifactId ?? `art_${runId.replace(/^run_/, "")}_summary`,
+        artifactId,
         kind: "report",
         title: executeInput.title ?? "Local harness run summary",
         runId,
         sourceRepo: executeInput.sourceRepo ?? "jami-harness",
         sourceCommit: executeInput.sourceCommit ?? "working-tree",
         sourceRef: executeInput.sourceRef ?? "refs/heads/main",
-        evidenceRef: executeInput.evidenceRef ?? `ev_${runId.replace(/^run_/, "")}_summary`,
+        evidenceRef,
         traceRef: trace.traceId,
         payload: {
           runId,
@@ -199,7 +219,28 @@ function moduleMode(module) {
   return module?.capabilities?.mode ?? "custom";
 }
 
-function normalizeId(prefix, value) {
-  const pattern = new RegExp(`^${prefix}_[a-z0-9][a-z0-9_-]*$`);
-  return typeof value === "string" && pattern.test(value) ? value : `${prefix}_local`;
+function normalizeId(kind, value, fallback) {
+  if (value === undefined) return fallback;
+  const pattern = ID_PATTERNS[kind];
+  if (typeof value === "string" && pattern.test(value)) return value;
+  throw new HarnessInputError(
+    "invalid_identifier",
+    `${kind} id must match ${pattern.source}`,
+  );
+}
+
+function assertPort(name, port, methods) {
+  if (!port || typeof port !== "object") {
+    throw new HarnessInputError("invalid_module", `${name} module must be an object`);
+  }
+  const missing = methods.filter((method) => typeof port[method] !== "function");
+  if (missing.length > 0) {
+    throw new HarnessInputError("invalid_module", `${name} module is missing required methods: ${missing.join(", ")}`);
+  }
+}
+
+function assertCapabilities(name, module) {
+  if (!module?.capabilities || typeof module.capabilities !== "object") {
+    throw new HarnessInputError("invalid_module", `${name} module must expose a capabilities object`);
+  }
 }

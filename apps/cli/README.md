@@ -16,5 +16,8 @@ Current commands:
 - `jami verify --json` checks local CLI state and core module availability with clean
   exit codes.
 
+Malformed run identifiers are rejected with structured JSON errors before the CLI reads
+or writes run state.
+
 The CLI intentionally reports tool gateway, docs generation, hosted workbench, hosted
 stores, provider runtime, and release publishing as unavailable until those packages exist.
