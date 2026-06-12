@@ -51,8 +51,7 @@ local dry-runs are not final completion.
 The complete harness product is the public, installable, hosted-capable
 `@jami-studio/harness` runtime foundation. It must work as a batteries-included default
 and as replaceable owned-core contracts. The following routes are not optional closeout
-polish; they are the definition of the end state unless explicitly removed from shipped
-scope by a recorded product decision.
+polish; they are the definition of the end state.
 
 ### Core Runtime
 
@@ -85,15 +84,15 @@ scope by a recorded product decision.
 - [ ] Hosted provider adapters for the accepted provider set implement auth, streaming or
   explicit non-streaming behavior, tool calls, structured outputs, retries, cancellation,
   usage, cost, error taxonomy, redaction, source locks, and capability manifests.
-- [ ] MCP adapter support covers accepted transports/features with auth, origin/session
-  safety, tool listing, tool execution, resources/prompts/roots if accepted, unsupported
+- [ ] MCP adapter support covers Streamable HTTP, stdio where needed for local tools,
+  auth, origin/session safety, tool listing, tool execution, resources, prompts, roots, unsupported
   states, malformed states, denied states, trace, and evidence fixtures.
 - [ ] OpenAPI adapter covers source-lock evidence, schema validation, auth, request and
   response redaction, dry-run, denied, unsupported, malformed, trace, and evidence fixtures.
 - [ ] Function-tool adapter covers schema validation, policy hooks, audit, denied,
   unsupported, malformed, trace, and evidence fixtures.
-- [ ] Shell, browser, code, provider-as-tool, and A2A routes are either fully implemented
-  with the same fixture matrix or explicitly removed from shipped scope and public claims.
+- [ ] Shell, browser, code, provider-as-tool, and A2A routes are implemented with the
+  same fixture matrix and public capability manifests.
 - [ ] Every accepted adapter has positive, denied, unsupported, malformed, auth, redacted,
   cancellation, resumability, trace, and evidence cases.
 
@@ -102,9 +101,9 @@ scope by a recorded product decision.
 - [ ] Memory supports no-op, local, hosted/vector, and external BYO adapters.
 - [ ] Context assembly supports source ranking, compression, token budgets, freshness,
   permission filtering, citations, inclusion/exclusion reasons, and deterministic replay.
-- [ ] Search supports local and hosted retrieval where claimed.
+- [ ] Search supports local and hosted retrieval.
 - [ ] Durable stores persist runs, checkpoints, artifacts, traces, memory, approvals,
-  config, and workbench state where those routes are claimed.
+  config, and workbench state for the production harness routes.
 - [ ] Secret resolver contracts and adapters never expose secret values in source,
   generated artifacts, logs, traces, docs, package contents, hosted output, or errors.
 - [ ] Retention, deletion, export, redaction, replay, and permission tests pass for
@@ -118,11 +117,11 @@ scope by a recorded product decision.
   outputs carry source commit, command, result, timestamp, freshness class, accepted
   contract, and output paths.
 - [ ] OpenTelemetry bridge, audit log exports, metrics, external sink adapters, hosted
-  observability backend, incident/export surfaces, and eval dashboards exist where claimed.
+  observability backend, incident/export surfaces, and eval dashboards exist.
 - [ ] Evidence packets cover every runtime, provider, tool, memory, docs, hosted, package,
   release, and UI integration route.
 - [ ] Evals cover tool safety, docs generation, memory recall, recovery, provider errors,
-  redaction, and hosted routes where claimed.
+  redaction, and hosted routes.
 
 ### SDK, CLI, Workbench, Examples
 
@@ -148,8 +147,8 @@ scope by a recorded product decision.
   signing/attestation, release notes, changelog, public claims evidence, and post-publish
   install smoke pass.
 - [ ] Harness docs build and publish to the accepted hosted docs route.
-- [ ] Hosted workbench/control route works if in shipped scope.
-- [ ] Hosted provider/store/observability routes work if in shipped scope.
+- [ ] Hosted harness workbench/control status and release-readiness routes work.
+- [ ] Hosted provider, store, and observability routes work.
 - [ ] Rollback, deprecation, unpublish, support, security, and incident runbooks are present
   and match implemented routes.
 
@@ -220,7 +219,7 @@ scope by a recorded product decision.
 - Keep external claims linked to official sources in reports or decision records.
 - Create implementation packages only after the plan is accepted or explicitly started.
 - Preserve cross-repo alignment by linking sibling docs instead of duplicating full plans. When a shared contract changes, update `docs/architecture/foundation-alignment.md` here and the matching Studio UI doc.
-- Preserve modular responsibility boundaries from `docs/architecture/modular-responsibility-map.md`. Do not hardwire optional defaults into runtime call sites.
+- Preserve modular responsibility boundaries from `docs/architecture/modular-responsibility-map.md`. Do not hardwire replaceable defaults into runtime call sites.
 - Use `C:\Users\james\dev\orgs\oss\registry\docs\operations\source-lock-evidence.md`
   as the registry-root current-source intake record. It does not close implementation gates
   by itself; code lanes must add repo-local, command-backed source-lock evidence for the
@@ -332,7 +331,7 @@ Shared integration is contract-first:
 - `artifactView` for harness artifacts rendered through trusted UI components.
 - `actionRef` for policy-gated agent/tool actions exposed by UI slots.
 - `themeRef` for factory/custom theme references.
-- `suiteRef` for suite install graphs and optional harness capabilities.
+- `suiteRef` for suite install graphs and harness capabilities.
 
 Do not duplicate the Studio UI roadmap in this repo. Link to the sibling plan and
 update shared contract docs when integration decisions change.
@@ -357,7 +356,7 @@ active plan, not optional research notes.
   requires a search/readback or equivalent path-lock evidence note.
 - `source-lock`: before runtime, protocol, package, or third-party source implementation, capture the
   official/current source, package/spec name, version or spec identifier, date, license/provenance state,
-  tarball or commit evidence where applicable, and unresolved risks. The root current-source record is
+  tarball or commit evidence for package/source dependencies, and unresolved risks. The root current-source record is
   `C:\Users\james\dev\orgs\oss\registry\docs\operations\source-lock-evidence.md`; implementation rows
   must become checked-in source-lock records before code depends on the source.
 - `compat-lock`: shared UI/action/artifact/theme/suite references must have machine-readable schemas or
@@ -662,11 +661,11 @@ Pass status:
 Implementation tasks:
 
 - [x] Implement tool registry and risk labels.
-- [~] Normalize MCP, OpenAPI, function, shell, browser, code, and provider-as-tool requests through one execution envelope for status reporting; function tools and trusted in-process MCP fixture tools have executable adapter paths, while OpenAPI/shell/browser/code/provider-as-tool/A2A and remote MCP surfaces fail closed as unsupported with dry-run evidence. Model-provider routing is owned by `packages/provider-local`.
-- [~] Add MCP client support for stdio and Streamable HTTP; trusted in-process fixture discovery/call mapping is implemented, while stdio subprocess and remote Streamable HTTP transports remain unsupported.
-- [ ] Add A2A agent-card/task interop where cross-agent communication is required.
-- [~] Add origin/session/auth controls for HTTP transports, including MCP Streamable HTTP origin and localhost-binding safeguards where applicable; guard validation exists for Origin, visible-ASCII session id, protocol version, and public local binding, while remote HTTP transport and OAuth remain unsupported.
-- [~] Add OpenAPI/function tool adapters; function tools are implemented, OpenAPI remains unsupported until current source-lock evidence and fixtures exist.
+- [~] Normalize MCP, OpenAPI, function, shell, browser, code, and provider-as-tool requests through one execution envelope for status reporting; function tools and trusted in-process MCP fixture tools have executable adapter paths, while OpenAPI/shell/browser/code/provider-as-tool/A2A and remote MCP surfaces remain required completion work.
+- [~] Add MCP client support for stdio and Streamable HTTP; trusted in-process fixture discovery/call mapping is implemented, while stdio subprocess and remote Streamable HTTP transports remain required completion work.
+- [ ] Add A2A agent-card/task interop for cross-agent communication.
+- [~] Add origin/session/auth controls for HTTP transports, including MCP Streamable HTTP origin and localhost-binding safeguards; guard validation exists for Origin, visible-ASCII session id, protocol version, and public local binding, while remote HTTP transport and OAuth remain required completion work.
+- [~] Add OpenAPI/function tool adapters; function tools are implemented, OpenAPI remains required completion work with current source-lock evidence and fixtures.
 - [ ] Add local shell/browser/code wrappers with sandbox policy.
 - [~] Add tool-call approval, timeout, cancellation, trace, and audit events; the foundation covers approval through the policy seam and represents timeout/cancellation status, but streaming and resume semantics remain open.
 - [~] Add adapter capability manifests for streaming, cancellation, resumability, auth model, tool result shape, artifact support, error taxonomy, trace propagation, policy hooks, and unsupported states; the MCP manifest now distinguishes trusted fixture support from unsupported stdio, Streamable HTTP, OAuth, resources, prompts, roots, sampling, elicitation, tasks, and resumability, and unsupported OpenAPI/shell/browser/code/provider-as-tool/A2A manifests carry missing-source-lock dry-run evidence.
