@@ -1,7 +1,7 @@
 # Jami Harness Production Implementation Plan
 
 Date: 2026-06-07
-Status: Active implementation
+Status: Active end-to-end implementation; local foundation only
 Source reports: `docs/research/2026-06-07-jami-harness-production-feasibility-report.md`; `docs/research/master/00-orchestration/plan.md`; `docs/research/master/00-orchestration/synthesis.md`; crossflow adversarial review at `C:\Users\james\dev\orgs\oss\registry\docs\research\2026-06-08-harness-ui-plan-adversarial-review.md`
 Owner: Jami Studio
 Surface: Jami Harness root workspace
@@ -36,6 +36,134 @@ hosted provider adapters, Mintlify build, SBOM
 artifact generation, release attestations, publishable package manifests, and hosted
 workbench/docs surfaces. The release-readiness audit intentionally reports these as
 unsupported or human-intervention-gated rather than weakening the gates.
+
+2026-06-12 reorientation: this roadmap is now aligned to the registry-root
+end-to-end completion roadmap at
+`C:\Users\james\dev\orgs\oss\registry\docs\roadmaps\2026-06-12-end-to-end-completion-roadmap.md`.
+The current head `9a5de16` is accepted as a local foundation checkpoint only. The harness is
+not complete until every accepted runtime, provider, tool, memory, context, store, artifact,
+observability, SDK, CLI, workbench, docs, hosted, package, release, provenance, and
+cross-repo UI seam route has executable evidence. Fail-closed unsupported manifests and
+local dry-runs are not final completion.
+
+## Complete Production Shape And Absolute Exit Criteria
+
+The complete harness product is the public, installable, hosted-capable
+`@jami-studio/harness` runtime foundation. It must work as a batteries-included default
+and as replaceable owned-core contracts. The following routes are not optional closeout
+polish; they are the definition of the end state unless explicitly removed from shipped
+scope by a recorded product decision.
+
+### Core Runtime
+
+- [ ] `packages/core` composes runtime, provider, policy, tools, memory, context, search,
+  artifacts, observability, stores, secrets, docs output, and UI refs through stable ports.
+- [ ] Runtime state machine supports queued, running, waiting approval, tool-running,
+  retrying, cancelling, cancelled, failed, recovered, completed, and archived states.
+- [ ] Runtime supports retry, cancellation, timeout, idempotency, resumability,
+  checkpoint migration, corrupted checkpoint handling, and interrupted-run recovery.
+- [ ] Runtime call sites remain port-based so users can replace providers, stores,
+  memory, context, policy, tools, artifacts, observability, secrets, and docs outputs.
+- [ ] Recovery fixtures cover fail-once, fail-after-tool, fail-after-artifact,
+  fail-after-checkpoint, cancel-during-provider, cancel-during-tool, stale checkpoint,
+  corrupted checkpoint, and incompatible checkpoint cases.
+
+### Policy, Identity, Consent, And Audit
+
+- [ ] Policy engine remains default-deny and emits audit evidence for allow, deny,
+  pending approval, expired approval, replay attempt, missing actor, missing scope,
+  missing audit, secret-bearing input, malformed request, and cross-scope action.
+- [ ] Identity, role, environment, project, actor, session, and approval records are
+  typed and validated.
+- [ ] Consent and approval routes cover request, approve, deny, expire, revoke, replay,
+  escalation, CLI approval, SDK approval, and workbench approval.
+- [ ] Redaction defaults cover prompts, tool metadata, credentials, secret refs, private
+  memory, provider responses, traces, metrics, docs, and generated evidence.
+
+### Providers And Tools
+
+- [ ] Hosted provider adapters for the accepted provider set implement auth, streaming or
+  explicit non-streaming behavior, tool calls, structured outputs, retries, cancellation,
+  usage, cost, error taxonomy, redaction, source locks, and capability manifests.
+- [ ] MCP adapter support covers accepted transports/features with auth, origin/session
+  safety, tool listing, tool execution, resources/prompts/roots if accepted, unsupported
+  states, malformed states, denied states, trace, and evidence fixtures.
+- [ ] OpenAPI adapter covers source-lock evidence, schema validation, auth, request and
+  response redaction, dry-run, denied, unsupported, malformed, trace, and evidence fixtures.
+- [ ] Function-tool adapter covers schema validation, policy hooks, audit, denied,
+  unsupported, malformed, trace, and evidence fixtures.
+- [ ] Shell, browser, code, provider-as-tool, and A2A routes are either fully implemented
+  with the same fixture matrix or explicitly removed from shipped scope and public claims.
+- [ ] Every accepted adapter has positive, denied, unsupported, malformed, auth, redacted,
+  cancellation, resumability, trace, and evidence cases.
+
+### Memory, Context, Search, Stores, And Secrets
+
+- [ ] Memory supports no-op, local, hosted/vector, and external BYO adapters.
+- [ ] Context assembly supports source ranking, compression, token budgets, freshness,
+  permission filtering, citations, inclusion/exclusion reasons, and deterministic replay.
+- [ ] Search supports local and hosted retrieval where claimed.
+- [ ] Durable stores persist runs, checkpoints, artifacts, traces, memory, approvals,
+  config, and workbench state where those routes are claimed.
+- [ ] Secret resolver contracts and adapters never expose secret values in source,
+  generated artifacts, logs, traces, docs, package contents, hosted output, or errors.
+- [ ] Retention, deletion, export, redaction, replay, and permission tests pass for
+  memory/context/store routes.
+
+### Artifacts, Docs, Observability, And Evidence
+
+- [ ] Artifacts can be created, stored, promoted, rendered through Studio UI refs, and tied
+  to evidence packets.
+- [ ] Generated docs, changelog, system map, user manual, API reference, and public claim
+  outputs carry source commit, command, result, timestamp, freshness class, accepted
+  contract, and output paths.
+- [ ] OpenTelemetry bridge, audit log exports, metrics, external sink adapters, hosted
+  observability backend, incident/export surfaces, and eval dashboards exist where claimed.
+- [ ] Evidence packets cover every runtime, provider, tool, memory, docs, hosted, package,
+  release, and UI integration route.
+- [ ] Evals cover tool safety, docs generation, memory recall, recovery, provider errors,
+  redaction, and hosted routes where claimed.
+
+### SDK, CLI, Workbench, Examples
+
+- [ ] SDK exposes run, resume, approve, deny, cancel, retry, inspect, tools, memory,
+  context, artifacts, traces, docs, release, workbench, module injection, and migration.
+- [ ] CLI exposes init, run, resume, approve, deny, cancel, retry, inspect, tools, memory,
+  context, docs, map, workbench, release, doctor, verify, migration, JSON output, and
+  human-readable output.
+- [ ] Workbench/control shell shows run timeline, approvals, tools, artifacts, traces,
+  metrics, memory/context, docs preview, system map, release readiness, hosted status,
+  and Studio UI integration through stable published package boundaries.
+- [ ] Examples cover local source checkout, public package install, hosted provider, MCP,
+  OpenAPI/function, memory BYO, hosted store, docs generation, policy denial, recovery,
+  and release dry-run.
+
+### Hosted, Package, Release, And Public Trust
+
+- [ ] Public harness packages install from the accepted public package channel in clean
+  external projects.
+- [ ] `private: true` is removed only after package contents, provenance, source locks, and
+  install smokes pass.
+- [ ] Package contents dry-run, trusted publishing or accepted provenance workflow, SBOM,
+  signing/attestation, release notes, changelog, public claims evidence, and post-publish
+  install smoke pass.
+- [ ] Harness docs build and publish to the accepted hosted docs route.
+- [ ] Hosted workbench/control route works if in shipped scope.
+- [ ] Hosted provider/store/observability routes work if in shipped scope.
+- [ ] Rollback, deprecation, unpublish, support, security, and incident runbooks are present
+  and match implemented routes.
+
+### Cross-Repo UI Seams
+
+- [ ] Shared fixtures cover `runEvent`, `uiPayload`, `artifactView`, `actionRef`,
+  `themeRef`, `suiteRef`, `evidencePacket`, `memoryRecord`, `contextPack`, and
+  `capabilityManifest` in both repos.
+- [ ] Harness-originated UI/action/artifact refs render through Studio UI without importing
+  UI implementation ownership into the harness.
+- [ ] Denied, invalid, unsupported, stale, redacted, missing-source, expired, and replayed
+  states fail closed and remain display-only in Studio UI.
+- [ ] Studio UI package integration uses stable published package boundaries and typed
+  shared contracts.
 
 ## Source Findings
 
