@@ -1,0 +1,20 @@
+{
+  "$schema": "../../schemas/action-ref.schema.json",
+  "expectedValid": true,
+  "caseId": "phase2-action-ref-pending-approval",
+  "description": "Action ref fixture for pending approval state.",
+  "coverage": ["pending_approval"],
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "actionId": "act_phase2_pending_approval",
+    "label": "Approve write",
+    "route": "harness://actions/approve-write",
+    "risk": "write",
+    "policyScope": "actions:approve",
+    "confirmationMode": "approval_required",
+    "state": "pending_approval",
+    "inputSchemaRef": "schema://jami-harness/action-input",
+    "actorRef": "actor_developer",
+    "auditRef": "audit_phase2_pending"
+  }
+}

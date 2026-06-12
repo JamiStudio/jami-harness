@@ -1,0 +1,22 @@
+{
+  "$schema": "../../schemas/run-event.schema.json",
+  "expectedValid": true,
+  "caseId": "phase2-run-event-progress",
+  "description": "Run event fixture for normal progress updates.",
+  "coverage": ["progress"],
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "eventId": "evt_phase2_progress",
+    "runId": "run_phase2_shared_seams",
+    "taskId": "task_phase2_contracts",
+    "sequence": 1,
+    "occurredAt": "2026-06-12T14:00:01.000Z",
+    "eventType": "run.progress",
+    "traceRef": {
+      "traceId": "trace_phase2_shared_seams",
+      "spanId": "span_progress"
+    },
+    "rendererState": "not_requested",
+    "message": "Run progressed."
+  }
+}

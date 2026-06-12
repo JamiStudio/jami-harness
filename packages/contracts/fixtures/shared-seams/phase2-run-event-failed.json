@@ -1,0 +1,22 @@
+{
+  "$schema": "../../schemas/run-event.schema.json",
+  "expectedValid": true,
+  "caseId": "phase2-run-event-failed",
+  "description": "Run event fixture for failed state.",
+  "coverage": ["failed"],
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "eventId": "evt_phase2_failed",
+    "runId": "run_phase2_shared_seams",
+    "taskId": "task_phase2_contracts",
+    "sequence": 10,
+    "occurredAt": "2026-06-12T14:00:10.000Z",
+    "eventType": "run.failed",
+    "traceRef": {
+      "traceId": "trace_phase2_shared_seams",
+      "spanId": "span_failed"
+    },
+    "rendererState": "not_requested",
+    "message": "Run failed with a typed error."
+  }
+}

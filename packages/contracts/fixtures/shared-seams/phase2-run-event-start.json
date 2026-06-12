@@ -1,0 +1,22 @@
+{
+  "$schema": "../../schemas/run-event.schema.json",
+  "expectedValid": true,
+  "caseId": "phase2-run-event-start",
+  "description": "Run event fixture for the run start state.",
+  "coverage": ["start"],
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "eventId": "evt_phase2_start",
+    "runId": "run_phase2_shared_seams",
+    "taskId": "task_phase2_contracts",
+    "sequence": 0,
+    "occurredAt": "2026-06-12T14:00:00.000Z",
+    "eventType": "run.started",
+    "traceRef": {
+      "traceId": "trace_phase2_shared_seams",
+      "spanId": "span_start"
+    },
+    "rendererState": "not_requested",
+    "message": "Run started."
+  }
+}

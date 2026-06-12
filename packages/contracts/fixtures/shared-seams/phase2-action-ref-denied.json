@@ -1,0 +1,24 @@
+{
+  "$schema": "../../schemas/action-ref.schema.json",
+  "expectedValid": true,
+  "caseId": "phase2-action-ref-denied",
+  "description": "Action ref fixture for denied action state.",
+  "coverage": ["denied"],
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "actionId": "act_phase2_denied",
+    "label": "Denied action",
+    "route": "harness://actions/denied",
+    "risk": "external",
+    "policyScope": "actions:external",
+    "confirmationMode": "approval_required",
+    "state": "denied",
+    "inputSchemaRef": "schema://jami-harness/action-input",
+    "denial": {
+      "reason": "Policy denied external action.",
+      "auditRef": "audit_phase2_denied"
+    },
+    "actorRef": "actor_developer",
+    "auditRef": "audit_phase2_denied"
+  }
+}

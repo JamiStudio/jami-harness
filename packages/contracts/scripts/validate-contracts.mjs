@@ -320,9 +320,61 @@ function addPhase2Coverage(schemaTitle, fixtureFile, coverage) {
       failures.push(`${relative(packageRoot, fixtureFile)} declares unknown ${schemaTitle} coverage state ${state}`);
       continue;
     }
+    const evidenceError = validatePhase2CoverageEvidence(schemaTitle, state, readJson(fixtureFile)?.payload);
+    if (evidenceError) {
+      failures.push(`${relative(packageRoot, fixtureFile)} declares ${schemaTitle} coverage for ${state} but ${evidenceError}`);
+      continue;
+    }
     covered.add(state);
   }
   phase2Coverage.set(schemaTitle, covered);
+}
+
+function validatePhase2CoverageEvidence(schemaTitle, state, value) {
+  if (!value) return "has no payload evidence";
+
+  if (schemaTitle === "runEvent") {
+    const expectedEventType = {
+      start: "run.started",
+      progress: "run.progress",
+      approval_required: "approval.requested",
+      tool_running: "tool.running",
+      artifact_emitted: "artifact.emitted",
+      checkpoint_saved: "checkpoint.saved",
+      retrying: "run.retrying",
+      cancelling: "run.cancelling",
+      cancelled: "run.cancelled",
+      failed: "run.failed",
+      recovered: "run.recovered",
+      complete: "run.completed",
+      redacted: "run.redacted",
+    }[state];
+    if (value.eventType !== expectedEventType) {
+      return `payload eventType is ${JSON.stringify(value.eventType)}, not ${JSON.stringify(expectedEventType)}`;
+    }
+  }
+
+  if (schemaTitle === "actionRef") {
+    const expectedActionState = {
+      pending_approval: "pending_approval",
+      approved: "executed",
+      denied: "denied",
+      expired: "expired",
+      replayed: "replayed",
+      display_only_ui_state: "display_only",
+    }[state];
+    if (expectedActionState && value.state !== expectedActionState) {
+      return `payload state is ${JSON.stringify(value.state)}, not ${JSON.stringify(expectedActionState)}`;
+    }
+    if (state === "missing_actor" && value.actorRef) return "payload includes actorRef";
+    if (state === "missing_scope" && value.policyScope) return "payload includes policyScope";
+    if (state === "missing_audit" && value.auditRef) return "payload includes auditRef";
+    if (state === "secret_bearing_input" && !findSecretLookingPath(value, "$") && !/secret|token|credential|password|apiKey/i.test(JSON.stringify(value))) {
+      return "payload has no secret-shaped field";
+    }
+  }
+
+  return undefined;
 }
 
 function requireEvidenceLikeRef(value, path, purpose) {

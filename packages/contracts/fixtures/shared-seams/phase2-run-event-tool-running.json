@@ -1,0 +1,22 @@
+{
+  "$schema": "../../schemas/run-event.schema.json",
+  "expectedValid": true,
+  "caseId": "phase2-run-event-tool-running",
+  "description": "Run event fixture for a tool-running update.",
+  "coverage": ["tool_running"],
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "eventId": "evt_phase2_tool_running",
+    "runId": "run_phase2_shared_seams",
+    "taskId": "task_phase2_contracts",
+    "sequence": 3,
+    "occurredAt": "2026-06-12T14:00:03.000Z",
+    "eventType": "tool.running",
+    "traceRef": {
+      "traceId": "trace_phase2_shared_seams",
+      "spanId": "span_tool"
+    },
+    "rendererState": "not_requested",
+    "message": "Tool execution is running."
+  }
+}

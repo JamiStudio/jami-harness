@@ -3,7 +3,7 @@
   "expectedValid": true,
   "caseId": "phase2-action-ref-states",
   "description": "Action ref fixture covers approval, completion, denial, expiry, replay, and display-only UI states as policy-gated data.",
-  "coverage": ["pending_approval", "approved", "denied", "expired", "replayed", "display_only_ui_state"],
+  "coverage": ["replayed"],
   "payload": {
     "schemaVersion": "2026-06-09",
     "actionId": "act_phase2_replay_blocked",

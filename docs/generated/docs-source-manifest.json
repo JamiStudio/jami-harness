@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:28fafb8a919de105b9cda06fdf19db28726c387b7812a43dc61166dc02cc21eb",
+  "sourceInputHash": "sha256:f88d04e4a6c6fcde9087b4e832a3d74a1e4f15454afd6c274556c128a0011401",
   "generatedAt": "deterministic:git-head-plus-input-hash",
   "freshnessClass": "deterministic_current_source_tree",
   "command": "pnpm docs:generate -- --check",
@@ -195,6 +195,11 @@
       "path": ".changes/2026-06-12-phase2-shared-seam-fixtures.md",
       "sha256": "sha256:b2089e2011b8fa6b6e53d5cd91404a9a49c61c08670a1c7e569a0bef60b3c8dd",
       "bytes": 382
+    },
+    {
+      "path": ".changes/2026-06-12-phase2-shared-seam-state-evidence.md",
+      "sha256": "sha256:f5ee3e924bad45379c5bba6c13be3f07b6bc353e3a77e3e040a2fd7b933479ff",
+      "bytes": 264
     },
     {
       "path": ".changes/README.md",
@@ -447,14 +452,39 @@
       "bytes": 512
     },
     {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-action-ref-approved.json",
+      "sha256": "sha256:e0de37764bd5c9103f17125c5153b4b648aa1546be71c50e2d14e9ce9b32affe",
+      "bytes": 734
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-action-ref-denied.json",
+      "sha256": "sha256:26104e8c14283bdc94679df4210193e959fa728d98f78a807c9520b4fb0291be",
+      "bytes": 751
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-action-ref-display-only.json",
+      "sha256": "sha256:b56deaafb0fd79bc36549d36757492283a5ad25f1dc8b25368e5be68d29d9563",
+      "bytes": 621
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-action-ref-expired.json",
+      "sha256": "sha256:a6033c098a5edb6118876eef90aab2262c4903d049c0029c69a4d1a373c6dc0a",
+      "bytes": 688
+    },
+    {
       "path": "packages/contracts/fixtures/shared-seams/phase2-action-ref-missing-audit.json",
       "sha256": "sha256:5a604980e50551d5f19ee471cbeb249bff324f921aca4f59d92b5249f3f54dd7",
       "bytes": 680
     },
     {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-action-ref-pending-approval.json",
+      "sha256": "sha256:b70983b4454b2ac866f4788d1f1824a92881da7318b5ed89c8545a024346612b",
+      "bytes": 685
+    },
+    {
       "path": "packages/contracts/fixtures/shared-seams/phase2-action-ref-states.json",
-      "sha256": "sha256:408e1eef82ab901c52d13e55d5a59993e1f7c099ee24df792a6a54e73b45bc50",
-      "bytes": 895
+      "sha256": "sha256:6a9a0ec872bf40337036914296b4101f2843a5d887739945d4cd572753d1b8ca",
+      "bytes": 817
     },
     {
       "path": "packages/contracts/fixtures/shared-seams/phase2-artifact-view-states.json",
@@ -477,9 +507,69 @@
       "bytes": 1281
     },
     {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-run-event-approval-required.json",
+      "sha256": "sha256:46f41743088a42ae3f6e903b8fc99f7387e169bb54224ed8e095029c3f346d4a",
+      "bytes": 768
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-run-event-artifact-emitted.json",
+      "sha256": "sha256:7906663a86ef7ead2171768eac2d32d0d8eb005b37713ef28be29e71d89959b1",
+      "bytes": 747
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-run-event-cancelled.json",
+      "sha256": "sha256:11a351d9785d16dd849292d197dfc7f2de537ceffc0751f141858d554475e234",
+      "bytes": 656
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-run-event-cancelling.json",
+      "sha256": "sha256:5a7bd4e906eab3d0bcde8928c959a139a729d13a31b867df3d347109cf0413ec",
+      "bytes": 683
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-run-event-complete.json",
+      "sha256": "sha256:40944e935eab8e13c3e6bc5b7e8ccb1ff2d4033bd52a34865db525ca27765dd2",
+      "bytes": 653
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-run-event-failed.json",
+      "sha256": "sha256:211540824ae7767b87ed0d7a0f9959e3a74b7c024365615c49925710bb59177a",
+      "bytes": 655
+    },
+    {
       "path": "packages/contracts/fixtures/shared-seams/phase2-run-event-lifecycle.json",
-      "sha256": "sha256:58e369e77f55d6f4579dba6f5117f32b27c5c76780c2dcaef05c9438d964b63f",
-      "bytes": 1027
+      "sha256": "sha256:8d098e5a1af5eb2cfea8757db2c70a2e94f971acb3bc4a7c6d11acff0522b7ab",
+      "bytes": 807
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-run-event-progress.json",
+      "sha256": "sha256:20bf900db42a83df5048051fd53b6c798931cfef0a397081bf2e39df11d56be1",
+      "bytes": 660
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-run-event-recovered.json",
+      "sha256": "sha256:ee34904bbe4f8d2a5ce8b6d4bb63409cef1535f95cf3d81ab36f798713cee63e",
+      "bytes": 673
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-run-event-redacted.json",
+      "sha256": "sha256:b5561d26cf26160eb98e28c0abeb66a2356394ab56fdf7a05f0a5bfddb0ff31a",
+      "bytes": 672
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-run-event-retrying.json",
+      "sha256": "sha256:7702a8177f5d1e4f73a8d984027f4d3b2d995701a944308eb5eaa0821a1e9d35",
+      "bytes": 652
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-run-event-start.json",
+      "sha256": "sha256:207178eef00eb54b4cefa8982f366a083c9acd1a2446772a7e0f0bec70d59b4e",
+      "bytes": 640
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-run-event-tool-running.json",
+      "sha256": "sha256:ccea2961674f4de1797531d03ae3256369d6fb568598bfb585e4286640fc7703",
+      "bytes": 677
     },
     {
       "path": "packages/contracts/fixtures/shared-seams/phase2-suite-ref-states.json",

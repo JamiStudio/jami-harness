@@ -5,7 +5,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:28fafb8a919de105b9cda06fdf19db28726c387b7812a43dc61166dc02cc21eb`
+- Source input hash: `sha256:f88d04e4a6c6fcde9087b4e832a3d74a1e4f15454afd6c274556c128a0011401`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -63,6 +63,7 @@
 - `.changes/2026-06-09-tool-gateway-foundation.md` (sha256:59072ff9cfd3aba9eb7ac0288bafd9a5770dfe92af2a6cbd01cee6ca88a0064c)
 - `.changes/2026-06-09-tool-gateway-pass2-hardening.md` (sha256:942eadb198a7f86c81ac19547511b2882452a193c73b677a0132945bc1352213)
 - `.changes/2026-06-12-phase2-shared-seam-fixtures.md` (sha256:b2089e2011b8fa6b6e53d5cd91404a9a49c61c08670a1c7e569a0bef60b3c8dd)
+- `.changes/2026-06-12-phase2-shared-seam-state-evidence.md` (sha256:f5ee3e924bad45379c5bba6c13be3f07b6bc353e3a77e3e040a2fd7b933479ff)
 - `.changes/README.md` (sha256:e528bf4b90ab589bfc83ffed78e37918f56ac94240e5eedebc8d03265e09e52f)
 - `.changes/stream5-cli-sdk-fail-closed-ids.md` (sha256:3b455ab2dfa9385a84a24beda28073ffbddcc2062e32ff4b1cb21a50814e1d4f)
 - `.changes/stream5-cli-sdk-foundation.md` (sha256:e496cce37d42a13d18d0745a780bfd40795097bbf4c5a89af3cc51b5d974af79)
@@ -113,13 +114,30 @@
 - `packages/contracts/fixtures/policy/valid-policy-decision-deny-secret-exfiltration.json` (sha256:73a07c0270db23beb21e00da6c48c75ebaa7d48ae405285a22287879c26d1f66)
 - `packages/contracts/fixtures/policy/valid-policy-decision-deny-tool-metadata-poisoning.json` (sha256:0cc869861650c2980ec8fa77d740dd61975ada6b28d1c842b58a20193567208a)
 - `packages/contracts/fixtures/policy/valid-secret-ref.json` (sha256:2f9f02ec8a15c2912d482f210d5cd57adb9567a605657f0f2e9e409438d98a49)
+- `packages/contracts/fixtures/shared-seams/phase2-action-ref-approved.json` (sha256:e0de37764bd5c9103f17125c5153b4b648aa1546be71c50e2d14e9ce9b32affe)
+- `packages/contracts/fixtures/shared-seams/phase2-action-ref-denied.json` (sha256:26104e8c14283bdc94679df4210193e959fa728d98f78a807c9520b4fb0291be)
+- `packages/contracts/fixtures/shared-seams/phase2-action-ref-display-only.json` (sha256:b56deaafb0fd79bc36549d36757492283a5ad25f1dc8b25368e5be68d29d9563)
+- `packages/contracts/fixtures/shared-seams/phase2-action-ref-expired.json` (sha256:a6033c098a5edb6118876eef90aab2262c4903d049c0029c69a4d1a373c6dc0a)
 - `packages/contracts/fixtures/shared-seams/phase2-action-ref-missing-audit.json` (sha256:5a604980e50551d5f19ee471cbeb249bff324f921aca4f59d92b5249f3f54dd7)
-- `packages/contracts/fixtures/shared-seams/phase2-action-ref-states.json` (sha256:408e1eef82ab901c52d13e55d5a59993e1f7c099ee24df792a6a54e73b45bc50)
+- `packages/contracts/fixtures/shared-seams/phase2-action-ref-pending-approval.json` (sha256:b70983b4454b2ac866f4788d1f1824a92881da7318b5ed89c8545a024346612b)
+- `packages/contracts/fixtures/shared-seams/phase2-action-ref-states.json` (sha256:6a9a0ec872bf40337036914296b4101f2843a5d887739945d4cd572753d1b8ca)
 - `packages/contracts/fixtures/shared-seams/phase2-artifact-view-states.json` (sha256:df1c873883f6a4c1803871a99e863dca683ec3d287b2f70098e474a20e925d44)
 - `packages/contracts/fixtures/shared-seams/phase2-capability-manifest-states.json` (sha256:d0e460a2a896b9bc76ec1c7b83ee1e36021200b46109ee60d46d45377050d2f4)
 - `packages/contracts/fixtures/shared-seams/phase2-context-pack-states.json` (sha256:1f58a429ae399f8024da0da20f94b8e4c489529f45207da1c11cd4efd406f17b)
 - `packages/contracts/fixtures/shared-seams/phase2-memory-record-states.json` (sha256:c1cf9e4adc6e2a44f9e3dc953ef6890ef1b070b682f9c75a64035e6edeee42a2)
-- `packages/contracts/fixtures/shared-seams/phase2-run-event-lifecycle.json` (sha256:58e369e77f55d6f4579dba6f5117f32b27c5c76780c2dcaef05c9438d964b63f)
+- `packages/contracts/fixtures/shared-seams/phase2-run-event-approval-required.json` (sha256:46f41743088a42ae3f6e903b8fc99f7387e169bb54224ed8e095029c3f346d4a)
+- `packages/contracts/fixtures/shared-seams/phase2-run-event-artifact-emitted.json` (sha256:7906663a86ef7ead2171768eac2d32d0d8eb005b37713ef28be29e71d89959b1)
+- `packages/contracts/fixtures/shared-seams/phase2-run-event-cancelled.json` (sha256:11a351d9785d16dd849292d197dfc7f2de537ceffc0751f141858d554475e234)
+- `packages/contracts/fixtures/shared-seams/phase2-run-event-cancelling.json` (sha256:5a7bd4e906eab3d0bcde8928c959a139a729d13a31b867df3d347109cf0413ec)
+- `packages/contracts/fixtures/shared-seams/phase2-run-event-complete.json` (sha256:40944e935eab8e13c3e6bc5b7e8ccb1ff2d4033bd52a34865db525ca27765dd2)
+- `packages/contracts/fixtures/shared-seams/phase2-run-event-failed.json` (sha256:211540824ae7767b87ed0d7a0f9959e3a74b7c024365615c49925710bb59177a)
+- `packages/contracts/fixtures/shared-seams/phase2-run-event-lifecycle.json` (sha256:8d098e5a1af5eb2cfea8757db2c70a2e94f971acb3bc4a7c6d11acff0522b7ab)
+- `packages/contracts/fixtures/shared-seams/phase2-run-event-progress.json` (sha256:20bf900db42a83df5048051fd53b6c798931cfef0a397081bf2e39df11d56be1)
+- `packages/contracts/fixtures/shared-seams/phase2-run-event-recovered.json` (sha256:ee34904bbe4f8d2a5ce8b6d4bb63409cef1535f95cf3d81ab36f798713cee63e)
+- `packages/contracts/fixtures/shared-seams/phase2-run-event-redacted.json` (sha256:b5561d26cf26160eb98e28c0abeb66a2356394ab56fdf7a05f0a5bfddb0ff31a)
+- `packages/contracts/fixtures/shared-seams/phase2-run-event-retrying.json` (sha256:7702a8177f5d1e4f73a8d984027f4d3b2d995701a944308eb5eaa0821a1e9d35)
+- `packages/contracts/fixtures/shared-seams/phase2-run-event-start.json` (sha256:207178eef00eb54b4cefa8982f366a083c9acd1a2446772a7e0f0bec70d59b4e)
+- `packages/contracts/fixtures/shared-seams/phase2-run-event-tool-running.json` (sha256:ccea2961674f4de1797531d03ae3256369d6fb568598bfb585e4286640fc7703)
 - `packages/contracts/fixtures/shared-seams/phase2-suite-ref-states.json` (sha256:7cd65196ad6868e5f8a19a191776cb095887e797f5949a45b4a532d2282ebab1)
 - `packages/contracts/fixtures/shared-seams/phase2-theme-ref-states.json` (sha256:f38d1f0201e4a46b82edd5566f3dd756485a98ad096b5812aec52e560ae3699e)
 - `packages/contracts/fixtures/shared-seams/phase2-ui-payload-unsafe-values.json` (sha256:36e681e11d765549d1e60d82519c5a7060db045154f6a18ce28f6d0abf918f47)

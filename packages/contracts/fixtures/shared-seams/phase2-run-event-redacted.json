@@ -1,0 +1,22 @@
+{
+  "$schema": "../../schemas/run-event.schema.json",
+  "expectedValid": true,
+  "caseId": "phase2-run-event-redacted",
+  "description": "Run event fixture for redacted state.",
+  "coverage": ["redacted"],
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "eventId": "evt_phase2_redacted",
+    "runId": "run_phase2_shared_seams",
+    "taskId": "task_phase2_contracts",
+    "sequence": 13,
+    "occurredAt": "2026-06-12T14:00:13.000Z",
+    "eventType": "run.redacted",
+    "traceRef": {
+      "traceId": "trace_phase2_shared_seams",
+      "spanId": "span_redacted"
+    },
+    "rendererState": "not_requested",
+    "message": "Sensitive run payload was redacted."
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "../../schemas/action-ref.schema.json",
+  "expectedValid": true,
+  "caseId": "phase2-action-ref-expired",
+  "description": "Action ref fixture for expired approval state.",
+  "coverage": ["expired"],
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "actionId": "act_phase2_expired",
+    "label": "Expired approval",
+    "route": "harness://actions/expired",
+    "risk": "write",
+    "policyScope": "actions:approve",
+    "confirmationMode": "approval_required",
+    "state": "expired",
+    "inputSchemaRef": "schema://jami-harness/action-input",
+    "evidenceRef": "ev_phase2_contracts",
+    "actorRef": "actor_developer",
+    "auditRef": "audit_phase2_expired"
+  }
+}

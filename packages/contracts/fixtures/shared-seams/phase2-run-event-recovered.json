@@ -1,0 +1,22 @@
+{
+  "$schema": "../../schemas/run-event.schema.json",
+  "expectedValid": true,
+  "caseId": "phase2-run-event-recovered",
+  "description": "Run event fixture for recovered state.",
+  "coverage": ["recovered"],
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "eventId": "evt_phase2_recovered",
+    "runId": "run_phase2_shared_seams",
+    "taskId": "task_phase2_contracts",
+    "sequence": 11,
+    "occurredAt": "2026-06-12T14:00:11.000Z",
+    "eventType": "run.recovered",
+    "traceRef": {
+      "traceId": "trace_phase2_shared_seams",
+      "spanId": "span_recovered"
+    },
+    "rendererState": "not_requested",
+    "message": "Run recovered from checkpoint."
+  }
+}

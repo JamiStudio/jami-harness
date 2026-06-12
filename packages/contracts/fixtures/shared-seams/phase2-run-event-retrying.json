@@ -1,0 +1,22 @@
+{
+  "$schema": "../../schemas/run-event.schema.json",
+  "expectedValid": true,
+  "caseId": "phase2-run-event-retrying",
+  "description": "Run event fixture for retrying state.",
+  "coverage": ["retrying"],
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "eventId": "evt_phase2_retrying",
+    "runId": "run_phase2_shared_seams",
+    "taskId": "task_phase2_contracts",
+    "sequence": 7,
+    "occurredAt": "2026-06-12T14:00:07.000Z",
+    "eventType": "run.retrying",
+    "traceRef": {
+      "traceId": "trace_phase2_shared_seams",
+      "spanId": "span_retrying"
+    },
+    "rendererState": "not_requested",
+    "message": "Run is retrying."
+  }
+}

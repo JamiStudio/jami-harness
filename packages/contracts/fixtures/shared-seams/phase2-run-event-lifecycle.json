@@ -3,21 +3,7 @@
   "expectedValid": true,
   "caseId": "phase2-run-event-lifecycle",
   "description": "Run event fixtures cover the Phase 2 lifecycle states the harness emits to Studio UI as typed data.",
-  "coverage": [
-    "start",
-    "progress",
-    "approval_required",
-    "tool_running",
-    "artifact_emitted",
-    "checkpoint_saved",
-    "retrying",
-    "cancelling",
-    "cancelled",
-    "failed",
-    "recovered",
-    "complete",
-    "redacted"
-  ],
+  "coverage": ["checkpoint_saved"],
   "payload": {
     "schemaVersion": "2026-06-09",
     "eventId": "evt_checkpoint_saved",

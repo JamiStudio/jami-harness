@@ -1,0 +1,18 @@
+{
+  "$schema": "../../schemas/action-ref.schema.json",
+  "expectedValid": true,
+  "caseId": "phase2-action-ref-display-only",
+  "description": "Action ref fixture for display-only UI state that cannot execute a harness route.",
+  "coverage": ["display_only_ui_state"],
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "actionId": "act_phase2_display_only",
+    "label": "Display status",
+    "route": "harness://actions/display-only",
+    "risk": "read",
+    "policyScope": "actions:read",
+    "confirmationMode": "none",
+    "state": "display_only",
+    "inputSchemaRef": "schema://jami-harness/display-only"
+  }
+}

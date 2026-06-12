@@ -1,0 +1,23 @@
+{
+  "$schema": "../../schemas/run-event.schema.json",
+  "expectedValid": true,
+  "caseId": "phase2-run-event-approval-required",
+  "description": "Run event fixture for an approval-required action.",
+  "coverage": ["approval_required"],
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "eventId": "evt_phase2_approval_required",
+    "runId": "run_phase2_shared_seams",
+    "taskId": "task_phase2_contracts",
+    "sequence": 2,
+    "occurredAt": "2026-06-12T14:00:02.000Z",
+    "eventType": "approval.requested",
+    "traceRef": {
+      "traceId": "trace_phase2_shared_seams",
+      "spanId": "span_approval"
+    },
+    "actionRef": "act_phase2_pending_approval",
+    "rendererState": "not_requested",
+    "message": "Approval is required before execution."
+  }
+}

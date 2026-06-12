@@ -1,0 +1,22 @@
+{
+  "$schema": "../../schemas/run-event.schema.json",
+  "expectedValid": true,
+  "caseId": "phase2-run-event-complete",
+  "description": "Run event fixture for completed state.",
+  "coverage": ["complete"],
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "eventId": "evt_phase2_complete",
+    "runId": "run_phase2_shared_seams",
+    "taskId": "task_phase2_contracts",
+    "sequence": 12,
+    "occurredAt": "2026-06-12T14:00:12.000Z",
+    "eventType": "run.completed",
+    "traceRef": {
+      "traceId": "trace_phase2_shared_seams",
+      "spanId": "span_complete"
+    },
+    "rendererState": "not_requested",
+    "message": "Run completed."
+  }
+}

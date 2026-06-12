@@ -1,0 +1,22 @@
+{
+  "$schema": "../../schemas/run-event.schema.json",
+  "expectedValid": true,
+  "caseId": "phase2-run-event-cancelling",
+  "description": "Run event fixture for cancellation in progress.",
+  "coverage": ["cancelling"],
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "eventId": "evt_phase2_cancelling",
+    "runId": "run_phase2_shared_seams",
+    "taskId": "task_phase2_contracts",
+    "sequence": 8,
+    "occurredAt": "2026-06-12T14:00:08.000Z",
+    "eventType": "run.cancelling",
+    "traceRef": {
+      "traceId": "trace_phase2_shared_seams",
+      "spanId": "span_cancelling"
+    },
+    "rendererState": "not_requested",
+    "message": "Run cancellation requested."
+  }
+}

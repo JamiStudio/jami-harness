@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:28fafb8a919de105b9cda06fdf19db28726c387b7812a43dc61166dc02cc21eb`
+- Source input hash: `sha256:f88d04e4a6c6fcde9087b4e832a3d74a1e4f15454afd6c274556c128a0011401`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -50,5 +50,6 @@
 - Tool Gateway Foundation (`.changes/2026-06-09-tool-gateway-foundation.md`)
 - 2026-06-09-tool-gateway-pass2-hardening (`.changes/2026-06-09-tool-gateway-pass2-hardening.md`)
 - 2026-06-12-phase2-shared-seam-fixtures (`.changes/2026-06-12-phase2-shared-seam-fixtures.md`)
+- 2026-06-12-phase2-shared-seam-state-evidence (`.changes/2026-06-12-phase2-shared-seam-state-evidence.md`)
 - stream5-cli-sdk-fail-closed-ids (`.changes/stream5-cli-sdk-fail-closed-ids.md`)
 - stream5-cli-sdk-foundation (`.changes/stream5-cli-sdk-foundation.md`)

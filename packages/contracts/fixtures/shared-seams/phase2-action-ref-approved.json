@@ -1,0 +1,21 @@
+{
+  "$schema": "../../schemas/action-ref.schema.json",
+  "expectedValid": true,
+  "caseId": "phase2-action-ref-approved",
+  "description": "Action ref fixture for an approved action that has executed and carries audit evidence.",
+  "coverage": ["approved"],
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "actionId": "act_phase2_approved",
+    "label": "Approved action",
+    "route": "harness://actions/approved",
+    "risk": "write",
+    "policyScope": "actions:approve",
+    "confirmationMode": "approval_required",
+    "state": "executed",
+    "inputSchemaRef": "schema://jami-harness/action-input",
+    "evidenceRef": "ev_phase2_contracts",
+    "actorRef": "actor_developer",
+    "auditRef": "audit_phase2_approved"
+  }
+}
