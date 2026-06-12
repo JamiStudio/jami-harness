@@ -356,12 +356,12 @@ Replaceable sinks:
 
 ## Developer Surface Status
 
-Current foundation status: Stream 5 pass 1 adds `@jami-studio/harness-sdk` and
-`@jami-studio/harness-cli` as local developer foundations. The SDK composes current
-runtime, policy, local deterministic provider, tool gateway, artifact, observability,
-memory, context, search, and checkpoint store modules; creates a local evidence run;
-writes redacted checkpoints; reads artifacts, traces, checkpoint state, and approval
-records; and exposes module injection and capability inspection. The CLI exposes
+Current foundation status: Group B pass 1 adds `@jami-studio/harness-core` as the
+core-owned composition layer for runtime, policy, local deterministic provider, tool
+gateway, artifact, observability, memory, context, search, and checkpoint store modules.
+The SDK consumes that core seam, creates a local evidence run, writes redacted
+checkpoints, reads artifacts, traces, checkpoint state, and approval records, and exposes
+module injection and capability inspection. The CLI exposes
 idempotent local `init`, evidence `run`,
 `resume`, `approve`, `inspect`, `doctor`, `tools`, `memory`, `docs`, `map`, and `verify`
 commands with JSON output and clean exit codes. These surfaces intentionally report

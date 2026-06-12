@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:f361ee9cc4fb060b197bf99aeb7d827ac581adc1f40889a3a28187f6ee4e2054",
+  "sourceInputHash": "sha256:9c4b81fb7fb11bb11373e437e50caf757b92ff9eb994d3804f0d543002c56891",
   "generatedAt": "deterministic:git-head-plus-input-hash",
   "freshnessClass": "deterministic_current_source_tree",
   "command": "pnpm docs:generate -- --check",
@@ -192,6 +192,11 @@
       "bytes": 320
     },
     {
+      "path": ".changes/2026-06-12-core-composition.md",
+      "sha256": "sha256:e218e0fb6845b27494470e6567ba1f6a8cbd332036a5f1e43293078fb7fe0b7e",
+      "bytes": 351
+    },
+    {
       "path": ".changes/2026-06-12-phase2-shared-seam-fixtures.md",
       "sha256": "sha256:b2089e2011b8fa6b6e53d5cd91404a9a49c61c08670a1c7e569a0bef60b3c8dd",
       "bytes": 382
@@ -258,8 +263,8 @@
     },
     {
       "path": "docs/architecture/modular-responsibility-map.md",
-      "sha256": "sha256:d097009cf9725fe5e21e54b2c44578b2b514133848e004be56e3c7a92abb10ee",
-      "bytes": 18286
+      "sha256": "sha256:62977d9dc1faa1dabf527aa20cd63317e4c147a912985437e89f91b1ed9a10ac",
+      "bytes": 18271
     },
     {
       "path": "docs/architecture/product-architecture.md",
@@ -268,8 +273,8 @@
     },
     {
       "path": "docs/generated/release-capability-manifest.json",
-      "sha256": "sha256:d1b8440f5b803479905b6256e18836fdf17a8df10f5aa340a4e0adceb1b3c9c3",
-      "bytes": 24193
+      "sha256": "sha256:eb043d08427c82663594d173e4939d79efa8ecd21494ce2b6697d3df74e22aed",
+      "bytes": 24683
     },
     {
       "path": "docs/operations/release-capability-source-lock.md",
@@ -288,8 +293,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "sha256:254cd4f7a27f24343b04ff2c3520304fd6df4f95e6cabb8432d6d8c8169b8b5a",
-      "bytes": 3486
+      "sha256": "sha256:0a3e626b9fbd048354d06b35073ede611e116ed2b4e2a3fa2a258d8d3bfc2d31",
+      "bytes": 3593
     },
     {
       "path": "packages/artifacts/package.json",
@@ -777,14 +782,34 @@
       "bytes": 2081
     },
     {
+      "path": "packages/core/README.md",
+      "sha256": "sha256:78af4a26e77c83e894232fb3b1060861401a0155a629ced307d09605d1698ba1",
+      "bytes": 635
+    },
+    {
+      "path": "packages/core/package.json",
+      "sha256": "sha256:1c789f4224b26aa84a983b93994f9fa0aed32dcd9b34d67b0df6777305ec2981",
+      "bytes": 543
+    },
+    {
+      "path": "packages/core/src/index.mjs",
+      "sha256": "sha256:65ad8dc1dc96be023535e3d2c9c706e99463edd165b646525fb09b8d079a5967",
+      "bytes": 14452
+    },
+    {
+      "path": "packages/core/test/core.test.mjs",
+      "sha256": "sha256:e18e778a7f03fcbbfd0a389ff41f115405536f1d180cd928c410314644e26f0a",
+      "bytes": 2715
+    },
+    {
       "path": "packages/docs/package.json",
       "sha256": "sha256:4a071a3ebf99fad5c2411aa0143da3465d782ab483c7ebd9bf663f2d9f608af6",
       "bytes": 494
     },
     {
       "path": "packages/docs/scripts/generate-docs.mjs",
-      "sha256": "sha256:22d73ee6b23def8a6712048272837ca63020a829ac42d20281d12fd1a6de86db",
-      "bytes": 27327
+      "sha256": "sha256:6f62f2dcead61d18294637a483594e56abb1779f91cbbcb96650646ae49d0db3",
+      "bytes": 27491
     },
     {
       "path": "packages/memory/package.json",
@@ -843,13 +868,13 @@
     },
     {
       "path": "packages/sdk/src/index.mjs",
-      "sha256": "sha256:b314c5796fef52e3c23106cca929d5e162223508ecba00740c513afd37aa2d20",
-      "bytes": 28966
+      "sha256": "sha256:bed385031414fb4c84f5501b66f1313083729663781cef67f7afe432118fddb7",
+      "bytes": 15655
     },
     {
       "path": "packages/sdk/test/sdk.test.mjs",
-      "sha256": "sha256:7aa6fbfeac34e1415722981c9e5a6a4df05de144ccd8ce3359003df6b4561e5c",
-      "bytes": 10145
+      "sha256": "sha256:5116c5741c96e9fa43f7f3e33d5efc35745e57dfac21491ef05762b3b2694e6b",
+      "bytes": 10339
     },
     {
       "path": "packages/store-local/package.json",

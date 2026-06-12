@@ -5,14 +5,14 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:c62a2fada5c1861a534bf68eb8ceb818f9298644ffe6c975161c2d1d84c710e1",
+  "sourceInputHash": "sha256:39a0e6cab81771e10755f86c7436e3d5f4e8f8116c406cf69313e904f22e1de8",
   "generatedAt": "deterministic:git-head-plus-release-capability-input-hash",
   "command": "pnpm release:capabilities:check",
   "commandResult": "passed",
   "freshnessClass": "current-head-official-source-lock",
   "packageSummary": {
-    "packageCount": 14,
-    "privatePackageCount": 14,
+    "packageCount": 15,
+    "privatePackageCount": 15,
     "publishablePackageCount": 0,
     "packages": [
       {
@@ -58,6 +58,16 @@
       {
         "path": "packages/contracts/package.json",
         "name": "@jami-studio/harness-contracts",
+        "version": "0.0.0",
+        "private": true,
+        "license": "Apache-2.0",
+        "repository": "git+https://github.com/JamiStudio/jami-harness.git",
+        "publishConfig": null,
+        "files": null
+      },
+      {
+        "path": "packages/core/package.json",
+        "name": "@jami-studio/harness-core",
         "version": "0.0.0",
         "private": true,
         "license": "Apache-2.0",
@@ -274,8 +284,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "sha256:254cd4f7a27f24343b04ff2c3520304fd6df4f95e6cabb8432d6d8c8169b8b5a",
-      "bytes": 3486
+      "sha256": "sha256:0a3e626b9fbd048354d06b35073ede611e116ed2b4e2a3fa2a258d8d3bfc2d31",
+      "bytes": 3593
     },
     {
       "path": "packages/artifacts/package.json",
@@ -286,6 +296,11 @@
       "path": "packages/contracts/package.json",
       "sha256": "sha256:0b10e7c328ee278f11a45887ab3c4a8a25e84e23646e6f40d3d8975961632494",
       "bytes": 851
+    },
+    {
+      "path": "packages/core/package.json",
+      "sha256": "sha256:1c789f4224b26aa84a983b93994f9fa0aed32dcd9b34d67b0df6777305ec2981",
+      "bytes": 543
     },
     {
       "path": "packages/docs/package.json",
@@ -453,7 +468,7 @@
         "npm_publish"
       ],
       "blockers": [
-        "14/14 package manifests remain private:true.",
+        "15/15 package manifests remain private:true.",
         "No package files lists or package contents dry-run evidence are recorded.",
         "No npm trusted publisher, OIDC, or automation scope is recorded in this repo.",
         "No publishConfig or accepted package scope/versioning decision is recorded."

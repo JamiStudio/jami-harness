@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:f361ee9cc4fb060b197bf99aeb7d827ac581adc1f40889a3a28187f6ee4e2054`
+- Source input hash: `sha256:9c4b81fb7fb11bb11373e437e50caf757b92ff9eb994d3804f0d543002c56891`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -49,6 +49,7 @@
 - Tool Adapter Source Inspection (`.changes/2026-06-09-tool-adapter-source-inspection.md`)
 - Tool Gateway Foundation (`.changes/2026-06-09-tool-gateway-foundation.md`)
 - 2026-06-09-tool-gateway-pass2-hardening (`.changes/2026-06-09-tool-gateway-pass2-hardening.md`)
+- Core Composition Package (`.changes/2026-06-12-core-composition.md`)
 - 2026-06-12-phase2-shared-seam-fixtures (`.changes/2026-06-12-phase2-shared-seam-fixtures.md`)
 - 2026-06-12-phase2-shared-seam-state-evidence (`.changes/2026-06-12-phase2-shared-seam-state-evidence.md`)
 - 2026-06-12-phase2-ui-payload-negative-fixtures (`.changes/2026-06-12-phase2-ui-payload-negative-fixtures.md`)

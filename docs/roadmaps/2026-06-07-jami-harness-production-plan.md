@@ -46,6 +46,13 @@ observability, SDK, CLI, workbench, docs, hosted, package, release, provenance, 
 cross-repo UI seam route has executable evidence. Fail-closed unsupported manifests and
 local dry-runs are not final completion.
 
+2026-06-12 Group B pass 1 adds `@jami-studio/harness-core` as the first concrete
+`packages/core` composition layer. The SDK now consumes core-owned default module assembly
+for runtime, policy, tools, memory, context, search, artifacts, observability, checkpoint
+store, local provider, and docs-output capability inspection. This advances the local
+runtime/core exit criteria only; hosted providers, hosted stores, secrets, hosted
+observability, package publishing, hosted docs, and Studio UI rendering remain open.
+
 ## Complete Production Shape And Absolute Exit Criteria
 
 The complete harness product is the public, installable, hosted-capable
@@ -55,8 +62,9 @@ polish; they are the definition of the end state.
 
 ### Core Runtime
 
-- [ ] `packages/core` composes runtime, provider, policy, tools, memory, context, search,
-  artifacts, observability, stores, secrets, docs output, and UI refs through stable ports.
+- [~] `packages/core` composes runtime, provider, policy, tools, memory, context, search,
+  artifacts, observability, stores, and docs-output placeholders through stable ports;
+  secrets and UI-ref composition remain open beyond the current local runtime foundation.
 - [ ] Runtime state machine supports queued, running, waiting approval, tool-running,
   retrying, cancelling, cancelled, failed, recovered, completed, and archived states.
 - [ ] Runtime supports retry, cancellation, timeout, idempotency, resumability,

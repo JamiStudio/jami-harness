@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:f361ee9cc4fb060b197bf99aeb7d827ac581adc1f40889a3a28187f6ee4e2054`
+- Source input hash: `sha256:9c4b81fb7fb11bb11373e437e50caf757b92ff9eb994d3804f0d543002c56891`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -65,6 +65,7 @@
 - `jami-harness`
 - `@jami-studio/harness-artifacts`
 - `@jami-studio/harness-contracts`
+- `@jami-studio/harness-core`
 - `@jami-studio/harness-docs`
 - `@jami-studio/harness-memory`
 - `@jami-studio/harness-observability`

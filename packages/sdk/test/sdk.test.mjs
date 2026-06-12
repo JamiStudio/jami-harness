@@ -35,6 +35,7 @@ test("creates a local run with evidence, artifacts, traces, and inspectable modu
   assert.equal(harness.readMetrics().length, result.metrics.length);
 
   const inspection = harness.inspect();
+  assert.equal(inspection.boundaries.coreComposition, "package_owned_default_ports");
   assert.equal(inspection.modules.some((module) => module.name === "runtime" && module.available), true);
   assert.equal(inspection.modules.some((module) => module.name === "checkpointStore" && module.available), true);
   assert.equal(inspection.modules.some((module) => module.name === "context" && module.available), true);
@@ -47,6 +48,7 @@ test("creates a local run with evidence, artifacts, traces, and inspectable modu
   assert.equal(inspection.toolAdapterManifests.some((manifest) => manifest.capabilityId === "cap_shell_tool_gateway"), true);
   assert.equal(inspection.sourceLocks.some((sourceLock) => sourceLock.adapterId === "adapter_mcp" && sourceLock.status === "locked"), true);
   assert.equal(inspection.installPaths.fullLocalHarness.status, "supported_local_source_checkout");
+  assert.equal(inspection.installPaths.fullLocalHarness.evidenceCommands.includes("pnpm core:test"), true);
   assert.equal(inspection.installPaths.fullLocalHarness.packageInstallStatus, "unavailable_private_manifests");
   assert.equal(inspection.installPaths.modularPaths.some((path) => path.pathId === "byo_memory" && path.status === "supported_port"), true);
   assert.equal(inspection.installPaths.modularPaths.some((path) => path.pathId === "byo_docs_output" && path.status === "repo_generator_supported_sdk_output_unavailable"), true);
