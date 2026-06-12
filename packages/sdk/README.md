@@ -14,7 +14,11 @@ Current capabilities:
   through the policy-gated tool gateway.
 - Write redacted run checkpoints with replay hashes through a replaceable checkpoint
   store port.
-- Resume from stored checkpoint state and record local approval evidence.
+- Resume from stored checkpoint state and record local approval or denial evidence.
+- Inspect the SDK/CLI control-surface matrix for run, resume, approve, deny, cancel,
+  retry, inspect, tools, memory, context, docs, map, workbench, release, doctor, verify,
+  and migration routes. Cancellation, manual retry orchestration, and migrations remain
+  fail-closed unsupported until their runtime/store backing exists.
 - Read artifact records and trace records from the default local stores.
 - Read local observability metric records for run latency, estimated tokens,
   external-billable cost, and tool-call counts. The local deterministic provider records
@@ -39,8 +43,9 @@ other hosted provider execution. It also does not implement executable full
 MCP/OpenAPI/shell/browser/code/provider-as-tool/A2A adapters beyond the current function
 tool, trusted MCP fixture, and fail-closed adapter inspection foundations, durable hosted
 stores, public package installation, SDK-level docs-output injection, release publishing,
-or a hosted control plane. Repo-level docs generation exists through `pnpm docs:generate`
-and is recorded in `docs/generated/install-readiness-manifest.json`.
+runtime cancellation orchestration, manual retry orchestration, checkpoint/store
+migrations, or a hosted control plane. Repo-level docs generation exists through
+`pnpm docs:generate` and is recorded in `docs/generated/install-readiness-manifest.json`.
 
 ```js
 import { createHarness } from "@jami-studio/harness-sdk";

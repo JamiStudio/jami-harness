@@ -952,10 +952,23 @@ Pass status:
   only; it does not claim hosted workbench/control plane, hosted stores, Studio UI package
   integration, Mintlify validation/build/publish, npm publishing, release attestations, or
   executable unsupported adapters.
+- 2026-06-12 Group C pass 1 extends the SDK/CLI/workbench integration surface over the
+  accepted local core/runtime seams. SDK inspection now reports an explicit control-surface
+  matrix for run, resume, approve, deny, cancel, retry, inspect, tools, memory, context,
+  docs, map, workbench, release, doctor, verify, and migration routes. CLI JSON commands
+  now include `deny`, `cancel`, `retry`, `context`, `workbench`, `release`, and
+  `migration`; local denial evidence is supported, local workbench and non-publishing
+  release audit inspection are supported, and cancellation, manual retry orchestration,
+  and checkpoint/store migrations remain fail-closed unsupported. The workbench manifest
+  renders the same matrix from SDK evidence. This is still local foundation integration,
+  not hosted control, hosted stores, package publishing, release provenance, or Studio UI
+  package integration.
 
 Implementation tasks:
 
-- [~] Add CLI commands for init, run, inspect, resume, approve, tools, memory, docs, map, verify, release; release remains unavailable in the CLI.
+- [~] Add CLI commands for init, run, inspect, resume, approve, deny, cancel, retry,
+  tools, memory, context, docs, map, workbench, verify, release, and migration; release
+  is local audit-only, while cancellation/retry/migration remain fail-closed unsupported.
 - [x] Add `--json`, idempotent commands, clean exit codes, and agent-first help output for AX.
 - [~] Add SDK for run creation, local deterministic provider execution, checkpoint/resume, approval records, tool registration, policy hooks, artifact reads, and trace reads.
 - [~] Add SDK configuration APIs for injecting custom memory, context, store, policy, local provider, tool, artifact, observability, and docs-output modules.

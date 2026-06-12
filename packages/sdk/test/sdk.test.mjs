@@ -53,6 +53,8 @@ test("creates a local run with evidence, artifacts, traces, and inspectable modu
   assert.equal(inspection.installPaths.modularPaths.some((path) => path.pathId === "byo_memory" && path.status === "supported_port"), true);
   assert.equal(inspection.installPaths.modularPaths.some((path) => path.pathId === "byo_docs_output" && path.status === "repo_generator_supported_sdk_output_unavailable"), true);
   assert.equal(inspection.installPaths.unsupportedSurfaces.includes("Mintlify build/publish"), true);
+  assert.equal(inspection.controlSurfaces.some((surface) => surface.operation === "deny" && surface.status === "supported_local"), true);
+  assert.equal(inspection.controlSurfaces.some((surface) => surface.operation === "cancel" && surface.status === "fail_closed_unsupported"), true);
 });
 
 test("external provider requests fail closed without hosted provider execution", async () => {
@@ -87,6 +89,26 @@ test("recoverable provider failure records checkpoint evidence and completes on 
   assert.equal(result.toolExecutions[0].status, "completed");
   assert.equal(harness.readArtifacts().some((artifact) => artifact.title.includes("failed_recoverable")), true);
   assert.equal(result.checkpoint.status, "completed");
+});
+
+test("records denial evidence and fails closed for unavailable control operations", () => {
+  const harness = createHarness({ now });
+  const denied = harness.deny({
+    runId: "run_sdk_control",
+    actionId: "act_sdk_release",
+    actorId: "actor_developer",
+    scopes: ["release:publish"],
+  }).approval;
+  const cancel = harness.cancel({ runId: "run_sdk_control" });
+  const retry = harness.retry({ runId: "run_sdk_control" });
+
+  assert.equal(denied.status, "denied");
+  assert.equal(denied.actionId, "act_sdk_release");
+  assert.equal(cancel.status, "unsupported");
+  assert.equal(cancel.failClosed, true);
+  assert.equal(cancel.reason, "runtime_cancellation_not_implemented");
+  assert.equal(retry.status, "unsupported");
+  assert.equal(retry.reason, "manual_retry_command_not_implemented");
 });
 
 test("supports configurable module injection without changing run grammar", async () => {

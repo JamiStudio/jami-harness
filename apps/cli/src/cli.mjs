@@ -1,14 +1,15 @@
 #!/usr/bin/env node
 import { existsSync } from "node:fs";
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
-import { join, resolve } from "node:path";
-import { pathToFileURL } from "node:url";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { HarnessInputError, createHarness } from "../../../packages/sdk/src/index.mjs";
 import { HarnessStoreError, createFileSystemCheckpointStore } from "../../../packages/store-local/src/index.mjs";
 
 const STATE_DIR = ".jami-harness";
 const CONFIG_FILE = "harness.json";
 const RUN_ID_PATTERN = /^run_[a-z0-9][a-z0-9_-]*$/;
+const REPO_ROOT = dirname(dirname(dirname(dirname(fileURLToPath(import.meta.url)))));
 
 export async function main(argv = process.argv.slice(2), env = process.env, io = defaultIo()) {
   const parsed = parseArgs(argv);
@@ -24,11 +25,15 @@ export async function main(argv = process.argv.slice(2), env = process.env, io =
     if (command === "run") return await runCommand(cwd, parsed, io);
     if (command === "resume") return await resumeCommand(cwd, parsed, io);
     if (command === "approve") return await approveCommand(cwd, parsed, io);
+    if (command === "deny") return await approveCommand(cwd, parsed, io, { command: "deny", status: "denied" });
+    if (command === "cancel" || command === "retry" || command === "migration") return await unsupportedControlCommand(cwd, command, parsed, io);
     if (command === "inspect") return await inspectCommand(cwd, parsed, io);
     if (command === "doctor") return await doctorCommand(cwd, parsed, io);
-    if (command === "tools" || command === "memory" || command === "docs" || command === "map") {
+    if (command === "tools" || command === "memory" || command === "context" || command === "docs" || command === "map") {
       return await capabilityCommand(cwd, command, parsed, io);
     }
+    if (command === "workbench") return await workbenchCommand(cwd, parsed, io);
+    if (command === "release") return await releaseCommand(cwd, parsed, io);
     if (command === "verify") return await verifyCommand(cwd, parsed, io);
 
     io.err(formatOutput(errorPayload("unknown_command", `Unknown command: ${command}`, 64), parsed));
@@ -113,7 +118,7 @@ async function resumeCommand(cwd, parsed, io) {
   return exitCode;
 }
 
-async function approveCommand(cwd, parsed, io) {
+async function approveCommand(cwd, parsed, io, options = {}) {
   await initStateIfMissing(cwd);
   const runId = validateRunId(parsed.options["run-id"] ?? parsed.options.runId);
   const actionId = validateActionId(parsed.options["action-id"] ?? parsed.options.actionId ?? "act_local_approval");
@@ -123,16 +128,47 @@ async function approveCommand(cwd, parsed, io) {
     actionId,
     actorId: parsed.options.actor ?? "actor_developer",
     scopes: parseCsv(parsed.options.scopes),
-    status: parsed.options.status ?? "approved",
+    status: options.status ?? parsed.options.status ?? "approved",
   }).approval;
   io.out(formatOutput({
     ok: true,
-    command: "approve",
+    command: options.command ?? "approve",
     runId,
     approval,
     approvals: checkpointStore.listApprovals(runId),
   }, parsed));
   return 0;
+}
+
+async function unsupportedControlCommand(cwd, command, parsed, io) {
+  await initStateIfMissing(cwd);
+  const runId = validateRunId(parsed.options["run-id"] ?? parsed.options.runId ?? "run_local");
+  const checkpointStore = createCliCheckpointStore(cwd);
+  const checkpoint = checkpointStore.readCheckpoint(runId);
+  const reasons = {
+    cancel: "runtime_cancellation_not_implemented",
+    retry: "manual_retry_command_not_implemented",
+    migration: "checkpoint_store_migration_not_implemented",
+  };
+  const surfaces = {
+    cancel: "runtime cancellation orchestration",
+    retry: "manual retry orchestration",
+    migration: "checkpoint/store migration runner",
+  };
+  io.out(formatOutput({
+    ok: false,
+    command,
+    runId,
+    status: "unsupported",
+    failClosed: true,
+    reason: reasons[command],
+    unavailableSurface: surfaces[command],
+    checkpointStatus: checkpoint?.status,
+    next: command === "retry"
+      ? ["jami run --json --provider-failure-mode fail_once"]
+      : ["jami inspect --json --run-id " + runId, "jami doctor --json --run-id " + runId],
+  }, parsed));
+  return 2;
 }
 
 async function inspectCommand(cwd, parsed, io) {
@@ -194,7 +230,57 @@ async function capabilityCommand(cwd, command, parsed, io) {
     sourceLocks: inspection.sourceLocks,
     toolAdapters: includeToolInspection ? inspection.toolAdapters : undefined,
     toolAdapterManifests: includeToolInspection ? inspection.toolAdapterManifests : undefined,
+    controlSurfaces: command === "map" ? inspection.controlSurfaces : undefined,
     note: command === "map" ? "Active module map only; local static workbench generation is available through pnpm workbench:generate, and hosted control plane remains unsupported." : undefined,
+  }, parsed));
+  return 0;
+}
+
+async function workbenchCommand(cwd, parsed, io) {
+  const stateRoot = join(cwd, STATE_DIR);
+  io.out(formatOutput({
+    ok: true,
+    command: "workbench",
+    status: "local_static_available",
+    stateRoot,
+    generatedManifestPath: join("apps", "workbench", "generated", "workbench-manifest.json"),
+    generatedHtmlPath: join("apps", "workbench", "dist", "index.html"),
+    supportedCommands: [
+      "pnpm workbench:generate",
+      "pnpm workbench:check",
+      "pnpm workbench:test",
+      "node apps/workbench/scripts/generate-workbench.mjs --state-root <path-to-.jami-harness>",
+    ],
+    unavailable: [
+      { surface: "hosted workbench/control", status: "fail_closed_unsupported" },
+      { surface: "hosted stores", status: "fail_closed_unsupported" },
+      { surface: "Studio UI package integration", status: "not_claimed" },
+    ],
+  }, parsed));
+  return 0;
+}
+
+async function releaseCommand(cwd, parsed, io) {
+  const manifest = await readJsonIfExists(join(REPO_ROOT, "docs", "generated", "release-capability-manifest.json"));
+  const unsupported = (manifest?.capabilities ?? [])
+    .filter((capability) => capability.status === "fail_closed_unsupported")
+    .map((capability) => ({ surface: capability.surface, status: capability.status, reason: capability.reason }));
+  io.out(formatOutput({
+    ok: true,
+    command: "release",
+    status: "local_audit_available_publish_unsupported",
+    supportedCommands: ["pnpm release:readiness", "pnpm release:dry-run", "pnpm release:capabilities:check"],
+    manifestPath: "docs/generated/release-capability-manifest.json",
+    unsupported,
+    unavailable: [
+      "npm publishing",
+      "package contents dry-run",
+      "trusted publishing/provenance",
+      "GitHub attestations",
+      "signed release archives",
+      "hosted docs/workbench deployment",
+    ],
+    failClosed: true,
   }, parsed));
   return 0;
 }
@@ -227,19 +313,26 @@ function help() {
   return {
     ok: true,
     command: "help",
-    usage: "jami <init|run|resume|approve|inspect|doctor|tools|memory|docs|map|verify> [--json]",
+    usage: "jami <init|run|resume|approve|deny|cancel|retry|inspect|doctor|tools|memory|context|docs|map|workbench|release|verify|migration> [--json]",
     commands: {
       init: "Create local .jami-harness state idempotently.",
       run: "Run the local SDK evidence smoke and write evidence under .jami-harness/runs.",
       resume: "Read a stored checkpoint and report replay/resume status.",
       approve: "Record a local approval decision for a run/action.",
+      deny: "Record a local denial decision for a run/action.",
+      cancel: "Report fail-closed cancellation availability for a run.",
+      retry: "Report fail-closed manual retry availability for a run.",
       inspect: "Show latest run evidence plus active module capabilities.",
       doctor: "Show module, checkpoint, resume, and missing optional capability diagnostics.",
       tools: "Show tool gateway adapter manifests, source-lock state, and missing setup.",
       memory: "Show memory module capabilities.",
+      context: "Show context assembly capabilities.",
       docs: "Show docs output availability and missing setup.",
       map: "Show all active module capabilities.",
+      workbench: "Show local static workbench generation status and hosted gaps.",
+      release: "Show non-publishing release audit status and fail-closed release gaps.",
       verify: "Check local CLI state and core module availability.",
+      migration: "Report fail-closed checkpoint/store migration availability.",
     },
   };
 }
@@ -293,6 +386,11 @@ async function initStateIfMissing(cwd) {
 
 async function readRunSummary(cwd, runId) {
   const path = join(cwd, STATE_DIR, "runs", runId, "summary.json");
+  if (!existsSync(path)) return undefined;
+  return JSON.parse(await readFile(path, "utf8"));
+}
+
+async function readJsonIfExists(path) {
   if (!existsSync(path)) return undefined;
   return JSON.parse(await readFile(path, "utf8"));
 }

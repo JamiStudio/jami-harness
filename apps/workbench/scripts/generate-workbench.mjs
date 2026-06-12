@@ -155,6 +155,7 @@ export async function buildWorkbenchModel(options = {}) {
       },
       capabilities: {
         modules: inspection.modules,
+        controlSurfaces: inspection.controlSurfaces,
         installPaths: installReadiness,
         releaseCapabilities: summarizeReleaseCapabilities(releaseCapabilities),
         sbom: {
@@ -290,6 +291,7 @@ function html(model) {
       ["artifacts", "Artifacts"],
       ["traces", "Traces"],
       ["memory", "Memory"],
+      ["control", "Control Surfaces"],
       ["docs", "Docs Preview"],
       ["map", "System Map"]
     ];
@@ -332,6 +334,7 @@ function html(model) {
         artifacts: () => renderTableSection("Artifacts", data.views.artifacts, ["artifactId", "kind", "title", "evidenceRef", "traceRef", "redaction"]),
         traces: () => renderTableSection("Traces", data.views.traces, ["traceId", "name", "kind", "status", "attributeKeys"]),
         memory: renderMemory,
+        control: renderControl,
         docs: renderDocs,
         map: renderMap
       }[state.view];
@@ -352,6 +355,18 @@ function html(model) {
       );
       content.append(grid);
       content.append(section("Tool Adapter State", table(data.views.capabilities.toolAdapters, ["adapterId", "support", "status", "reason"])));
+    }
+
+    function renderControl() {
+      const supported = data.views.capabilities.controlSurfaces.filter((surface) => surface.status.includes("supported")).length;
+      const failClosed = data.views.capabilities.controlSurfaces.filter((surface) => surface.status.includes("fail_closed")).length;
+      content.append(stats([
+        ["Local Surfaces", supported],
+        ["Fail-Closed", failClosed],
+        ["Release Posture", data.views.capabilities.controlSurfaces.find((surface) => surface.operation === "release")?.status],
+        ["Workbench", data.boundary.hostedWorkbench]
+      ]));
+      content.append(section("SDK/CLI Control Surface Matrix", table(data.views.capabilities.controlSurfaces, ["operation", "status", "description"])));
     }
 
     function renderMemory() {
@@ -693,10 +708,13 @@ function collectSourceRecords() {
     "pnpm-workspace.yaml",
     "apps/cli/src/cli.mjs",
     "apps/cli/README.md",
+    "apps/cli/test/cli.test.mjs",
     "apps/workbench/package.json",
     "apps/workbench/scripts/generate-workbench.mjs",
     "apps/workbench/test/workbench.test.mjs",
     "packages/sdk/src/index.mjs",
+    "packages/sdk/README.md",
+    "packages/sdk/test/sdk.test.mjs",
     "packages/store-local/src/index.mjs",
     "packages/observability/src/index.mjs",
     "packages/memory/src/index.mjs",

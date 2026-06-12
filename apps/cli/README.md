@@ -19,15 +19,27 @@ Current commands:
 - `jami resume --json --run-id <runId>` reports checkpoint replay status and replay hash.
 - `jami approve --json --run-id <runId> --action-id <actionId>` records a local approval
   decision through the checkpoint store.
+- `jami deny --json --run-id <runId> --action-id <actionId>` records a local denial
+  decision through the same approval evidence contract.
+- `jami cancel --json --run-id <runId>`, `jami retry --json --run-id <runId>`, and
+  `jami migration --json` are explicit fail-closed JSON surfaces until runtime
+  cancellation, manual retry orchestration, and checkpoint/store migration runners exist.
 - `jami inspect --json` reports latest run evidence, checkpoint state, approvals, and
   active module capabilities.
 - `jami doctor --json` reports module, checkpoint, resume, and missing optional capability
   diagnostics.
 - `jami tools --json` reports tool adapter manifests, source-lock states, supported
   function/trusted MCP fixture paths, and fail-closed unavailable adapters.
-- `jami memory --json`, `jami docs --json`, and `jami map --json` report current
+- `jami memory --json`, `jami context --json`, `jami docs --json`, and
+  `jami map --json` report current
   capability availability plus the full local source-checkout install path and modular
   BYO replacement paths; `jami map --json` also includes tool adapter inspection.
+- `jami workbench --json` reports local static workbench generation/check commands and
+  keeps hosted workbench/control, hosted stores, and Studio UI package integration
+  explicitly unavailable or unclaimed.
+- `jami release --json` reports the non-publishing release audit surface and unavailable
+  public publishing/provenance/attestation routes without publishing, tagging, deploying,
+  or calling external account APIs.
 - `jami verify --json` checks local CLI state and core module availability with clean
   exit codes, including the generated full-local and modular replacement path manifest.
 

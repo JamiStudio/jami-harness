@@ -24,6 +24,8 @@ test("workbench model is sourced from SDK runtime evidence and generated docs ma
   assert.equal(model.views.traces.some((trace) => trace.name === "sdk.run"), true);
   assert.equal(model.views.memory.records[0].artifactRef, "docs/generated/docs-source-manifest.json");
   assert.equal(model.views.memory.contextPack.itemCount, 1);
+  assert.equal(model.views.capabilities.controlSurfaces.some((surface) => surface.operation === "workbench" && surface.status === "supported_local_static"), true);
+  assert.equal(model.views.capabilities.controlSurfaces.some((surface) => surface.operation === "migration" && surface.status === "fail_closed_unsupported"), true);
   assert.equal(model.views.docsPreview.some((doc) => doc.path === "docs/generated/system-map.md"), true);
   assert.match(model.views.systemMap.mermaid, /flowchart LR/);
   assert.equal(model.unavailable.some((surface) => surface.surface === "Hosted workbench"), true);
@@ -68,6 +70,7 @@ test("generated static shell embeds the workbench manifest for file-open use", a
 
   assert.match(html, /id="workbench-data"/);
   assert.match(html, /Run Timeline/);
+  assert.match(html, /Control Surfaces/);
   assert.match(html, /Hosted workbench/);
 });
 

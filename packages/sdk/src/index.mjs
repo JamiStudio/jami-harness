@@ -77,12 +77,73 @@ export function createHarness(options = {}) {
       return checkpointStore.writeApproval(input);
     },
 
+    deny(input = {}) {
+      return checkpointStore.writeApproval({ ...input, status: "denied" });
+    },
+
+    cancel(input = {}) {
+      return unsupportedControlOperation({
+        operation: "cancel",
+        runId: normalizeId("run", input.runId, "run_local"),
+        reason: "runtime_cancellation_not_implemented",
+        unavailableSurface: "runtime cancellation orchestration",
+      });
+    },
+
+    retry(input = {}) {
+      return unsupportedControlOperation({
+        operation: "retry",
+        runId: normalizeId("run", input.runId, "run_local"),
+        reason: "manual_retry_command_not_implemented",
+        unavailableSurface: "manual retry orchestration",
+      });
+    },
+
     inspect() {
       return {
         ...core.inspect(),
         schemaVersion: SCHEMA_VERSION,
+        controlSurfaces: controlSurfaces(),
       };
     },
+  };
+}
+
+function controlSurfaces() {
+  return [
+    surface("run", "supported_local", "Executes the local deterministic provider workflow through policy, tools, checkpoint, memory/context, artifacts, observability, and evidence."),
+    surface("resume", "supported_local", "Reads local checkpoint replay state and redacted replay hash."),
+    surface("approve", "supported_local", "Records local approval evidence through the checkpoint store."),
+    surface("deny", "supported_local", "Records local denial evidence through the same approval record contract."),
+    surface("cancel", "fail_closed_unsupported", "Runtime cancellation orchestration is not implemented beyond typed lifecycle fixtures."),
+    surface("retry", "fail_closed_unsupported", "Manual retry orchestration is not implemented; the local provider fail-once recovery fixture remains the supported retry evidence."),
+    surface("inspect", "supported_local", "Reports active modules, install paths, source locks, tool adapters, and unavailable surfaces."),
+    surface("tools", "supported_local", "Reports function/trusted MCP fixture support plus fail-closed adapter manifests."),
+    surface("memory", "supported_local", "Reports local memory/search/context capabilities and replacement paths."),
+    surface("context", "supported_local", "Reports deterministic context assembly capabilities and replacement paths."),
+    surface("docs", "supported_repo_generator", "Repo-level docs generation exists; SDK docs-output injection is still unavailable."),
+    surface("map", "supported_local", "Reports the local module map and adapter inspection state."),
+    surface("workbench", "supported_local_static", "Local static workbench generation is supported; hosted workbench/control is unsupported."),
+    surface("release", "supported_local_audit_only", "Non-publishing release readiness and dry-run audits exist; publishing, provenance, and attestations remain unavailable."),
+    surface("doctor", "supported_local", "Reports module diagnostics and exact next local setup steps."),
+    surface("verify", "supported_local", "Checks local CLI state and core module availability."),
+    surface("migration", "fail_closed_unsupported", "Checkpoint/store migration runner is not implemented."),
+  ];
+}
+
+function surface(operation, status, description) {
+  return { operation, status, description };
+}
+
+function unsupportedControlOperation({ operation, runId, reason, unavailableSurface }) {
+  return {
+    ok: false,
+    operation,
+    runId,
+    status: "unsupported",
+    failClosed: true,
+    reason,
+    unavailableSurface,
   };
 }
 
