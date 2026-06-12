@@ -628,15 +628,13 @@ function packageNodes() {
 }
 
 function summarizeReleaseCapabilities(manifest) {
+  const unsupportedCapabilities = (manifest.capabilities ?? [])
+    .filter((capability) => capability.status === "fail_closed_unsupported");
   return {
     schemaVersion: manifest.schemaVersion,
     sourceInputHash: manifest.sourceInputHash,
-    unsupportedCount: Array.isArray(manifest.capabilities)
-      ? manifest.capabilities.filter((capability) => capability.status === "unsupported").length
-      : 0,
-    unsupportedSurfaces: (manifest.capabilities ?? [])
-      .filter((capability) => capability.status === "unsupported")
-      .map((capability) => capability.surface),
+    unsupportedCount: unsupportedCapabilities.length,
+    unsupportedSurfaces: unsupportedCapabilities.map((capability) => capability.surface),
   };
 }
 

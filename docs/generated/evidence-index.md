@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:9c4b81fb7fb11bb11373e437e50caf757b92ff9eb994d3804f0d543002c56891`
+- Source input hash: `sha256:4c4740846d9fad49d05cf9fdcbe6d922c7875b608f133828273c149cbb4a4567`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -76,11 +76,11 @@
 - `apps/cli/src/cli.mjs` (sha256:19c41ff0414bdf270771b0250fb9a13ca31dfbef8c22bbd47ae7590db0726e1d)
 - `apps/cli/test/cli.test.mjs` (sha256:a69348cd132c7f79adfb922953389c7e4dc0c2a36f76b7318fda2eff5a368b0f)
 - `apps/workbench/package.json` (sha256:94071b4618690d51dcef3e4cf484b09cafefdbba42b6340b6eb6ed9a821dfdf0)
-- `apps/workbench/scripts/generate-workbench.mjs` (sha256:69ecc2bf831f72656af8c92eec53cff7299b864678bd85658831e313b2d5b639)
+- `apps/workbench/scripts/generate-workbench.mjs` (sha256:7b0c604852905ec93257d0e0726e73f5b6623d2f25c1ca71fc93ac31cf391f67)
 - `apps/workbench/test/workbench.test.mjs` (sha256:acd4d7469c1be4e5615d2f291e3fea0dd8317f1d88caad3bd6966f90232265bc)
 - `docs/architecture/modular-responsibility-map.md` (sha256:62977d9dc1faa1dabf527aa20cd63317e4c147a912985437e89f91b1ed9a10ac)
 - `docs/architecture/product-architecture.md` (sha256:d9b30effc258fc3d4164596fd9bf81902330706254f24d9da7c0e01b2cdff968)
-- `docs/generated/release-capability-manifest.json` (sha256:eb043d08427c82663594d173e4939d79efa8ecd21494ce2b6697d3df74e22aed)
+- `docs/generated/release-capability-manifest.json` (sha256:4b2fefafbab7092ab7de06dc8519c484ca112bc7c3ad176adc9b815b48b22927)
 - `docs/operations/release-capability-source-lock.md` (sha256:05e7f15fd43115d24c1a2a4d47f0d08ede6ed3bb4500cd118d3957bb17d215cc)
 - `docs/operations/release-readiness.md` (sha256:e41a8e26bc34afa713e0a76d5abb0a9c790314296c9141eb6805f7de59a790dc)
 - `evals/smoke.mjs` (sha256:af584c4b94ca943837f91f3be25a48c174339d016ea0bb5c82633f4151f1b674)
@@ -206,4 +206,4 @@
 - `packages/tools/package.json` (sha256:33d602f8aa67c000525aa603a1c4c3834f0f91a1385180fd61e7e29a00ccc53c)
 - `pnpm-workspace.yaml` (sha256:316f2a0038d464f103abd64d7338dacefc35d0d09e57c8296defa0d5ddb898fe)
 - `scripts/release/check-readiness.mjs` (sha256:cb562cc61bffe46ecc514726e19e05452c508140a8f39f00e20c964594936928)
-- `scripts/release/generate-capability-manifest.mjs` (sha256:1762f3c0763b56b8881c6d58f655d19f0218a4845af5fcad86aa8c4332e31d47)
+- `scripts/release/generate-capability-manifest.mjs` (sha256:91ea5795bc6c4df88cba5895de4ac54f183904dbe9a4123a1cd9b14510a6c18d)

@@ -1,7 +1,7 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:814f373f-7b29-5d4c-bc3f-83310453d362",
+  "serialNumber": "urn:uuid:bb69d9ed-39b8-58a5-8f66-5e82b8706f6a",
   "version": 1,
   "metadata": {
     "tools": {
@@ -70,7 +70,7 @@
       },
       {
         "name": "jami:harness:sourceInputHash",
-        "value": "a42acb800b6b6e8660f8592ab3858d0d03bbedef2c2954cd61e90910fbda26a7"
+        "value": "fad601b918e422dd6af2ac762cf9f810d524d77295d306200d8725a973f2cb07"
       },
       {
         "name": "jami:harness:commands",
@@ -224,6 +224,39 @@
         {
           "name": "jami:harness:repositoryDirectory",
           "value": "packages/contracts"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "pkg:@jami-studio/harness-core:packages/core/package.json",
+      "name": "@jami-studio/harness-core",
+      "version": "0.0.0",
+      "description": "Core composition layer for harness runtime, policy, tools, memory, context, artifacts, observability, stores, providers, and docs-output ports.",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40jami-studio/harness-core@0.0.0",
+      "properties": [
+        {
+          "name": "jami:harness:manifestPath",
+          "value": "packages/core/package.json"
+        },
+        {
+          "name": "jami:harness:private",
+          "value": "true"
+        },
+        {
+          "name": "jami:harness:repository",
+          "value": "git+https://github.com/JamiStudio/jami-harness.git"
+        },
+        {
+          "name": "jami:harness:repositoryDirectory",
+          "value": "packages/core"
         }
       ]
     },
@@ -540,6 +573,10 @@
     },
     {
       "ref": "pkg:@jami-studio/harness-contracts:packages/contracts/package.json",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:@jami-studio/harness-core:packages/core/package.json",
       "dependsOn": []
     },
     {

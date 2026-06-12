@@ -266,11 +266,11 @@ function buildCapabilities() {
       capabilityId: "cap_hosted_workbench",
       surface: "hosted workbench",
       blockedCommand: "workbench build/smoke/deploy",
-      safeClaim: "No hosted or local workbench app exists in this repo.",
+      safeClaim: "A local static workbench generator exists, but hosted workbench/control is not implemented or deployed.",
       blockers: [
-        "apps/workbench is absent.",
+        "apps/workbench is a dependency-free local static shell, not a hosted control plane.",
         "Studio UI owns workbench UI primitives and install/config surfaces.",
-        "No browser smoke, hosted target, or accessibility evidence exists.",
+        "No hosted target, backend state, deploy smoke, or accessibility evidence exists for a hosted harness workbench.",
       ],
       requiredBeforeClaim: [
         "Define the harness-owned workbench contract boundary and integrate Studio UI through published typed contracts before building or hosting a workbench.",

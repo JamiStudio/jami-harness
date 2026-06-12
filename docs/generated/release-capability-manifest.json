@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:39a0e6cab81771e10755f86c7436e3d5f4e8f8116c406cf69313e904f22e1de8",
+  "sourceInputHash": "sha256:a3cac7b57164b44ed909b910f282982121b0ad8094fa4e97f89777347fd24ba5",
   "generatedAt": "deterministic:git-head-plus-release-capability-input-hash",
   "command": "pnpm release:capabilities:check",
   "commandResult": "passed",
@@ -264,8 +264,8 @@
     },
     {
       "path": "docs/generated/sbom.cdx.json",
-      "sha256": "sha256:a8c862cb83bcaff5670e66d0c354e4e4d22ce5f04742ee28cb844243af3f77ce",
-      "bytes": 16691
+      "sha256": "sha256:ea5751453d6f971195ac905dc6a1a63439549fe362ca060494a19ff2172f6c6b",
+      "bytes": 17811
     },
     {
       "path": "docs/operations/release-capability-source-lock.md",
@@ -359,8 +359,8 @@
     },
     {
       "path": "scripts/release/generate-capability-manifest.mjs",
-      "sha256": "sha256:1762f3c0763b56b8881c6d58f655d19f0218a4845af5fcad86aa8c4332e31d47",
-      "bytes": 18813
+      "sha256": "sha256:91ea5795bc6c4df88cba5895de4ac54f183904dbe9a4123a1cd9b14510a6c18d",
+      "bytes": 18966
     },
     {
       "path": "scripts/release/generate-sbom.mjs",
@@ -625,15 +625,15 @@
       "claimable": false,
       "failClosed": true,
       "blockedCommand": "workbench build/smoke/deploy",
-      "safeClaim": "No hosted or local workbench app exists in this repo.",
+      "safeClaim": "A local static workbench generator exists, but hosted workbench/control is not implemented or deployed.",
       "commandEvidence": [
         "pnpm release:capabilities:check"
       ],
       "officialSourceIds": [],
       "blockers": [
-        "apps/workbench is absent.",
+        "apps/workbench is a dependency-free local static shell, not a hosted control plane.",
         "Studio UI owns workbench UI primitives and install/config surfaces.",
-        "No browser smoke, hosted target, or accessibility evidence exists."
+        "No hosted target, backend state, deploy smoke, or accessibility evidence exists for a hosted harness workbench."
       ],
       "requiredBeforeClaim": [
         "Define the harness-owned workbench contract boundary and integrate Studio UI through published typed contracts before building or hosting a workbench."
