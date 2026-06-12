@@ -4,7 +4,7 @@ Today is June 2026. Do not rely on outdated training knowledge. There have been 
 
 These rules apply at the workspace root for Jami Harness work.
 
-Canonical repo identity: `jami-harness` at `https://github.com/JamiStudio/jami-harness.git`.
+Canonical repo identity: `jami-harness` at `https://github.com/studio-jami/jami-harness.git`.
 
 ## Source Truth
 

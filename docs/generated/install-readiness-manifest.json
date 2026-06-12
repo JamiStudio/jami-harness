@@ -1,11 +1,11 @@
 {
   "schemaVersion": "2026-06-09.install-readiness",
   "sourceRepo": "jami-harness",
-  "sourceRemote": "https://github.com/JamiStudio/jami-harness.git",
+  "sourceRemote": "https://github.com/studio-jami/jami-harness.git",
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:f637b158ca55df49829498ff685785a497b9cb3dda34de91faee9a0cddc19fee",
+  "sourceInputHash": "sha256:8b4d8ebb55dbb2cf3ef8b6663b509bcf7abb632e606b7d9bc74d977d35422f12",
   "generatedAt": "deterministic:git-head-plus-input-hash",
   "freshnessClass": "deterministic_current_source_tree",
   "command": "pnpm docs:generate -- --check",

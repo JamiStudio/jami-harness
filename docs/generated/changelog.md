@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:f637b158ca55df49829498ff685785a497b9cb3dda34de91faee9a0cddc19fee`
+- Source input hash: `sha256:8b4d8ebb55dbb2cf3ef8b6663b509bcf7abb632e606b7d9bc74d977d35422f12`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -52,6 +52,7 @@
 - Core Composition Package (`.changes/2026-06-12-core-composition.md`)
 - 2026-06-12-core-source-lock-gate (`.changes/2026-06-12-core-source-lock-gate.md`)
 - 2026-06-12-group-c-sdk-cli-workbench-surfaces (`.changes/2026-06-12-group-c-sdk-cli-workbench-surfaces.md`)
+- 2026-06-12-group-d-canonical-repo-owner (`.changes/2026-06-12-group-d-canonical-repo-owner.md`)
 - 2026-06-12-hosted-route-readiness (`.changes/2026-06-12-hosted-route-readiness.md`)
 - 2026-06-12-phase2-shared-seam-fixtures (`.changes/2026-06-12-phase2-shared-seam-fixtures.md`)
 - 2026-06-12-phase2-shared-seam-state-evidence (`.changes/2026-06-12-phase2-shared-seam-state-evidence.md`)

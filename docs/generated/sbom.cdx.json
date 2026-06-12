@@ -1,7 +1,7 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:bb69d9ed-39b8-58a5-8f66-5e82b8706f6a",
+  "serialNumber": "urn:uuid:aee572a1-8e98-583c-af94-60aed6359440",
   "version": 1,
   "metadata": {
     "tools": {
@@ -39,7 +39,7 @@
         },
         {
           "name": "jami:harness:repository",
-          "value": "git+https://github.com/JamiStudio/jami-harness.git"
+          "value": "git+https://github.com/studio-jami/jami-harness.git"
         },
         {
           "name": "jami:harness:rootPackage",
@@ -54,7 +54,7 @@
       },
       {
         "name": "jami:harness:sourceRemote",
-        "value": "https://github.com/JamiStudio/jami-harness.git"
+        "value": "https://github.com/studio-jami/jami-harness.git"
       },
       {
         "name": "jami:harness:sourceCommit",
@@ -70,7 +70,7 @@
       },
       {
         "name": "jami:harness:sourceInputHash",
-        "value": "fad601b918e422dd6af2ac762cf9f810d524d77295d306200d8725a973f2cb07"
+        "value": "bed0bbdd3ce2ed80f75452bb8177ea8bbaa8b30e0c33ae637b0be390ba451bd4"
       },
       {
         "name": "jami:harness:commands",
@@ -120,7 +120,7 @@
         },
         {
           "name": "jami:harness:repository",
-          "value": "git+https://github.com/JamiStudio/jami-harness.git"
+          "value": "git+https://github.com/studio-jami/jami-harness.git"
         },
         {
           "name": "jami:harness:repositoryDirectory",
@@ -153,7 +153,7 @@
         },
         {
           "name": "jami:harness:repository",
-          "value": "git+https://github.com/JamiStudio/jami-harness.git"
+          "value": "git+https://github.com/studio-jami/jami-harness.git"
         },
         {
           "name": "jami:harness:repositoryDirectory",
@@ -186,7 +186,7 @@
         },
         {
           "name": "jami:harness:repository",
-          "value": "git+https://github.com/JamiStudio/jami-harness.git"
+          "value": "git+https://github.com/studio-jami/jami-harness.git"
         },
         {
           "name": "jami:harness:repositoryDirectory",
@@ -219,7 +219,7 @@
         },
         {
           "name": "jami:harness:repository",
-          "value": "git+https://github.com/JamiStudio/jami-harness.git"
+          "value": "git+https://github.com/studio-jami/jami-harness.git"
         },
         {
           "name": "jami:harness:repositoryDirectory",
@@ -252,7 +252,7 @@
         },
         {
           "name": "jami:harness:repository",
-          "value": "git+https://github.com/JamiStudio/jami-harness.git"
+          "value": "git+https://github.com/studio-jami/jami-harness.git"
         },
         {
           "name": "jami:harness:repositoryDirectory",
@@ -285,7 +285,7 @@
         },
         {
           "name": "jami:harness:repository",
-          "value": "git+https://github.com/JamiStudio/jami-harness.git"
+          "value": "git+https://github.com/studio-jami/jami-harness.git"
         }
       ]
     },
@@ -314,7 +314,7 @@
         },
         {
           "name": "jami:harness:repository",
-          "value": "git+https://github.com/JamiStudio/jami-harness.git"
+          "value": "git+https://github.com/studio-jami/jami-harness.git"
         },
         {
           "name": "jami:harness:repositoryDirectory",
@@ -347,7 +347,7 @@
         },
         {
           "name": "jami:harness:repository",
-          "value": "git+https://github.com/JamiStudio/jami-harness.git"
+          "value": "git+https://github.com/studio-jami/jami-harness.git"
         },
         {
           "name": "jami:harness:repositoryDirectory",
@@ -380,7 +380,7 @@
         },
         {
           "name": "jami:harness:repository",
-          "value": "git+https://github.com/JamiStudio/jami-harness.git"
+          "value": "git+https://github.com/studio-jami/jami-harness.git"
         },
         {
           "name": "jami:harness:repositoryDirectory",
@@ -413,7 +413,7 @@
         },
         {
           "name": "jami:harness:repository",
-          "value": "git+https://github.com/JamiStudio/jami-harness.git"
+          "value": "git+https://github.com/studio-jami/jami-harness.git"
         },
         {
           "name": "jami:harness:repositoryDirectory",
@@ -446,7 +446,7 @@
         },
         {
           "name": "jami:harness:repository",
-          "value": "git+https://github.com/JamiStudio/jami-harness.git"
+          "value": "git+https://github.com/studio-jami/jami-harness.git"
         },
         {
           "name": "jami:harness:repositoryDirectory",
@@ -479,7 +479,7 @@
         },
         {
           "name": "jami:harness:repository",
-          "value": "git+https://github.com/JamiStudio/jami-harness.git"
+          "value": "git+https://github.com/studio-jami/jami-harness.git"
         },
         {
           "name": "jami:harness:repositoryDirectory",
@@ -512,7 +512,7 @@
         },
         {
           "name": "jami:harness:repository",
-          "value": "git+https://github.com/JamiStudio/jami-harness.git"
+          "value": "git+https://github.com/studio-jami/jami-harness.git"
         },
         {
           "name": "jami:harness:repositoryDirectory",
@@ -545,7 +545,7 @@
         },
         {
           "name": "jami:harness:repository",
-          "value": "git+https://github.com/JamiStudio/jami-harness.git"
+          "value": "git+https://github.com/studio-jami/jami-harness.git"
         },
         {
           "name": "jami:harness:repositoryDirectory",

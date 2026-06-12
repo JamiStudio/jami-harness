@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:f637b158ca55df49829498ff685785a497b9cb3dda34de91faee9a0cddc19fee`
+- Source input hash: `sha256:8b4d8ebb55dbb2cf3ef8b6663b509bcf7abb632e606b7d9bc74d977d35422f12`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -51,4 +51,4 @@ Local metric records and `pnpm eval:smoke` provide deterministic regression cove
 
 ## Changelog
 
-The current generated changelog consumes 44 accepted changelog fragments from `.changes/`.
+The current generated changelog consumes 45 accepted changelog fragments from `.changes/`.
