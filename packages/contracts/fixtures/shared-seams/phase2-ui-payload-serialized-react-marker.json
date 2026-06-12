@@ -1,0 +1,30 @@
+{
+  "$schema": "../../schemas/ui-payload.schema.json",
+  "expectedValid": false,
+  "caseId": "phase2-ui-payload-serialized-react-marker",
+  "description": "UI payload fixture proves serialized React element markers fail closed.",
+  "coverage": ["serialized_react_marker"],
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "payloadId": "uip_phase2_serialized_react_marker",
+    "componentRef": {
+      "namespace": "@jami-studio/ui",
+      "name": "run-timeline",
+      "version": "0.0.0",
+      "allowlisted": true
+    },
+    "props": {
+      "$$typeof": "Symbol(react.element)"
+    },
+    "children": [],
+    "fallback": {
+      "mode": "invalid_payload",
+      "message": "Serialized React markers are rejected."
+    },
+    "provenance": {
+      "runId": "run_phase2_shared_seams",
+      "emittedBy": "harness",
+      "evidenceRef": "ev_phase2_contracts"
+    }
+  }
+}

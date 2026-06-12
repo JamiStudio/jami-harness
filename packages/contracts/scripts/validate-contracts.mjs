@@ -300,6 +300,26 @@ function findUnsafeUiPropPath(value, path = "$.props") {
   return undefined;
 }
 
+function findUnsafeUiValuePath(value, path = "$.props") {
+  if (typeof value === "string") {
+    if (value.includes("Symbol(react.element)") || /<script/i.test(value) || /^@[a-z0-9@/_-]+/i.test(value)) {
+      return path;
+    }
+    return undefined;
+  }
+  if (value === null || typeof value !== "object") return undefined;
+
+  for (const [key, child] of Object.entries(value)) {
+    const childPath = `${path}.${key}`;
+    if (key === "import" || key === "$$typeof" || key === "invalidProps") {
+      return childPath;
+    }
+    const nested = findUnsafeUiValuePath(child, childPath);
+    if (nested) return nested;
+  }
+  return undefined;
+}
+
 function addPhase2Coverage(schemaTitle, fixtureFile, coverage) {
   if (coverage === undefined) return;
   if (!Array.isArray(coverage)) {
@@ -311,6 +331,24 @@ function addPhase2Coverage(schemaTitle, fixtureFile, coverage) {
   if (!allowed) return;
   const allowedSet = new Set(allowed);
   const covered = phase2Coverage.get(schemaTitle) ?? new Set();
+  const uiPayloadNegativeStates = new Set([
+    "invalid_props",
+    "unsafe_values",
+    "stale_vocabulary",
+    "unknown_component",
+    "package_import",
+    "serialized_react_marker",
+    "html_script",
+    "handler_props",
+    "secret_shaped_values",
+  ]);
+  if (
+    schemaTitle === "uiPayload" &&
+    coverage.filter((state) => uiPayloadNegativeStates.has(state)).length > 1
+  ) {
+    failures.push(`${relative(packageRoot, fixtureFile)} must not aggregate multiple negative uiPayload Phase 2 cases`);
+    return;
+  }
   for (const state of coverage) {
     if (typeof state !== "string" || state.length === 0) {
       failures.push(`${relative(packageRoot, fixtureFile)} coverage entries must be non-empty strings`);
@@ -332,6 +370,49 @@ function addPhase2Coverage(schemaTitle, fixtureFile, coverage) {
 
 function validatePhase2CoverageEvidence(schemaTitle, state, value) {
   if (!value) return "has no payload evidence";
+
+  if (schemaTitle === "uiPayload") {
+    const serialized = JSON.stringify(value);
+    if (state === "valid_primitive_tree" && (value.componentRef?.allowlisted === false || value.fallback?.mode === "invalid_payload")) {
+      return "payload is not a valid allowlisted primitive tree";
+    }
+    if (state === "nested_children" && !value.children?.some((child) => child && typeof child === "object")) {
+      return "payload has no nested object child";
+    }
+    if (state === "empty_state" && value.props?.state !== "empty" && !Array.isArray(value.props?.items)) {
+      return "payload has no empty-state evidence";
+    }
+    if (state === "long_content" && !serialized.match(/[A-Za-z ,.-]{72,}/)) {
+      return "payload has no long-content evidence";
+    }
+    if (state === "invalid_props" && (value.fallback?.mode !== "invalid_payload" || !("invalidProps" in (value.props ?? {})))) {
+      return "payload has no invalid-props marker";
+    }
+    if (state === "unsafe_values" && !findUnsafeUiPropPath(value.props ?? {}, "$.props")) {
+      return "payload has no unsafe prop evidence";
+    }
+    if (state === "stale_vocabulary" && value.componentRef?.version !== "stale") {
+      return "payload component version is not stale";
+    }
+    if (state === "unknown_component" && value.componentRef?.allowlisted !== false) {
+      return "payload component is not marked unallowlisted";
+    }
+    if (state === "package_import" && !/"import":"@[^"]+"/.test(serialized)) {
+      return "payload has no package import marker";
+    }
+    if (state === "serialized_react_marker" && !serialized.includes("Symbol(react.element)")) {
+      return "payload has no serialized React marker";
+    }
+    if (state === "html_script" && !/<script/i.test(serialized)) {
+      return "payload has no HTML/script marker";
+    }
+    if (state === "handler_props" && !/"on[A-Z][^"]*":/.test(serialized)) {
+      return "payload has no handler prop";
+    }
+    if (state === "secret_shaped_values" && !findSecretLookingPath(value.props ?? {}, "$.props")) {
+      return "payload has no secret-shaped prop";
+    }
+  }
 
   if (schemaTitle === "runEvent") {
     const expectedEventType = {
@@ -480,9 +561,16 @@ function validateSemantics(schemaTitle, value) {
     if (unsafePropPath) {
       errors.push(`${unsafePropPath} is not allowed in data-only UI payload props`);
     }
+    const unsafeValuePath = findUnsafeUiValuePath(value.props);
+    if (unsafeValuePath) {
+      errors.push(`${unsafeValuePath} is not allowed in data-only UI payload values`);
+    }
     const secretPropPath = findSecretLookingPath(value.props, "$.props");
-    if (secretPropPath && value.fallback.mode !== "invalid_payload") {
-      errors.push("$.fallback.mode must be invalid_payload when props contain secret-shaped keys");
+    if (secretPropPath) {
+      errors.push(`${secretPropPath} is not allowed in data-only UI payload props`);
+      if (value.fallback.mode !== "invalid_payload") {
+        errors.push("$.fallback.mode must be invalid_payload when props contain secret-shaped keys");
+      }
     }
     if (value.componentRef.version === "stale" && value.fallback.mode !== "unsupported_component") {
       errors.push("$.fallback.mode must be unsupported_component for stale component vocabulary");

@@ -1,0 +1,32 @@
+{
+  "$schema": "../../schemas/ui-payload.schema.json",
+  "expectedValid": false,
+  "caseId": "phase2-ui-payload-invalid-props",
+  "description": "UI payload fixture proves invalid prop-shape markers fail closed instead of counting as usable data.",
+  "coverage": ["invalid_props"],
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "payloadId": "uip_phase2_invalid_props",
+    "componentRef": {
+      "namespace": "@jami-studio/ui",
+      "name": "run-timeline",
+      "version": "0.0.0",
+      "allowlisted": true
+    },
+    "props": {
+      "invalidProps": {
+        "reason": "renderer prop schema rejected this field"
+      }
+    },
+    "children": [],
+    "fallback": {
+      "mode": "invalid_payload",
+      "message": "Invalid props are rejected."
+    },
+    "provenance": {
+      "runId": "run_phase2_shared_seams",
+      "emittedBy": "harness",
+      "evidenceRef": "ev_phase2_contracts"
+    }
+  }
+}

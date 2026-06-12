@@ -1,0 +1,30 @@
+{
+  "$schema": "../../schemas/ui-payload.schema.json",
+  "expectedValid": true,
+  "caseId": "phase2-ui-payload-unknown-component",
+  "description": "UI payload fixture proves unknown component names are unsupported rather than executable.",
+  "coverage": ["unknown_component"],
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "payloadId": "uip_phase2_unknown_component",
+    "componentRef": {
+      "namespace": "@jami-studio/ui",
+      "name": "unknown-widget",
+      "version": "0.0.0",
+      "allowlisted": false
+    },
+    "props": {
+      "state": "unsupported"
+    },
+    "children": [],
+    "fallback": {
+      "mode": "unsupported_component",
+      "message": "Unknown components are not renderable."
+    },
+    "provenance": {
+      "runId": "run_phase2_shared_seams",
+      "emittedBy": "harness",
+      "evidenceRef": "ev_phase2_contracts"
+    }
+  }
+}

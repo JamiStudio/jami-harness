@@ -2,18 +2,8 @@
   "$schema": "../../schemas/ui-payload.schema.json",
   "expectedValid": false,
   "caseId": "phase2-ui-payload-unsafe-values",
-  "description": "UI payload fixture proves unsafe, stale, unknown, package-import, serialized React, HTML/script, handler, and secret-shaped values fail closed.",
-  "coverage": [
-    "invalid_props",
-    "unsafe_values",
-    "stale_vocabulary",
-    "unknown_component",
-    "package_import",
-    "serialized_react_marker",
-    "html_script",
-    "handler_props",
-    "secret_shaped_values"
-  ],
+  "description": "UI payload fixture proves unsafe values fail closed.",
+  "coverage": ["unsafe_values"],
   "payload": {
     "schemaVersion": "2026-06-09",
     "payloadId": "uip_phase2_unsafe_values",

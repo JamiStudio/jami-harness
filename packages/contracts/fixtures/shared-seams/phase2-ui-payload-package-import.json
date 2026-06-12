@@ -1,0 +1,30 @@
+{
+  "$schema": "../../schemas/ui-payload.schema.json",
+  "expectedValid": false,
+  "caseId": "phase2-ui-payload-package-import",
+  "description": "UI payload fixture proves package import markers fail closed.",
+  "coverage": ["package_import"],
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "payloadId": "uip_phase2_package_import",
+    "componentRef": {
+      "namespace": "@jami-studio/ui",
+      "name": "run-timeline",
+      "version": "0.0.0",
+      "allowlisted": true
+    },
+    "props": {
+      "import": "@evil/package"
+    },
+    "children": [],
+    "fallback": {
+      "mode": "invalid_payload",
+      "message": "Package imports are rejected."
+    },
+    "provenance": {
+      "runId": "run_phase2_shared_seams",
+      "emittedBy": "harness",
+      "evidenceRef": "ev_phase2_contracts"
+    }
+  }
+}

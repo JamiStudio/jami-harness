@@ -1,0 +1,30 @@
+{
+  "$schema": "../../schemas/ui-payload.schema.json",
+  "expectedValid": true,
+  "caseId": "phase2-ui-payload-stale-vocabulary",
+  "description": "UI payload fixture proves stale component vocabulary is represented as unsupported component data.",
+  "coverage": ["stale_vocabulary"],
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "payloadId": "uip_phase2_stale_vocabulary",
+    "componentRef": {
+      "namespace": "@jami-studio/ui",
+      "name": "run-timeline",
+      "version": "stale",
+      "allowlisted": true
+    },
+    "props": {
+      "state": "stale"
+    },
+    "children": [],
+    "fallback": {
+      "mode": "unsupported_component",
+      "message": "Stale component vocabulary is not renderable."
+    },
+    "provenance": {
+      "runId": "run_phase2_shared_seams",
+      "emittedBy": "harness",
+      "evidenceRef": "ev_phase2_contracts"
+    }
+  }
+}

@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:f88d04e4a6c6fcde9087b4e832a3d74a1e4f15454afd6c274556c128a0011401",
+  "sourceInputHash": "sha256:f361ee9cc4fb060b197bf99aeb7d827ac581adc1f40889a3a28187f6ee4e2054",
   "generatedAt": "deterministic:git-head-plus-input-hash",
   "freshnessClass": "deterministic_current_source_tree",
   "command": "pnpm docs:generate -- --check",
@@ -200,6 +200,11 @@
       "path": ".changes/2026-06-12-phase2-shared-seam-state-evidence.md",
       "sha256": "sha256:f5ee3e924bad45379c5bba6c13be3f07b6bc353e3a77e3e040a2fd7b933479ff",
       "bytes": 264
+    },
+    {
+      "path": ".changes/2026-06-12-phase2-ui-payload-negative-fixtures.md",
+      "sha256": "sha256:bda366a3c53f7985b119f266d110f6cad44e75daae23959f4194175e9a53573c",
+      "bytes": 368
     },
     {
       "path": ".changes/README.md",
@@ -582,9 +587,49 @@
       "bytes": 885
     },
     {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-ui-payload-handler-props.json",
+      "sha256": "sha256:05950a735cdcc157090b95754b2eb560dbc86cda697ab07b0a4fad930c128a38",
+      "bytes": 804
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-ui-payload-html-script.json",
+      "sha256": "sha256:17e05fba2f099caed4066e41acf65d514c4b38c6b6d358f8868e57bdd1f176c8",
+      "bytes": 829
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-ui-payload-invalid-props.json",
+      "sha256": "sha256:fe10801fc8caa4bb1b1195beebdcbb78040b3695defc5ad7cc2945abdaf4c1c7",
+      "bytes": 913
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-ui-payload-package-import.json",
+      "sha256": "sha256:ccc1c4761373bd7e904a79fafe164717b18cc0c1df4760c9f9114bf8d65d0c61",
+      "bytes": 818
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-ui-payload-secret-shaped-values.json",
+      "sha256": "sha256:24b29dc6afdfa05da440c053a318f56ddbd5c4f0afe87b97e6b63bd532c93e26",
+      "bytes": 860
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-ui-payload-serialized-react-marker.json",
+      "sha256": "sha256:fcb74e2a17c6071f6da19132b77cc4a0167f04b3dd8f06071f41c466df3bd94b",
+      "bytes": 874
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-ui-payload-stale-vocabulary.json",
+      "sha256": "sha256:a8faf3dd0009ab4ed30cf8be72f1b98b8746c7e3e3812ff4df4b2c6524157164",
+      "bytes": 873
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-ui-payload-unknown-component.json",
+      "sha256": "sha256:ea7f088b7d1147490c177a8ba429e216d6fd46a88dff890b67ecfbbd7a39929c",
+      "bytes": 869
+    },
+    {
       "path": "packages/contracts/fixtures/shared-seams/phase2-ui-payload-unsafe-values.json",
-      "sha256": "sha256:36e681e11d765549d1e60d82519c5a7060db045154f6a18ce28f6d0abf918f47",
-      "bytes": 1316
+      "sha256": "sha256:24bd4713b7c39254bfe32095cd37497bd6756c5531e49fe6593aecadc9e1a4ca",
+      "bytes": 1026
     },
     {
       "path": "packages/contracts/fixtures/shared-seams/phase2-ui-payload-valid-tree.json",
