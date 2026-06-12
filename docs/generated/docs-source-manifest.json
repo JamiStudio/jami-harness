@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:c89beb6158888232805595cc36da8bced436c4ff99ba978b43105f11b8b11a8d",
+  "sourceInputHash": "sha256:f637b158ca55df49829498ff685785a497b9cb3dda34de91faee9a0cddc19fee",
   "generatedAt": "deterministic:git-head-plus-input-hash",
   "freshnessClass": "deterministic_current_source_tree",
   "command": "pnpm docs:generate -- --check",
@@ -207,6 +207,11 @@
       "bytes": 663
     },
     {
+      "path": ".changes/2026-06-12-hosted-route-readiness.md",
+      "sha256": "sha256:50a19b8bd01d2adb3ad4ff076d57dd215554bc05704697f3d003813149d57236",
+      "bytes": 316
+    },
+    {
       "path": ".changes/2026-06-12-phase2-shared-seam-fixtures.md",
       "sha256": "sha256:b2089e2011b8fa6b6e53d5cd91404a9a49c61c08670a1c7e569a0bef60b3c8dd",
       "bytes": 382
@@ -263,13 +268,13 @@
     },
     {
       "path": "apps/workbench/scripts/generate-workbench.mjs",
-      "sha256": "sha256:53cf6e8547f78fd4686ff60a043b647ddb209943fe9f5e55ecdee2a62def4f3d",
-      "bytes": 31702
+      "sha256": "sha256:5dae68cc4f3375dee089851dc9fd2aa4a15148ff15388c60e514da7a4b64830d",
+      "bytes": 33453
     },
     {
       "path": "apps/workbench/test/workbench.test.mjs",
-      "sha256": "sha256:80fe61d7fbd8ac7a667d9838533e6c21f45c64f8b8bf591516cfdb7a25c6cbcc",
-      "bytes": 3990
+      "sha256": "sha256:2af1596d41a6dedfe1124c3aea7a7d3a4a6a4df702a97db4d9e100cc8ef22d07",
+      "bytes": 4568
     },
     {
       "path": "docs/architecture/modular-responsibility-map.md",
@@ -283,18 +288,18 @@
     },
     {
       "path": "docs/generated/release-capability-manifest.json",
-      "sha256": "sha256:4b2fefafbab7092ab7de06dc8519c484ca112bc7c3ad176adc9b815b48b22927",
-      "bytes": 24836
+      "sha256": "sha256:9b216e7caf91ee335bbcc227a5b898253eb1ef09984b108c15d43ceb01726a67",
+      "bytes": 30305
     },
     {
       "path": "docs/operations/release-capability-source-lock.md",
-      "sha256": "sha256:05e7f15fd43115d24c1a2a4d47f0d08ede6ed3bb4500cd118d3957bb17d215cc",
-      "bytes": 5060
+      "sha256": "sha256:047e0f38e39203a26fa78b3c21260d1c0fa65a6e1bcdecdede2ed098507a3b1b",
+      "bytes": 7217
     },
     {
       "path": "docs/operations/release-readiness.md",
-      "sha256": "sha256:e41a8e26bc34afa713e0a76d5abb0a9c790314296c9141eb6805f7de59a790dc",
-      "bytes": 18356
+      "sha256": "sha256:efc5636316e5c0c0d42123af8422858b02d7e7c34a5ddaf78cb81c5d125a2908",
+      "bytes": 22165
     },
     {
       "path": "evals/smoke.mjs",
@@ -303,8 +308,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "sha256:0a3e626b9fbd048354d06b35073ede611e116ed2b4e2a3fa2a258d8d3bfc2d31",
-      "bytes": 3593
+      "sha256": "sha256:9d2a0b5a68a978ee510287749ef24352c6a7da8bec9242a5c7ee0c6dbc142d16",
+      "bytes": 3807
     },
     {
       "path": "packages/artifacts/package.json",
@@ -908,13 +913,13 @@
     },
     {
       "path": "scripts/release/check-readiness.mjs",
-      "sha256": "sha256:cb562cc61bffe46ecc514726e19e05452c508140a8f39f00e20c964594936928",
-      "bytes": 18054
+      "sha256": "sha256:cf7724d9b1ef46e2406e0bada2d807d7d3265b281e9115f683ac90b38e3be425",
+      "bytes": 20591
     },
     {
       "path": "scripts/release/generate-capability-manifest.mjs",
-      "sha256": "sha256:91ea5795bc6c4df88cba5895de4ac54f183904dbe9a4123a1cd9b14510a6c18d",
-      "bytes": 18966
+      "sha256": "sha256:51fbe3c020f098aed38fe8336b1081a036e8c6a3a30587418073646a838de709",
+      "bytes": 23219
     }
   ],
   "acceptedContractReferences": [

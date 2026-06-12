@@ -29,6 +29,8 @@ const checks = [
   checkScript("sbom:check", "local SBOM drift check command"),
   checkScript("release:capabilities", "release capability manifest generation command"),
   checkScript("release:capabilities:check", "release capability manifest drift check command"),
+  checkScript("hosted:routes", "hosted status/control route generation command"),
+  checkScript("hosted:routes:check", "hosted status/control route drift check command"),
   checkScript("eval:smoke", "local regression eval smoke command"),
   checkScript("release:readiness", "release readiness audit command"),
   checkScript("release:dry-run", "non-publishing release dry-run command"),
@@ -38,11 +40,19 @@ const checks = [
   checkFile("docs/operations/release-readiness.md", "release, claims, SBOM, and attestation policy"),
   checkFile("docs/operations/sbom-source-lock.md", "repo-local SBOM source-lock evidence"),
   checkFile("docs/operations/release-capability-source-lock.md", "repo-local release capability source-lock evidence"),
+  checkFile("docs/operations/hosted-route-source-lock.md", "repo-local hosted route source-lock evidence"),
   checkFile("docs/generated/docs-source-manifest.json", "generated docs-source manifest"),
   checkFile("docs/generated/install-readiness-manifest.json", "generated install-readiness manifest"),
   checkFile("docs/generated/sbom.cdx.json", "generated local CycloneDX SBOM dry-run artifact"),
   checkFile("docs/generated/release-capability-manifest.json", "generated release capability manifest"),
+  checkFile("docs/generated/hosted-route-manifest.json", "generated hosted status/control route manifest"),
   checkFile("apps/docs/docs.json", "Mintlify-ready navigation draft"),
+  checkFile("apps/workbench/generated/hosted-route-manifest.json", "workbench hosted route manifest mirror"),
+  checkFile("apps/workbench/dist/status.json", "preview status route"),
+  checkFile("apps/workbench/dist/release-readiness.json", "preview release-readiness route"),
+  checkFile("apps/workbench/dist/provider-store-observability.json", "preview provider/store/observability route"),
+  checkFile("apps/workbench/dist/healthz.json", "preview route health check"),
+  checkFile("apps/workbench/dist/_headers", "preview route static headers"),
   checkFile(".github/workflows/manual-check.yml", "manual GitHub fallback workflow"),
   checkWorkflow(),
   checkReleaseCapabilityManifest(),
@@ -52,6 +62,7 @@ const checks = [
   checkDocsPolicy("Public Claims Matrix", "public claims matrix"),
   checkDocsPolicy("SBOM Policy", "SBOM policy"),
   checkDocsPolicy("Hosted And Release Capability Manifest", "hosted and release capability manifest policy"),
+  checkDocsPolicy("Hosted Status And Control Routes", "hosted status/control route policy"),
   checkDocsPolicy("Package Provenance And Attestation Policy", "package provenance and attestation policy"),
   checkDocsPolicy("Install And Module Replacement Readiness", "install and module replacement readiness policy"),
   checkDocsPolicy("Human Interventions", "human/account intervention ledger"),
@@ -78,6 +89,21 @@ const unavailableCommands = [
     status: "unavailable",
     reason: "hosted docs/control-plane deployment target is not selected or authorized",
   },
+  {
+    command: "Cloudflare Pages hosted route smoke",
+    status: "unavailable",
+    reason: "static harness status/control routes are generated locally, but no Cloudflare Pages project, DNS target, deployment, or public URL smoke exists",
+  },
+  {
+    command: "Neon hosted store smoke",
+    status: "unavailable",
+    reason: "no Neon project, branch, role, migration, or connection secret is configured",
+  },
+  {
+    command: "OTLP hosted observability export smoke",
+    status: "unavailable",
+    reason: "no OTLP endpoint or secret header storage is configured",
+  },
 ];
 
 const humanInterventions = [
@@ -86,6 +112,8 @@ const humanInterventions = [
   "Select and authorize the public docs hosting target before Mintlify, Vercel, or Cloudflare claims are made.",
   "Approve publishable package scope changes, including removing private:true and adding publishConfig/files only when packages are ready.",
   "Refresh repo-local source-lock evidence for any release tool, hosted service, protocol, or third-party source used by the release.",
+  "Create or authorize the Cloudflare Pages project and DNS target before claiming hosted harness status/control routes.",
+  "Provision Neon and OTLP endpoint secrets outside tracked files before claiming hosted store or hosted observability routes.",
 ];
 
 const claims = [
@@ -168,6 +196,18 @@ const claims = [
     "docs/generated/release-capability-manifest.json",
     "pnpm release:capabilities",
     "pnpm release:capabilities:check",
+  ]),
+  claim("Preview hosted status/control routes are generated as static JSON with fail-closed hosted provider/store/observability readiness", "supported", [
+    "scripts/hosted/generate-hosted-routes.mjs",
+    "docs/operations/hosted-route-source-lock.md",
+    "docs/generated/hosted-route-manifest.json",
+    "apps/workbench/dist/status.json",
+    "apps/workbench/dist/release-readiness.json",
+    "apps/workbench/dist/provider-store-observability.json",
+    "apps/workbench/dist/healthz.json",
+    "apps/workbench/dist/_headers",
+    "pnpm hosted:routes",
+    "pnpm hosted:routes:check",
   ]),
   claim("Release publishing, hosted Mintlify build, hosted workbench, hosted stores, hosted provider runtime, and executable full MCP/OpenAPI/shell/browser/code/provider-as-tool/A2A adapters are available", "unsupported", [
     "apps/cli/README.md",
@@ -312,6 +352,7 @@ function checkReleaseCapabilityManifest() {
     "cap_release_capability_manifest",
     "cap_local_sbom_dry_run",
     "cap_local_docs_generation",
+    "cap_hosted_status_control_preview_routes",
   ];
   const requiredUnsupported = [
     "cap_npm_publish_provenance",
@@ -322,6 +363,7 @@ function checkReleaseCapabilityManifest() {
     "cap_hosted_provider_runtime",
     "cap_hosted_durable_stores",
     "cap_hosted_workbench",
+    "cap_hosted_observability_sinks",
   ];
   const byId = new Map((releaseCapabilityManifest.capabilities ?? []).map((capability) => [capability.capabilityId, capability]));
   const missingSupported = requiredSupported.filter((id) => byId.get(id)?.status !== "supported_local_evidence");

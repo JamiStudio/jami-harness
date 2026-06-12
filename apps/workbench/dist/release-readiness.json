@@ -1,0 +1,118 @@
+{
+  "schemaVersion": "2026-06-12.hosted-route",
+  "routeId": "release-readiness",
+  "path": "/release-readiness.json",
+  "sourceRepo": "jami-harness",
+  "sourceCommit": "git:HEAD",
+  "sourceInputHash": "sha256:e5c518c7002d44d0f38572bd5548e4d1e6d17ca6b2da627677103a2ac24f9021",
+  "generatedAt": "deterministic:git-head-plus-hosted-route-input-hash",
+  "freshnessClass": "current-head-official-source-lock",
+  "status": "supported_preview_static_fail_closed",
+  "claimable": false,
+  "failClosed": true,
+  "safeClaim": "A static release-readiness route is generated from local release manifests; package publishing, attestations, and hosted docs remain blocked.",
+  "evidence": {
+    "packagePublishing": {
+      "capabilityId": "cap_npm_publish_provenance",
+      "surface": "npm publish with provenance",
+      "status": "fail_closed_unsupported",
+      "claimable": false,
+      "failClosed": true,
+      "blockers": [
+        "15/15 package manifests remain private:true.",
+        "No package files lists or package contents dry-run evidence are recorded.",
+        "No npm trusted publisher, OIDC, or automation scope is recorded in this repo.",
+        "No publishConfig or accepted package scope/versioning decision is recorded."
+      ],
+      "requiredBeforeClaim": [
+        "Approve package names, files lists, publishConfig, and versioning.",
+        "Configure npm trusted publishing or explicit provenance on a supported cloud CI/CD provider.",
+        "Run and record a package contents dry run before any npm publish dry run."
+      ]
+    },
+    "packageContents": {
+      "capabilityId": "cap_package_contents_dry_run",
+      "surface": "npm package contents dry run",
+      "status": "fail_closed_unsupported",
+      "claimable": false,
+      "failClosed": true,
+      "blockers": [
+        "Package manifests remain private:true.",
+        "No package files lists or publishable package allowlists are accepted.",
+        "Research archives and generated/local state boundaries have not been proven against package tarballs."
+      ],
+      "requiredBeforeClaim": [
+        "Add package files lists or equivalent contents policy.",
+        "Run a contents dry run for each publishable package and record included files."
+      ]
+    },
+    "attestations": {
+      "capabilityId": "cap_github_release_attestations",
+      "surface": "GitHub release artifact attestations",
+      "status": "fail_closed_unsupported",
+      "claimable": false,
+      "failClosed": true,
+      "blockers": [
+        "No release artifact workflow exists.",
+        "No artifact subject path, digest, or SBOM attestation input is generated.",
+        "No GitHub attestation verification command has been run against a release artifact."
+      ],
+      "requiredBeforeClaim": [
+        "Create a release artifact and workflow using id-token: write and attestations: write.",
+        "Generate and verify the attestation with GitHub CLI before claiming attested artifacts."
+      ]
+    },
+    "hostedDocs": {
+      "capabilityId": "cap_hosted_public_docs",
+      "surface": "hosted public docs",
+      "status": "fail_closed_unsupported",
+      "claimable": false,
+      "failClosed": true,
+      "blockers": [
+        "No hosted docs target is selected.",
+        "No account/project authorization evidence is recorded.",
+        "No deploy dry run or hosted smoke URL exists."
+      ],
+      "requiredBeforeClaim": [
+        "Select the hosted docs target.",
+        "Record account/project authorization and run the target's local/dry-run gate."
+      ]
+    },
+    "sbom": {
+      "path": "docs/generated/sbom.cdx.json",
+      "bomFormat": "CycloneDX",
+      "specVersion": "1.7",
+      "componentCount": 14
+    }
+  },
+  "readiness": [
+    {
+      "surface": "local_release_readiness_audit",
+      "status": "supported_local_evidence",
+      "reason": "Release readiness and dry-run audits are local and non-publishing."
+    },
+    {
+      "surface": "npm_publish",
+      "status": "fail_closed_account_required",
+      "reason": "Packages remain private and npm trusted publishing is not configured."
+    },
+    {
+      "surface": "github_attestation",
+      "status": "fail_closed_workflow_required",
+      "reason": "No release artifact or attestation workflow exists."
+    }
+  ],
+  "requiredBeforePublicClaim": [
+    "Close package contents, npm provenance, and package scope gates.",
+    "Create and verify release artifact attestations.",
+    "Record public docs URL and package version evidence."
+  ],
+  "humanInterventions": [
+    "Create or authorize the Cloudflare Pages project for the harness status/control static route bundle.",
+    "Point the accepted DNS hostname to the deployed Cloudflare Pages project before public hosted claims.",
+    "Provision a Neon project, branch, role, migration path, and secret storage for the hosted store adapter before hosted-store claims.",
+    "Provision hosted provider credentials and secret references for each accepted provider adapter before hosted-provider claims.",
+    "Provision an OTLP endpoint and secret header storage before hosted observability export claims.",
+    "Run a hosted smoke against the final public URLs and record cache, integrity, and secret-scan evidence before saying routes are live."
+  ]
+}

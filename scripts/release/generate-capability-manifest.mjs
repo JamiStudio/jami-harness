@@ -45,6 +45,26 @@ const officialSources = [
     "docs.json is the current Mintlify configuration file, with required theme, name, colors, and navigation fields.",
     "Referenced files must stay inside the docs project root.",
   ]),
+  source("cloudflare_pages_direct_upload", "Cloudflare Pages Direct Upload", "https://developers.cloudflare.com/pages/get-started/direct-upload/", [
+    "Cloudflare Pages can deploy a prebuilt static asset folder through Wrangler direct upload or dashboard upload.",
+    "The harness route bundle is only a local static output until a Cloudflare project, deploy, DNS target, and hosted smoke exist.",
+  ], "2026-06-12"),
+  source("cloudflare_pages_headers", "Cloudflare Pages custom headers", "https://developers.cloudflare.com/pages/configuration/headers/", [
+    "Cloudflare Pages applies custom response headers from a _headers file in the static asset directory.",
+    "Header policy is only a generated preview until the hosted target serves the bundle.",
+  ], "2026-06-12"),
+  source("neon_connection_string", "Neon connection strings", "https://neon.com/docs/connect/connect-from-any-app", [
+    "Neon connection strings include role, password, hostname, and database name.",
+    "Hosted store readiness must require secret storage and must never write connection values to generated output.",
+  ], "2026-06-12"),
+  source("opentelemetry_otlp_exporter", "OpenTelemetry OTLP exporter configuration", "https://opentelemetry.io/docs/languages/sdk-configuration/otlp-exporter/", [
+    "OTLP exporter endpoints and headers configure trace, metric, log, and profile export.",
+    "Header values can contain API keys and must remain runtime secrets.",
+  ], "2026-06-12"),
+  source("opentelemetry_env_spec", "OpenTelemetry environment variable specification", "https://opentelemetry.io/docs/specs/otel/configuration/sdk-environment-variables/", [
+    "OpenTelemetry environment variable behavior is stable except where noted.",
+    "Empty environment variables are treated the same as unset values.",
+  ], "2026-06-12"),
 ];
 
 const sourceLockText = existsSync(sourceLockFullPath)
@@ -103,6 +123,8 @@ const manifest = {
     "Install and source-lock the exact Mintlify CLI/package, then run mint validate locally before claiming a Mintlify build check.",
     "Select and authorize a hosted docs target before public docs hosting, Mintlify deployment, Vercel, or Cloudflare claims.",
     "Implement hosted provider, store, and workbench adapters with source-lock evidence and fail-closed fixtures before advertising hosted capability.",
+    "Create or authorize the Cloudflare Pages project and DNS target before claiming hosted harness status/control routes.",
+    "Provision Neon and OTLP endpoint secrets outside tracked files before claiming hosted store or hosted observability routes.",
   ],
 };
 
@@ -152,6 +174,29 @@ function buildCapabilities() {
       commands: ["pnpm docs:generate", "pnpm docs:generate -- --check"],
       evidence: ["packages/docs/scripts/generate-docs.mjs", "apps/docs/docs.json", "docs/generated/docs-source-manifest.json"],
       officialSourceIds: ["mintlify_docs_json"],
+    }),
+    localCapability({
+      capabilityId: "cap_hosted_status_control_preview_routes",
+      surface: "preview-deployable hosted status/control route bundle",
+      safeClaim: "The repo can generate static preview JSON routes for harness status, release readiness, and provider/store/observability readiness; no public hosted URL is live.",
+      commands: ["pnpm hosted:routes", "pnpm hosted:routes:check"],
+      evidence: [
+        "scripts/hosted/generate-hosted-routes.mjs",
+        "docs/operations/hosted-route-source-lock.md",
+        "docs/generated/hosted-route-manifest.json",
+        "apps/workbench/dist/status.json",
+        "apps/workbench/dist/release-readiness.json",
+        "apps/workbench/dist/provider-store-observability.json",
+        "apps/workbench/dist/healthz.json",
+        "apps/workbench/dist/_headers",
+      ],
+      officialSourceIds: [
+        "cloudflare_pages_direct_upload",
+        "cloudflare_pages_headers",
+        "neon_connection_string",
+        "opentelemetry_otlp_exporter",
+        "opentelemetry_env_spec",
+      ],
     }),
     unsupportedCapability({
       capabilityId: "cap_npm_publish_provenance",
@@ -276,6 +321,23 @@ function buildCapabilities() {
         "Define the harness-owned workbench contract boundary and integrate Studio UI through published typed contracts before building or hosting a workbench.",
       ],
     }),
+    unsupportedCapability({
+      capabilityId: "cap_hosted_observability_sinks",
+      surface: "hosted observability sinks",
+      blockedCommand: "OTLP export smoke",
+      safeClaim: "Hosted observability export remains unsupported; generated route output only records required endpoint and secret actions.",
+      officialSourceIds: ["opentelemetry_otlp_exporter", "opentelemetry_env_spec"],
+      blockers: [
+        "No OTLP endpoint, collector, sink, or secret header storage is configured.",
+        "No hosted trace, metric, log, or profile export smoke has run.",
+        "Current observability evidence is local deterministic package-test output only.",
+      ],
+      requiredBeforeClaim: [
+        "Configure an OTLP endpoint and secret header resolver outside tracked files.",
+        "Run hosted trace and metric export smokes with redacted evidence.",
+        "Record failure behavior for missing, empty, malformed, and unauthorized exporter configuration.",
+      ],
+    }),
   ];
 }
 
@@ -333,6 +395,8 @@ function collectSourceRecords() {
     "scripts/release/check-readiness.mjs",
     "scripts/release/generate-sbom.mjs",
     "scripts/release/generate-capability-manifest.mjs",
+    "scripts/hosted/generate-hosted-routes.mjs",
+    "docs/operations/hosted-route-source-lock.md",
   ];
   files.push(...packageFiles);
   return [...new Set(files)]
@@ -375,13 +439,13 @@ function packageInput(path, manifest) {
   };
 }
 
-function source(id, title, url, observations) {
+function source(id, title, url, observations, verifiedOn = "2026-06-09") {
   return {
     id,
     title,
     url,
     official: true,
-    verifiedOn: "2026-06-09",
+    verifiedOn,
     observations,
   };
 }

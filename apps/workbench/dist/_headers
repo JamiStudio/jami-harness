@@ -1,0 +1,16 @@
+/status.json
+  Content-Type: application/json; charset=utf-8
+  Cache-Control: no-store
+  X-Content-Type-Options: nosniff
+/release-readiness.json
+  Content-Type: application/json; charset=utf-8
+  Cache-Control: no-store
+  X-Content-Type-Options: nosniff
+/provider-store-observability.json
+  Content-Type: application/json; charset=utf-8
+  Cache-Control: no-store
+  X-Content-Type-Options: nosniff
+/healthz.json
+  Content-Type: application/json; charset=utf-8
+  Cache-Control: no-store
+  X-Content-Type-Options: nosniff

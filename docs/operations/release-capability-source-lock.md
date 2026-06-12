@@ -31,6 +31,19 @@ Verified on 2026-06-09:
 - Mintlify `docs.json` settings:
   `https://www.mintlify.com/docs/organize/settings-reference`
 
+Verified on 2026-06-12:
+
+- Cloudflare Pages Direct Upload:
+  `https://developers.cloudflare.com/pages/get-started/direct-upload/`
+- Cloudflare Pages custom headers:
+  `https://developers.cloudflare.com/pages/configuration/headers/`
+- Neon connection strings:
+  `https://neon.com/docs/connect/connect-from-any-app`
+- OpenTelemetry OTLP exporter configuration:
+  `https://opentelemetry.io/docs/languages/sdk-configuration/otlp-exporter/`
+- OpenTelemetry environment variable specification:
+  `https://opentelemetry.io/docs/specs/otel/configuration/sdk-environment-variables/`
+
 ## Source Findings
 
 - npm provenance requires a supported CI/CD environment, compatible npm CLI, repository
@@ -55,14 +68,30 @@ Verified on 2026-06-09:
   current required root fields include `theme`, `name`, `colors`, and `navigation`. The
   local generated `apps/docs/docs.json` is only a draft until `mint validate` or an
   accepted hosted-docs build runs.
+- Cloudflare Pages can accept a prebuilt static asset folder by direct upload, and
+  Cloudflare Pages custom headers are configured with an `_headers` file in the static
+  asset directory. The harness now generates static status/control JSON route files and
+  `_headers`, but no Cloudflare project, DNS target, deploy, or hosted smoke exists.
+- Neon connection details come from a Neon project and branch, and the connection string
+  includes role, password, hostname, and database name. Hosted store readiness must list
+  secret names and human actions without writing connection values to tracked output.
+- OpenTelemetry OTLP exporter configuration uses endpoint variables for traces, metrics,
+  logs, and profiles, and header variables may carry API keys. Hosted observability
+  readiness remains fail-closed until endpoint and header secrets are resolved at runtime
+  and smoke-tested without leaking values.
 
 ## Implemented In This Pass
 
 - `pnpm release:capabilities` writes
   `docs/generated/release-capability-manifest.json`.
+- `pnpm hosted:routes` writes `docs/generated/hosted-route-manifest.json`,
+  `apps/workbench/generated/hosted-route-manifest.json`, and preview static route files
+  under `apps/workbench/dist/`.
+- `pnpm hosted:routes:check` verifies the preview route bundle and fails on generated
+  drift or common secret-shaped output.
 - `pnpm release:capabilities:check` fails when the generated manifest drifts from package
-  metadata, this source-lock record, release docs, SBOM evidence, docs config, or release
-  scripts.
+  metadata, this source-lock record, hosted route source-lock evidence, release docs,
+  SBOM evidence, docs config, hosted route scripts, or release scripts.
 - `pnpm verify` runs the release capability manifest drift check before generated docs and
   release readiness audits.
 - `pnpm release:readiness` and `pnpm release:dry-run` check that the generated manifest
@@ -79,6 +108,11 @@ Verified on 2026-06-09:
 - No Mintlify CLI validation, hosted build, or hosted publish was run.
 - No Vercel, Cloudflare, or other hosted docs target was selected or called.
 - No hosted provider, hosted durable store, or hosted workbench was implemented.
+- No Cloudflare Pages harness status/control project, DNS route, deploy, or hosted smoke
+  was run.
+- No Neon project, branch, migration, role, or connection secret was provisioned.
+- No OpenTelemetry collector, OTLP endpoint, header secret storage, or hosted export
+  smoke was configured.
 
 ## Refresh Triggers
 

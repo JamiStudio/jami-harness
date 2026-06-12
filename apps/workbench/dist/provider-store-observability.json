@@ -1,0 +1,95 @@
+{
+  "schemaVersion": "2026-06-12.hosted-route",
+  "routeId": "provider-store-observability",
+  "path": "/provider-store-observability.json",
+  "sourceRepo": "jami-harness",
+  "sourceCommit": "git:HEAD",
+  "sourceInputHash": "sha256:e5c518c7002d44d0f38572bd5548e4d1e6d17ca6b2da627677103a2ac24f9021",
+  "generatedAt": "deterministic:git-head-plus-hosted-route-input-hash",
+  "freshnessClass": "current-head-official-source-lock",
+  "status": "supported_preview_static_fail_closed",
+  "claimable": false,
+  "failClosed": true,
+  "safeClaim": "A static readiness route enumerates hosted provider, Neon store, and OTLP observability prerequisites; the hosted services are not live.",
+  "evidence": {
+    "hostedProviderRuntime": {
+      "capabilityId": "cap_hosted_provider_runtime",
+      "surface": "hosted provider runtime",
+      "status": "fail_closed_unsupported",
+      "claimable": false,
+      "failClosed": true,
+      "blockers": [
+        "No hosted provider adapter source-lock, authentication, redaction, streaming, retry, billing, or policy fixtures exist.",
+        "Current unsupported external provider CLI routes return nonzero fail-closed evidence."
+      ],
+      "requiredBeforeClaim": [
+        "Implement a hosted provider adapter behind the model port with auth, policy, trace, redaction, and negative fixtures."
+      ]
+    },
+    "hostedDurableStores": {
+      "capabilityId": "cap_hosted_durable_stores",
+      "surface": "hosted durable stores",
+      "status": "fail_closed_unsupported",
+      "claimable": false,
+      "failClosed": true,
+      "blockers": [
+        "No database/object-store adapter exists.",
+        "No hosted store credentials, migration, fixture, or replay evidence exists."
+      ],
+      "requiredBeforeClaim": [
+        "Implement hosted store adapters behind the existing store port and prove fail-closed credential/replay behavior."
+      ]
+    },
+    "hostedWorkbench": {
+      "capabilityId": "cap_hosted_workbench",
+      "surface": "hosted workbench",
+      "status": "fail_closed_unsupported",
+      "claimable": false,
+      "failClosed": true,
+      "blockers": [
+        "apps/workbench is a dependency-free local static shell, not a hosted control plane.",
+        "Studio UI owns workbench UI primitives and install/config surfaces.",
+        "No hosted target, backend state, deploy smoke, or accessibility evidence exists for a hosted harness workbench."
+      ],
+      "requiredBeforeClaim": [
+        "Define the harness-owned workbench contract boundary and integrate Studio UI through published typed contracts before building or hosting a workbench."
+      ]
+    }
+  },
+  "readiness": [
+    {
+      "surface": "hosted_provider_runtime",
+      "status": "fail_closed_secret_required",
+      "reason": "No hosted provider adapter credentials or secret refs are configured."
+    },
+    {
+      "surface": "neon_store_adapter",
+      "status": "fail_closed_database_required",
+      "reason": "No Neon project, branch, migration, role, or connection secret is configured."
+    },
+    {
+      "surface": "otel_observability_sink",
+      "status": "fail_closed_endpoint_required",
+      "reason": "No OTLP endpoint or secret header storage is configured."
+    },
+    {
+      "surface": "redaction_and_secret_boundary",
+      "status": "supported_local_evidence",
+      "reason": "Generated readiness routes contain no secret values and only list secret names/actions."
+    }
+  ],
+  "requiredBeforePublicClaim": [
+    "Implement hosted provider adapters behind the provider port with auth, retry, cost, usage, cancellation, redaction, and negative fixtures.",
+    "Implement Neon-backed stores behind the store port with migrations, replay, stale-lock, corruption, and credential-failure fixtures.",
+    "Implement OTLP sink export with endpoint/header secrets resolved at runtime and redacted evidence.",
+    "Run hosted provider, store, and observability smokes against provisioned services."
+  ],
+  "humanInterventions": [
+    "Create or authorize the Cloudflare Pages project for the harness status/control static route bundle.",
+    "Point the accepted DNS hostname to the deployed Cloudflare Pages project before public hosted claims.",
+    "Provision a Neon project, branch, role, migration path, and secret storage for the hosted store adapter before hosted-store claims.",
+    "Provision hosted provider credentials and secret references for each accepted provider adapter before hosted-provider claims.",
+    "Provision an OTLP endpoint and secret header storage before hosted observability export claims.",
+    "Run a hosted smoke against the final public URLs and record cache, integrity, and secret-scan evidence before saying routes are live."
+  ]
+}

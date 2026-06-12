@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:a3cac7b57164b44ed909b910f282982121b0ad8094fa4e97f89777347fd24ba5",
+  "sourceInputHash": "sha256:5febd0b4653c391af5467c131f5c63a7a1210dda95138595b47345fd273a5603",
   "generatedAt": "deterministic:git-head-plus-release-capability-input-hash",
   "command": "pnpm release:capabilities:check",
   "commandResult": "passed",
@@ -244,6 +244,61 @@
         "docs.json is the current Mintlify configuration file, with required theme, name, colors, and navigation fields.",
         "Referenced files must stay inside the docs project root."
       ]
+    },
+    {
+      "id": "cloudflare_pages_direct_upload",
+      "title": "Cloudflare Pages Direct Upload",
+      "url": "https://developers.cloudflare.com/pages/get-started/direct-upload/",
+      "official": true,
+      "verifiedOn": "2026-06-12",
+      "observations": [
+        "Cloudflare Pages can deploy a prebuilt static asset folder through Wrangler direct upload or dashboard upload.",
+        "The harness route bundle is only a local static output until a Cloudflare project, deploy, DNS target, and hosted smoke exist."
+      ]
+    },
+    {
+      "id": "cloudflare_pages_headers",
+      "title": "Cloudflare Pages custom headers",
+      "url": "https://developers.cloudflare.com/pages/configuration/headers/",
+      "official": true,
+      "verifiedOn": "2026-06-12",
+      "observations": [
+        "Cloudflare Pages applies custom response headers from a _headers file in the static asset directory.",
+        "Header policy is only a generated preview until the hosted target serves the bundle."
+      ]
+    },
+    {
+      "id": "neon_connection_string",
+      "title": "Neon connection strings",
+      "url": "https://neon.com/docs/connect/connect-from-any-app",
+      "official": true,
+      "verifiedOn": "2026-06-12",
+      "observations": [
+        "Neon connection strings include role, password, hostname, and database name.",
+        "Hosted store readiness must require secret storage and must never write connection values to generated output."
+      ]
+    },
+    {
+      "id": "opentelemetry_otlp_exporter",
+      "title": "OpenTelemetry OTLP exporter configuration",
+      "url": "https://opentelemetry.io/docs/languages/sdk-configuration/otlp-exporter/",
+      "official": true,
+      "verifiedOn": "2026-06-12",
+      "observations": [
+        "OTLP exporter endpoints and headers configure trace, metric, log, and profile export.",
+        "Header values can contain API keys and must remain runtime secrets."
+      ]
+    },
+    {
+      "id": "opentelemetry_env_spec",
+      "title": "OpenTelemetry environment variable specification",
+      "url": "https://opentelemetry.io/docs/specs/otel/configuration/sdk-environment-variables/",
+      "official": true,
+      "verifiedOn": "2026-06-12",
+      "observations": [
+        "OpenTelemetry environment variable behavior is stable except where noted.",
+        "Empty environment variables are treated the same as unset values."
+      ]
     }
   ],
   "sourceRecords": [
@@ -268,14 +323,19 @@
       "bytes": 17811
     },
     {
+      "path": "docs/operations/hosted-route-source-lock.md",
+      "sha256": "sha256:4486944aebc7cc96db93debbec336e22bf49191d817908e7b658a0c805e9619a",
+      "bytes": 4298
+    },
+    {
       "path": "docs/operations/release-capability-source-lock.md",
-      "sha256": "sha256:05e7f15fd43115d24c1a2a4d47f0d08ede6ed3bb4500cd118d3957bb17d215cc",
-      "bytes": 5060
+      "sha256": "sha256:047e0f38e39203a26fa78b3c21260d1c0fa65a6e1bcdecdede2ed098507a3b1b",
+      "bytes": 7217
     },
     {
       "path": "docs/operations/release-readiness.md",
-      "sha256": "sha256:e41a8e26bc34afa713e0a76d5abb0a9c790314296c9141eb6805f7de59a790dc",
-      "bytes": 18356
+      "sha256": "sha256:efc5636316e5c0c0d42123af8422858b02d7e7c34a5ddaf78cb81c5d125a2908",
+      "bytes": 22165
     },
     {
       "path": "docs/operations/sbom-source-lock.md",
@@ -284,8 +344,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "sha256:0a3e626b9fbd048354d06b35073ede611e116ed2b4e2a3fa2a258d8d3bfc2d31",
-      "bytes": 3593
+      "sha256": "sha256:9d2a0b5a68a978ee510287749ef24352c6a7da8bec9242a5c7ee0c6dbc142d16",
+      "bytes": 3807
     },
     {
       "path": "packages/artifacts/package.json",
@@ -353,14 +413,19 @@
       "bytes": 40
     },
     {
+      "path": "scripts/hosted/generate-hosted-routes.mjs",
+      "sha256": "sha256:8f0b52a9282690c86725b681c5401654bc0c1f70cd2179e178bc00232a919842",
+      "bytes": 18338
+    },
+    {
       "path": "scripts/release/check-readiness.mjs",
-      "sha256": "sha256:cb562cc61bffe46ecc514726e19e05452c508140a8f39f00e20c964594936928",
-      "bytes": 18054
+      "sha256": "sha256:cf7724d9b1ef46e2406e0bada2d807d7d3265b281e9115f683ac90b38e3be425",
+      "bytes": 20591
     },
     {
       "path": "scripts/release/generate-capability-manifest.mjs",
-      "sha256": "sha256:91ea5795bc6c4df88cba5895de4ac54f183904dbe9a4123a1cd9b14510a6c18d",
-      "bytes": 18966
+      "sha256": "sha256:51fbe3c020f098aed38fe8336b1081a036e8c6a3a30587418073646a838de709",
+      "bytes": 23219
     },
     {
       "path": "scripts/release/generate-sbom.mjs",
@@ -447,6 +512,37 @@
       ],
       "officialSourceIds": [
         "mintlify_docs_json"
+      ],
+      "blockers": [],
+      "requiredBeforeClaim": []
+    },
+    {
+      "capabilityId": "cap_hosted_status_control_preview_routes",
+      "surface": "preview-deployable hosted status/control route bundle",
+      "status": "supported_local_evidence",
+      "claimable": true,
+      "failClosed": false,
+      "safeClaim": "The repo can generate static preview JSON routes for harness status, release readiness, and provider/store/observability readiness; no public hosted URL is live.",
+      "commandEvidence": [
+        "pnpm hosted:routes",
+        "pnpm hosted:routes:check"
+      ],
+      "sourceEvidence": [
+        "scripts/hosted/generate-hosted-routes.mjs",
+        "docs/operations/hosted-route-source-lock.md",
+        "docs/generated/hosted-route-manifest.json",
+        "apps/workbench/dist/status.json",
+        "apps/workbench/dist/release-readiness.json",
+        "apps/workbench/dist/provider-store-observability.json",
+        "apps/workbench/dist/healthz.json",
+        "apps/workbench/dist/_headers"
+      ],
+      "officialSourceIds": [
+        "cloudflare_pages_direct_upload",
+        "cloudflare_pages_headers",
+        "neon_connection_string",
+        "opentelemetry_otlp_exporter",
+        "opentelemetry_env_spec"
       ],
       "blockers": [],
       "requiredBeforeClaim": []
@@ -638,6 +734,32 @@
       "requiredBeforeClaim": [
         "Define the harness-owned workbench contract boundary and integrate Studio UI through published typed contracts before building or hosting a workbench."
       ]
+    },
+    {
+      "capabilityId": "cap_hosted_observability_sinks",
+      "surface": "hosted observability sinks",
+      "status": "fail_closed_unsupported",
+      "claimable": false,
+      "failClosed": true,
+      "blockedCommand": "OTLP export smoke",
+      "safeClaim": "Hosted observability export remains unsupported; generated route output only records required endpoint and secret actions.",
+      "commandEvidence": [
+        "pnpm release:capabilities:check"
+      ],
+      "officialSourceIds": [
+        "opentelemetry_otlp_exporter",
+        "opentelemetry_env_spec"
+      ],
+      "blockers": [
+        "No OTLP endpoint, collector, sink, or secret header storage is configured.",
+        "No hosted trace, metric, log, or profile export smoke has run.",
+        "Current observability evidence is local deterministic package-test output only."
+      ],
+      "requiredBeforeClaim": [
+        "Configure an OTLP endpoint and secret header resolver outside tracked files.",
+        "Run hosted trace and metric export smokes with redacted evidence.",
+        "Record failure behavior for missing, empty, malformed, and unauthorized exporter configuration."
+      ]
     }
   ],
   "humanInterventions": [
@@ -646,6 +768,8 @@
     "Create and verify a release artifact plus GitHub attestation workflow before claiming signed or attested artifacts.",
     "Install and source-lock the exact Mintlify CLI/package, then run mint validate locally before claiming a Mintlify build check.",
     "Select and authorize a hosted docs target before public docs hosting, Mintlify deployment, Vercel, or Cloudflare claims.",
-    "Implement hosted provider, store, and workbench adapters with source-lock evidence and fail-closed fixtures before advertising hosted capability."
+    "Implement hosted provider, store, and workbench adapters with source-lock evidence and fail-closed fixtures before advertising hosted capability.",
+    "Create or authorize the Cloudflare Pages project and DNS target before claiming hosted harness status/control routes.",
+    "Provision Neon and OTLP endpoint secrets outside tracked files before claiming hosted store or hosted observability routes."
   ]
 }

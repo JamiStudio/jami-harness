@@ -1,0 +1,365 @@
+{
+  "schemaVersion": "2026-06-12.hosted-route-manifest",
+  "sourceRepo": "jami-harness",
+  "sourceRemote": "https://github.com/JamiStudio/jami-harness.git",
+  "sourceCommit": "git:HEAD",
+  "sourceRef": "main",
+  "sourceCommitResolutionCommand": "git rev-parse HEAD",
+  "sourceInputHash": "sha256:e5c518c7002d44d0f38572bd5548e4d1e6d17ca6b2da627677103a2ac24f9021",
+  "generatedAt": "deterministic:git-head-plus-hosted-route-input-hash",
+  "command": "pnpm hosted:routes:check",
+  "commandResult": "passed",
+  "freshnessClass": "current-head-official-source-lock",
+  "routeBase": {
+    "localDirectory": "apps/workbench/dist",
+    "previewServeCommand": "npx serve apps/workbench/dist",
+    "intendedHostedTarget": "Cloudflare Pages or equivalent static asset hosting after account and DNS authorization",
+    "publicUrl": null,
+    "publicUrlStatus": "not_provisioned"
+  },
+  "officialSources": [
+    {
+      "id": "cloudflare_pages_direct_upload",
+      "title": "Cloudflare Pages Direct Upload",
+      "url": "https://developers.cloudflare.com/pages/get-started/direct-upload/",
+      "official": true,
+      "verifiedOn": "2026-06-12",
+      "observations": [
+        "Cloudflare Pages can upload a prebuilt asset folder through Wrangler or dashboard drag and drop.",
+        "Wrangler direct upload accepts a single folder of built assets."
+      ]
+    },
+    {
+      "id": "cloudflare_pages_headers",
+      "title": "Cloudflare Pages custom headers",
+      "url": "https://developers.cloudflare.com/pages/configuration/headers/",
+      "official": true,
+      "verifiedOn": "2026-06-12",
+      "observations": [
+        "Cloudflare Pages applies custom headers from a plain _headers file placed in the static asset directory."
+      ]
+    },
+    {
+      "id": "neon_connection_string",
+      "title": "Neon connection strings",
+      "url": "https://neon.com/docs/connect/connect-from-any-app",
+      "official": true,
+      "verifiedOn": "2026-06-12",
+      "observations": [
+        "Neon application connections require connection details from a Neon project and branch.",
+        "Neon connection strings include role, password, hostname, and database name, so they must not be committed."
+      ]
+    },
+    {
+      "id": "opentelemetry_otlp_exporter",
+      "title": "OpenTelemetry OTLP exporter configuration",
+      "url": "https://opentelemetry.io/docs/languages/sdk-configuration/otlp-exporter/",
+      "official": true,
+      "verifiedOn": "2026-06-12",
+      "observations": [
+        "OTLP exporters use endpoint variables for traces, metrics, logs, and profiles.",
+        "OTLP headers can carry API keys and must not be written to generated route output."
+      ]
+    },
+    {
+      "id": "opentelemetry_env_spec",
+      "title": "OpenTelemetry environment variable specification",
+      "url": "https://opentelemetry.io/docs/specs/otel/configuration/sdk-environment-variables/",
+      "official": true,
+      "verifiedOn": "2026-06-12",
+      "observations": [
+        "The OpenTelemetry environment variable specification is stable except where noted.",
+        "Empty environment variable values are interpreted the same as unset values."
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "routeId": "status",
+      "path": "/status.json",
+      "outputPath": "apps/workbench/dist/status.json",
+      "method": "GET",
+      "contentType": "application/json",
+      "status": "supported_preview_static_fail_closed",
+      "claimable": false,
+      "failClosed": true,
+      "safeClaim": "A static harness status route is generated for preview serving from apps/workbench/dist; no public hosted deployment has run.",
+      "evidence": {
+        "sourceCommit": "git:HEAD",
+        "docsSourceManifest": {
+          "path": "docs/generated/docs-source-manifest.json",
+          "sourceInputHash": "sha256:f637b158ca55df49829498ff685785a497b9cb3dda34de91faee9a0cddc19fee",
+          "generatedOutputCount": 16
+        },
+        "releaseCapabilityManifest": {
+          "path": "docs/generated/release-capability-manifest.json",
+          "sourceInputHash": "sha256:5febd0b4653c391af5467c131f5c63a7a1210dda95138595b47345fd273a5603",
+          "capabilityCount": 14
+        }
+      },
+      "readiness": [
+        {
+          "surface": "local_static_route_generation",
+          "status": "supported_local_evidence",
+          "reason": "Generated route files can be checked without a hosted account."
+        },
+        {
+          "surface": "public_cloudflare_pages_deploy",
+          "status": "fail_closed_account_required",
+          "reason": "Cloudflare project and DNS target are not provisioned."
+        },
+        {
+          "surface": "hosted_smoke",
+          "status": "fail_closed_url_required",
+          "reason": "No public URL exists to smoke-test."
+        }
+      ],
+      "requiredBeforePublicClaim": [
+        "Create or authorize the Cloudflare Pages project.",
+        "Deploy apps/workbench/dist or the accepted static output directory.",
+        "Smoke-test the public status route and record response headers plus cache policy."
+      ]
+    },
+    {
+      "routeId": "release-readiness",
+      "path": "/release-readiness.json",
+      "outputPath": "apps/workbench/dist/release-readiness.json",
+      "method": "GET",
+      "contentType": "application/json",
+      "status": "supported_preview_static_fail_closed",
+      "claimable": false,
+      "failClosed": true,
+      "safeClaim": "A static release-readiness route is generated from local release manifests; package publishing, attestations, and hosted docs remain blocked.",
+      "evidence": {
+        "packagePublishing": {
+          "capabilityId": "cap_npm_publish_provenance",
+          "surface": "npm publish with provenance",
+          "status": "fail_closed_unsupported",
+          "claimable": false,
+          "failClosed": true,
+          "blockers": [
+            "15/15 package manifests remain private:true.",
+            "No package files lists or package contents dry-run evidence are recorded.",
+            "No npm trusted publisher, OIDC, or automation scope is recorded in this repo.",
+            "No publishConfig or accepted package scope/versioning decision is recorded."
+          ],
+          "requiredBeforeClaim": [
+            "Approve package names, files lists, publishConfig, and versioning.",
+            "Configure npm trusted publishing or explicit provenance on a supported cloud CI/CD provider.",
+            "Run and record a package contents dry run before any npm publish dry run."
+          ]
+        },
+        "packageContents": {
+          "capabilityId": "cap_package_contents_dry_run",
+          "surface": "npm package contents dry run",
+          "status": "fail_closed_unsupported",
+          "claimable": false,
+          "failClosed": true,
+          "blockers": [
+            "Package manifests remain private:true.",
+            "No package files lists or publishable package allowlists are accepted.",
+            "Research archives and generated/local state boundaries have not been proven against package tarballs."
+          ],
+          "requiredBeforeClaim": [
+            "Add package files lists or equivalent contents policy.",
+            "Run a contents dry run for each publishable package and record included files."
+          ]
+        },
+        "attestations": {
+          "capabilityId": "cap_github_release_attestations",
+          "surface": "GitHub release artifact attestations",
+          "status": "fail_closed_unsupported",
+          "claimable": false,
+          "failClosed": true,
+          "blockers": [
+            "No release artifact workflow exists.",
+            "No artifact subject path, digest, or SBOM attestation input is generated.",
+            "No GitHub attestation verification command has been run against a release artifact."
+          ],
+          "requiredBeforeClaim": [
+            "Create a release artifact and workflow using id-token: write and attestations: write.",
+            "Generate and verify the attestation with GitHub CLI before claiming attested artifacts."
+          ]
+        },
+        "hostedDocs": {
+          "capabilityId": "cap_hosted_public_docs",
+          "surface": "hosted public docs",
+          "status": "fail_closed_unsupported",
+          "claimable": false,
+          "failClosed": true,
+          "blockers": [
+            "No hosted docs target is selected.",
+            "No account/project authorization evidence is recorded.",
+            "No deploy dry run or hosted smoke URL exists."
+          ],
+          "requiredBeforeClaim": [
+            "Select the hosted docs target.",
+            "Record account/project authorization and run the target's local/dry-run gate."
+          ]
+        },
+        "sbom": {
+          "path": "docs/generated/sbom.cdx.json",
+          "bomFormat": "CycloneDX",
+          "specVersion": "1.7",
+          "componentCount": 14
+        }
+      },
+      "readiness": [
+        {
+          "surface": "local_release_readiness_audit",
+          "status": "supported_local_evidence",
+          "reason": "Release readiness and dry-run audits are local and non-publishing."
+        },
+        {
+          "surface": "npm_publish",
+          "status": "fail_closed_account_required",
+          "reason": "Packages remain private and npm trusted publishing is not configured."
+        },
+        {
+          "surface": "github_attestation",
+          "status": "fail_closed_workflow_required",
+          "reason": "No release artifact or attestation workflow exists."
+        }
+      ],
+      "requiredBeforePublicClaim": [
+        "Close package contents, npm provenance, and package scope gates.",
+        "Create and verify release artifact attestations.",
+        "Record public docs URL and package version evidence."
+      ]
+    },
+    {
+      "routeId": "provider-store-observability",
+      "path": "/provider-store-observability.json",
+      "outputPath": "apps/workbench/dist/provider-store-observability.json",
+      "method": "GET",
+      "contentType": "application/json",
+      "status": "supported_preview_static_fail_closed",
+      "claimable": false,
+      "failClosed": true,
+      "safeClaim": "A static readiness route enumerates hosted provider, Neon store, and OTLP observability prerequisites; the hosted services are not live.",
+      "evidence": {
+        "hostedProviderRuntime": {
+          "capabilityId": "cap_hosted_provider_runtime",
+          "surface": "hosted provider runtime",
+          "status": "fail_closed_unsupported",
+          "claimable": false,
+          "failClosed": true,
+          "blockers": [
+            "No hosted provider adapter source-lock, authentication, redaction, streaming, retry, billing, or policy fixtures exist.",
+            "Current unsupported external provider CLI routes return nonzero fail-closed evidence."
+          ],
+          "requiredBeforeClaim": [
+            "Implement a hosted provider adapter behind the model port with auth, policy, trace, redaction, and negative fixtures."
+          ]
+        },
+        "hostedDurableStores": {
+          "capabilityId": "cap_hosted_durable_stores",
+          "surface": "hosted durable stores",
+          "status": "fail_closed_unsupported",
+          "claimable": false,
+          "failClosed": true,
+          "blockers": [
+            "No database/object-store adapter exists.",
+            "No hosted store credentials, migration, fixture, or replay evidence exists."
+          ],
+          "requiredBeforeClaim": [
+            "Implement hosted store adapters behind the existing store port and prove fail-closed credential/replay behavior."
+          ]
+        },
+        "hostedWorkbench": {
+          "capabilityId": "cap_hosted_workbench",
+          "surface": "hosted workbench",
+          "status": "fail_closed_unsupported",
+          "claimable": false,
+          "failClosed": true,
+          "blockers": [
+            "apps/workbench is a dependency-free local static shell, not a hosted control plane.",
+            "Studio UI owns workbench UI primitives and install/config surfaces.",
+            "No hosted target, backend state, deploy smoke, or accessibility evidence exists for a hosted harness workbench."
+          ],
+          "requiredBeforeClaim": [
+            "Define the harness-owned workbench contract boundary and integrate Studio UI through published typed contracts before building or hosting a workbench."
+          ]
+        }
+      },
+      "readiness": [
+        {
+          "surface": "hosted_provider_runtime",
+          "status": "fail_closed_secret_required",
+          "reason": "No hosted provider adapter credentials or secret refs are configured."
+        },
+        {
+          "surface": "neon_store_adapter",
+          "status": "fail_closed_database_required",
+          "reason": "No Neon project, branch, migration, role, or connection secret is configured."
+        },
+        {
+          "surface": "otel_observability_sink",
+          "status": "fail_closed_endpoint_required",
+          "reason": "No OTLP endpoint or secret header storage is configured."
+        },
+        {
+          "surface": "redaction_and_secret_boundary",
+          "status": "supported_local_evidence",
+          "reason": "Generated readiness routes contain no secret values and only list secret names/actions."
+        }
+      ],
+      "requiredBeforePublicClaim": [
+        "Implement hosted provider adapters behind the provider port with auth, retry, cost, usage, cancellation, redaction, and negative fixtures.",
+        "Implement Neon-backed stores behind the store port with migrations, replay, stale-lock, corruption, and credential-failure fixtures.",
+        "Implement OTLP sink export with endpoint/header secrets resolved at runtime and redacted evidence.",
+        "Run hosted provider, store, and observability smokes against provisioned services."
+      ]
+    },
+    {
+      "routeId": "healthz",
+      "path": "/healthz.json",
+      "outputPath": "apps/workbench/dist/healthz.json",
+      "method": "GET",
+      "contentType": "application/json",
+      "status": "supported_preview_static_fail_closed",
+      "claimable": false,
+      "failClosed": true,
+      "safeClaim": "A static preview health route proves the route bundle can be generated and parsed locally; it is not hosted uptime evidence.",
+      "evidence": {
+        "generatedRouteCount": 4,
+        "sourceInputHash": "sha256:e5c518c7002d44d0f38572bd5548e4d1e6d17ca6b2da627677103a2ac24f9021",
+        "secretScan": "passed"
+      },
+      "readiness": [
+        {
+          "surface": "local_route_bundle",
+          "status": "supported_local_evidence",
+          "reason": "All generated route files parse as JSON or static headers."
+        },
+        {
+          "surface": "public_uptime",
+          "status": "fail_closed_url_required",
+          "reason": "No public hosted URL exists."
+        }
+      ],
+      "requiredBeforePublicClaim": [
+        "Deploy the static bundle and run an HTTP smoke against the public health route."
+      ]
+    }
+  ],
+  "humanInterventions": [
+    "Create or authorize the Cloudflare Pages project for the harness status/control static route bundle.",
+    "Point the accepted DNS hostname to the deployed Cloudflare Pages project before public hosted claims.",
+    "Provision a Neon project, branch, role, migration path, and secret storage for the hosted store adapter before hosted-store claims.",
+    "Provision hosted provider credentials and secret references for each accepted provider adapter before hosted-provider claims.",
+    "Provision an OTLP endpoint and secret header storage before hosted observability export claims.",
+    "Run a hosted smoke against the final public URLs and record cache, integrity, and secret-scan evidence before saying routes are live."
+  ],
+  "secretPolicy": {
+    "generatedRoutesContainSecrets": false,
+    "blockedSecretFields": [
+      "DATABASE_URL",
+      "NEON_DATABASE_URL",
+      "OPENAI_API_KEY",
+      "ANTHROPIC_API_KEY",
+      "OTEL_EXPORTER_OTLP_HEADERS"
+    ],
+    "scan": "generated route files are checked for common token, password, credential, signed URL, and API-key markers"
+  }
+}

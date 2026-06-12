@@ -38,6 +38,7 @@ export async function buildWorkbenchModel(options = {}) {
   const docsSourceManifest = readJson("docs/generated/docs-source-manifest.json");
   const installReadiness = readJson("docs/generated/install-readiness-manifest.json");
   const releaseCapabilities = readJson("docs/generated/release-capability-manifest.json");
+  const hostedRoutes = readJson("docs/generated/hosted-route-manifest.json");
   const sbom = readJson("docs/generated/sbom.cdx.json");
 
   const memory = createInMemoryMemoryPort({ now });
@@ -158,6 +159,7 @@ export async function buildWorkbenchModel(options = {}) {
         controlSurfaces: inspection.controlSurfaces,
         installPaths: installReadiness,
         releaseCapabilities: summarizeReleaseCapabilities(releaseCapabilities),
+        hostedRoutes: summarizeHostedRoutes(hostedRoutes),
         sbom: {
           bomFormat: sbom.bomFormat,
           specVersion: sbom.specVersion,
@@ -173,6 +175,7 @@ export async function buildWorkbenchModel(options = {}) {
       { surface: "Hosted workbench", status: "unsupported", reason: "This pass emits a reusable local static shell only." },
       { surface: "Studio UI package integration", status: "not_claimed", reason: "No Studio UI package boundary is consumed by this workbench." },
       { surface: "Hosted stores", status: "unsupported", reason: "The workbench reads local SDK/CLI evidence and generated manifests only." },
+      { surface: "Hosted provider/store/observability routes", status: "preview_static_fail_closed", reason: "Static readiness routes are generated locally; no hosted provider, Neon store, OTLP sink, DNS, or public smoke exists." },
       { surface: "Mintlify validation/build/publish", status: "unsupported", reason: "Mintlify remains source-locked but not installed or executed in this repo." },
     ],
   };
@@ -367,6 +370,8 @@ function html(model) {
         ["Workbench", data.boundary.hostedWorkbench]
       ]));
       content.append(section("SDK/CLI Control Surface Matrix", table(data.views.capabilities.controlSurfaces, ["operation", "status", "description"])));
+      content.append(section("Hosted Status/Control Preview Routes", table(data.views.capabilities.hostedRoutes.routes, ["path", "status", "claimable", "failClosed"])));
+      content.append(section("Hosted Route Human Actions", table(data.views.capabilities.hostedRoutes.humanInterventions.map((action, index) => ({ index: index + 1, action })), ["index", "action"])));
     }
 
     function renderMemory() {
@@ -653,6 +658,26 @@ function summarizeReleaseCapabilities(manifest) {
   };
 }
 
+function summarizeHostedRoutes(manifest) {
+  return {
+    schemaVersion: manifest.schemaVersion,
+    sourceInputHash: manifest.sourceInputHash,
+    publicUrlStatus: manifest.routeBase?.publicUrlStatus,
+    localDirectory: manifest.routeBase?.localDirectory,
+    previewServeCommand: manifest.routeBase?.previewServeCommand,
+    routes: (manifest.routes ?? []).map((route) => ({
+      routeId: route.routeId,
+      path: route.path,
+      outputPath: route.outputPath,
+      status: route.status,
+      claimable: route.claimable,
+      failClosed: route.failClosed,
+      safeClaim: route.safeClaim,
+    })),
+    humanInterventions: manifest.humanInterventions ?? [],
+  };
+}
+
 function readCliState(stateRoot) {
   if (!stateRoot) {
     return {
@@ -723,6 +748,13 @@ function collectSourceRecords() {
     "docs/generated/docs-source-manifest.json",
     "docs/generated/install-readiness-manifest.json",
     "docs/generated/release-capability-manifest.json",
+    "docs/generated/hosted-route-manifest.json",
+    "apps/workbench/generated/hosted-route-manifest.json",
+    "apps/workbench/dist/status.json",
+    "apps/workbench/dist/release-readiness.json",
+    "apps/workbench/dist/provider-store-observability.json",
+    "apps/workbench/dist/healthz.json",
+    "apps/workbench/dist/_headers",
     "docs/generated/sbom.cdx.json",
     "docs/generated/quickstart.md",
     "docs/generated/user-manual.md",

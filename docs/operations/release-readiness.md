@@ -1,7 +1,7 @@
 # Release Readiness
 
 Status: Active release gate
-Last updated: 2026-06-09
+Last updated: 2026-06-12
 
 ## Purpose
 
@@ -31,6 +31,13 @@ ledger below is closed.
   `docs/generated/release-capability-manifest.json` from package metadata, release docs,
   local SBOM/docs evidence, release scripts, and official-source links in
   `docs/operations/release-capability-source-lock.md`.
+- Hosted status/control route commands exist as `pnpm hosted:routes` and
+  `pnpm hosted:routes:check`. They emit and verify
+  `docs/generated/hosted-route-manifest.json`, a workbench mirror, and preview static
+  route files under `apps/workbench/dist/` for `/status.json`,
+  `/release-readiness.json`, `/provider-store-observability.json`, `/healthz.json`, and
+  `_headers`. These are local preview artifacts only; no public URL has been deployed or
+  smoke-tested.
 - All package manifests remain `private: true`. That is intentional until package scope,
   publish metadata, npm provenance, and account permissions are accepted.
 - `packages/docs` now generates local docs artifacts from accepted source records into
@@ -64,6 +71,8 @@ pnpm sbom:generate
 pnpm sbom:check
 pnpm release:capabilities
 pnpm release:capabilities:check
+pnpm hosted:routes
+pnpm hosted:routes:check
 pnpm policy:test
 pnpm runtime:test
 pnpm tools:test
@@ -99,6 +108,9 @@ results.
 | GitHub release attestation | Artifact attestation workflow is not implemented. | Add a release workflow or local attestation procedure and verify it against a dry-run artifact. |
 | Mintlify validation/build/publish | Mintlify-ready `docs.json` and MDX drafts are generated locally, but the Mintlify CLI/package is not installed or source-locked in this repo. Current official CLI docs list `mint validate` as the strict local documentation build validation command. | Add source-lock evidence for the exact Mintlify CLI/package, install it intentionally, and run `mint validate` or the accepted current local build check before public docs hosting claims. |
 | Vercel or Cloudflare deploy dry run | Hosted target is not selected or authorized. | Record account/project target and dry-run/deploy evidence. |
+| Cloudflare Pages hosted route smoke | Preview static status/control route files are generated locally, but no Cloudflare Pages project, DNS target, deploy, or public URL smoke exists. | Create or authorize the Cloudflare Pages project, deploy the accepted static bundle, point DNS, and record HTTP smoke evidence for the public route URLs. |
+| Neon hosted store smoke | No Neon project, branch, role, migration, or connection secret is configured. | Provision Neon, store connection material in the accepted secret system, run migrations, and smoke persisted run/checkpoint/artifact/trace state. |
+| OTLP hosted observability export smoke | No OTLP endpoint, collector, or secret header storage is configured. | Provision the OTLP endpoint and secret header resolver, then smoke trace and metric export with redacted evidence. |
 
 ## Public Claims Matrix
 
@@ -116,6 +128,7 @@ results.
 | Full local source-checkout install and modular BYO paths are inspectable and generated into release docs. | Supported for current local foundations | `packages/sdk/src/index.mjs`, `apps/cli/src/cli.mjs`, `docs/generated/install-readiness-manifest.json`, `packages/sdk/test/sdk.test.mjs`, `apps/cli/test/cli.test.mjs`, `pnpm sdk:test`, `pnpm cli:test`, `pnpm docs:generate -- --check`. | "The repo documents and exposes the current local source-checkout install path plus modular replacement paths; public package installation remains unavailable." |
 | Local SBOM dry-run generation can produce and drift-check a CycloneDX workspace package-manifest inventory. | Supported for current source records | `scripts/release/generate-sbom.mjs`, `docs/operations/sbom-source-lock.md`, `docs/generated/sbom.cdx.json`, `pnpm sbom:generate`, `pnpm sbom:check`. | "The repo includes a local SBOM dry-run artifact for workspace package manifests; release artifacts are not signed, attested, or publish-ready." |
 | Release and hosted capability readiness can be generated and drift-checked from current package metadata, official-source links, and local evidence. | Supported for current local evidence | `scripts/release/generate-capability-manifest.mjs`, `docs/operations/release-capability-source-lock.md`, `docs/generated/release-capability-manifest.json`, `pnpm release:capabilities`, `pnpm release:capabilities:check`. | "The repo includes a generated release capability manifest; unsupported publish, provenance, attestation, Mintlify, hosted docs, hosted provider, hosted store, and hosted workbench surfaces fail closed." |
+| Preview hosted status/control routes can be generated and drift-checked as static JSON. | Supported for current local evidence | `scripts/hosted/generate-hosted-routes.mjs`, `docs/operations/hosted-route-source-lock.md`, `docs/generated/hosted-route-manifest.json`, `apps/workbench/dist/status.json`, `apps/workbench/dist/release-readiness.json`, `apps/workbench/dist/provider-store-observability.json`, `apps/workbench/dist/healthz.json`, `apps/workbench/dist/_headers`, `pnpm hosted:routes`, `pnpm hosted:routes:check`. | "The repo can generate preview static status/control routes; no hosted route is live until Cloudflare/DNS is provisioned and smoked." |
 | Hosted provider runtime, executable full MCP/OpenAPI/shell/browser/code/provider-as-tool/A2A adapters, hosted workbench, hosted stores, release publishing, Mintlify build/publish, or public docs hosting exist. | Unsupported | CLI, SDK, tools, and provider README files state unavailable hosted/protocol surfaces; this release gate records hosted docs and publishing blockers; roadmap Workstreams 4, 6, 8, and 9 remain open. | "Those surfaces are planned and currently unavailable." |
 | Release artifacts are signed, attested, externally published, or publish-ready. | Unsupported | This release gate, `private: true` package manifests, and unavailable command ledger. | "The repo has release-readiness policy, local SBOM dry-run evidence, and audit commands; publishable artifacts are not ready." |
 
@@ -161,7 +174,8 @@ Current local implementation:
 - `pnpm release:readiness` and `pnpm release:dry-run` verify that the generated manifest
   keeps npm publishing/provenance, package contents dry-runs, GitHub attestations,
   Mintlify validation/publishing, hosted public docs, hosted provider runtime, hosted
-  durable stores, and hosted workbench surfaces fail-closed unsupported.
+  durable stores, hosted observability sinks, and hosted workbench surfaces fail-closed
+  unsupported while marking the static preview route bundle as local evidence only.
 
 Current unsupported surfaces:
 
@@ -172,10 +186,41 @@ Current unsupported surfaces:
 - Hosted public docs on Mintlify, Vercel, Cloudflare, or any other target.
 - Hosted provider runtime.
 - Hosted durable stores.
+- Hosted observability sinks.
 - Hosted workbench.
 
 This manifest is evidence that unsupported surfaces stay blocked. It is not evidence that
 those surfaces work.
+
+## Hosted Status And Control Routes
+
+Current local implementation:
+
+- `pnpm hosted:routes` writes `docs/generated/hosted-route-manifest.json`,
+  `apps/workbench/generated/hosted-route-manifest.json`, and preview static route files
+  under `apps/workbench/dist/`.
+- `pnpm hosted:routes:check` fails when generated route files drift from source-lock
+  evidence, release capability evidence, generated docs evidence, install readiness
+  evidence, SBOM evidence, or route-generator source.
+- The generated route bundle is designed for later static hosting and includes
+  `/status.json`, `/release-readiness.json`, `/provider-store-observability.json`,
+  `/healthz.json`, and `_headers`.
+- Generated route files contain no secret values. They list missing human actions and
+  expected secret names only.
+
+Current unsupported surfaces:
+
+- Cloudflare Pages project creation or deploy.
+- DNS route configuration.
+- Public hosted route smoke.
+- Neon-backed hosted store runtime.
+- Hosted provider runtime.
+- OTLP hosted observability export.
+- Hosted workbench/control plane.
+
+The preview route bundle is not a hosted-route acceptance record. It is a deployable
+local artifact and drift check that keeps hosted provider, store, observability, and
+public-route claims fail-closed until account/env/DNS actions are completed.
 
 ## Install And Module Replacement Readiness
 
@@ -240,6 +285,12 @@ stubbed around:
 - Confirm npm organization access for `@jami-studio` and provenance/OIDC setup.
 - Confirm GitHub release, tag, Actions, and artifact attestation permissions.
 - Select and authorize a public docs target before Mintlify, Vercel, or Cloudflare claims.
+- Create or authorize the Cloudflare Pages project and DNS target before hosted harness
+  status/control route claims.
+- Provision Neon project, branch, role, migration path, and secret storage before hosted
+  store claims.
+- Provision hosted provider credentials and OTLP endpoint/header secret storage before
+  hosted provider or hosted observability claims.
 - Approve package publication scope, package names, contents policy, and versioning.
 - Refresh repo-local source-lock evidence for release tools and hosted services used by
   the release.

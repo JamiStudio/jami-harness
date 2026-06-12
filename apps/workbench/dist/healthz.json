@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "2026-06-12.hosted-route",
+  "routeId": "healthz",
+  "path": "/healthz.json",
+  "sourceRepo": "jami-harness",
+  "sourceCommit": "git:HEAD",
+  "sourceInputHash": "sha256:e5c518c7002d44d0f38572bd5548e4d1e6d17ca6b2da627677103a2ac24f9021",
+  "generatedAt": "deterministic:git-head-plus-hosted-route-input-hash",
+  "freshnessClass": "current-head-official-source-lock",
+  "status": "supported_preview_static_fail_closed",
+  "claimable": false,
+  "failClosed": true,
+  "safeClaim": "A static preview health route proves the route bundle can be generated and parsed locally; it is not hosted uptime evidence.",
+  "evidence": {
+    "generatedRouteCount": 4,
+    "sourceInputHash": "sha256:e5c518c7002d44d0f38572bd5548e4d1e6d17ca6b2da627677103a2ac24f9021",
+    "secretScan": "passed"
+  },
+  "readiness": [
+    {
+      "surface": "local_route_bundle",
+      "status": "supported_local_evidence",
+      "reason": "All generated route files parse as JSON or static headers."
+    },
+    {
+      "surface": "public_uptime",
+      "status": "fail_closed_url_required",
+      "reason": "No public hosted URL exists."
+    }
+  ],
+  "requiredBeforePublicClaim": [
+    "Deploy the static bundle and run an HTTP smoke against the public health route."
+  ],
+  "humanInterventions": [
+    "Create or authorize the Cloudflare Pages project for the harness status/control static route bundle.",
+    "Point the accepted DNS hostname to the deployed Cloudflare Pages project before public hosted claims.",
+    "Provision a Neon project, branch, role, migration path, and secret storage for the hosted store adapter before hosted-store claims.",
+    "Provision hosted provider credentials and secret references for each accepted provider adapter before hosted-provider claims.",
+    "Provision an OTLP endpoint and secret header storage before hosted observability export claims.",
+    "Run a hosted smoke against the final public URLs and record cache, integrity, and secret-scan evidence before saying routes are live."
+  ]
+}
