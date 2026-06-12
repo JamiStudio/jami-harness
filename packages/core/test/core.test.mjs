@@ -47,3 +47,27 @@ test("fails closed when required core ports are malformed", () => {
     (error) => error instanceof HarnessCoreError && error.code === "invalid_module",
   );
 });
+
+test("fails closed when injected adapter source-lock inspection hides unsupported states", () => {
+  const defaults = composeHarnessCore({ now }).sourceLocks;
+
+  assert.throws(
+    () => composeHarnessCore({
+      now,
+      sourceLocks: defaults.map((sourceLock) =>
+        sourceLock.adapterId === "adapter_openapi"
+          ? { ...sourceLock, status: "locked" }
+          : sourceLock,
+      ),
+    }),
+    (error) => error instanceof HarnessCoreError && error.code === "invalid_source_lock",
+  );
+
+  assert.throws(
+    () => composeHarnessCore({
+      now,
+      sourceLocks: defaults.filter((sourceLock) => sourceLock.adapterId !== "adapter_shell"),
+    }),
+    (error) => error instanceof HarnessCoreError && error.code === "invalid_source_lock",
+  );
+});

@@ -63,9 +63,9 @@ export function composeHarnessCore(options = {}) {
   const toolGateway = options.toolGateway ?? createToolGateway({ registry: tools, artifactStore, observability, policyEngine, now });
   assertPort("toolGateway", toolGateway, ["execute"]);
 
-  const toolAdapterManifests = typeof tools.manifests === "function" ? tools.manifests() : [];
   const toolAdapters = listToolAdapterCapabilities();
-  const sourceLocks = options.sourceLocks ?? listToolAdapterSourceLocks();
+  const sourceLocks = validateAdapterSourceLocks(options.sourceLocks ?? listToolAdapterSourceLocks(), toolAdapters);
+  const toolAdapterManifests = typeof tools.manifests === "function" ? tools.manifests() : [];
   const modules = buildCoreModules({
     artifactStore,
     observability,
@@ -320,4 +320,39 @@ function assertCapabilities(name, module) {
   if (!module?.capabilities || typeof module.capabilities !== "object") {
     throw new HarnessCoreError("invalid_module", `${name} module must expose a capabilities object`);
   }
+}
+
+function validateAdapterSourceLocks(sourceLocks, toolAdapters) {
+  if (!Array.isArray(sourceLocks)) {
+    throw new HarnessCoreError("invalid_source_lock", "sourceLocks must be an array");
+  }
+  const adapterById = new Map(toolAdapters.map((adapter) => [adapter.adapterId, adapter]));
+  const seen = new Set();
+  for (const sourceLock of sourceLocks) {
+    if (!sourceLock || typeof sourceLock !== "object") {
+      throw new HarnessCoreError("invalid_source_lock", "sourceLocks entries must be objects");
+    }
+    if (!adapterById.has(sourceLock.adapterId)) {
+      throw new HarnessCoreError("invalid_source_lock", `unknown source-lock adapterId: ${String(sourceLock.adapterId)}`);
+    }
+    if (seen.has(sourceLock.adapterId)) {
+      throw new HarnessCoreError("invalid_source_lock", `duplicate source-lock adapterId: ${sourceLock.adapterId}`);
+    }
+    seen.add(sourceLock.adapterId);
+    if (!["first_party", "locked", "missing"].includes(sourceLock.status)) {
+      throw new HarnessCoreError("invalid_source_lock", `${sourceLock.adapterId} source-lock status must be first_party, locked, or missing`);
+    }
+    const adapter = adapterById.get(sourceLock.adapterId);
+    if (adapter.support === "unsupported" && sourceLock.status !== "missing") {
+      throw new HarnessCoreError("invalid_source_lock", `${sourceLock.adapterId} is unsupported and must keep source-lock status missing`);
+    }
+    if (adapter.support === "supported" && sourceLock.status === "missing") {
+      throw new HarnessCoreError("invalid_source_lock", `${sourceLock.adapterId} is supported and must expose a first_party or locked source lock`);
+    }
+  }
+  const missing = [...adapterById.keys()].filter((adapterId) => !seen.has(adapterId));
+  if (missing.length > 0) {
+    throw new HarnessCoreError("invalid_source_lock", `sourceLocks missing adapter coverage: ${missing.join(", ")}`);
+  }
+  return sourceLocks.map((sourceLock) => ({ ...sourceLock }));
 }
