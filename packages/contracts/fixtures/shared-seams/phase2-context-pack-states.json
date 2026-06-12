@@ -1,0 +1,39 @@
+{
+  "$schema": "../../schemas/context-pack.schema.json",
+  "expectedValid": true,
+  "caseId": "phase2-context-pack-states",
+  "description": "Context pack fixture covers public/private/redacted/stale/empty/missing/denied/permission-filtered/cited/replayed context routing.",
+  "coverage": ["public", "private", "redacted", "stale", "empty", "missing", "denied", "permission_filtered", "cited", "replayed"],
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "contextPackId": "ctx_phase2_replay",
+    "runId": "run_phase2_shared_seams",
+    "assembledAt": "2026-06-12T14:00:00.000Z",
+    "deterministicHash": "sha256:phase2-context-pack",
+    "items": [
+      {
+        "sourceRef": "mem_phase2_private_redacted",
+        "kind": "compressed",
+        "priority": 1,
+        "inclusionReason": "permission-filtered cited replay context",
+        "citationId": "cit_phase2_memory",
+        "freshnessClass": "stale",
+        "tokenEstimate": 8
+      }
+    ],
+    "droppedItems": [
+      {
+        "sourceRef": "mem_phase2_denied",
+        "reason": "permission_denied"
+      },
+      {
+        "sourceRef": "mem_phase2_missing",
+        "reason": "retention_expired"
+      },
+      {
+        "sourceRef": "mem_phase2_redacted",
+        "reason": "redacted"
+      }
+    ]
+  }
+}

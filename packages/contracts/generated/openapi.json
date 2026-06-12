@@ -10,6 +10,12 @@
             "pattern": "^act_[a-z0-9][a-z0-9_-]*$",
             "type": "string"
           },
+          "actorRef": {
+            "type": "string"
+          },
+          "auditRef": {
+            "type": "string"
+          },
           "confirmationMode": {
             "enum": [
               "none",
@@ -47,6 +53,9 @@
           "policyScope": {
             "type": "string"
           },
+          "replayRef": {
+            "type": "string"
+          },
           "risk": {
             "enum": [
               "read",
@@ -71,7 +80,10 @@
               "denied",
               "pending_approval",
               "executed",
-              "failed"
+              "failed",
+              "expired",
+              "replayed",
+              "display_only"
             ],
             "type": "string"
           }
@@ -365,14 +377,29 @@
             "pattern": "^artv_[a-z0-9][a-z0-9_-]*$",
             "type": "string"
           },
+          "availabilityState": {
+            "enum": [
+              "available",
+              "unsupported_kind",
+              "missing_artifact",
+              "stale_artifact",
+              "redacted_artifact",
+              "denied_artifact"
+            ],
+            "type": "string"
+          },
           "kind": {
             "enum": [
               "report",
               "patch",
               "document",
+              "docs",
               "image",
+              "media",
               "trace",
               "evidence",
+              "system_map",
+              "changelog",
               "release_packet"
             ],
             "type": "string"
@@ -620,10 +647,16 @@
             "items": {
               "additionalProperties": false,
               "properties": {
+                "authRef": {
+                  "type": "string"
+                },
                 "featureId": {
                   "type": "string"
                 },
                 "notes": {
+                  "type": "string"
+                },
+                "sourceLockRef": {
                   "type": "string"
                 },
                 "support": {
@@ -632,7 +665,17 @@
                     "unsupported",
                     "denied_by_policy",
                     "requires_adapter",
-                    "requires_approval"
+                    "requires_approval",
+                    "missing_source_lock",
+                    "local_only",
+                    "hosted",
+                    "auth_required",
+                    "streaming",
+                    "cancellation",
+                    "persistence",
+                    "package",
+                    "release",
+                    "evidence"
                   ],
                   "type": "string"
                 }
@@ -1577,11 +1620,19 @@
               "run.progress",
               "run.completed",
               "run.failed",
+              "run.retrying",
+              "run.cancelling",
+              "run.cancelled",
+              "run.recovered",
+              "run.redacted",
               "policy.decision",
               "approval.requested",
               "tool.call.requested",
+              "tool.running",
               "tool.call.completed",
               "artifact.created",
+              "artifact.emitted",
+              "checkpoint.saved",
               "ui.payload.emitted",
               "renderer.error"
             ],
@@ -1745,6 +1796,9 @@
           "appShellId": {
             "type": "string"
           },
+          "evidenceRef": {
+            "type": "string"
+          },
           "installedItems": {
             "items": {
               "type": "string"
@@ -1766,6 +1820,15 @@
               "type": "string"
             },
             "type": "array"
+          },
+          "registryState": {
+            "enum": [
+              "current",
+              "missing_dependency",
+              "unsupported_suite_version",
+              "stale_registry_item"
+            ],
+            "type": "string"
           },
           "routeMap": {
             "items": {
@@ -1810,6 +1873,9 @@
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "additionalProperties": false,
         "properties": {
+          "evidenceRef": {
+            "type": "string"
+          },
           "restoreTarget": {
             "additionalProperties": false,
             "properties": {
@@ -1836,7 +1902,8 @@
               "kind": {
                 "enum": [
                   "factory",
-                  "custom"
+                  "custom",
+                  "default"
                 ],
                 "type": "string"
               },
@@ -1854,6 +1921,18 @@
               "kind"
             ],
             "type": "object"
+          },
+          "state": {
+            "enum": [
+              "current",
+              "deprecated",
+              "missing_token",
+              "invalid_alias",
+              "contrast_failure",
+              "migration_needed",
+              "unsupported_family"
+            ],
+            "type": "string"
           },
           "themeId": {
             "pattern": "^theme_[a-z0-9][a-z0-9_-]*$",
@@ -2248,7 +2327,10 @@
           },
           "children": {
             "items": {
-              "type": "string"
+              "type": [
+                "string",
+                "object"
+              ]
             },
             "type": "array"
           },
@@ -2359,7 +2441,7 @@
     "title": "Jami Harness Contracts",
     "version": "2026-06-09",
     "x-jami-generated": {
-      "generatedAt": "2026-06-09T15:53:53.310Z",
+      "generatedAt": "2026-06-12T09:31:30.905Z",
       "generatorVersion": "2026-06-09.contracts.1",
       "source": "packages/contracts/schemas/*.schema.json"
     }

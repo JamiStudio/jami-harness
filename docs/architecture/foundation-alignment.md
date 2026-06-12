@@ -154,6 +154,16 @@ handshake. Studio UI should consume those generated outputs or the same schema i
 fixture categories from its own lane and report any renderer-side fixture needs back
 across the sibling boundary.
 
+Phase 2 / Group A fresh pass 1 extends the harness-side shared seam fixtures under
+`packages/contracts/fixtures/shared-seams/` and the contract validator now requires
+machine-readable coverage for the root-roadmap seam matrix: `runEvent`, `uiPayload`,
+`artifactView`, `actionRef`, `themeRef`, `suiteRef`, `evidencePacket`, `memoryRecord`,
+`contextPack`, and `capabilityManifest`. The coverage gate includes positive, denied,
+unsupported, malformed or invalid, missing-source, stale, redacted, expired, replayed,
+local-only, hosted, package, release, and evidence states where those states belong to a
+harness-owned data seam. These fixtures remain data-only and do not import Studio UI
+implementation or claim hosted/package/release completion.
+
 ## Integration Direction
 
 The first integration should be contract-first:

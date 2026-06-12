@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:4693004a8d665da7bdc6d9306728754c2d2924f818cee6e001bcc07da4a9d85f",
+  "sourceInputHash": "sha256:28fafb8a919de105b9cda06fdf19db28726c387b7812a43dc61166dc02cc21eb",
   "generatedAt": "deterministic:git-head-plus-input-hash",
   "freshnessClass": "deterministic_current_source_tree",
   "command": "pnpm docs:generate -- --check",
@@ -192,6 +192,11 @@
       "bytes": 320
     },
     {
+      "path": ".changes/2026-06-12-phase2-shared-seam-fixtures.md",
+      "sha256": "sha256:b2089e2011b8fa6b6e53d5cd91404a9a49c61c08670a1c7e569a0bef60b3c8dd",
+      "bytes": 382
+    },
+    {
       "path": ".changes/README.md",
       "sha256": "sha256:e528bf4b90ab589bfc83ffed78e37918f56ac94240e5eedebc8d03265e09e52f",
       "bytes": 433
@@ -253,7 +258,7 @@
     },
     {
       "path": "docs/generated/release-capability-manifest.json",
-      "sha256": "sha256:bfcb60e26dee0e58d343b7aa6a617c9dfbb6b3a78cf96a6a3a24fe864e2cbd31",
+      "sha256": "sha256:d1b8440f5b803479905b6256e18836fdf17a8df10f5aa340a4e0adceb1b3c9c3",
       "bytes": 24193
     },
     {
@@ -373,8 +378,8 @@
     },
     {
       "path": "packages/contracts/fixtures/observability/valid-evidence-packet.json",
-      "sha256": "sha256:6c3ff7e09b115a259f15a84e7ec423ae649b4fb75b3606e44878e2fc8f01fec5",
-      "bytes": 1308
+      "sha256": "sha256:a159439927b5b1551100ab9cfe422056ba1f9068582ab49bafef5b2f2dd1c975",
+      "bytes": 1509
     },
     {
       "path": "packages/contracts/fixtures/observability/valid-metric-record.json",
@@ -442,6 +447,61 @@
       "bytes": 512
     },
     {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-action-ref-missing-audit.json",
+      "sha256": "sha256:5a604980e50551d5f19ee471cbeb249bff324f921aca4f59d92b5249f3f54dd7",
+      "bytes": 680
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-action-ref-states.json",
+      "sha256": "sha256:408e1eef82ab901c52d13e55d5a59993e1f7c099ee24df792a6a54e73b45bc50",
+      "bytes": 895
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-artifact-view-states.json",
+      "sha256": "sha256:df1c873883f6a4c1803871a99e863dca683ec3d287b2f70098e474a20e925d44",
+      "bytes": 1277
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-capability-manifest-states.json",
+      "sha256": "sha256:d0e460a2a896b9bc76ec1c7b83ee1e36021200b46109ee60d46d45377050d2f4",
+      "bytes": 2371
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-context-pack-states.json",
+      "sha256": "sha256:1f58a429ae399f8024da0da20f94b8e4c489529f45207da1c11cd4efd406f17b",
+      "bytes": 1278
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-memory-record-states.json",
+      "sha256": "sha256:c1cf9e4adc6e2a44f9e3dc953ef6890ef1b070b682f9c75a64035e6edeee42a2",
+      "bytes": 1281
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-run-event-lifecycle.json",
+      "sha256": "sha256:58e369e77f55d6f4579dba6f5117f32b27c5c76780c2dcaef05c9438d964b63f",
+      "bytes": 1027
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-suite-ref-states.json",
+      "sha256": "sha256:7cd65196ad6868e5f8a19a191776cb095887e797f5949a45b4a532d2282ebab1",
+      "bytes": 1180
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-theme-ref-states.json",
+      "sha256": "sha256:f38d1f0201e4a46b82edd5566f3dd756485a98ad096b5812aec52e560ae3699e",
+      "bytes": 885
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-ui-payload-unsafe-values.json",
+      "sha256": "sha256:36e681e11d765549d1e60d82519c5a7060db045154f6a18ce28f6d0abf918f47",
+      "bytes": 1316
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-ui-payload-valid-tree.json",
+      "sha256": "sha256:74daf494c9915d25287e9da71da46b87a4331d7178553e8ee5bf8658ed6cd67d",
+      "bytes": 1403
+    },
+    {
       "path": "packages/contracts/fixtures/threat-model/fixture-catalog.json",
       "sha256": "sha256:b6a1c17f4663eae832bfe6dab96e7b5e14974aedfa2efbbac64c62f7f09fed2e",
       "bytes": 5186
@@ -468,12 +528,12 @@
     },
     {
       "path": "packages/contracts/generated/openapi.json",
-      "sha256": "sha256:a9cb8befebb48567c8fdbe033573be76781d749aad563a7604dc0300544d8eb5",
-      "bytes": 63363
+      "sha256": "sha256:a55a140f6e884a432dbc9aecdc2297846de3b702a7620d77c1fcb99ec27b4cff",
+      "bytes": 65608
     },
     {
       "path": "packages/contracts/generated/reference.json",
-      "sha256": "sha256:edfd8d5473916d9baca3582d7733b91ead8303a1f17c359055e7951c1c3cc1c8",
+      "sha256": "sha256:2d6b0b1641b9bfbe8ccc9f97c2a8d8498c6014bdf8674eb678e848abf46427f8",
       "bytes": 8515
     },
     {
@@ -483,8 +543,8 @@
     },
     {
       "path": "packages/contracts/schemas/action-ref.schema.json",
-      "sha256": "sha256:a3792a8280e6654afbf9c488f188a8361be237a6578a7e8d4842a047fa5d53e3",
-      "bytes": 1304
+      "sha256": "sha256:480ed6efe2dc7e67965b1f02da22bfc5be125d2834bd832acb2ccc08d8db1b4a",
+      "bytes": 1474
     },
     {
       "path": "packages/contracts/schemas/approval-request.schema.json",
@@ -498,8 +558,8 @@
     },
     {
       "path": "packages/contracts/schemas/artifact-view.schema.json",
-      "sha256": "sha256:737a2189425e03f207842c0c9823269285a5c9b86a9177ddd70adc16979c5c92",
-      "bytes": 1793
+      "sha256": "sha256:e8e68f9883712f2c0c260d4525982b7322f0776b1c54be87ed4bb4bfc405864a",
+      "bytes": 2037
     },
     {
       "path": "packages/contracts/schemas/audit-event.schema.json",
@@ -508,8 +568,8 @@
     },
     {
       "path": "packages/contracts/schemas/capability-manifest.schema.json",
-      "sha256": "sha256:b27c09c9aa78de04e7522bae13e038f51a0981e25b245c6739259e826a09b59b",
-      "bytes": 2184
+      "sha256": "sha256:d2b9158735c65c344a39681a3f4192673c731c57fbe28ba23acc0feac37c33de",
+      "bytes": 2676
     },
     {
       "path": "packages/contracts/schemas/context-pack.schema.json",
@@ -543,8 +603,8 @@
     },
     {
       "path": "packages/contracts/schemas/run-event.schema.json",
-      "sha256": "sha256:545c9451f3c583bec59614936a6d3bdf0f6d585979740d95d3fed14a5422a756",
-      "bytes": 2003
+      "sha256": "sha256:d592e871ad1b8185747e459a3eb5d6e260ceaa2bd7ff991fa00622db0fb0b480",
+      "bytes": 2207
     },
     {
       "path": "packages/contracts/schemas/secret-ref.schema.json",
@@ -553,13 +613,13 @@
     },
     {
       "path": "packages/contracts/schemas/suite-ref.schema.json",
-      "sha256": "sha256:fc8705713edb502dac13568d6dc3cedf13a2e127fdeb75f7c462a3a613eac571",
-      "bytes": 1096
+      "sha256": "sha256:ca582de6ee2788d7c2f103d0ead973403c53ff963e7740f4219ff62c8f4f0b6e",
+      "bytes": 1291
     },
     {
       "path": "packages/contracts/schemas/theme-ref.schema.json",
-      "sha256": "sha256:0f521d139b69aa948912719b2bab72928b579e0d4e7916507f58dbb8bd830f23",
-      "bytes": 1128
+      "sha256": "sha256:5c6cf0de65978e5a86e78fe6a6281e5c3ee72e130e703e47ce7597cf45cca4bf",
+      "bytes": 1362
     },
     {
       "path": "packages/contracts/schemas/threat-model-fixture-catalog.schema.json",
@@ -578,8 +638,8 @@
     },
     {
       "path": "packages/contracts/schemas/ui-payload.schema.json",
-      "sha256": "sha256:4f668d65e42bf3e50bb0e7a7c065bb070856992f7961cf49d7f21ba99132192b",
-      "bytes": 2069
+      "sha256": "sha256:b9919032e8b64c8931a91de72693831f721d71f355125001337dc99acd6825ef",
+      "bytes": 2081
     },
     {
       "path": "packages/docs/package.json",
@@ -1084,6 +1144,9 @@
     },
     {
       "path": "packages/contracts/fixtures/policy/valid-secret-ref.json"
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-memory-record-states.json"
     },
     {
       "path": "packages/contracts/fixtures/tools/invalid-tool-execution-missing-audit.json"

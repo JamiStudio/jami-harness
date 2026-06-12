@@ -41,9 +41,9 @@ validation, and root `pnpm verify` runs the check explicitly.
 
 ## Compatibility Fixtures
 
-Fixtures under `fixtures/compatibility/` are intentionally small. They prove every
-current shared anchor plus the contract categories that both repos need before
-runtime or renderer work expands:
+Fixtures under `fixtures/compatibility/` and `fixtures/shared-seams/` are intentionally
+small. They prove every current shared anchor plus the contract categories that both
+repos need before runtime or renderer work expands:
 
 - unsupported UI components
 - invalid payloads
@@ -63,6 +63,9 @@ runtime or renderer work expands:
 - evidence packets missing command evidence
 - completed, denied, unsupported, and invalid tool execution records
 - threat-model fixture catalog coverage
+- Phase 2 shared seam coverage for `runEvent`, `uiPayload`, `artifactView`, `actionRef`,
+  `themeRef`, `suiteRef`, `evidencePacket`, `memoryRecord`, `contextPack`, and
+  `capabilityManifest`
 
 Studio UI should add matching consumer fixtures against these schema ids in its own
 lane rather than editing this package from the UI stream. The expected handshake for
@@ -72,9 +75,11 @@ token, registry packaging, and suite install behavior in the UI repo.
 
 The validation gate fails when any anchor lacks fixture coverage, when a fixture points
 outside `packages/contracts/schemas/`, or when cross-field contract semantics are
-violated. Current semantic checks include denied-action evidence, elevated-risk action
-confirmation, renderer error states, emitted UI payload references, policy decision
-payloads, data-only UI props, Studio UI renderer component references, replacement
+violated. It also fails when Phase 2 shared-seam coverage omits any root-roadmap state
+for the harness-owned seam families. Current semantic checks include denied-action
+evidence, elevated-risk action confirmation, replay and expiry evidence, renderer error
+states, emitted UI payload references, policy decision payloads, data-only UI props,
+secret-shaped UI prop rejection, Studio UI renderer component references, replacement
 invariants, Studio UI registry item ids for suite refs, and Studio UI adapter
 compatibility for UI-reference primitives. Required negative fixtures cover invalid
 payloads, denied actions without denial evidence, renderer errors without error state,

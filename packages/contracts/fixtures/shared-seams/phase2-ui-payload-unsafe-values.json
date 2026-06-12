@@ -1,0 +1,46 @@
+{
+  "$schema": "../../schemas/ui-payload.schema.json",
+  "expectedValid": false,
+  "caseId": "phase2-ui-payload-unsafe-values",
+  "description": "UI payload fixture proves unsafe, stale, unknown, package-import, serialized React, HTML/script, handler, and secret-shaped values fail closed.",
+  "coverage": [
+    "invalid_props",
+    "unsafe_values",
+    "stale_vocabulary",
+    "unknown_component",
+    "package_import",
+    "serialized_react_marker",
+    "html_script",
+    "handler_props",
+    "secret_shaped_values"
+  ],
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "payloadId": "uip_phase2_unsafe_values",
+    "componentRef": {
+      "namespace": "@jami-studio/ui",
+      "name": "unknown-widget",
+      "version": "stale",
+      "allowlisted": false
+    },
+    "props": {
+      "import": "@evil/package",
+      "$$typeof": "Symbol(react.element)",
+      "dangerouslySetInnerHTML": {
+        "__html": "<script>alert('x')</script>"
+      },
+      "onClick": "exfiltrate()",
+      "apiToken": "secret-looking-inline-value"
+    },
+    "children": [],
+    "fallback": {
+      "mode": "invalid_payload",
+      "message": "Unsafe payloads are rejected."
+    },
+    "provenance": {
+      "runId": "run_phase2_shared_seams",
+      "emittedBy": "harness",
+      "evidenceRef": "ev_phase2_contracts"
+    }
+  }
+}

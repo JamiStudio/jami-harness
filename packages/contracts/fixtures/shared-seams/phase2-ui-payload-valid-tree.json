@@ -1,0 +1,47 @@
+{
+  "$schema": "../../schemas/ui-payload.schema.json",
+  "expectedValid": true,
+  "caseId": "phase2-ui-payload-valid-tree",
+  "description": "UI payload fixture for a valid data-only primitive tree with nested child payload data.",
+  "coverage": ["valid_primitive_tree", "nested_children", "empty_state", "long_content"],
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "payloadId": "uip_phase2_valid_tree",
+    "componentRef": {
+      "namespace": "@jami-studio/ui",
+      "name": "run-timeline",
+      "version": "0.0.0",
+      "allowlisted": true
+    },
+    "props": {
+      "state": "empty",
+      "title": "A long but plain-text run title that remains data-only and safe for resident rendering.",
+      "items": []
+    },
+    "children": [
+      {
+        "componentRef": {
+          "namespace": "@jami-studio/ui",
+          "name": "empty-state",
+          "version": "0.0.0"
+        },
+        "props": {
+          "message": "No tools have run yet."
+        }
+      }
+    ],
+    "actionRefs": ["act_phase2_approve"],
+    "artifactViewRefs": ["artv_phase2_docs"],
+    "themeRef": "theme_phase2_default",
+    "suiteRef": "suite_phase2_root",
+    "fallback": {
+      "mode": "text",
+      "message": "Run timeline is available as text."
+    },
+    "provenance": {
+      "runId": "run_phase2_shared_seams",
+      "emittedBy": "harness",
+      "evidenceRef": "ev_phase2_contracts"
+    }
+  }
+}

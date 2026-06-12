@@ -1,0 +1,40 @@
+{
+  "$schema": "../../schemas/memory-record.schema.json",
+  "expectedValid": true,
+  "caseId": "phase2-memory-record-states",
+  "description": "Memory record fixture covers privacy, redaction, stale, empty, missing, denied, permission-filtered, cited, and replay states.",
+  "coverage": ["public", "private", "redacted", "stale", "empty", "missing", "denied", "permission_filtered", "cited", "replayed"],
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "memoryId": "mem_phase2_private_redacted",
+    "kind": "user_note",
+    "summary": "",
+    "scope": {
+      "projectId": "proj_jami_harness",
+      "allowedActorIds": ["actor_developer"],
+      "allowedScopes": ["memory:read:private"]
+    },
+    "source": {
+      "runId": "run_phase2_shared_seams",
+      "recordedAt": "2026-06-12T14:00:00.000Z"
+    },
+    "freshness": {
+      "class": "stale",
+      "asOf": "2026-06-01T14:00:00.000Z"
+    },
+    "retention": {
+      "policy": "project",
+      "forgetAfter": "2026-07-12T14:00:00.000Z"
+    },
+    "redaction": {
+      "classification": "private",
+      "mode": "redacted",
+      "redactedFields": ["content"]
+    },
+    "citation": {
+      "citationId": "cit_phase2_memory",
+      "label": "Private redacted memory fixture",
+      "freshnessClass": "stale"
+    }
+  }
+}

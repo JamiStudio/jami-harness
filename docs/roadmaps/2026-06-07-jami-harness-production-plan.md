@@ -154,9 +154,10 @@ polish; they are the definition of the end state.
 
 ### Cross-Repo UI Seams
 
-- [ ] Shared fixtures cover `runEvent`, `uiPayload`, `artifactView`, `actionRef`,
+- [~] Shared fixtures cover `runEvent`, `uiPayload`, `artifactView`, `actionRef`,
   `themeRef`, `suiteRef`, `evidencePacket`, `memoryRecord`, `contextPack`, and
-  `capabilityManifest` in both repos.
+  `capabilityManifest` on the harness side through the Phase 2 fixture coverage gate;
+  Studio UI consumer fixture parity remains required in its repo.
 - [ ] Harness-originated UI/action/artifact refs render through Studio UI without importing
   UI implementation ownership into the harness.
 - [ ] Denied, invalid, unsupported, stale, redacted, missing-source, expired, and replayed
@@ -430,6 +431,14 @@ Pass status:
   repo, commit, and ref fields on artifact records, artifact views, and evidence packets;
   accepted evidence contracts now record name plus schema version, and runtime artifact
   view emission fails closed when required provenance is missing.
+- 2026-06-12 Phase 2 / Group A fresh pass 1 extended the harness-side shared contract
+  fixture matrix for `runEvent`, `uiPayload`, `artifactView`, `actionRef`, `themeRef`,
+  `suiteRef`, `evidencePacket`, `memoryRecord`, `contextPack`, and
+  `capabilityManifest`. The contract validator now fails when any root-roadmap Phase 2
+  seam state is missing, including denied, unsupported, malformed/invalid,
+  missing-source, stale, redacted, expired, replayed, local-only, hosted, package,
+  release, and evidence states where applicable. This does not claim Studio UI consumer
+  parity, hosted routes, package publication, or release completion.
 - Root verification now runs `pnpm contracts:validate` through `pnpm verify`.
 - The workstream remains open because broad run/task/tool/docs/release schemas, core
   ports, primitive lifecycle/versioning docs, and cross-repo Studio UI consumer fixtures
@@ -457,7 +466,8 @@ Implementation tasks:
 - [x] Define capability manifest format so modules can declare supported features, required scopes, failure modes, and replacement compatibility.
 - [x] Generate JSON Schema and TypeScript exports.
 - [x] Define primitive registry manifest format.
-- [~] Add contract tests and schema compatibility checks, including shared fixtures for unsupported UI components, invalid payloads, denied actions, and renderer error states.
+- [~] Add contract tests and schema compatibility checks, including the Phase 2 shared
+  seam fixture coverage gate for all root-roadmap harness seam families.
 - [x] Define the initial threat model fixture catalog for policy/tool/UI/action/memory/evidence risks.
 - [x] Define the evidence packet schema before docs-generation work consumes evidence claims.
 - [~] Define artifact, trace, memory, and context record schemas before hosted backends or
@@ -468,7 +478,8 @@ Exit criteria:
 
 - [~] Contracts build, validate, and generate docs/reference artifacts.
 - [ ] Ports make module replacement explicit without weakening core policy, audit, artifact, evidence, or checkpoint contracts.
-- [ ] Shared harness/UI compatibility fixtures can be consumed by both this repo and `studio-ui`.
+- [~] Harness-side shared seam fixtures are machine-readable and validated through
+  `pnpm contracts:validate`; Studio UI still needs its matching consumer fixtures.
 - [ ] Evidence packet and threat model schemas exist before runtime, gateway, memory, or docs generation work builds on them.
 
 Suggested verification:

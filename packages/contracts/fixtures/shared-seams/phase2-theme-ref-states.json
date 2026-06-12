@@ -1,0 +1,32 @@
+{
+  "$schema": "../../schemas/theme-ref.schema.json",
+  "expectedValid": true,
+  "caseId": "phase2-theme-ref-states",
+  "description": "Theme ref fixture keeps token/theme decisions as Studio UI-owned registry data while covering fail-closed theme states.",
+  "coverage": [
+    "default",
+    "custom",
+    "deprecated",
+    "missing_token",
+    "invalid_alias",
+    "contrast_failure",
+    "migration_needed",
+    "unsupported_family"
+  ],
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "themeId": "theme_phase2_default",
+    "tokenSchemaVersion": "2026-06-12",
+    "source": {
+      "owner": "studio-ui",
+      "registryItemId": "theme/default",
+      "kind": "default"
+    },
+    "state": "migration_needed",
+    "evidenceRef": "ev_phase2_contracts",
+    "restoreTarget": {
+      "packageName": "@jami-studio/ui",
+      "itemPath": "registry/themes/default.json"
+    }
+  }
+}

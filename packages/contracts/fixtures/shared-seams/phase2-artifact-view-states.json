@@ -1,0 +1,46 @@
+{
+  "$schema": "../../schemas/artifact-view.schema.json",
+  "expectedValid": true,
+  "caseId": "phase2-artifact-view-states",
+  "description": "Artifact view fixture records the harness-owned artifact states Studio UI may render or reject.",
+  "coverage": [
+    "docs",
+    "trace",
+    "evidence",
+    "system_map",
+    "changelog",
+    "media",
+    "unsupported_kind",
+    "missing_artifact",
+    "stale_artifact",
+    "redacted_artifact",
+    "denied_artifact"
+  ],
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "artifactViewId": "artv_phase2_system_map",
+    "artifactId": "art_phase2_system_map",
+    "kind": "system_map",
+    "title": "Phase 2 shared seam system map",
+    "promotionState": "reviewed",
+    "availabilityState": "redacted_artifact",
+    "renderers": [
+      {
+        "rendererId": "renderer_markdown",
+        "mode": "markdown"
+      },
+      {
+        "rendererId": "renderer_studio_ui",
+        "mode": "studio_ui",
+        "componentRef": "@jami-studio/ui/artifact-viewer"
+      }
+    ],
+    "provenance": {
+      "runId": "run_phase2_shared_seams",
+      "sourceRepo": "jami-harness",
+      "sourceCommit": "working-tree",
+      "sourceRef": "packages/contracts/fixtures/shared-seams",
+      "evidenceRef": "ev_phase2_contracts"
+    }
+  }
+}

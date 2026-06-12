@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:90780bc028cd2cbb76fa11913191211208f1eb92e3ea8344a44f55a82ff80667",
+  "sourceInputHash": "sha256:c62a2fada5c1861a534bf68eb8ceb818f9298644ffe6c975161c2d1d84c710e1",
   "generatedAt": "deterministic:git-head-plus-release-capability-input-hash",
   "command": "pnpm release:capabilities:check",
   "commandResult": "passed",
@@ -254,8 +254,8 @@
     },
     {
       "path": "docs/generated/sbom.cdx.json",
-      "sha256": "sha256:439aeb80d9423f67c4e0992ebacbd582bfa0c3768635ae8c646cdf22e4df7f68",
-      "bytes": 15595
+      "sha256": "sha256:a8c862cb83bcaff5670e66d0c354e4e4d22ce5f04742ee28cb844243af3f77ce",
+      "bytes": 16691
     },
     {
       "path": "docs/operations/release-capability-source-lock.md",

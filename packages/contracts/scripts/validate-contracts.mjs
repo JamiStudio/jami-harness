@@ -43,8 +43,143 @@ const requiredNegativeCaseIds = new Set([
   "invalid-memory-cross-actor-leakage",
   "invalid-tool-execution-missing-audit",
 ]);
+const requiredPhase2Coverage = new Map([
+  [
+    "runEvent",
+    [
+      "start",
+      "progress",
+      "approval_required",
+      "tool_running",
+      "artifact_emitted",
+      "checkpoint_saved",
+      "retrying",
+      "cancelling",
+      "cancelled",
+      "failed",
+      "recovered",
+      "complete",
+      "redacted",
+    ],
+  ],
+  [
+    "uiPayload",
+    [
+      "valid_primitive_tree",
+      "nested_children",
+      "empty_state",
+      "long_content",
+      "invalid_props",
+      "unsafe_values",
+      "stale_vocabulary",
+      "unknown_component",
+      "package_import",
+      "serialized_react_marker",
+      "html_script",
+      "handler_props",
+      "secret_shaped_values",
+    ],
+  ],
+  [
+    "artifactView",
+    [
+      "docs",
+      "trace",
+      "evidence",
+      "system_map",
+      "changelog",
+      "media",
+      "unsupported_kind",
+      "missing_artifact",
+      "stale_artifact",
+      "redacted_artifact",
+      "denied_artifact",
+    ],
+  ],
+  [
+    "actionRef",
+    [
+      "pending_approval",
+      "approved",
+      "denied",
+      "expired",
+      "replayed",
+      "missing_actor",
+      "missing_scope",
+      "missing_audit",
+      "secret_bearing_input",
+      "display_only_ui_state",
+    ],
+  ],
+  [
+    "themeRef",
+    [
+      "default",
+      "custom",
+      "deprecated",
+      "missing_token",
+      "invalid_alias",
+      "contrast_failure",
+      "migration_needed",
+      "unsupported_family",
+    ],
+  ],
+  [
+    "suiteRef",
+    [
+      "suite_root",
+      "page",
+      "block",
+      "primitive_dependency",
+      "harness_capability",
+      "missing_dependency",
+      "unsupported_suite_version",
+      "stale_registry_item",
+    ],
+  ],
+  [
+    "evidencePacket",
+    [
+      "source_repo",
+      "commit",
+      "command",
+      "result",
+      "timestamp",
+      "freshness",
+      "accepted_contract",
+      "generated_outputs",
+      "unsupported_external_checks",
+    ],
+  ],
+  [
+    "memoryRecord",
+    ["public", "private", "redacted", "stale", "empty", "missing", "denied", "permission_filtered", "cited", "replayed"],
+  ],
+  [
+    "contextPack",
+    ["public", "private", "redacted", "stale", "empty", "missing", "denied", "permission_filtered", "cited", "replayed"],
+  ],
+  [
+    "capabilityManifest",
+    [
+      "supported",
+      "unsupported",
+      "missing_source_lock",
+      "local_only",
+      "hosted",
+      "auth_required",
+      "streaming",
+      "cancellation",
+      "persistence",
+      "package",
+      "release",
+      "evidence",
+    ],
+  ],
+]);
 const fixtureCoverage = new Map();
 const negativeCaseCoverage = new Set();
+const phase2Coverage = new Map();
 const failures = [];
 
 function readJson(path) {
@@ -90,6 +225,7 @@ function validate(schema, value, path = "$") {
     const accepted = Array.isArray(schema.type) ? schema.type : [schema.type];
     const typeMatches = accepted.some((type) => {
       if (type === "integer") return Number.isInteger(value);
+      if (type === "number") return typeof value === "number";
       if (type === "array") return Array.isArray(value);
       if (type === "object") return value !== null && typeof value === "object" && !Array.isArray(value);
       return actual === type;
@@ -164,6 +300,36 @@ function findUnsafeUiPropPath(value, path = "$.props") {
   return undefined;
 }
 
+function addPhase2Coverage(schemaTitle, fixtureFile, coverage) {
+  if (coverage === undefined) return;
+  if (!Array.isArray(coverage)) {
+    failures.push(`${relative(packageRoot, fixtureFile)} coverage must be an array when declared`);
+    return;
+  }
+
+  const allowed = requiredPhase2Coverage.get(schemaTitle);
+  if (!allowed) return;
+  const allowedSet = new Set(allowed);
+  const covered = phase2Coverage.get(schemaTitle) ?? new Set();
+  for (const state of coverage) {
+    if (typeof state !== "string" || state.length === 0) {
+      failures.push(`${relative(packageRoot, fixtureFile)} coverage entries must be non-empty strings`);
+      continue;
+    }
+    if (!allowedSet.has(state)) {
+      failures.push(`${relative(packageRoot, fixtureFile)} declares unknown ${schemaTitle} coverage state ${state}`);
+      continue;
+    }
+    covered.add(state);
+  }
+  phase2Coverage.set(schemaTitle, covered);
+}
+
+function requireEvidenceLikeRef(value, path, purpose) {
+  if (!value) return [`${path} is required for ${purpose}`];
+  return [];
+}
+
 function validateSemantics(schemaTitle, value) {
   const errors = [];
 
@@ -177,6 +343,19 @@ function validateSemantics(schemaTitle, value) {
     if (["destructive", "external", "secret_adjacent"].includes(value.risk) && value.confirmationMode === "none") {
       errors.push("$.confirmationMode cannot be none for elevated-risk actions");
     }
+    if (["executed", "failed", "expired", "replayed"].includes(value.state)) {
+      errors.push(...requireEvidenceLikeRef(value.evidenceRef, "$.evidenceRef", `${value.state} action refs`));
+    }
+    if (["pending_approval", "executed", "failed", "expired", "replayed"].includes(value.state)) {
+      errors.push(...requireEvidenceLikeRef(value.auditRef, "$.auditRef", `${value.state} action refs`));
+      errors.push(...requireEvidenceLikeRef(value.actorRef, "$.actorRef", `${value.state} action refs`));
+    }
+    if (value.state === "display_only" && value.route !== "harness://actions/display-only") {
+      errors.push("$.route must be harness://actions/display-only when $.state is display_only");
+    }
+    if (value.state === "replayed" && !value.replayRef) {
+      errors.push("$.replayRef is required when $.state is replayed");
+    }
   }
 
   if (schemaTitle === "runEvent") {
@@ -188,6 +367,12 @@ function validateSemantics(schemaTitle, value) {
     }
     if (value.eventType === "policy.decision" && !value.policyDecision) {
       errors.push("$.policyDecision is required for policy.decision events");
+    }
+    if (value.eventType === "run.redacted" && value.rendererState !== "not_requested") {
+      errors.push("$.rendererState must be not_requested for run.redacted events");
+    }
+    if (value.eventType === "artifact.emitted" && !value.artifactViewRef) {
+      errors.push("$.artifactViewRef is required for artifact.emitted events");
     }
   }
 
@@ -243,6 +428,13 @@ function validateSemantics(schemaTitle, value) {
     if (unsafePropPath) {
       errors.push(`${unsafePropPath} is not allowed in data-only UI payload props`);
     }
+    const secretPropPath = findSecretLookingPath(value.props, "$.props");
+    if (secretPropPath && value.fallback.mode !== "invalid_payload") {
+      errors.push("$.fallback.mode must be invalid_payload when props contain secret-shaped keys");
+    }
+    if (value.componentRef.version === "stale" && value.fallback.mode !== "unsupported_component") {
+      errors.push("$.fallback.mode must be unsupported_component for stale component vocabulary");
+    }
   }
 
   if (schemaTitle === "artifactView") {
@@ -251,11 +443,17 @@ function validateSemantics(schemaTitle, value) {
         errors.push(`$.renderers[${index}].componentRef is required for studio_ui renderers`);
       }
     });
+    if (value.availabilityState && value.availabilityState !== "available" && !value.provenance.evidenceRef) {
+      errors.push("$.provenance.evidenceRef is required for non-available artifact views");
+    }
   }
 
   if (schemaTitle === "suiteRef") {
     if (value.installedItems.some((item) => !item.startsWith("@jami-studio/ui/"))) {
       errors.push("$.installedItems must reference Studio UI registry items");
+    }
+    if (value.registryState && value.registryState !== "current" && value.installedItems.length > 0 && !value.evidenceRef) {
+      errors.push("$.evidenceRef is required for non-current suite refs");
     }
   }
 
@@ -264,6 +462,14 @@ function validateSemantics(schemaTitle, value) {
     for (const invariant of ["policy", "audit", "evidence"]) {
       if (!preserved.has(invariant)) {
         errors.push(`$.replacementCompatibility.mustPreserve must include ${invariant}`);
+      }
+    }
+    for (const [index, feature] of value.features.entries()) {
+      if (feature.support === "missing_source_lock" && !feature.sourceLockRef) {
+        errors.push(`$.features[${index}].sourceLockRef is required for missing_source_lock features`);
+      }
+      if (feature.support === "auth_required" && !feature.authRef) {
+        errors.push(`$.features[${index}].authRef is required for auth_required features`);
       }
     }
   }
@@ -324,6 +530,9 @@ function validateSemantics(schemaTitle, value) {
     }
     if (Date.parse(value.retention.forgetAfter) <= Date.parse(value.source.recordedAt)) {
       errors.push("$.retention.forgetAfter must be after $.source.recordedAt");
+    }
+    if (value.freshness.class === "stale" && value.redaction.classification === "public" && value.redaction.mode === "none") {
+      errors.push("$.redaction.mode cannot be none for public stale memory records");
     }
   }
 
@@ -434,6 +643,7 @@ for (const fixtureFile of listJsonFiles(fixtureRoot)) {
   if (fixture.expectedValid === false) {
     negativeCaseCoverage.add(fixture.caseId);
   }
+  addPhase2Coverage(schema.title, fixtureFile, fixture.coverage);
 
   const errors = [...validate(schema, fixture.payload), ...validateSemantics(schema.title, fixture.payload)];
   const valid = errors.length === 0;
@@ -455,6 +665,15 @@ for (const title of requiredFixtureAnchors) {
 for (const caseId of requiredNegativeCaseIds) {
   if (!negativeCaseCoverage.has(caseId)) {
     failures.push(`fixtures must include failing negative case ${caseId}`);
+  }
+}
+
+for (const [schemaTitle, requiredStates] of requiredPhase2Coverage) {
+  const covered = phase2Coverage.get(schemaTitle) ?? new Set();
+  for (const state of requiredStates) {
+    if (!covered.has(state)) {
+      failures.push(`fixtures must include Phase 2 ${schemaTitle} coverage for ${state}`);
+    }
   }
 }
 

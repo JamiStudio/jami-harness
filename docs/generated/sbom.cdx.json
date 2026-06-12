@@ -1,7 +1,7 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:9cf0566e-17fe-56c1-b0bf-15017f63db1c",
+  "serialNumber": "urn:uuid:814f373f-7b29-5d4c-bc3f-83310453d362",
   "version": 1,
   "metadata": {
     "tools": {
@@ -70,7 +70,7 @@
       },
       {
         "name": "jami:harness:sourceInputHash",
-        "value": "457f3b64ecdefb45ffedcfd5d17fa51d58011aafab8869193b1009cc9d89ef0c"
+        "value": "a42acb800b6b6e8660f8592ab3858d0d03bbedef2c2954cd61e90910fbda26a7"
       },
       {
         "name": "jami:harness:commands",
@@ -125,6 +125,39 @@
         {
           "name": "jami:harness:repositoryDirectory",
           "value": "apps/cli"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "pkg:@jami-studio/harness-workbench:apps/workbench/package.json",
+      "name": "@jami-studio/harness-workbench",
+      "version": "0.0.0",
+      "description": "Dependency-free local workbench shell for Jami Harness runtime evidence, docs, and system maps.",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40jami-studio/harness-workbench@0.0.0",
+      "properties": [
+        {
+          "name": "jami:harness:manifestPath",
+          "value": "apps/workbench/package.json"
+        },
+        {
+          "name": "jami:harness:private",
+          "value": "true"
+        },
+        {
+          "name": "jami:harness:repository",
+          "value": "git+https://github.com/JamiStudio/jami-harness.git"
+        },
+        {
+          "name": "jami:harness:repositoryDirectory",
+          "value": "apps/workbench"
         }
       ]
     },
@@ -491,6 +524,10 @@
   "dependencies": [
     {
       "ref": "pkg:@jami-studio/harness-cli:apps/cli/package.json",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:@jami-studio/harness-workbench:apps/workbench/package.json",
       "dependsOn": []
     },
     {

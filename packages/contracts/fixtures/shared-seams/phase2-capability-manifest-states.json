@@ -1,0 +1,91 @@
+{
+  "$schema": "../../schemas/capability-manifest.schema.json",
+  "expectedValid": true,
+  "caseId": "phase2-capability-manifest-states",
+  "description": "Capability manifest fixture covers supported, unsupported, hosted, auth, streaming, cancellation, persistence, package, release, and evidence states.",
+  "coverage": [
+    "supported",
+    "unsupported",
+    "missing_source_lock",
+    "local_only",
+    "hosted",
+    "auth_required",
+    "streaming",
+    "cancellation",
+    "persistence",
+    "package",
+    "release",
+    "evidence"
+  ],
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "capabilityId": "cap_phase2_shared_contracts",
+    "ownerPackage": "@jami-studio/harness-contracts",
+    "capabilityClass": "core_invariant",
+    "features": [
+      {
+        "featureId": "contracts.validate",
+        "support": "supported"
+      },
+      {
+        "featureId": "studio-ui.render",
+        "support": "unsupported",
+        "notes": "Rendering remains owned by Studio UI."
+      },
+      {
+        "featureId": "hosted.registry",
+        "support": "missing_source_lock",
+        "sourceLockRef": "source-lock:missing:hosted-registry"
+      },
+      {
+        "featureId": "local.fixture.validation",
+        "support": "local_only"
+      },
+      {
+        "featureId": "hosted.docs",
+        "support": "hosted"
+      },
+      {
+        "featureId": "provider.auth",
+        "support": "auth_required",
+        "authRef": "auth:provider"
+      },
+      {
+        "featureId": "run.streaming",
+        "support": "streaming"
+      },
+      {
+        "featureId": "run.cancellation",
+        "support": "cancellation"
+      },
+      {
+        "featureId": "store.persistence",
+        "support": "persistence"
+      },
+      {
+        "featureId": "package.install",
+        "support": "package"
+      },
+      {
+        "featureId": "release.provenance",
+        "support": "release"
+      },
+      {
+        "featureId": "evidence.packet",
+        "support": "evidence"
+      }
+    ],
+    "requiredScopes": ["contracts:validate"],
+    "failureModes": [
+      {
+        "mode": "unsupported",
+        "observableAs": "evidence_packet"
+      }
+    ],
+    "replacementCompatibility": {
+      "portId": "sharedContractPort",
+      "contractVersion": "2026-06-09",
+      "mustPreserve": ["policy", "audit", "artifact", "evidence", "redaction"]
+    }
+  }
+}

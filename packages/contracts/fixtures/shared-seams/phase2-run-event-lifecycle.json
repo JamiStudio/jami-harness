@@ -1,0 +1,37 @@
+{
+  "$schema": "../../schemas/run-event.schema.json",
+  "expectedValid": true,
+  "caseId": "phase2-run-event-lifecycle",
+  "description": "Run event fixtures cover the Phase 2 lifecycle states the harness emits to Studio UI as typed data.",
+  "coverage": [
+    "start",
+    "progress",
+    "approval_required",
+    "tool_running",
+    "artifact_emitted",
+    "checkpoint_saved",
+    "retrying",
+    "cancelling",
+    "cancelled",
+    "failed",
+    "recovered",
+    "complete",
+    "redacted"
+  ],
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "eventId": "evt_checkpoint_saved",
+    "runId": "run_phase2_shared_seams",
+    "taskId": "task_phase2_contracts",
+    "sequence": 6,
+    "occurredAt": "2026-06-12T14:00:00.000Z",
+    "eventType": "checkpoint.saved",
+    "traceRef": {
+      "traceId": "trace_phase2_shared_seams",
+      "spanId": "span_checkpoint"
+    },
+    "artifactViewRef": "artv_phase2_checkpoint",
+    "rendererState": "not_requested",
+    "message": "Checkpoint state was persisted before retry."
+  }
+}

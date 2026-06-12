@@ -1,0 +1,18 @@
+{
+  "$schema": "../../schemas/action-ref.schema.json",
+  "expectedValid": false,
+  "caseId": "phase2-action-ref-missing-audit",
+  "description": "Action ref fixture rejects missing actor, missing scope, missing audit, and secret-bearing inputs.",
+  "coverage": ["missing_actor", "missing_scope", "missing_audit", "secret_bearing_input"],
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "actionId": "act_phase2_missing_audit",
+    "label": "Missing audit",
+    "route": "harness://actions/missing-audit",
+    "risk": "secret_adjacent",
+    "policyScope": "",
+    "confirmationMode": "none",
+    "state": "executed",
+    "inputSchemaRef": "schema://inline-secret-token"
+  }
+}

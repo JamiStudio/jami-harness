@@ -19,8 +19,29 @@
         "additionalProperties": false,
         "properties": {
           "featureId": { "type": "string" },
-          "support": { "type": "string", "enum": ["supported", "unsupported", "denied_by_policy", "requires_adapter", "requires_approval"] },
-          "notes": { "type": "string" }
+          "support": {
+            "type": "string",
+            "enum": [
+              "supported",
+              "unsupported",
+              "denied_by_policy",
+              "requires_adapter",
+              "requires_approval",
+              "missing_source_lock",
+              "local_only",
+              "hosted",
+              "auth_required",
+              "streaming",
+              "cancellation",
+              "persistence",
+              "package",
+              "release",
+              "evidence"
+            ]
+          },
+          "notes": { "type": "string" },
+          "sourceLockRef": { "type": "string" },
+          "authRef": { "type": "string" }
         }
       }
     },

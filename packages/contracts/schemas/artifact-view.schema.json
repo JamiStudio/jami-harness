@@ -9,9 +9,16 @@
     "schemaVersion": { "const": "2026-06-09" },
     "artifactViewId": { "type": "string", "pattern": "^artv_[a-z0-9][a-z0-9_-]*$" },
     "artifactId": { "type": "string", "pattern": "^art_[a-z0-9][a-z0-9_-]*$" },
-    "kind": { "type": "string", "enum": ["report", "patch", "document", "image", "trace", "evidence", "release_packet"] },
+    "kind": {
+      "type": "string",
+      "enum": ["report", "patch", "document", "docs", "image", "media", "trace", "evidence", "system_map", "changelog", "release_packet"]
+    },
     "title": { "type": "string" },
     "promotionState": { "type": "string", "enum": ["draft", "reviewed", "accepted", "rejected", "promoted"] },
+    "availabilityState": {
+      "type": "string",
+      "enum": ["available", "unsupported_kind", "missing_artifact", "stale_artifact", "redacted_artifact", "denied_artifact"]
+    },
     "renderers": {
       "type": "array",
       "minItems": 1,

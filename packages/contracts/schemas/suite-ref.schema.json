@@ -29,6 +29,11 @@
     "optionalHarnessCapabilities": {
       "type": "array",
       "items": { "type": "string" }
-    }
+    },
+    "registryState": {
+      "type": "string",
+      "enum": ["current", "missing_dependency", "unsupported_suite_version", "stale_registry_item"]
+    },
+    "evidenceRef": { "type": "string" }
   }
 }

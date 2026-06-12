@@ -16,9 +16,14 @@
       "properties": {
         "owner": { "type": "string", "const": "studio-ui" },
         "registryItemId": { "type": "string" },
-        "kind": { "type": "string", "enum": ["factory", "custom"] }
+        "kind": { "type": "string", "enum": ["factory", "custom", "default"] }
       }
     },
+    "state": {
+      "type": "string",
+      "enum": ["current", "deprecated", "missing_token", "invalid_alias", "contrast_failure", "migration_needed", "unsupported_family"]
+    },
+    "evidenceRef": { "type": "string" },
     "restoreTarget": {
       "type": "object",
       "required": ["packageName", "itemPath"],

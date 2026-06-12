@@ -1,0 +1,41 @@
+{
+  "$schema": "../../schemas/suite-ref.schema.json",
+  "expectedValid": true,
+  "caseId": "phase2-suite-ref-states",
+  "description": "Suite ref fixture covers suite roots, pages, blocks, primitive dependencies, harness capabilities, and stale or missing registry states.",
+  "coverage": [
+    "suite_root",
+    "page",
+    "block",
+    "primitive_dependency",
+    "harness_capability",
+    "missing_dependency",
+    "unsupported_suite_version",
+    "stale_registry_item"
+  ],
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "suiteId": "suite_phase2_root",
+    "lane": "ops",
+    "appShellId": "ops-suite-shell",
+    "installedItems": [
+      "@jami-studio/ui/suites/ops",
+      "@jami-studio/ui/pages/run-detail",
+      "@jami-studio/ui/blocks/action-panel",
+      "@jami-studio/ui/primitives/status-badge"
+    ],
+    "routeMap": [
+      {
+        "routeId": "suite-root",
+        "path": "/ops"
+      },
+      {
+        "routeId": "run-detail",
+        "path": "/ops/runs/:runId"
+      }
+    ],
+    "optionalHarnessCapabilities": ["cap_runtime", "cap_artifacts", "cap_evidence"],
+    "registryState": "stale_registry_item",
+    "evidenceRef": "ev_phase2_contracts"
+  }
+}

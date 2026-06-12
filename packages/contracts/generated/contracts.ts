@@ -2,7 +2,7 @@
 // Do not edit by hand; run pnpm --filter @jami-studio/harness-contracts generate.
 
 export const generatedContractMetadata = {
-  generatedAt: "2026-06-09T15:53:53.310Z",
+  generatedAt: "2026-06-12T09:31:30.905Z",
   generatorVersion: "2026-06-09.contracts.1",
   source: "packages/contracts/schemas/*.schema.json"
 } as const;
@@ -14,6 +14,12 @@ export const ActionRefSchema = {
   "properties": {
     "actionId": {
       "pattern": "^act_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "actorRef": {
+      "type": "string"
+    },
+    "auditRef": {
       "type": "string"
     },
     "confirmationMode": {
@@ -53,6 +59,9 @@ export const ActionRefSchema = {
     "policyScope": {
       "type": "string"
     },
+    "replayRef": {
+      "type": "string"
+    },
     "risk": {
       "enum": [
         "read",
@@ -77,7 +86,10 @@ export const ActionRefSchema = {
         "denied",
         "pending_approval",
         "executed",
-        "failed"
+        "failed",
+        "expired",
+        "replayed",
+        "display_only"
       ],
       "type": "string"
     }
@@ -374,14 +386,29 @@ export const ArtifactViewSchema = {
       "pattern": "^artv_[a-z0-9][a-z0-9_-]*$",
       "type": "string"
     },
+    "availabilityState": {
+      "enum": [
+        "available",
+        "unsupported_kind",
+        "missing_artifact",
+        "stale_artifact",
+        "redacted_artifact",
+        "denied_artifact"
+      ],
+      "type": "string"
+    },
     "kind": {
       "enum": [
         "report",
         "patch",
         "document",
+        "docs",
         "image",
+        "media",
         "trace",
         "evidence",
+        "system_map",
+        "changelog",
         "release_packet"
       ],
       "type": "string"
@@ -631,10 +658,16 @@ export const CapabilityManifestSchema = {
       "items": {
         "additionalProperties": false,
         "properties": {
+          "authRef": {
+            "type": "string"
+          },
           "featureId": {
             "type": "string"
           },
           "notes": {
+            "type": "string"
+          },
+          "sourceLockRef": {
             "type": "string"
           },
           "support": {
@@ -643,7 +676,17 @@ export const CapabilityManifestSchema = {
               "unsupported",
               "denied_by_policy",
               "requires_adapter",
-              "requires_approval"
+              "requires_approval",
+              "missing_source_lock",
+              "local_only",
+              "hosted",
+              "auth_required",
+              "streaming",
+              "cancellation",
+              "persistence",
+              "package",
+              "release",
+              "evidence"
             ],
             "type": "string"
           }
@@ -1595,11 +1638,19 @@ export const RunEventSchema = {
         "run.progress",
         "run.completed",
         "run.failed",
+        "run.retrying",
+        "run.cancelling",
+        "run.cancelled",
+        "run.recovered",
+        "run.redacted",
         "policy.decision",
         "approval.requested",
         "tool.call.requested",
+        "tool.running",
         "tool.call.completed",
         "artifact.created",
+        "artifact.emitted",
+        "checkpoint.saved",
         "ui.payload.emitted",
         "renderer.error"
       ],
@@ -1765,6 +1816,9 @@ export const SuiteRefSchema = {
     "appShellId": {
       "type": "string"
     },
+    "evidenceRef": {
+      "type": "string"
+    },
     "installedItems": {
       "items": {
         "type": "string"
@@ -1786,6 +1840,15 @@ export const SuiteRefSchema = {
         "type": "string"
       },
       "type": "array"
+    },
+    "registryState": {
+      "enum": [
+        "current",
+        "missing_dependency",
+        "unsupported_suite_version",
+        "stale_registry_item"
+      ],
+      "type": "string"
     },
     "routeMap": {
       "items": {
@@ -1831,6 +1894,9 @@ export const ThemeRefSchema = {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
   "properties": {
+    "evidenceRef": {
+      "type": "string"
+    },
     "restoreTarget": {
       "additionalProperties": false,
       "properties": {
@@ -1857,7 +1923,8 @@ export const ThemeRefSchema = {
         "kind": {
           "enum": [
             "factory",
-            "custom"
+            "custom",
+            "default"
           ],
           "type": "string"
         },
@@ -1875,6 +1942,18 @@ export const ThemeRefSchema = {
         "kind"
       ],
       "type": "object"
+    },
+    "state": {
+      "enum": [
+        "current",
+        "deprecated",
+        "missing_token",
+        "invalid_alias",
+        "contrast_failure",
+        "migration_needed",
+        "unsupported_family"
+      ],
+      "type": "string"
     },
     "themeId": {
       "pattern": "^theme_[a-z0-9][a-z0-9_-]*$",
@@ -2273,7 +2352,10 @@ export const UiPayloadSchema = {
     },
     "children": {
       "items": {
-        "type": "string"
+        "type": [
+          "string",
+          "object"
+        ]
       },
       "type": "array"
     },

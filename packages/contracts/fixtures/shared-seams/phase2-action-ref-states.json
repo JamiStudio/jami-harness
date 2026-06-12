@@ -1,0 +1,22 @@
+{
+  "$schema": "../../schemas/action-ref.schema.json",
+  "expectedValid": true,
+  "caseId": "phase2-action-ref-states",
+  "description": "Action ref fixture covers approval, completion, denial, expiry, replay, and display-only UI states as policy-gated data.",
+  "coverage": ["pending_approval", "approved", "denied", "expired", "replayed", "display_only_ui_state"],
+  "payload": {
+    "schemaVersion": "2026-06-09",
+    "actionId": "act_phase2_replay_blocked",
+    "label": "Replay blocked",
+    "route": "harness://actions/replay-blocked",
+    "risk": "write",
+    "policyScope": "actions:approve",
+    "confirmationMode": "approval_required",
+    "state": "replayed",
+    "inputSchemaRef": "schema://jami-harness/action-input",
+    "evidenceRef": "ev_phase2_contracts",
+    "actorRef": "actor_developer",
+    "auditRef": "audit_phase2_replay",
+    "replayRef": "approval_replay_phase2"
+  }
+}

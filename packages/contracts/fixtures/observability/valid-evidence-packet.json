@@ -3,6 +3,17 @@
   "expectedValid": true,
   "caseId": "valid-evidence-packet",
   "description": "Evidence packets bind claims to source, commands, accepted contracts, artifacts, freshness, and redaction state.",
+  "coverage": [
+    "source_repo",
+    "commit",
+    "command",
+    "result",
+    "timestamp",
+    "freshness",
+    "accepted_contract",
+    "generated_outputs",
+    "unsupported_external_checks"
+  ],
   "payload": {
     "schemaVersion": "2026-06-09",
     "evidenceId": "ev_contract_generation",

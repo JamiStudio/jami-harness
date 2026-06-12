@@ -13,7 +13,10 @@
     "risk": { "type": "string", "enum": ["read", "write", "destructive", "external", "secret_adjacent"] },
     "policyScope": { "type": "string" },
     "confirmationMode": { "type": "string", "enum": ["none", "confirm", "approval_required", "owner_required"] },
-    "state": { "type": "string", "enum": ["available", "disabled", "denied", "pending_approval", "executed", "failed"] },
+    "state": {
+      "type": "string",
+      "enum": ["available", "disabled", "denied", "pending_approval", "executed", "failed", "expired", "replayed", "display_only"]
+    },
     "denial": {
       "type": "object",
       "required": ["reason", "auditRef"],
@@ -24,6 +27,9 @@
       }
     },
     "inputSchemaRef": { "type": "string" },
-    "evidenceRef": { "type": "string" }
+    "evidenceRef": { "type": "string" },
+    "actorRef": { "type": "string" },
+    "auditRef": { "type": "string" },
+    "replayRef": { "type": "string" }
   }
 }
