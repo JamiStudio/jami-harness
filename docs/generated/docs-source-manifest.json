@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:9c101f70f4b2a032cc7d667bdd9928043968d8a4cccf9af167b33c5b1d7f672b",
+  "sourceInputHash": "sha256:c89beb6158888232805595cc36da8bced436c4ff99ba978b43105f11b8b11a8d",
   "generatedAt": "deterministic:git-head-plus-input-hash",
   "freshnessClass": "deterministic_current_source_tree",
   "command": "pnpm docs:generate -- --check",
@@ -203,8 +203,8 @@
     },
     {
       "path": ".changes/2026-06-12-group-c-sdk-cli-workbench-surfaces.md",
-      "sha256": "sha256:90af4874e5b26866290608f86a786da9311db72cc692d442f5221a5cff43b0f9",
-      "bytes": 535
+      "sha256": "sha256:6911ec276e7be82dbeaf2b3110793a8f08e7c592b71bfa40a1cd160552dbbeaa",
+      "bytes": 663
     },
     {
       "path": ".changes/2026-06-12-phase2-shared-seam-fixtures.md",
@@ -248,13 +248,13 @@
     },
     {
       "path": "apps/cli/src/cli.mjs",
-      "sha256": "sha256:780f1a487c6d53253136c92cdc2089b228b4e3f9ee819fd70150420337122ca5",
-      "bytes": 20183
+      "sha256": "sha256:8708234a74e888a5eecd8c92398ad4b7acbbda227a73080d2c94a56ca5de0bad",
+      "bytes": 20277
     },
     {
       "path": "apps/cli/test/cli.test.mjs",
-      "sha256": "sha256:51d43c6e8b3cf8cd3d1d2cd5bf15b490edd86b4ce4bc09dec5dee967728a005f",
-      "bytes": 10899
+      "sha256": "sha256:84486392faba0fadd95157cef7f4fbfd6fd683d5db4e37b3d8316992c4409f0c",
+      "bytes": 11662
     },
     {
       "path": "apps/workbench/package.json",

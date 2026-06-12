@@ -141,10 +141,8 @@ async function approveCommand(cwd, parsed, io, options = {}) {
 }
 
 async function unsupportedControlCommand(cwd, command, parsed, io) {
-  await initStateIfMissing(cwd);
   const runId = validateRunId(parsed.options["run-id"] ?? parsed.options.runId ?? "run_local");
-  const checkpointStore = createCliCheckpointStore(cwd);
-  const checkpoint = checkpointStore.readCheckpoint(runId);
+  const checkpointStatus = await readCheckpointStatusIfExists(cwd, runId);
   const reasons = {
     cancel: "runtime_cancellation_not_implemented",
     retry: "manual_retry_command_not_implemented",
@@ -163,7 +161,7 @@ async function unsupportedControlCommand(cwd, command, parsed, io) {
     failClosed: true,
     reason: reasons[command],
     unavailableSurface: surfaces[command],
-    checkpointStatus: checkpoint?.status,
+    checkpointStatus,
     next: command === "retry"
       ? ["jami run --json --provider-failure-mode fail_once"]
       : ["jami inspect --json --run-id " + runId, "jami doctor --json --run-id " + runId],
@@ -393,6 +391,11 @@ async function readRunSummary(cwd, runId) {
 async function readJsonIfExists(path) {
   if (!existsSync(path)) return undefined;
   return JSON.parse(await readFile(path, "utf8"));
+}
+
+async function readCheckpointStatusIfExists(cwd, runId) {
+  const checkpoint = await readJsonIfExists(join(cwd, STATE_DIR, "checkpoints", `${runId}.json`));
+  return checkpoint?.status;
 }
 
 async function readLatestRunSummary(cwd) {

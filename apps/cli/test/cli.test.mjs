@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { existsSync } from "node:fs";
 import { mkdtemp, readFile, rm } from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
@@ -192,6 +193,23 @@ test("cancel, retry, and migration report fail-closed unsupported JSON", async (
     assert.equal(JSON.parse(retry.out).reason, "manual_retry_command_not_implemented");
     assert.equal(migration.code, 2);
     assert.equal(JSON.parse(migration.out).reason, "checkpoint_store_migration_not_implemented");
+  } finally {
+    await rm(cwd, { recursive: true, force: true });
+  }
+});
+
+test("unsupported control routes do not initialize local state", async () => {
+  const cwd = await mkdtemp(join(tmpdir(), "jami-cli-"));
+  try {
+    const cancel = await runCli(["cancel", "--json", "--cwd", cwd, "--run-id", "run_cli_no_state"]);
+    const retry = await runCli(["retry", "--json", "--cwd", cwd, "--run-id", "run_cli_no_state"]);
+    const migration = await runCli(["migration", "--json", "--cwd", cwd]);
+
+    assert.equal(cancel.code, 2);
+    assert.equal(JSON.parse(cancel.out).failClosed, true);
+    assert.equal(retry.code, 2);
+    assert.equal(migration.code, 2);
+    assert.equal(existsSync(join(cwd, ".jami-harness")), false);
   } finally {
     await rm(cwd, { recursive: true, force: true });
   }
