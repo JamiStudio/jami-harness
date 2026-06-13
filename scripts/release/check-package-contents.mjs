@@ -137,10 +137,8 @@ function buildSmokeManifest(packageDryRuns) {
         name: entry.manifest.name,
         version: entry.manifest.version,
         filename: pack.filename,
-        sha256: pack.sha256,
-        shasum: pack.shasum,
-        integrity: pack.integrity,
-        size: pack.size,
+        fileTreeSha256: packageFileTreeSha256(pack.files),
+        fileCount: pack.files.length,
       })),
       smokes: [
         {
@@ -213,9 +211,6 @@ function packPackage(entry, packDir) {
     files,
     entryCount: files.length,
     size: bytes.length,
-    sha256: `sha256:${createHash("sha256").update(bytes).digest("hex")}`,
-    shasum: createHash("sha1").update(bytes).digest("hex"),
-    integrity: `sha512-${createHash("sha512").update(bytes).digest("base64")}`,
   };
   return { entry, pack, path };
 }
@@ -444,6 +439,15 @@ function packageFileMode(entry, packageRelativePath) {
   const repoRelativePath = `${entry.packageDir}/${packageRelativePath}`.replace(/\\/g, "/");
   const mode = gitModes.get(repoRelativePath);
   return mode === "100755" ? 0o755 : 0o644;
+}
+
+function packageFileTreeSha256(files) {
+  return hashJson(files.map((file) => ({
+    path: file.path,
+    size: file.size,
+    mode: file.mode,
+    sha256: file.sha256,
+  })));
 }
 
 function gitModeMap() {

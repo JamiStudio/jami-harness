@@ -4,7 +4,7 @@
   "path": "/status.json",
   "sourceRepo": "jami-harness",
   "sourceCommit": "git:HEAD",
-  "sourceInputHash": "sha256:959ecece054ab52c890e9ef657f95a14bc372400e9141ef0f836af0694abcc52",
+  "sourceInputHash": "sha256:831346a572ba01364d4a1638bd8c6ccf60adc1a5d1b143609cc5f3397f775271",
   "generatedAt": "deterministic:git-head-plus-hosted-route-input-hash",
   "freshnessClass": "current-head-official-source-lock",
   "status": "supported_preview_static_fail_closed",
@@ -15,12 +15,12 @@
     "sourceCommit": "git:HEAD",
     "docsSourceManifest": {
       "path": "docs/generated/docs-source-manifest.json",
-      "sourceInputHash": "sha256:20d682e2b0aea1e6b2a587ececb13831352a39bf74f640db4028014cc55b5713",
+      "sourceInputHash": "sha256:d5e3b8cdada188dee80374c7320f870bd1b3102c601a690f8a2b08247745eddf",
       "generatedOutputCount": 16
     },
     "releaseCapabilityManifest": {
       "path": "docs/generated/release-capability-manifest.json",
-      "sourceInputHash": "sha256:f1396ef00953c13b951d6ed2153a7b488467ca47f4f1ffa33e776a46ed836152",
+      "sourceInputHash": "sha256:1ef67cccadb75faf54e2114601b6d3871d48ee5182fc83d8f42920facf6c60c7",
       "capabilityCount": 15
     }
   },
