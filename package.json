@@ -36,7 +36,7 @@
     "observability:test": "node --test packages/observability/test/*.test.mjs",
     "memory:test": "node --test packages/memory/test/*.test.mjs",
     "core:test": "node --test packages/core/test/*.test.mjs",
-    "provider:test": "node --test packages/provider-local/test/*.test.mjs",
+    "provider:test": "node --test packages/provider-local/test/*.test.mjs packages/provider-hosted/test/*.test.mjs",
     "store:test": "node --test packages/store-local/test/*.test.mjs",
     "sdk:test": "node --test packages/sdk/test/*.test.mjs",
     "cli:test": "node --test apps/cli/test/*.test.mjs",

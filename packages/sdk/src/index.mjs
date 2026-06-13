@@ -193,7 +193,7 @@ function createSdkRun({ now, artifactStore, observability, memory, context, chec
         contextPack,
         executeInput,
       });
-      if (providerResult.status === "unsupported") {
+      if (providerResult.status !== "completed") {
         kernel.fail(providerResult.reason);
         observability.recordUsageMetrics?.({
           runId,

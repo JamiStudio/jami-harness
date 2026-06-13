@@ -37,6 +37,9 @@ importers:
       '@jami-studio/harness-policy':
         specifier: workspace:0.1.0
         version: link:../policy
+      '@jami-studio/harness-provider-hosted':
+        specifier: workspace:0.1.0
+        version: link:../provider-hosted
       '@jami-studio/harness-provider-local':
         specifier: workspace:0.1.0
         version: link:../provider-local
@@ -58,6 +61,12 @@ importers:
         version: link:../artifacts
 
   packages/policy: {}
+
+  packages/provider-hosted:
+    dependencies:
+      '@jami-studio/harness-provider-local':
+        specifier: workspace:0.1.0
+        version: link:../provider-local
 
   packages/provider-local: {}
 

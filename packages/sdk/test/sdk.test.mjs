@@ -41,8 +41,8 @@ test("creates a local run with evidence, artifacts, traces, and inspectable modu
   assert.equal(inspection.modules.some((module) => module.name === "context" && module.available), true);
   assert.equal(inspection.modules.some((module) => module.name === "tools" && module.available), true);
   assert.equal(inspection.modules.some((module) => module.name === "provider" && module.available), true);
-  assert.equal(inspection.boundaries.providerRuntime, "local_deterministic_only");
-  assert.equal(inspection.boundaries.hostedProviders, "not_implemented");
+  assert.equal(inspection.boundaries.providerRuntime, "provider_router_local_plus_hosted");
+  assert.equal(inspection.boundaries.hostedProviders, "fail_closed_openai_adapter_available");
   assert.equal(inspection.toolAdapters.some((adapter) => adapter.adapterId === "adapter_function" && adapter.support === "supported"), true);
   assert.equal(inspection.toolAdapters.some((adapter) => adapter.adapterId === "adapter_openapi" && adapter.sourceLock.status === "missing"), true);
   assert.equal(inspection.toolAdapterManifests.some((manifest) => manifest.capabilityId === "cap_shell_tool_gateway"), true);
@@ -59,7 +59,7 @@ test("creates a local run with evidence, artifacts, traces, and inspectable modu
   assert.equal(inspection.controlSurfaces.some((surface) => surface.operation === "cancel" && surface.status === "fail_closed_unsupported"), true);
 });
 
-test("external provider requests fail closed without hosted provider execution", async () => {
+test("external provider requests fail closed without hosted provider auth", async () => {
   const harness = createHarness({ now });
   const result = await harness.run({
     runId: "run_external_provider",
@@ -68,7 +68,7 @@ test("external provider requests fail closed without hosted provider execution",
   });
 
   assert.equal(result.status, "unsupported");
-  assert.equal(result.providerResult.status, "unsupported");
+  assert.equal(result.providerResult.status, "auth_missing");
   assert.equal(result.providerResult.output.structured.failClosed, true);
   assert.equal(result.toolExecutions, undefined);
   assert.equal(result.checkpoint.status, "unsupported");
@@ -76,6 +76,40 @@ test("external provider requests fail closed without hosted provider execution",
   assert.equal(result.metrics.some((metric) => metric.name === "tool.call.count" && metric.value === 0), true);
   assert.equal(result.metrics.some((metric) => metric.name === "cost.external_billable_usd" && metric.value === 0), true);
   assert.equal(result.evidence.acceptedContracts.some((contract) => contract.name === "metricRecord"), true);
+});
+
+test("hosted provider requests can complete through injected explicit config and fetch", async () => {
+  const harness = createHarness({
+    now,
+    env: {
+      JAMI_HARNESS_OPENAI_API_KEY: "sk-test-secret",
+      JAMI_HARNESS_OPENAI_MODEL: "gpt-test",
+      JAMI_HARNESS_OPENAI_BASE_URL: "https://api.openai.test/v1",
+    },
+    fetchFn: async () => ({
+      ok: true,
+      status: 200,
+      async json() {
+        return {
+          id: "resp_test",
+          model: "gpt-test",
+          output_text: "hosted success",
+          usage: { input_tokens: 2, output_tokens: 3, total_tokens: 5 },
+        };
+      },
+    }),
+  });
+  const result = await harness.run({
+    runId: "run_hosted_provider_success",
+    providerId: "provider_openai",
+    instruction: "produce hosted evidence",
+  });
+
+  assert.equal(result.status, "completed");
+  assert.equal(result.providerResult.providerId, "provider_openai");
+  assert.equal(result.providerResult.status, "completed");
+  assert.equal(result.toolExecutions.length, 0);
+  assert.equal(JSON.stringify(result).includes("sk-test-secret"), false);
 });
 
 test("recoverable provider failure records checkpoint evidence and completes on retry", async () => {

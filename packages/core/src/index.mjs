@@ -8,6 +8,7 @@ import {
 } from "@jami-studio/harness-memory";
 import { createRunObservability } from "@jami-studio/harness-observability";
 import { createDefaultPolicyEngine } from "@jami-studio/harness-policy";
+import { createHostedProviderRouter } from "@jami-studio/harness-provider-hosted";
 import { createDeterministicProvider } from "@jami-studio/harness-provider-local";
 import { createInMemoryCheckpointStore } from "@jami-studio/harness-store-local";
 import {
@@ -51,7 +52,12 @@ export function composeHarnessCore(options = {}) {
   const policyEngine = options.policyEngine ?? createDefaultPolicyEngine({ now });
   assertPort("policyEngine", policyEngine, ["evaluate"]);
 
-  const provider = options.provider ?? createDeterministicProvider({ now });
+  const provider = options.provider ?? createHostedProviderRouter({
+    now,
+    env: options.env,
+    fetchFn: options.fetchFn,
+    localProvider: createDeterministicProvider({ now }),
+  });
   assertPort("provider", provider, ["generate"]);
   assertCapabilities("provider", provider);
 
@@ -114,8 +120,8 @@ export function composeHarnessCore(options = {}) {
           workbench: "local_static_workbench_available_hosted_unavailable",
           docsGeneration: "repo_generator_available_sdk_output_not_wired",
           checkpointStore: checkpointStore.capabilities?.durable ? "durable_local" : "memory_only",
-          providerRuntime: provider.capabilities?.provider === true ? "local_deterministic_only" : "unsupported",
-          hostedProviders: "not_implemented",
+          providerRuntime: provider.capabilities?.provider === true ? provider.capabilities.mode : "unsupported",
+          hostedProviders: provider.capabilities?.mode === "provider_router_local_plus_hosted" ? "fail_closed_openai_adapter_available" : "custom_or_unsupported",
         },
       };
     },
@@ -166,6 +172,7 @@ function buildCoreModules({ artifactStore, observability, memory, search, contex
     ], checkpointStore.capabilities?.durable ? [] : ["checkpoint store is in-memory and not durable"]),
     provider: capability("provider", "replaceable_module", moduleMode(provider), provider.capabilities?.provider === true, [
       "local deterministic provider workflow",
+      "fail-closed hosted OpenAI provider route",
       "model replacement port",
       "fail-closed external provider routes",
       "recoverable fail-once fixture",
@@ -236,7 +243,7 @@ function buildInstallPaths(modules) {
       modularPath({ pathId: "byo_context", moduleName: "context", sdkOption: "context", status: "supported_port", defaultMode: modules.context.mode, evidence: ["packages/core/test/core.test.mjs", "packages/sdk/test/sdk.test.mjs", "jami map --json"] }),
       modularPath({ pathId: "byo_search", moduleName: "search", sdkOption: "search", status: "supported_port", defaultMode: modules.search.mode, evidence: ["packages/core/test/core.test.mjs", "packages/sdk/test/sdk.test.mjs", "jami map --json"] }),
       modularPath({ pathId: "byo_store", moduleName: "checkpointStore", sdkOption: "checkpointStore", status: "supported_port", defaultMode: modules.checkpointStore.mode, evidence: ["packages/core/test/core.test.mjs", "packages/sdk/test/sdk.test.mjs", "apps/cli/test/cli.test.mjs", "jami doctor --json"] }),
-      modularPath({ pathId: "byo_provider", moduleName: "provider", sdkOption: "provider", status: "supported_port_local_only", defaultMode: modules.provider.mode, evidence: ["packages/core/test/core.test.mjs", "packages/sdk/test/sdk.test.mjs", "apps/cli/test/cli.test.mjs"], unavailableReason: "Hosted provider adapters fail closed until source-lock, auth, redaction, policy, trace, and adapter fixtures land." }),
+      modularPath({ pathId: "byo_provider", moduleName: "provider", sdkOption: "provider", status: "supported_port_local_plus_hosted_fail_closed", defaultMode: modules.provider.mode, evidence: ["packages/core/test/core.test.mjs", "packages/provider-hosted/test/provider-hosted.test.mjs", "packages/sdk/test/sdk.test.mjs", "apps/cli/test/cli.test.mjs"], unavailableReason: "Hosted provider execution requires explicit provider env vars; streaming, hosted tool calls, structured output schemas, and cancellation are not wired yet." }),
       modularPath({ pathId: "byo_policy", moduleName: "policy", sdkOption: "policyEngine", status: "supported_port", defaultMode: modules.policy.mode, evidence: ["packages/core/test/core.test.mjs", "packages/sdk/test/sdk.test.mjs", "pnpm policy:test"] }),
       modularPath({ pathId: "byo_tools", moduleName: "tools", sdkOption: "tools", status: "supported_port_current_adapters_only", defaultMode: modules.tools.mode, evidence: ["packages/core/test/core.test.mjs", "packages/sdk/test/sdk.test.mjs", "pnpm tools:test", "jami tools --json"], unavailableReason: "OpenAPI, shell, browser, code, provider-as-tool, A2A, stdio MCP, and remote MCP remain fail-closed unsupported surfaces." }),
       modularPath({ pathId: "byo_artifacts", moduleName: "artifacts", sdkOption: "artifactStore", status: "supported_port", defaultMode: modules.artifacts.mode, evidence: ["packages/core/test/core.test.mjs", "packages/sdk/test/sdk.test.mjs", "pnpm artifacts:test"] }),

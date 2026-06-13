@@ -11,7 +11,8 @@ test("composes default harness modules through core-owned ports", () => {
   assert.equal(core.schemaVersion, "2026-06-12.core-composition");
   assert.equal(inspection.boundaries.coreComposition, "package_owned_default_ports");
   assert.equal(inspection.modules.some((module) => module.name === "runtime" && module.available), true);
-  assert.equal(inspection.modules.some((module) => module.name === "provider" && module.mode === "local_deterministic"), true);
+  assert.equal(inspection.modules.some((module) => module.name === "provider" && module.mode === "provider_router_local_plus_hosted"), true);
+  assert.equal(inspection.boundaries.hostedProviders, "fail_closed_openai_adapter_available");
   assert.equal(inspection.modules.some((module) => module.name === "checkpointStore" && module.mode === "memory"), true);
   assert.equal(inspection.installPaths.fullLocalHarness.evidenceCommands.includes("pnpm core:test"), true);
   assert.equal(inspection.installPaths.fullLocalHarness.packageInstallStatus, "public_npm_install_smoke_passed");

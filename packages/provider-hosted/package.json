@@ -1,0 +1,28 @@
+{
+  "name": "@jami-studio/harness-provider-hosted",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Fail-closed hosted provider adapter foundation for Jami Harness.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/studio-jami/jami-harness.git",
+    "directory": "packages/provider-hosted"
+  },
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "src/",
+    "README.md"
+  ],
+  "jamiRelease": {
+    "publishable": true
+  },
+  "dependencies": {
+    "@jami-studio/harness-provider-local": "workspace:0.1.0"
+  }
+}

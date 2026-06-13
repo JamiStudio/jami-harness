@@ -99,8 +99,8 @@ test("run fails closed for unsupported external provider routes", async () => {
     assert.equal(run.code, 2);
     assert.equal(runPayload.ok, false);
     assert.equal(runPayload.status, "unsupported");
-    assert.equal(runPayload.providerStatus, "unsupported");
-    assert.equal(summary.provider.status, "unsupported");
+    assert.equal(runPayload.providerStatus, "auth_missing");
+    assert.equal(summary.provider.status, "auth_missing");
     assert.equal(summary.tools.length, 0);
   } finally {
     await rm(cwd, { recursive: true, force: true });

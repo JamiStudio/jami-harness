@@ -30,6 +30,7 @@
     "@jami-studio/harness-memory": "workspace:0.1.0",
     "@jami-studio/harness-observability": "workspace:0.1.0",
     "@jami-studio/harness-policy": "workspace:0.1.0",
+    "@jami-studio/harness-provider-hosted": "workspace:0.1.0",
     "@jami-studio/harness-provider-local": "workspace:0.1.0",
     "@jami-studio/harness-store-local": "workspace:0.1.0",
     "@jami-studio/harness-tools": "workspace:0.1.0"
