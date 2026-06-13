@@ -1,0 +1,67 @@
+name: Release artifacts
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version, for example v0.1.0"
+        required: true
+
+permissions:
+  contents: write
+  id-token: write
+  attestations: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.16.0"
+      - uses: pnpm/action-setup@v4
+        with:
+          version: "10.33.2"
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm verify
+      - name: Build release bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p release-packs release-artifacts
+          for pkg in \
+            packages/artifacts \
+            packages/contracts \
+            packages/memory \
+            packages/policy \
+            packages/provider-local \
+            packages/store-local \
+            packages/observability \
+            packages/runtime \
+            packages/tools \
+            packages/core \
+            packages/sdk \
+            apps/cli; do
+            pnpm --dir "$pkg" pack --pack-destination "$GITHUB_WORKSPACE/release-packs"
+          done
+          cp docs/generated/sbom.cdx.json release-artifacts/jami-harness-sbom.cdx.json
+          cp docs/generated/package-contents-manifest.json release-artifacts/jami-harness-package-contents.json
+          cp docs/generated/package-install-smoke.json release-artifacts/jami-harness-package-install-smoke.json
+          cp docs/generated/release-capability-manifest.json release-artifacts/jami-harness-release-capabilities.json
+          cp docs/generated/install-readiness-manifest.json release-artifacts/jami-harness-install-readiness.json
+          tar -czf "jami-harness-${{ inputs.version }}.tgz" release-packs release-artifacts
+          sha256sum "jami-harness-${{ inputs.version }}.tgz" > "jami-harness-${{ inputs.version }}.tgz.sha256"
+      - name: Attest release bundle
+        uses: actions/attest-build-provenance@v4
+        with:
+          subject-path: "jami-harness-${{ inputs.version }}.tgz"
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ inputs.version }}" \
+            --title "Jami Harness ${{ inputs.version }}" \
+            --notes "Jami Harness release artifacts for ${{ inputs.version }}." \
+            "jami-harness-${{ inputs.version }}.tgz" \
+            "jami-harness-${{ inputs.version }}.tgz.sha256"
