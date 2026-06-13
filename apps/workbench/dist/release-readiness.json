@@ -4,7 +4,7 @@
   "path": "/release-readiness.json",
   "sourceRepo": "jami-harness",
   "sourceCommit": "git:HEAD",
-  "sourceInputHash": "sha256:bdb1de80b0f2b66feb3c42fb073b7f1a41841b8b0088cd368a50d6f519f05cca",
+  "sourceInputHash": "sha256:800a5342c28e5fca5ed91d846b4f2fd61c1bb2791a2047dd947f22ddea6c18ab",
   "generatedAt": "deterministic:git-head-plus-hosted-route-input-hash",
   "freshnessClass": "current-head-official-source-lock",
   "status": "supported_preview_static_fail_closed",
@@ -19,32 +19,24 @@
       "claimable": false,
       "failClosed": true,
       "blockers": [
-        "15/15 package manifests remain private:true.",
-        "No package files lists or package contents dry-run evidence are recorded.",
+        "Publishable package contents and clean local install smokes pass, but no trusted npm publishing/OIDC provenance workflow is configured or verified.",
         "No npm trusted publisher, OIDC, or automation scope is recorded in this repo.",
-        "No publishConfig or accepted package scope/versioning decision is recorded."
+        "No accepted public versioning and trusted publish workflow decision is recorded."
       ],
       "requiredBeforeClaim": [
-        "Approve package names, files lists, publishConfig, and versioning.",
+        "Approve package names, publishConfig, files lists, public versioning, and the trusted publish workflow.",
         "Configure npm trusted publishing or explicit provenance on a supported cloud CI/CD provider.",
-        "Run and record a package contents dry run before any npm publish dry run."
+        "Run and record a provenance-capable npm publish dry run before any real npm publish."
       ]
     },
     "packageContents": {
       "capabilityId": "cap_package_contents_dry_run",
-      "surface": "npm package contents dry run",
-      "status": "fail_closed_unsupported",
-      "claimable": false,
-      "failClosed": true,
-      "blockers": [
-        "Package manifests remain private:true.",
-        "No package files lists or publishable package allowlists are accepted.",
-        "Research archives and generated/local state boundaries have not been proven against package tarballs."
-      ],
-      "requiredBeforeClaim": [
-        "Add package files lists or equivalent contents policy.",
-        "Run a contents dry run for each publishable package and record included files."
-      ]
+      "surface": "package contents dry run",
+      "status": "supported_local_evidence",
+      "claimable": true,
+      "failClosed": false,
+      "blockers": [],
+      "requiredBeforeClaim": []
     },
     "attestations": {
       "capabilityId": "cap_github_release_attestations",

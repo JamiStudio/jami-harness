@@ -225,7 +225,7 @@ function validatePublishableManifest(entry) {
   if (!manifest.repository?.url?.includes("github.com/studio-jami/jami-harness")) errors.push("repository must point at studio-jami/jami-harness");
   if (manifest.publishConfig?.access !== "public") errors.push("publishConfig.access must be public");
   if (!Array.isArray(manifest.files) || manifest.files.length === 0) errors.push("files policy is required");
-  if (manifest.private !== true) errors.push("private must stay true until the real publish step removes it after gates pass");
+  if (manifest.private === true) errors.push("publishable package must not be private after package contents and clean install smoke gates are enabled");
   if (errors.length > 0) fail(`${path}: ${errors.join("; ")}`);
 }
 

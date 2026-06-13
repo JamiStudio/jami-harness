@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:8b4d8ebb55dbb2cf3ef8b6663b509bcf7abb632e606b7d9bc74d977d35422f12",
+  "sourceInputHash": "sha256:952f910beb7c19db5d666277062f1cc574a0eb76b8eeb5fa56d8b331caa491ef",
   "generatedAt": "deterministic:git-head-plus-input-hash",
   "freshnessClass": "deterministic_current_source_tree",
   "command": "pnpm docs:generate -- --check",
@@ -18,7 +18,7 @@
   "fullLocalHarness": {
     "pathId": "full_local_source_checkout",
     "status": "supported_local_source_checkout",
-    "packageInstallStatus": "unavailable_private_manifests",
+    "packageInstallStatus": "local_tarball_install_smoke_passed_registry_publish_unavailable",
     "installCommands": [
       "pnpm install --frozen-lockfile",
       "node apps/cli/src/cli.mjs init --json",
@@ -31,7 +31,9 @@
       "pnpm docs:generate -- --check",
       "pnpm workbench:check",
       "pnpm eval:smoke",
-      "pnpm release:readiness"
+      "pnpm release:readiness",
+      "pnpm package:dry-run:check",
+      "pnpm package:smoke:check"
     ],
     "sourceEvidence": [
       "packages/sdk/src/index.mjs",
@@ -42,7 +44,7 @@
       "docs/operations/release-readiness.md"
     ],
     "unavailableReasons": [
-      "Package manifests remain private:true.",
+      "Public registry install is not claimed because no trusted-provenance npm publish has been executed.",
       "Hosted providers, hosted stores, hosted workbench, release publishing, Mintlify build/publish, hosted public docs, and attestations remain unavailable."
     ]
   },

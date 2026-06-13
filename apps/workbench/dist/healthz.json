@@ -4,7 +4,7 @@
   "path": "/healthz.json",
   "sourceRepo": "jami-harness",
   "sourceCommit": "git:HEAD",
-  "sourceInputHash": "sha256:bdb1de80b0f2b66feb3c42fb073b7f1a41841b8b0088cd368a50d6f519f05cca",
+  "sourceInputHash": "sha256:800a5342c28e5fca5ed91d846b4f2fd61c1bb2791a2047dd947f22ddea6c18ab",
   "generatedAt": "deterministic:git-head-plus-hosted-route-input-hash",
   "freshnessClass": "current-head-official-source-lock",
   "status": "supported_preview_static_fail_closed",
@@ -13,7 +13,7 @@
   "safeClaim": "A static preview health route proves the route bundle can be generated and parsed locally; it is not hosted uptime evidence.",
   "evidence": {
     "generatedRouteCount": 4,
-    "sourceInputHash": "sha256:bdb1de80b0f2b66feb3c42fb073b7f1a41841b8b0088cd368a50d6f519f05cca",
+    "sourceInputHash": "sha256:800a5342c28e5fca5ed91d846b4f2fd61c1bb2791a2047dd947f22ddea6c18ab",
     "secretScan": "passed"
   },
   "readiness": [

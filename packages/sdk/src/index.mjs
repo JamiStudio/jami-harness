@@ -1,6 +1,6 @@
-import { toArtifactView } from "../../artifacts/src/index.mjs";
-import { HarnessCoreError, composeHarnessCore } from "../../core/src/index.mjs";
-import { createRunLifecycleKernel } from "../../runtime/src/index.mjs";
+import { toArtifactView } from "@jami-studio/harness-artifacts";
+import { HarnessCoreError, composeHarnessCore } from "@jami-studio/harness-core";
+import { createRunLifecycleKernel } from "@jami-studio/harness-runtime";
 
 const SCHEMA_VERSION = "2026-06-09";
 const ID_PATTERNS = {

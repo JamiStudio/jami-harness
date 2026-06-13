@@ -85,6 +85,7 @@ const sourceInputHash = hashJson({
   sourceRecords,
 });
 const privatePackages = packages.filter(({ manifest }) => manifest.private === true);
+const publishablePackages = packages.filter(({ manifest }) => manifest.jamiRelease?.publishable === true);
 
 const manifest = {
   schemaVersion: "2026-06-09.release-capability-manifest",
@@ -101,7 +102,7 @@ const manifest = {
   packageSummary: {
     packageCount: packages.length,
     privatePackageCount: privatePackages.length,
-    publishablePackageCount: packages.length - privatePackages.length,
+    publishablePackageCount: publishablePackages.length,
     packages: packages.map(({ path, manifest }) => ({
       path,
       name: manifest.name,
@@ -118,7 +119,7 @@ const manifest = {
   capabilities: buildCapabilities(),
   humanInterventions: [
     "Confirm npm organization/package publishing access for @jami-studio and configure trusted publishing or provenance/OIDC before any npm publish dry run.",
-    "Approve publishable package names, package contents policy, files lists, publishConfig, and versioning before removing private:true.",
+    "Confirm publishable package names, package contents policy, files lists, publishConfig, public versioning, and trusted publishing workflow before real npm publish.",
     "Create and verify a release artifact plus GitHub attestation workflow before claiming signed or attested artifacts.",
     "Install and source-lock the exact Mintlify CLI/package, then run mint validate locally before claiming a Mintlify build check.",
     "Select and authorize a hosted docs target before public docs hosting, Mintlify deployment, Vercel, or Cloudflare claims.",
@@ -198,6 +199,22 @@ function buildCapabilities() {
         "opentelemetry_env_spec",
       ],
     }),
+    localCapability({
+      capabilityId: "cap_package_contents_dry_run",
+      surface: "package contents dry run",
+      safeClaim: "The repo can dry-run pack every harness-owned publishable package, record included files with SHA-256 hashes, and scan package contents for secret-shaped values without publishing.",
+      commands: ["pnpm package:dry-run", "pnpm package:dry-run:check"],
+      evidence: ["scripts/release/check-package-contents.mjs", "docs/generated/package-contents-manifest.json"],
+      officialSourceIds: ["npm_publish"],
+    }),
+    localCapability({
+      capabilityId: "cap_clean_local_package_install_smoke",
+      surface: "clean local tarball install smoke",
+      safeClaim: "The repo can pack every harness-owned publishable package, install those tarballs into a clean external npm project, import the public package graph, and run the installed CLI release route.",
+      commands: ["pnpm package:smoke", "pnpm package:smoke:check"],
+      evidence: ["scripts/release/check-package-contents.mjs", "docs/generated/package-install-smoke.json"],
+      officialSourceIds: ["npm_publish"],
+    }),
     unsupportedCapability({
       capabilityId: "cap_npm_publish_provenance",
       surface: "npm publish with provenance",
@@ -205,31 +222,14 @@ function buildCapabilities() {
       safeClaim: "npm publishing and provenance are not available from this repo yet.",
       officialSourceIds: ["npm_provenance", "npm_trusted_publishing", "npm_publish"],
       blockers: [
-        `${privatePackages.length}/${packages.length} package manifests remain private:true.`,
-        "No package files lists or package contents dry-run evidence are recorded.",
+        "Publishable package contents and clean local install smokes pass, but no trusted npm publishing/OIDC provenance workflow is configured or verified.",
         "No npm trusted publisher, OIDC, or automation scope is recorded in this repo.",
-        "No publishConfig or accepted package scope/versioning decision is recorded.",
+        "No accepted public versioning and trusted publish workflow decision is recorded.",
       ],
       requiredBeforeClaim: [
-        "Approve package names, files lists, publishConfig, and versioning.",
+        "Approve package names, publishConfig, files lists, public versioning, and the trusted publish workflow.",
         "Configure npm trusted publishing or explicit provenance on a supported cloud CI/CD provider.",
-        "Run and record a package contents dry run before any npm publish dry run.",
-      ],
-    }),
-    unsupportedCapability({
-      capabilityId: "cap_package_contents_dry_run",
-      surface: "npm package contents dry run",
-      blockedCommand: "npm publish --dry-run or npm pack --dry-run for each publishable package",
-      safeClaim: "Package contents have not been dry-run or accepted for public release.",
-      officialSourceIds: ["npm_publish"],
-      blockers: [
-        "Package manifests remain private:true.",
-        "No package files lists or publishable package allowlists are accepted.",
-        "Research archives and generated/local state boundaries have not been proven against package tarballs.",
-      ],
-      requiredBeforeClaim: [
-        "Add package files lists or equivalent contents policy.",
-        "Run a contents dry run for each publishable package and record included files.",
+        "Run and record a provenance-capable npm publish dry run before any real npm publish.",
       ],
     }),
     unsupportedCapability({
@@ -393,8 +393,11 @@ function collectSourceRecords() {
     "docs/generated/sbom.cdx.json",
     "apps/docs/docs.json",
     "scripts/release/check-readiness.mjs",
+    "scripts/release/check-package-contents.mjs",
     "scripts/release/generate-sbom.mjs",
     "scripts/release/generate-capability-manifest.mjs",
+    "docs/generated/package-contents-manifest.json",
+    "docs/generated/package-install-smoke.json",
     "scripts/hosted/generate-hosted-routes.mjs",
     "docs/operations/hosted-route-source-lock.md",
   ];

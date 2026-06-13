@@ -1,7 +1,7 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:7f51b040-b36c-5874-a692-fe115c6c9cfd",
+  "serialNumber": "urn:uuid:960c1d5d-1052-57fb-a898-bfc791e13a67",
   "version": 1,
   "metadata": {
     "tools": {
@@ -70,7 +70,7 @@
       },
       {
         "name": "jami:harness:sourceInputHash",
-        "value": "1c0adaabf5a1283a59519355d183ed4396f14a498a6413bdeee9e248b4c0327e"
+        "value": "68f64e5fabc040f1b6b7ce62e1dbbe7800d650ff3d78cea8c1089e01322b78ac"
       },
       {
         "name": "jami:harness:commands",

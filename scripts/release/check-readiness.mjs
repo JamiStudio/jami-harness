@@ -27,6 +27,10 @@ const checks = [
   checkScript("contracts:validate", "contract and fixture validation"),
   checkScript("sbom:generate", "local SBOM generation command"),
   checkScript("sbom:check", "local SBOM drift check command"),
+  checkScript("package:dry-run", "package contents dry-run command"),
+  checkScript("package:dry-run:check", "package contents dry-run drift check command"),
+  checkScript("package:smoke", "clean local package install smoke command"),
+  checkScript("package:smoke:check", "clean local package install smoke drift check command"),
   checkScript("release:capabilities", "release capability manifest generation command"),
   checkScript("release:capabilities:check", "release capability manifest drift check command"),
   checkScript("hosted:routes", "hosted status/control route generation command"),
@@ -44,6 +48,8 @@ const checks = [
   checkFile("docs/generated/docs-source-manifest.json", "generated docs-source manifest"),
   checkFile("docs/generated/install-readiness-manifest.json", "generated install-readiness manifest"),
   checkFile("docs/generated/sbom.cdx.json", "generated local CycloneDX SBOM dry-run artifact"),
+  checkFile("docs/generated/package-contents-manifest.json", "generated package contents dry-run artifact"),
+  checkFile("docs/generated/package-install-smoke.json", "generated clean package install smoke artifact"),
   checkFile("docs/generated/release-capability-manifest.json", "generated release capability manifest"),
   checkFile("docs/generated/hosted-route-manifest.json", "generated hosted status/control route manifest"),
   checkFile("apps/docs/docs.json", "Mintlify-ready navigation draft"),
@@ -72,7 +78,7 @@ const unavailableCommands = [
   {
     command: "npm publish --dry-run --provenance",
     status: "unavailable",
-    reason: "all publishable package manifests remain private and npm automation scope is not recorded",
+    reason: "publishable package contents and clean install smokes pass, but trusted npm provenance/OIDC workflow scope is not recorded",
   },
   {
     command: "gh attestation sign/verify",
@@ -110,7 +116,7 @@ const humanInterventions = [
   "Confirm npm organization/package publishing access for @jami-studio and enable npm provenance/OIDC before any npm publish dry run.",
   "Confirm GitHub release permissions and accepted artifact attestation workflow before creating release artifacts.",
   "Select and authorize the public docs hosting target before Mintlify, Vercel, or Cloudflare claims are made.",
-  "Approve publishable package scope changes, including removing private:true and adding publishConfig/files only when packages are ready.",
+  "Confirm publishable package scope, public versioning, trusted publishing workflow, and provenance verification before any real npm publish.",
   "Refresh repo-local source-lock evidence for any release tool, hosted service, protocol, or third-party source used by the release.",
   "Create or authorize the Cloudflare Pages project and DNS target before claiming hosted harness status/control routes.",
   "Provision Neon and OTLP endpoint secrets outside tracked files before claiming hosted store or hosted observability routes.",
@@ -189,6 +195,13 @@ const claims = [
     "docs/generated/sbom.cdx.json",
     "pnpm sbom:generate",
     "pnpm sbom:check",
+  ]),
+  claim("Harness-owned publishable packages have local pack dry-run evidence and clean external tarball install smoke", "supported", [
+    "scripts/release/check-package-contents.mjs",
+    "docs/generated/package-contents-manifest.json",
+    "docs/generated/package-install-smoke.json",
+    "pnpm package:dry-run:check",
+    "pnpm package:smoke:check",
   ]),
   claim("Release and hosted capability manifest exists with fail-closed unsupported surfaces backed by repo-local official-source evidence", "supported", [
     "scripts/release/generate-capability-manifest.mjs",
@@ -334,12 +347,24 @@ function checkPackageMetadata() {
 }
 
 function checkPrivatePublishBlock() {
-  const privatePackages = manifests.filter(({ manifest }) => manifest.private === true);
+  const publishablePrivatePackages = manifests.filter(({ manifest }) => manifest.jamiRelease?.publishable === true && manifest.private === true);
+  if (publishablePrivatePackages.length > 0) {
+    return {
+      label: "publishable package manifests are public-package ready",
+      status: "blocked",
+      reason: `${publishablePrivatePackages.length} publishable package manifests still have private:true`,
+      evidence: publishablePrivatePackages.map(({ path }) => path),
+    };
+  }
   return {
-    label: "package publishing disabled until release gates close",
+    label: "npm publish/provenance disabled until trusted release workflow closes",
     status: "blocked",
-    reason: `${privatePackages.length}/${manifests.length} package manifests are private:true; this intentionally blocks npm publishing`,
-    evidence: privatePackages.map(({ path }) => path),
+    reason: "publishable package manifests are package-ready locally, but no trusted npm publishing/OIDC provenance workflow is configured or verified",
+    evidence: [
+      "docs/generated/package-contents-manifest.json",
+      "docs/generated/package-install-smoke.json",
+      "docs/generated/release-capability-manifest.json",
+    ],
   };
 }
 
@@ -353,10 +378,11 @@ function checkReleaseCapabilityManifest() {
     "cap_local_sbom_dry_run",
     "cap_local_docs_generation",
     "cap_hosted_status_control_preview_routes",
+    "cap_package_contents_dry_run",
+    "cap_clean_local_package_install_smoke",
   ];
   const requiredUnsupported = [
     "cap_npm_publish_provenance",
-    "cap_package_contents_dry_run",
     "cap_github_release_attestations",
     "cap_mintlify_validate_publish",
     "cap_hosted_public_docs",

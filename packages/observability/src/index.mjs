@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { createInMemoryArtifactStore } from "../../artifacts/src/index.mjs";
+import { createInMemoryArtifactStore } from "@jami-studio/harness-artifacts";
 
 const SCHEMA_VERSION = "2026-06-09";
 const SENSITIVE_FIELD_PATTERN = /secret|apiKey|credential|password|privatePayload|plaintext|value|prompt|systemPrompt|developerPrompt|userPrompt|toolMetadata|tool_metadata|toolDescription|tool_description|toolSchema|tool_schema/i;

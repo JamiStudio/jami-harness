@@ -3,8 +3,8 @@ import { existsSync } from "node:fs";
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { HarnessInputError, createHarness } from "../../../packages/sdk/src/index.mjs";
-import { HarnessStoreError, createFileSystemCheckpointStore } from "../../../packages/store-local/src/index.mjs";
+import { HarnessInputError, createHarness } from "@jami-studio/harness-sdk";
+import { HarnessStoreError, createFileSystemCheckpointStore } from "@jami-studio/harness-store-local";
 
 const STATE_DIR = ".jami-harness";
 const CONFIG_FILE = "harness.json";

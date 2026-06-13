@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
-import { createInMemoryArtifactStore } from "../../artifacts/src/index.mjs";
-import { createRunObservability } from "../../observability/src/index.mjs";
-import { createDefaultPolicyEngine } from "../../policy/src/index.mjs";
+import { createInMemoryArtifactStore } from "@jami-studio/harness-artifacts";
+import { createRunObservability } from "@jami-studio/harness-observability";
+import { createDefaultPolicyEngine } from "@jami-studio/harness-policy";
 
 const SCHEMA_VERSION = "2026-06-09";
 export const MCP_PROTOCOL_VERSION = "2025-11-25";

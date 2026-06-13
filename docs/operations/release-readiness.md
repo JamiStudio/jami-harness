@@ -172,15 +172,16 @@ Current local implementation:
 - `pnpm verify` runs the release capability manifest drift check before generated docs and
   release readiness audits.
 - `pnpm release:readiness` and `pnpm release:dry-run` verify that the generated manifest
-  keeps npm publishing/provenance, package contents dry-runs, GitHub attestations,
-  Mintlify validation/publishing, hosted public docs, hosted provider runtime, hosted
-  durable stores, hosted observability sinks, and hosted workbench surfaces fail-closed
-  unsupported while marking the static preview route bundle as local evidence only.
+  marks package contents dry-runs, clean local tarball install smoke, and the static
+  preview route bundle as local evidence while keeping npm publishing/provenance,
+  GitHub attestations, Mintlify validation/publishing, hosted public docs, hosted
+  provider runtime, hosted durable stores, hosted observability sinks, and hosted
+  workbench surfaces fail-closed unsupported.
 
 Current unsupported surfaces:
 
 - npm publish/provenance/trusted publishing.
-- npm package contents dry-runs.
+- npm publish/provenance/trusted publishing.
 - GitHub release artifact attestations.
 - Mintlify CLI validation or hosted docs publishing.
 - Hosted public docs on Mintlify, Vercel, Cloudflare, or any other target.

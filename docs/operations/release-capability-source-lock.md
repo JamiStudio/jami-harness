@@ -95,15 +95,18 @@ Verified on 2026-06-12:
 - `pnpm verify` runs the release capability manifest drift check before generated docs and
   release readiness audits.
 - `pnpm release:readiness` and `pnpm release:dry-run` check that the generated manifest
-  exists and still marks npm publishing, package contents dry-runs, GitHub attestations,
-  Mintlify validation/publishing, hosted public docs, hosted provider runtime, hosted
-  durable stores, and hosted workbench as fail-closed unsupported.
+  exists, marks package contents dry-runs and clean local tarball install smoke as
+  supported local evidence, and still marks npm publishing/provenance, GitHub
+  attestations, Mintlify validation/publishing, hosted public docs, hosted provider
+  runtime, hosted durable stores, and hosted workbench as fail-closed unsupported.
 
 ## Unsupported Or Not Claimed
 
 - No npm publish dry run, trusted publishing, staged publish, or provenance publish was
   attempted.
-- No package contents dry run was attempted.
+- Package contents dry-runs and clean local tarball install smoke are generated locally;
+  no npm publish dry run, trusted publishing, staged publish, or provenance publish was
+  attempted.
 - No GitHub release artifact or attestation was generated or verified.
 - No Mintlify CLI validation, hosted build, or hosted publish was run.
 - No Vercel, Cloudflare, or other hosted docs target was selected or called.
@@ -117,8 +120,8 @@ Verified on 2026-06-12:
 ## Refresh Triggers
 
 - Any release package changes from `private: true` to publishable.
-- Any addition of `publishConfig`, package `files`, npm trusted publishing, npm stage
-  publish, provenance, package contents dry-runs, or release workflows.
+- Any addition of npm trusted publishing, npm stage publish, provenance publish, package
+  versioning changes, or release workflows.
 - Any GitHub artifact attestation or signed release archive implementation.
 - Any Mintlify CLI install, source-lock, `mint validate`, hosted Mintlify project, or
   hosted docs target.

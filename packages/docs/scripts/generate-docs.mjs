@@ -171,7 +171,7 @@ function buildOutputs(model, baseProvenance) {
       },
       {
         surface: "Public package installation",
-        reason: "All package manifests remain private:true, so generated install guidance is limited to the local source-checkout path.",
+        reason: "Clean local tarball install smoke is proven, but no public registry publish with trusted provenance has been performed.",
       },
     ],
   };
@@ -198,7 +198,7 @@ function quickstart(model) {
   return [
     "## Current Install Posture",
     "",
-    `The root package is \`${model.rootManifest.name}\` at version \`${model.rootManifest.version}\`. Package manifests remain private until release gates close.`,
+    `The root package is \`${model.rootManifest.name}\` at version \`${model.rootManifest.version}\`. Publishable package manifests are locally pack-ready, but public registry installation is not claimed until trusted provenance publishing is configured and executed.`,
     "",
     "## Local Commands",
     "",
@@ -216,7 +216,7 @@ function quickstart(model) {
     "",
     "## Full Local Harness Path",
     "",
-    "The supported install path today is a local source checkout. Public package installation remains unavailable because package manifests are still private.",
+    "The supported install paths today are a local source checkout and the generated clean local tarball install smoke. Public registry installation remains unavailable because no trusted-provenance npm publish has been executed.",
     "",
     "```powershell",
     ...installReadinessManifest(model, {}).fullLocalHarness.installCommands,
@@ -378,7 +378,7 @@ function evidenceIndex(model) {
     "- Local deterministic regression eval smoke exists for tool safety, docs generation, memory recall, and recovery.",
     "- Local static workbench generation exists for run timeline, approvals, artifacts, traces, memory/context, docs preview, and system-map inspection from current local evidence.",
     "- Tool adapter source inspection exists for supported function and trusted MCP fixture paths plus fail-closed OpenAPI, shell, browser, code, provider-as-tool, and A2A dry-run evidence.",
-    "- Release and hosted capability readiness is generated into `docs/generated/release-capability-manifest.json`, with unsupported npm publish/provenance, package contents dry-runs, GitHub attestations, Mintlify validation/publishing, hosted docs, hosted providers, hosted stores, and hosted workbench surfaces marked fail-closed.",
+    "- Release and hosted capability readiness is generated into `docs/generated/release-capability-manifest.json`, with package contents dry-runs and clean local tarball install smoke marked supported local evidence, while npm publish/provenance, GitHub attestations, Mintlify validation/publishing, hosted docs, hosted providers, hosted stores, and hosted workbench surfaces remain fail-closed.",
     "- Release publishing, hosted docs, hosted model providers, executable full protocol/local tool adapters, attestation, and package release artifacts remain unavailable until their gates close.",
     "",
     "## Evidence Inputs",
@@ -395,7 +395,7 @@ function installReadinessManifest(model, provenance) {
     fullLocalHarness: {
       pathId: "full_local_source_checkout",
       status: "supported_local_source_checkout",
-      packageInstallStatus: "unavailable_private_manifests",
+      packageInstallStatus: "local_tarball_install_smoke_passed_registry_publish_unavailable",
       installCommands: [
         "pnpm install --frozen-lockfile",
         "node apps/cli/src/cli.mjs init --json",
@@ -409,6 +409,8 @@ function installReadinessManifest(model, provenance) {
         "pnpm workbench:check",
         "pnpm eval:smoke",
         "pnpm release:readiness",
+        "pnpm package:dry-run:check",
+        "pnpm package:smoke:check",
       ],
       sourceEvidence: [
         "packages/sdk/src/index.mjs",
@@ -419,7 +421,7 @@ function installReadinessManifest(model, provenance) {
         "docs/operations/release-readiness.md",
       ],
       unavailableReasons: [
-        "Package manifests remain private:true.",
+        "Public registry install is not claimed because no trusted-provenance npm publish has been executed.",
         "Hosted providers, hosted stores, hosted workbench, release publishing, Mintlify build/publish, hosted public docs, and attestations remain unavailable.",
       ],
     },

@@ -1,4 +1,4 @@
-import { createDefaultPolicyEngine, createPolicyGatedRunKernel } from "../../policy/src/index.mjs";
+import { createDefaultPolicyEngine, createPolicyGatedRunKernel } from "@jami-studio/harness-policy";
 
 const SCHEMA_VERSION = "2026-06-09";
 const ACTION_ID_PATTERN = /^act_[a-z0-9][a-z0-9_-]*$/;

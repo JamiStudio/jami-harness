@@ -1,22 +1,22 @@
-import { createInMemoryArtifactStore } from "../../artifacts/src/index.mjs";
+import { createInMemoryArtifactStore } from "@jami-studio/harness-artifacts";
 import {
   createContextAssembler,
   createInMemoryMemoryPort,
   createMemorySearchAdapter,
   createNoopMemoryPort,
   createNoopSearchAdapter,
-} from "../../memory/src/index.mjs";
-import { createRunObservability } from "../../observability/src/index.mjs";
-import { createDefaultPolicyEngine } from "../../policy/src/index.mjs";
-import { createDeterministicProvider } from "../../provider-local/src/index.mjs";
-import { createInMemoryCheckpointStore } from "../../store-local/src/index.mjs";
+} from "@jami-studio/harness-memory";
+import { createRunObservability } from "@jami-studio/harness-observability";
+import { createDefaultPolicyEngine } from "@jami-studio/harness-policy";
+import { createDeterministicProvider } from "@jami-studio/harness-provider-local";
+import { createInMemoryCheckpointStore } from "@jami-studio/harness-store-local";
 import {
   createFunctionTool,
   createToolGateway,
   createToolRegistry,
   listToolAdapterCapabilities,
   listToolAdapterSourceLocks,
-} from "../../tools/src/index.mjs";
+} from "@jami-studio/harness-tools";
 
 export const CORE_SCHEMA_VERSION = "2026-06-12.core-composition";
 
@@ -188,7 +188,7 @@ function buildInstallPaths(modules) {
     fullLocalHarness: {
       pathId: "full_local_source_checkout",
       status: "supported_local_source_checkout",
-      packageInstallStatus: "unavailable_private_manifests",
+      packageInstallStatus: "local_tarball_install_smoke_passed_registry_publish_unavailable",
       installCommands: [
         "pnpm install --frozen-lockfile",
         "node apps/cli/src/cli.mjs init --json",
@@ -219,7 +219,7 @@ function buildInstallPaths(modules) {
         available: modules[name]?.available === true,
       })),
       unavailableReasons: [
-        "Workspace package manifests remain private:true, so public npm installation is not claimed.",
+        "Local tarball package install smoke is available, but public npm installation is not claimed until trusted-provenance publishing is executed.",
         "Hosted providers, hosted stores, hosted workbench, release publishing, hosted docs, and SDK docs-output injection remain unavailable.",
         "Local static workbench generation is available through pnpm workbench:generate; it is not a hosted control plane.",
       ],
