@@ -15,8 +15,8 @@ const specVersion = "1.7";
 const sourceCommit = "git:HEAD";
 const resolvedSourceCommit = git(["rev-parse", "HEAD"]) ?? "working-tree";
 const resolvedCommitDate = git(["log", "-1", "--format=%cI"]) ?? "unknown";
-const sourceRef = git(["rev-parse", "--abbrev-ref", "HEAD"]) ?? "unknown";
-const sourceRemote = git(["remote", "get-url", "origin"]) ?? "unknown";
+const sourceRef = normalizeRef() ?? "unknown";
+const sourceRemote = normalizeRemote(git(["remote", "get-url", "origin"])) ?? "unknown";
 const packageFiles = discoverPackageFiles();
 const packages = packageFiles.map((path) => ({
   path,
@@ -169,6 +169,23 @@ function property(name, value) {
 function git(args) {
   const result = spawnSync("git", args, { cwd: repoRoot, encoding: "utf8" });
   return result.status === 0 ? result.stdout.trim() : undefined;
+}
+
+function normalizeRemote(remote) {
+  if (!remote) return remote;
+  if (/^https:\/\/github\.com\/[^/]+\/[^/]+(?:\.git)?$/.test(remote)) {
+    return `${remote.replace(/\.git$/, "")}.git`;
+  }
+  return remote;
+}
+
+function normalizeRef() {
+  const githubRefName = process.env.GITHUB_REF_NAME;
+  if (githubRefName) return githubRefName;
+  const githubRef = process.env.GITHUB_REF;
+  if (githubRef?.startsWith("refs/heads/")) return githubRef.slice("refs/heads/".length);
+  const gitRef = git(["rev-parse", "--abbrev-ref", "HEAD"]);
+  return gitRef === "HEAD" ? "main" : gitRef;
 }
 
 function hashJson(value) {

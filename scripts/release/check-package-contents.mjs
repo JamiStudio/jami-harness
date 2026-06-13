@@ -434,9 +434,26 @@ function removeTempRoot(tempRoot) {
 
 function gitInfo() {
   return {
-    remote: safeGit(["remote", "get-url", "origin"]),
-    ref: safeGit(["rev-parse", "--abbrev-ref", "HEAD"]),
+    remote: normalizeRemote(safeGit(["remote", "get-url", "origin"])),
+    ref: normalizeRef(),
   };
+}
+
+function normalizeRemote(remote) {
+  if (!remote) return remote;
+  if (/^https:\/\/github\.com\/[^/]+\/[^/]+(?:\.git)?$/.test(remote)) {
+    return `${remote.replace(/\.git$/, "")}.git`;
+  }
+  return remote;
+}
+
+function normalizeRef() {
+  const githubRefName = process.env.GITHUB_REF_NAME;
+  if (githubRefName) return githubRefName;
+  const githubRef = process.env.GITHUB_REF;
+  if (githubRef?.startsWith("refs/heads/")) return githubRef.slice("refs/heads/".length);
+  const gitRef = safeGit(["rev-parse", "--abbrev-ref", "HEAD"]);
+  return gitRef === "HEAD" ? "main" : gitRef;
 }
 
 function safeGit(commandArgs) {

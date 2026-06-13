@@ -434,11 +434,28 @@ function readReleaseCapabilityManifest() {
 
 function gitInfo() {
   return {
-    remote: runGit(["remote", "get-url", "origin"]),
+    remote: normalizeRemote(runGit(["remote", "get-url", "origin"])),
     commit: runGit(["rev-parse", "HEAD"]),
-    ref: runGit(["rev-parse", "--abbrev-ref", "HEAD"]),
+    ref: normalizeRef(),
     commitDate: runGit(["log", "-1", "--format=%cI"]),
   };
+}
+
+function normalizeRemote(remote) {
+  if (!remote) return remote;
+  if (/^https:\/\/github\.com\/[^/]+\/[^/]+(?:\.git)?$/.test(remote)) {
+    return `${remote.replace(/\.git$/, "")}.git`;
+  }
+  return remote;
+}
+
+function normalizeRef() {
+  const githubRefName = process.env.GITHUB_REF_NAME;
+  if (githubRefName) return githubRefName;
+  const githubRef = process.env.GITHUB_REF;
+  if (githubRef?.startsWith("refs/heads/")) return githubRef.slice("refs/heads/".length);
+  const gitRef = runGit(["rev-parse", "--abbrev-ref", "HEAD"]);
+  return gitRef === "HEAD" ? "main" : gitRef;
 }
 
 function runGit(args) {

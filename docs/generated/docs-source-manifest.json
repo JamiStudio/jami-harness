@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:21d5fd8f6749654a5e1a0751f4748a783916013bc923c8bf1c78e5b8f910b871",
+  "sourceInputHash": "sha256:50908ca9b1c5d52193bc18541016dd43ac18dbb65bebbb09c6fbecd3e9556b35",
   "generatedAt": "deterministic:git-head-plus-input-hash",
   "freshnessClass": "deterministic_current_source_tree",
   "command": "pnpm docs:generate -- --check",
@@ -273,8 +273,8 @@
     },
     {
       "path": "apps/workbench/scripts/generate-workbench.mjs",
-      "sha256": "sha256:5dae68cc4f3375dee089851dc9fd2aa4a15148ff15388c60e514da7a4b64830d",
-      "bytes": 33453
+      "sha256": "sha256:988341f0dac9c51b67524c6f5b56cae5fad6418452e2c2b43ca7b137f9fff9b6",
+      "bytes": 34019
     },
     {
       "path": "apps/workbench/test/workbench.test.mjs",
@@ -293,7 +293,7 @@
     },
     {
       "path": "docs/generated/release-capability-manifest.json",
-      "sha256": "sha256:c6a139966ceb22f8f665bf9ad4dd73a176339562e2849e30facf742380d4d278",
+      "sha256": "sha256:71765e5099baf0e2fefa09a974016d1c4d27b07ff130c3750e38717511b7e29a",
       "bytes": 32601
     },
     {
@@ -828,8 +828,8 @@
     },
     {
       "path": "packages/docs/scripts/generate-docs.mjs",
-      "sha256": "sha256:f75c2fd8f44ee9deb0cd6c540a9bba2a66ac75370e05d642cd8f6e6255bbe01e",
-      "bytes": 27902
+      "sha256": "sha256:9b409c38875fecc7b8f1c01271f2fed6c3b9ac4df359d9ede6d38b094e0fdc4c",
+      "bytes": 28468
     },
     {
       "path": "packages/memory/package.json",
@@ -918,8 +918,8 @@
     },
     {
       "path": "scripts/release/check-readiness.mjs",
-      "sha256": "sha256:d7c3196ac867c00e947dda69a79f19da62a82492b57eb668143a9b41e1061d52",
-      "bytes": 22141
+      "sha256": "sha256:1786f11cb0a401a9f3fb8d719b419e1811abe7872295a2e5d37125b33b5f36b9",
+      "bytes": 22707
     },
     {
       "path": "scripts/release/generate-capability-manifest.mjs",
