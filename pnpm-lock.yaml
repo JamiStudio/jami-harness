@@ -8,20 +8,87 @@ importers:
 
   .: {}
 
-  apps/cli: {}
+  apps/cli:
+    dependencies:
+      '@jami-studio/harness-sdk':
+        specifier: workspace:0.0.0
+        version: link:../../packages/sdk
+      '@jami-studio/harness-store-local':
+        specifier: workspace:0.0.0
+        version: link:../../packages/store-local
+
+  apps/workbench: {}
 
   packages/artifacts: {}
 
   packages/contracts: {}
 
+  packages/core:
+    dependencies:
+      '@jami-studio/harness-artifacts':
+        specifier: workspace:0.0.0
+        version: link:../artifacts
+      '@jami-studio/harness-memory':
+        specifier: workspace:0.0.0
+        version: link:../memory
+      '@jami-studio/harness-observability':
+        specifier: workspace:0.0.0
+        version: link:../observability
+      '@jami-studio/harness-policy':
+        specifier: workspace:0.0.0
+        version: link:../policy
+      '@jami-studio/harness-provider-local':
+        specifier: workspace:0.0.0
+        version: link:../provider-local
+      '@jami-studio/harness-store-local':
+        specifier: workspace:0.0.0
+        version: link:../store-local
+      '@jami-studio/harness-tools':
+        specifier: workspace:0.0.0
+        version: link:../tools
+
   packages/docs: {}
 
   packages/memory: {}
 
-  packages/observability: {}
+  packages/observability:
+    dependencies:
+      '@jami-studio/harness-artifacts':
+        specifier: workspace:0.0.0
+        version: link:../artifacts
 
   packages/policy: {}
 
-  packages/runtime: {}
+  packages/provider-local: {}
 
-  packages/sdk: {}
+  packages/runtime:
+    dependencies:
+      '@jami-studio/harness-policy':
+        specifier: workspace:0.0.0
+        version: link:../policy
+
+  packages/sdk:
+    dependencies:
+      '@jami-studio/harness-artifacts':
+        specifier: workspace:0.0.0
+        version: link:../artifacts
+      '@jami-studio/harness-core':
+        specifier: workspace:0.0.0
+        version: link:../core
+      '@jami-studio/harness-runtime':
+        specifier: workspace:0.0.0
+        version: link:../runtime
+
+  packages/store-local: {}
+
+  packages/tools:
+    dependencies:
+      '@jami-studio/harness-artifacts':
+        specifier: workspace:0.0.0
+        version: link:../artifacts
+      '@jami-studio/harness-observability':
+        specifier: workspace:0.0.0
+        version: link:../observability
+      '@jami-studio/harness-policy':
+        specifier: workspace:0.0.0
+        version: link:../policy
