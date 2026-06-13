@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:b9775fe1e2e8c6952dc2805b02bc0bb85a7c170ce6925aece0ab2cb4e97f66dd`
+- Source input hash: `sha256:0d5af4597649446143f5db5c1392cb0a05051da85ce89461cc5208417bdae73f`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -32,7 +32,7 @@ node apps/cli/src/cli.mjs inspect --json
 
 ## Full Local Harness Path
 
-The supported install paths today are a local source checkout and the generated clean local tarball install smoke. Public registry installation remains unavailable because no trusted-provenance npm publish has been executed.
+The supported install paths today are a local source checkout, the generated clean local tarball install smoke, and public npm installation from the published `@jami-studio/*@0.1.0` harness packages.
 
 ```powershell
 pnpm install --frozen-lockfile

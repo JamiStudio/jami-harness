@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:7ef5b679de4199caddc951c202a9e76df710fe8fdf8f9b4deeba7a95f12f3220",
+  "sourceInputHash": "sha256:eebcabcf1fce33e56a6a69f56c630a40c83723b4a93ac9e597e669108a830589",
   "generatedAt": "deterministic:git-head-plus-hosted-route-input-hash",
   "command": "pnpm hosted:routes:check",
   "commandResult": "passed",
@@ -88,12 +88,12 @@
         "sourceCommit": "git:HEAD",
         "docsSourceManifest": {
           "path": "docs/generated/docs-source-manifest.json",
-          "sourceInputHash": "sha256:b9775fe1e2e8c6952dc2805b02bc0bb85a7c170ce6925aece0ab2cb4e97f66dd",
+          "sourceInputHash": "sha256:0d5af4597649446143f5db5c1392cb0a05051da85ce89461cc5208417bdae73f",
           "generatedOutputCount": 16
         },
         "releaseCapabilityManifest": {
           "path": "docs/generated/release-capability-manifest.json",
-          "sourceInputHash": "sha256:a274a50b339de993dddecd9b23fc28d41bb62850ecda4b0210b87141bed8693b",
+          "sourceInputHash": "sha256:1a73147caeccd1979c0ee5019b658171399ae3e579fa18f3efcc9ece4a4c620c",
           "capabilityCount": 15
         }
       },
@@ -134,19 +134,11 @@
         "packagePublishing": {
           "capabilityId": "cap_npm_publish_provenance",
           "surface": "npm publish with provenance",
-          "status": "fail_closed_unsupported",
-          "claimable": false,
-          "failClosed": true,
-          "blockers": [
-            "Publishable package contents and clean local install smokes pass, but no trusted npm publishing/OIDC provenance workflow is configured or verified.",
-            "No npm trusted publisher, OIDC, or automation scope is recorded in this repo.",
-            "No accepted public versioning and trusted publish workflow decision is recorded."
-          ],
-          "requiredBeforeClaim": [
-            "Approve package names, publishConfig, files lists, public versioning, and the trusted publish workflow.",
-            "Configure npm trusted publishing or explicit provenance on a supported cloud CI/CD provider.",
-            "Run and record a provenance-capable npm publish dry run before any real npm publish."
-          ]
+          "status": "supported_public_evidence",
+          "claimable": true,
+          "failClosed": false,
+          "blockers": [],
+          "requiredBeforeClaim": []
         },
         "packageContents": {
           "capabilityId": "cap_package_contents_dry_run",
@@ -160,18 +152,11 @@
         "attestations": {
           "capabilityId": "cap_github_release_attestations",
           "surface": "GitHub release artifact attestations",
-          "status": "fail_closed_unsupported",
-          "claimable": false,
-          "failClosed": true,
-          "blockers": [
-            "No release artifact workflow exists.",
-            "No artifact subject path, digest, or SBOM attestation input is generated.",
-            "No GitHub attestation verification command has been run against a release artifact."
-          ],
-          "requiredBeforeClaim": [
-            "Create a release artifact and workflow using id-token: write and attestations: write.",
-            "Generate and verify the attestation with GitHub CLI before claiming attested artifacts."
-          ]
+          "status": "supported_public_evidence",
+          "claimable": true,
+          "failClosed": false,
+          "blockers": [],
+          "requiredBeforeClaim": []
         },
         "hostedDocs": {
           "capabilityId": "cap_hosted_public_docs",
@@ -315,7 +300,7 @@
       "safeClaim": "A static preview health route proves the route bundle can be generated and parsed locally; it is not hosted uptime evidence.",
       "evidence": {
         "generatedRouteCount": 4,
-        "sourceInputHash": "sha256:7ef5b679de4199caddc951c202a9e76df710fe8fdf8f9b4deeba7a95f12f3220",
+        "sourceInputHash": "sha256:eebcabcf1fce33e56a6a69f56c630a40c83723b4a93ac9e597e669108a830589",
         "secretScan": "passed"
       },
       "readiness": [

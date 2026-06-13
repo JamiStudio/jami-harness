@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:b9775fe1e2e8c6952dc2805b02bc0bb85a7c170ce6925aece0ab2cb4e97f66dd",
+  "sourceInputHash": "sha256:0d5af4597649446143f5db5c1392cb0a05051da85ce89461cc5208417bdae73f",
   "generatedAt": "deterministic:git-head-plus-input-hash",
   "freshnessClass": "deterministic_current_source_tree",
   "command": "pnpm docs:generate -- --check",
@@ -44,7 +44,7 @@
       "docs/operations/release-readiness.md"
     ],
     "unavailableReasons": [
-      "Public registry install is not claimed because no trusted-provenance npm publish has been executed.",
+      "Public npm install is claimed for the published `@jami-studio/*@0.1.0` harness packages, with trusted GitHub Actions publish evidence and clean external install smoke.",
       "Hosted providers, hosted stores, hosted workbench, release publishing, Mintlify build/publish, hosted public docs, and attestations remain unavailable."
     ]
   },

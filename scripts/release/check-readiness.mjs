@@ -76,19 +76,9 @@ const checks = [
 
 const unavailableCommands = [
   {
-    command: "npm publish --dry-run --provenance",
-    status: "unavailable",
-    reason: "publishable package contents and clean install smokes pass, but trusted npm provenance/OIDC workflow scope is not recorded",
-  },
-  {
-    command: "gh attestation sign/verify",
-    status: "unavailable",
-    reason: "GitHub release artifact attestation workflow is not implemented or authorized yet",
-  },
-  {
     command: "mint validate / hosted Mintlify publish",
     status: "unavailable",
-    reason: "Mintlify-ready docs.json and MDX drafts are generated locally, but the Mintlify CLI/package is not installed or source-locked in this repo and no hosted project is selected",
+    reason: "Mintlify-ready harness docs are generated locally, but no harness-hosted Mintlify project/route has been selected and smoked",
   },
   {
     command: "vercel/cloudflare deploy --dry-run",
@@ -113,10 +103,7 @@ const unavailableCommands = [
 ];
 
 const humanInterventions = [
-  "Confirm npm organization/package publishing access for @jami-studio and enable npm provenance/OIDC before any npm publish dry run.",
-  "Confirm GitHub release permissions and accepted artifact attestation workflow before creating release artifacts.",
-  "Select and authorize the public docs hosting target before Mintlify, Vercel, or Cloudflare claims are made.",
-  "Confirm publishable package scope, public versioning, trusted publishing workflow, and provenance verification before any real npm publish.",
+  "Select and authorize the harness hosted docs/control target before Mintlify, Vercel, Cloudflare, or other harness-hosted route claims are made.",
   "Refresh repo-local source-lock evidence for any release tool, hosted service, protocol, or third-party source used by the release.",
   "Create or authorize the Cloudflare Pages project and DNS target before claiming hosted harness status/control routes.",
   "Provision Neon and OTLP endpoint secrets outside tracked files before claiming hosted store or hosted observability routes.",
@@ -203,6 +190,16 @@ const claims = [
     "pnpm package:dry-run:check",
     "pnpm package:smoke:check",
   ]),
+  claim("Harness packages are published publicly at @jami-studio/*@0.1.0 with GitHub Actions publish provenance", "supported", [
+    "https://github.com/studio-jami/jami-harness/actions/runs/27464403402",
+    "docs/generated/package-contents-manifest.json",
+    "docs/generated/package-install-smoke.json",
+  ]),
+  claim("Harness GitHub Release v0.1.0 includes an attested release bundle and checksum", "supported", [
+    "https://github.com/studio-jami/jami-harness/releases/tag/v0.1.0",
+    "https://github.com/studio-jami/jami-harness/actions/runs/27471444596",
+    "gh attestation verify jami-harness-v0.1.0.tgz --repo studio-jami/jami-harness --format json",
+  ]),
   claim("Release and hosted capability manifest exists with fail-closed unsupported surfaces backed by repo-local official-source evidence", "supported", [
     "scripts/release/generate-capability-manifest.mjs",
     "docs/operations/release-capability-source-lock.md",
@@ -222,7 +219,7 @@ const claims = [
     "pnpm hosted:routes",
     "pnpm hosted:routes:check",
   ]),
-  claim("Release publishing, hosted Mintlify build, hosted workbench, hosted stores, hosted provider runtime, and executable full MCP/OpenAPI/shell/browser/code/provider-as-tool/A2A adapters are available", "unsupported", [
+  claim("Hosted Mintlify build, hosted workbench, hosted stores, hosted provider runtime, and executable full MCP/OpenAPI/shell/browser/code/provider-as-tool/A2A adapters are available", "unsupported", [
     "apps/cli/README.md",
     "packages/sdk/README.md",
     "packages/provider-local/README.md",
@@ -247,10 +244,10 @@ const readiness = {
     commit: git.commit,
     ref: git.ref,
   },
-  readyToPublish: false,
+  readyToPublish: blockerCount === 0,
   dryRun,
   summary: blockerCount === 0
-    ? "Release audit surfaces exist, but public publishing remains disabled until human interventions are closed."
+    ? "Package publishing, public package install evidence, and GitHub Release artifact evidence are complete; hosted harness runtime/control lanes remain unavailable until real hosted targets and secrets are configured."
     : "Release audit completed with publish-blocking gaps. No external publishing was attempted.",
   packages: manifests.map(({ path, manifest }) => ({
     path,
@@ -357,10 +354,11 @@ function checkPrivatePublishBlock() {
     };
   }
   return {
-    label: "npm publish/provenance disabled until trusted release workflow closes",
-    status: "blocked",
-    reason: "publishable package manifests are package-ready locally, but no trusted npm publishing/OIDC provenance workflow is configured or verified",
+    label: "npm publish/provenance completed through trusted release workflow",
+    status: "passed",
     evidence: [
+      "https://github.com/studio-jami/jami-harness/actions/runs/27464403402",
+      "https://github.com/studio-jami/jami-harness/releases/tag/v0.1.0",
       "docs/generated/package-contents-manifest.json",
       "docs/generated/package-install-smoke.json",
       "docs/generated/release-capability-manifest.json",
@@ -380,10 +378,10 @@ function checkReleaseCapabilityManifest() {
     "cap_hosted_status_control_preview_routes",
     "cap_package_contents_dry_run",
     "cap_clean_local_package_install_smoke",
-  ];
-  const requiredUnsupported = [
     "cap_npm_publish_provenance",
     "cap_github_release_attestations",
+  ];
+  const requiredUnsupported = [
     "cap_mintlify_validate_publish",
     "cap_hosted_public_docs",
     "cap_hosted_provider_runtime",
@@ -392,7 +390,8 @@ function checkReleaseCapabilityManifest() {
     "cap_hosted_observability_sinks",
   ];
   const byId = new Map((releaseCapabilityManifest.capabilities ?? []).map((capability) => [capability.capabilityId, capability]));
-  const missingSupported = requiredSupported.filter((id) => byId.get(id)?.status !== "supported_local_evidence");
+  const supportedStatuses = new Set(["supported_local_evidence", "supported_public_evidence"]);
+  const missingSupported = requiredSupported.filter((id) => !supportedStatuses.has(byId.get(id)?.status));
   const missingUnsupported = requiredUnsupported.filter((id) => {
     const capability = byId.get(id);
     return capability?.status !== "fail_closed_unsupported" || capability?.claimable !== false || capability?.failClosed !== true;

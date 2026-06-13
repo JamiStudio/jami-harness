@@ -216,7 +216,7 @@ function quickstart(model) {
     "",
     "## Full Local Harness Path",
     "",
-    "The supported install paths today are a local source checkout and the generated clean local tarball install smoke. Public registry installation remains unavailable because no trusted-provenance npm publish has been executed.",
+    "The supported install paths today are a local source checkout, the generated clean local tarball install smoke, and public npm installation from the published `@jami-studio/*@0.1.0` harness packages.",
     "",
     "```powershell",
     ...installReadinessManifest(model, {}).fullLocalHarness.installCommands,
@@ -421,7 +421,7 @@ function installReadinessManifest(model, provenance) {
         "docs/operations/release-readiness.md",
       ],
       unavailableReasons: [
-        "Public registry install is not claimed because no trusted-provenance npm publish has been executed.",
+        "Public npm install is claimed for the published `@jami-studio/*@0.1.0` harness packages, with trusted GitHub Actions publish evidence and clean external install smoke.",
         "Hosted providers, hosted stores, hosted workbench, release publishing, Mintlify build/publish, hosted public docs, and attestations remain unavailable.",
       ],
     },

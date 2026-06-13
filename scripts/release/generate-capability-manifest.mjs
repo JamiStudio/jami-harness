@@ -215,38 +215,35 @@ function buildCapabilities() {
       evidence: ["scripts/release/check-package-contents.mjs", "docs/generated/package-install-smoke.json"],
       officialSourceIds: ["npm_publish"],
     }),
-    unsupportedCapability({
+    publicCapability({
       capabilityId: "cap_npm_publish_provenance",
       surface: "npm publish with provenance",
-      blockedCommand: "npm publish --dry-run --provenance",
-      safeClaim: "npm publishing and provenance are not available from this repo yet.",
+      safeClaim: "All harness packages are published at 0.1.0 through the trusted GitHub Actions package workflow with npm provenance and post-publish install smoke evidence.",
+      commands: [
+        "gh run view 27464403402 --repo studio-jami/jami-harness",
+        "npm view @jami-studio/harness-cli@0.1.0",
+      ],
+      evidence: [
+        "https://github.com/studio-jami/jami-harness/actions/runs/27464403402",
+        "docs/generated/package-contents-manifest.json",
+        "docs/generated/package-install-smoke.json",
+      ],
       officialSourceIds: ["npm_provenance", "npm_trusted_publishing", "npm_publish"],
-      blockers: [
-        "Publishable package contents and clean local install smokes pass, but no trusted npm publishing/OIDC provenance workflow is configured or verified.",
-        "No npm trusted publisher, OIDC, or automation scope is recorded in this repo.",
-        "No accepted public versioning and trusted publish workflow decision is recorded.",
-      ],
-      requiredBeforeClaim: [
-        "Approve package names, publishConfig, files lists, public versioning, and the trusted publish workflow.",
-        "Configure npm trusted publishing or explicit provenance on a supported cloud CI/CD provider.",
-        "Run and record a provenance-capable npm publish dry run before any real npm publish.",
-      ],
     }),
-    unsupportedCapability({
+    publicCapability({
       capabilityId: "cap_github_release_attestations",
       surface: "GitHub release artifact attestations",
-      blockedCommand: "gh attestation verify",
-      safeClaim: "Release artifacts are not signed or attested.",
+      safeClaim: "The v0.1.0 GitHub Release contains the harness release bundle and checksum, and the bundle attestation verifies against studio-jami/jami-harness.",
+      commands: [
+        "gh release view v0.1.0 --repo studio-jami/jami-harness",
+        "gh attestation verify jami-harness-v0.1.0.tgz --repo studio-jami/jami-harness --format json",
+      ],
+      evidence: [
+        "https://github.com/studio-jami/jami-harness/releases/tag/v0.1.0",
+        "https://github.com/studio-jami/jami-harness/actions/runs/27471444596",
+        "docs/generated/release-capability-manifest.json",
+      ],
       officialSourceIds: ["github_artifact_attestations", "github_attest_action"],
-      blockers: [
-        "No release artifact workflow exists.",
-        "No artifact subject path, digest, or SBOM attestation input is generated.",
-        "No GitHub attestation verification command has been run against a release artifact.",
-      ],
-      requiredBeforeClaim: [
-        "Create a release artifact and workflow using id-token: write and attestations: write.",
-        "Generate and verify the attestation with GitHub CLI before claiming attested artifacts.",
-      ],
     }),
     unsupportedCapability({
       capabilityId: "cap_mintlify_validate_publish",
@@ -346,6 +343,22 @@ function localCapability({ capabilityId, surface, safeClaim, commands, evidence,
     capabilityId,
     surface,
     status: "supported_local_evidence",
+    claimable: true,
+    failClosed: false,
+    safeClaim,
+    commandEvidence: commands,
+    sourceEvidence: evidence,
+    officialSourceIds,
+    blockers: [],
+    requiredBeforeClaim: [],
+  };
+}
+
+function publicCapability({ capabilityId, surface, safeClaim, commands, evidence, officialSourceIds = [] }) {
+  return {
+    capabilityId,
+    surface,
+    status: "supported_public_evidence",
     claimable: true,
     failClosed: false,
     safeClaim,
