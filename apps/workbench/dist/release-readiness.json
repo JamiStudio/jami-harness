@@ -4,7 +4,7 @@
   "path": "/release-readiness.json",
   "sourceRepo": "jami-harness",
   "sourceCommit": "git:HEAD",
-  "sourceInputHash": "sha256:d2636f309085226867dbc5f4fe1edce0a9d31a05f557250760ff213d8092d9b1",
+  "sourceInputHash": "sha256:1039d27e02ca204a370af6f4dbe4d368afdde707349e7f61611c7c7b9cc2ec02",
   "generatedAt": "deterministic:git-head-plus-hosted-route-input-hash",
   "freshnessClass": "current-head-official-source-lock",
   "status": "supported_preview_static_fail_closed",

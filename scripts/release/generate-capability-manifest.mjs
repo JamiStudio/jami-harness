@@ -455,9 +455,24 @@ function source(id, title, url, observations, verifiedOn = "2026-06-09") {
 
 function gitInfo() {
   return {
-    remote: runGit(["remote", "get-url", "origin"]),
-    ref: process.env.GITHUB_REF_NAME || runGit(["rev-parse", "--abbrev-ref", "HEAD"]),
+    remote: normalizeRemote(runGit(["remote", "get-url", "origin"])),
+    ref: normalizeRef(),
   };
+}
+
+function normalizeRemote(remote) {
+  if (!remote) return remote;
+  if (/^https:\/\/github\.com\/[^/]+\/[^/]+$/.test(remote)) return `${remote}.git`;
+  return remote;
+}
+
+function normalizeRef() {
+  const githubRefName = process.env.GITHUB_REF_NAME;
+  if (githubRefName) return githubRefName;
+  const githubRef = process.env.GITHUB_REF;
+  if (githubRef?.startsWith("refs/heads/")) return githubRef.slice("refs/heads/".length);
+  const gitRef = runGit(["rev-parse", "--abbrev-ref", "HEAD"]);
+  return gitRef === "HEAD" ? "main" : gitRef;
 }
 
 function runGit(args) {

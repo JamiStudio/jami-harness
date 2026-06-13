@@ -1,11 +1,11 @@
 {
   "schemaVersion": "2026-06-09.release-capability-manifest",
   "sourceRepo": "jami-harness",
-  "sourceRemote": "https://github.com/studio-jami/jami-harness.git",
+  "sourceRemote": "https://github.com/studio-jami/jami-harness.git.git",
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:ef10ada49fa3cfa81eae6882a3f6eb8608cda618a827656699c19dc3483b6872",
+  "sourceInputHash": "sha256:7c177581cb45ef5ec1b398da7cce89ece57b68b6e379875272ee0a106c15b515",
   "generatedAt": "deterministic:git-head-plus-release-capability-input-hash",
   "command": "pnpm release:capabilities:check",
   "commandResult": "passed",
@@ -501,8 +501,8 @@
     },
     {
       "path": "scripts/release/generate-capability-manifest.mjs",
-      "sha256": "sha256:07514798565f1feb8f14498c170118a348f39d5559e6a932995c4cf6631e81f7",
-      "bytes": 23852
+      "sha256": "sha256:9288fb298e409d8d1c57106975a82845702b13a3319a5f53e3ab2984419f05b1",
+      "bytes": 24345
     },
     {
       "path": "scripts/release/generate-sbom.mjs",
