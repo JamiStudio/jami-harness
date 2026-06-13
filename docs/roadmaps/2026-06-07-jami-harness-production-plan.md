@@ -361,7 +361,7 @@ These gates convert the crossflow adversarial review into execution criteria. Th
 active plan, not optional research notes.
 
 - `path-lock`: active plans, boundary docs, package metadata, and dispatch prompts must point to the
-  registry-root `jami-harness` and `studio-ui` checkouts and canonical `JamiStudio/*` remotes; closure
+  registry-root `jami-harness` and `studio-ui` checkouts and canonical `studio-jami/*` remotes; closure
   requires a search/readback or equivalent path-lock evidence note.
 - `source-lock`: before runtime, protocol, package, or third-party source implementation, capture the
   official/current source, package/spec name, version or spec identifier, date, license/provenance state,
