@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:1ef67cccadb75faf54e2114601b6d3871d48ee5182fc83d8f42920facf6c60c7",
+  "sourceInputHash": "sha256:a274a50b339de993dddecd9b23fc28d41bb62850ecda4b0210b87141bed8693b",
   "generatedAt": "deterministic:git-head-plus-release-capability-input-hash",
   "command": "pnpm release:capabilities:check",
   "commandResult": "passed",
@@ -18,7 +18,7 @@
       {
         "path": "apps/cli/package.json",
         "name": "@jami-studio/harness-cli",
-        "version": "0.0.0",
+        "version": "0.1.0",
         "private": false,
         "license": "Apache-2.0",
         "repository": "git+https://github.com/studio-jami/jami-harness.git",
@@ -33,7 +33,7 @@
       {
         "path": "apps/workbench/package.json",
         "name": "@jami-studio/harness-workbench",
-        "version": "0.0.0",
+        "version": "0.1.0",
         "private": true,
         "license": "Apache-2.0",
         "repository": "git+https://github.com/studio-jami/jami-harness.git",
@@ -43,7 +43,7 @@
       {
         "path": "package.json",
         "name": "jami-harness",
-        "version": "0.0.0",
+        "version": "0.1.0",
         "private": true,
         "license": "Apache-2.0",
         "repository": "git+https://github.com/studio-jami/jami-harness.git",
@@ -53,7 +53,7 @@
       {
         "path": "packages/artifacts/package.json",
         "name": "@jami-studio/harness-artifacts",
-        "version": "0.0.0",
+        "version": "0.1.0",
         "private": false,
         "license": "Apache-2.0",
         "repository": "git+https://github.com/studio-jami/jami-harness.git",
@@ -68,7 +68,7 @@
       {
         "path": "packages/contracts/package.json",
         "name": "@jami-studio/harness-contracts",
-        "version": "0.0.0",
+        "version": "0.1.0",
         "private": false,
         "license": "Apache-2.0",
         "repository": "git+https://github.com/studio-jami/jami-harness.git",
@@ -85,7 +85,7 @@
       {
         "path": "packages/core/package.json",
         "name": "@jami-studio/harness-core",
-        "version": "0.0.0",
+        "version": "0.1.0",
         "private": false,
         "license": "Apache-2.0",
         "repository": "git+https://github.com/studio-jami/jami-harness.git",
@@ -110,7 +110,7 @@
       {
         "path": "packages/memory/package.json",
         "name": "@jami-studio/harness-memory",
-        "version": "0.0.0",
+        "version": "0.1.0",
         "private": false,
         "license": "Apache-2.0",
         "repository": "git+https://github.com/studio-jami/jami-harness.git",
@@ -125,7 +125,7 @@
       {
         "path": "packages/observability/package.json",
         "name": "@jami-studio/harness-observability",
-        "version": "0.0.0",
+        "version": "0.1.0",
         "private": false,
         "license": "Apache-2.0",
         "repository": "git+https://github.com/studio-jami/jami-harness.git",
@@ -140,7 +140,7 @@
       {
         "path": "packages/policy/package.json",
         "name": "@jami-studio/harness-policy",
-        "version": "0.0.0",
+        "version": "0.1.0",
         "private": false,
         "license": "Apache-2.0",
         "repository": "git+https://github.com/studio-jami/jami-harness.git",
@@ -155,7 +155,7 @@
       {
         "path": "packages/provider-local/package.json",
         "name": "@jami-studio/harness-provider-local",
-        "version": "0.0.0",
+        "version": "0.1.0",
         "private": false,
         "license": "Apache-2.0",
         "repository": "git+https://github.com/studio-jami/jami-harness.git",
@@ -170,7 +170,7 @@
       {
         "path": "packages/runtime/package.json",
         "name": "@jami-studio/harness-runtime",
-        "version": "0.0.0",
+        "version": "0.1.0",
         "private": false,
         "license": "Apache-2.0",
         "repository": "git+https://github.com/studio-jami/jami-harness.git",
@@ -185,7 +185,7 @@
       {
         "path": "packages/sdk/package.json",
         "name": "@jami-studio/harness-sdk",
-        "version": "0.0.0",
+        "version": "0.1.0",
         "private": false,
         "license": "Apache-2.0",
         "repository": "git+https://github.com/studio-jami/jami-harness.git",
@@ -200,7 +200,7 @@
       {
         "path": "packages/store-local/package.json",
         "name": "@jami-studio/harness-store-local",
-        "version": "0.0.0",
+        "version": "0.1.0",
         "private": false,
         "license": "Apache-2.0",
         "repository": "git+https://github.com/studio-jami/jami-harness.git",
@@ -215,7 +215,7 @@
       {
         "path": "packages/tools/package.json",
         "name": "@jami-studio/harness-tools",
-        "version": "0.0.0",
+        "version": "0.1.0",
         "private": false,
         "license": "Apache-2.0",
         "repository": "git+https://github.com/studio-jami/jami-harness.git",
@@ -366,7 +366,7 @@
   "sourceRecords": [
     {
       "path": "apps/cli/package.json",
-      "sha256": "sha256:b24dddf13c2b7045d6fc44a175a97e278739526ea55137f55c64512c9232014f",
+      "sha256": "sha256:175b57b01b868745067a9c7c4ccb8385d2cff7582223adf254d262e5ddbd70ce",
       "bytes": 729
     },
     {
@@ -376,22 +376,22 @@
     },
     {
       "path": "apps/workbench/package.json",
-      "sha256": "sha256:a6befa66127b33f0f0ba9385cec3b57daa760807b31da6253930a347865b7667",
+      "sha256": "sha256:a34b8402c1bfbe716d7dcf56d958e844894426b18587f8d59b7485dfbc62c781",
       "bytes": 570
     },
     {
       "path": "docs/generated/package-contents-manifest.json",
-      "sha256": "sha256:5e685b8efef4c7a5ea530bd89d5a1945fe20f74402346f6ca318ced4b795f8dc",
+      "sha256": "sha256:a6c08bbc30d0412278e4faf9add5c97bde2c16aa78a00f104074ba94aa3adb05",
       "bytes": 37665
     },
     {
       "path": "docs/generated/package-install-smoke.json",
-      "sha256": "sha256:39cd9db8d6f2981a4884320e9d18ae8fb806a1e3a4fc5a22e2b8cfe073f800b5",
+      "sha256": "sha256:a021626f76925b5e48770deb454a6a1cfd026646c8ba947a9b6abf0500cbebd3",
       "bytes": 4862
     },
     {
       "path": "docs/generated/sbom.cdx.json",
-      "sha256": "sha256:4a98859e9879acf581821a80fc43b49037b34c1591e8002dd625bf3d2e813c37",
+      "sha256": "sha256:71eaaa4373671549d59d3ef761ba3cc44372c016767718da90518c5045b9536d",
       "bytes": 19177
     },
     {
@@ -416,22 +416,22 @@
     },
     {
       "path": "package.json",
-      "sha256": "sha256:d092e3131e649426c28ba37a6e04e5a6c4e6902ad19de77212440d2bc32968a5",
+      "sha256": "sha256:9f89b58aafa9ab2d0cc0e36cb14e3eb44a7b2c800862f7b0c522bd3a30ef1a21",
       "bytes": 4303
     },
     {
       "path": "packages/artifacts/package.json",
-      "sha256": "sha256:2223ef60fb08a77b64aa13aa4fd657b43d182bedafb6e694340889906a1c4cbc",
+      "sha256": "sha256:09f72e9cc182c5536c80c3c7daea00a4105509ace454f99bef79b3f9cb1ae12a",
       "bytes": 615
     },
     {
       "path": "packages/contracts/package.json",
-      "sha256": "sha256:d4230eaef25cb604a0bda75c91f725cde01a80876a20700f2938d99eff0f6ada",
+      "sha256": "sha256:b8d56d886b64db3f6f041724b8ff94501d513ba5cb4c70dea54a33c189be2fb3",
       "bytes": 1015
     },
     {
       "path": "packages/core/package.json",
-      "sha256": "sha256:93320a54a7769a12b0beecc7e4d0eee903089e1623b5902f97576287afe90533",
+      "sha256": "sha256:8743fce431057c57e9dbd7c85b00c854c906e5ffd15964e0b10efb1771665121",
       "bytes": 1092
     },
     {
@@ -441,42 +441,42 @@
     },
     {
       "path": "packages/memory/package.json",
-      "sha256": "sha256:8716ffee4f690865aafb49d0334aa7f3da6e2ed15862e7ca7cb6ea9ebcc4b394",
+      "sha256": "sha256:1ea94a4fbed652a76ccf11944d55eb25a3914ae666ef1403f881a2e63b1655a4",
       "bytes": 622
     },
     {
       "path": "packages/observability/package.json",
-      "sha256": "sha256:b9ff96fb0341552272258fd0f06775cdb915c0f30616768f29d221699ef07feb",
+      "sha256": "sha256:4c56331a5810fb95349f9b78db498f7fcd7cae2d724f2ae6a2d2fcc7d88b964d",
       "bytes": 691
     },
     {
       "path": "packages/policy/package.json",
-      "sha256": "sha256:0ad2d73cbca77f6fdac099d3d8e9bed2ae26cc36df55bc00de06aa95e7d0dc8a",
+      "sha256": "sha256:3c42abc4fa6c0c06492402bd39ddc312514337256f2d4b6a6ff3222bacb61a6f",
       "bytes": 613
     },
     {
       "path": "packages/provider-local/package.json",
-      "sha256": "sha256:2024a20d3de9f597177723bdaaaf85b0a4c6f1986b8554c647541f092ca21b47",
+      "sha256": "sha256:880c060635cfac5b2e7e48d2c0f6a6c81d32a573a2cee0d2a09c0d62db4f50a5",
       "bytes": 567
     },
     {
       "path": "packages/runtime/package.json",
-      "sha256": "sha256:820506d2d60d7a9fe4847689ef387f1aae0c5479c6a45a9776e5c09d4c244e0b",
+      "sha256": "sha256:c6e6fb07b80e763be9a52940ce168141a372ad2699fe8936613af25b77494081",
       "bytes": 687
     },
     {
       "path": "packages/sdk/package.json",
-      "sha256": "sha256:8e620cdff4eb5ca491e7521e7b124016305ed0dacbc1438cfe0845851b23d897",
+      "sha256": "sha256:27b3bf6debfc3c0fedacd843114ff2938c7beae8bbaea2bf2a34a1b6a066692f",
       "bytes": 800
     },
     {
       "path": "packages/store-local/package.json",
-      "sha256": "sha256:f63adf657b0402471a46da04765f0797b5979a209af2ee4a3f435b9b89cd092e",
+      "sha256": "sha256:00b72dd8637bef53cd638cf5cf04e83510c910dd87083b541b8f0fadfdd257af",
       "bytes": 549
     },
     {
       "path": "packages/tools/package.json",
-      "sha256": "sha256:3b7e19bfff626c14773bd26e86fc468bb36b8b65a6cd57ce78bf7d38a29b2d9a",
+      "sha256": "sha256:0f46ec9328fc724a9402ffb6fe8e3208acc002a06f807ca070517005dd8e1782",
       "bytes": 841
     },
     {

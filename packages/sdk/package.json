@@ -1,6 +1,6 @@
 {
   "name": "@jami-studio/harness-sdk",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Harness SDK foundation for local run creation, evidence inspection, and module injection.",
   "license": "Apache-2.0",
   "repository": {
@@ -26,8 +26,8 @@
     "publishable": true
   },
   "dependencies": {
-    "@jami-studio/harness-artifacts": "workspace:0.0.0",
-    "@jami-studio/harness-core": "workspace:0.0.0",
-    "@jami-studio/harness-runtime": "workspace:0.0.0"
+    "@jami-studio/harness-artifacts": "workspace:0.1.0",
+    "@jami-studio/harness-core": "workspace:0.1.0",
+    "@jami-studio/harness-runtime": "workspace:0.1.0"
   }
 }

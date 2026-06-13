@@ -1,6 +1,6 @@
 {
   "name": "@jami-studio/harness-memory",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Harness-owned memory, search, citation, permission filtering, and context replay foundations.",
   "license": "Apache-2.0",
   "repository": {

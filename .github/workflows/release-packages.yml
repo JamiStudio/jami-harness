@@ -39,19 +39,19 @@ jobs:
           set -euo pipefail
           mkdir -p release-packs
           for pkg in \
-            apps/cli \
             packages/artifacts \
             packages/contracts \
-            packages/core \
             packages/memory \
-            packages/observability \
             packages/policy \
             packages/provider-local \
-            packages/runtime \
-            packages/sdk \
             packages/store-local \
-            packages/tools; do
-            (cd "$pkg" && npm pack --pack-destination "$GITHUB_WORKSPACE/release-packs")
+            packages/observability \
+            packages/runtime \
+            packages/tools \
+            packages/core \
+            packages/sdk \
+            apps/cli; do
+            pnpm --dir "$pkg" pack --pack-destination "$GITHUB_WORKSPACE/release-packs"
           done
       - name: Attest package tarballs
         uses: actions/attest-build-provenance@v4
@@ -63,17 +63,19 @@ jobs:
         run: |
           set -euo pipefail
           for pkg in \
-            apps/cli \
             packages/artifacts \
             packages/contracts \
-            packages/core \
             packages/memory \
-            packages/observability \
             packages/policy \
             packages/provider-local \
-            packages/runtime \
-            packages/sdk \
             packages/store-local \
-            packages/tools; do
-            (cd "$pkg" && npm publish --provenance --access public)
+            packages/observability \
+            packages/runtime \
+            packages/tools \
+            packages/core \
+            packages/sdk \
+            apps/cli; do
+            name=$(node -p "require('./$pkg/package.json').name.replace('@', '').replace('/', '-')")
+            version=$(node -p "require('./$pkg/package.json').version")
+            npm publish "release-packs/${name}-${version}.tgz" --provenance --access public
           done

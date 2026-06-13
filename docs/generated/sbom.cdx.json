@@ -1,7 +1,7 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:960c1d5d-1052-57fb-a898-bfc791e13a67",
+  "serialNumber": "urn:uuid:2917a5ec-834d-5cfb-a529-0eadb3f93b28",
   "version": 1,
   "metadata": {
     "tools": {
@@ -18,7 +18,7 @@
       "type": "application",
       "bom-ref": "pkg:jami-harness:package.json",
       "name": "jami-harness",
-      "version": "0.0.0",
+      "version": "0.1.0",
       "description": "Jami Harness docs, roadmap, contracts, runtime, and governance foundation.",
       "licenses": [
         {
@@ -27,7 +27,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/jami-harness@0.0.0",
+      "purl": "pkg:npm/jami-harness@0.1.0",
       "properties": [
         {
           "name": "jami:harness:manifestPath",
@@ -70,7 +70,7 @@
       },
       {
         "name": "jami:harness:sourceInputHash",
-        "value": "68f64e5fabc040f1b6b7ce62e1dbbe7800d650ff3d78cea8c1089e01322b78ac"
+        "value": "3953ee354fd470fea0b6ac8b00c673f36c53058e97229665731b26393c92cb15"
       },
       {
         "name": "jami:harness:commands",
@@ -99,7 +99,7 @@
       "type": "application",
       "bom-ref": "pkg:@jami-studio/harness-cli:apps/cli/package.json",
       "name": "@jami-studio/harness-cli",
-      "version": "0.0.0",
+      "version": "0.1.0",
       "description": "Agent-first CLI foundation for local Jami Harness runs and evidence inspection.",
       "licenses": [
         {
@@ -108,7 +108,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40jami-studio/harness-cli@0.0.0",
+      "purl": "pkg:npm/%40jami-studio/harness-cli@0.1.0",
       "properties": [
         {
           "name": "jami:harness:manifestPath",
@@ -132,7 +132,7 @@
       "type": "application",
       "bom-ref": "pkg:@jami-studio/harness-workbench:apps/workbench/package.json",
       "name": "@jami-studio/harness-workbench",
-      "version": "0.0.0",
+      "version": "0.1.0",
       "description": "Dependency-free local workbench shell for Jami Harness runtime evidence, docs, and system maps.",
       "licenses": [
         {
@@ -141,7 +141,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40jami-studio/harness-workbench@0.0.0",
+      "purl": "pkg:npm/%40jami-studio/harness-workbench@0.1.0",
       "properties": [
         {
           "name": "jami:harness:manifestPath",
@@ -165,7 +165,7 @@
       "type": "application",
       "bom-ref": "pkg:@jami-studio/harness-artifacts:packages/artifacts/package.json",
       "name": "@jami-studio/harness-artifacts",
-      "version": "0.0.0",
+      "version": "0.1.0",
       "description": "Harness-owned artifact provenance records and replaceable storage port defaults.",
       "licenses": [
         {
@@ -174,7 +174,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40jami-studio/harness-artifacts@0.0.0",
+      "purl": "pkg:npm/%40jami-studio/harness-artifacts@0.1.0",
       "properties": [
         {
           "name": "jami:harness:manifestPath",
@@ -198,7 +198,7 @@
       "type": "application",
       "bom-ref": "pkg:@jami-studio/harness-contracts:packages/contracts/package.json",
       "name": "@jami-studio/harness-contracts",
-      "version": "0.0.0",
+      "version": "0.1.0",
       "description": "Harness-owned shared contracts, JSON Schema anchors, and compatibility fixtures.",
       "licenses": [
         {
@@ -207,7 +207,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40jami-studio/harness-contracts@0.0.0",
+      "purl": "pkg:npm/%40jami-studio/harness-contracts@0.1.0",
       "properties": [
         {
           "name": "jami:harness:manifestPath",
@@ -231,7 +231,7 @@
       "type": "application",
       "bom-ref": "pkg:@jami-studio/harness-core:packages/core/package.json",
       "name": "@jami-studio/harness-core",
-      "version": "0.0.0",
+      "version": "0.1.0",
       "description": "Core composition layer for harness runtime, policy, tools, memory, context, artifacts, observability, stores, providers, and docs-output ports.",
       "licenses": [
         {
@@ -240,7 +240,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40jami-studio/harness-core@0.0.0",
+      "purl": "pkg:npm/%40jami-studio/harness-core@0.1.0",
       "properties": [
         {
           "name": "jami:harness:manifestPath",
@@ -293,7 +293,7 @@
       "type": "application",
       "bom-ref": "pkg:@jami-studio/harness-memory:packages/memory/package.json",
       "name": "@jami-studio/harness-memory",
-      "version": "0.0.0",
+      "version": "0.1.0",
       "description": "Harness-owned memory, search, citation, permission filtering, and context replay foundations.",
       "licenses": [
         {
@@ -302,7 +302,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40jami-studio/harness-memory@0.0.0",
+      "purl": "pkg:npm/%40jami-studio/harness-memory@0.1.0",
       "properties": [
         {
           "name": "jami:harness:manifestPath",
@@ -326,7 +326,7 @@
       "type": "application",
       "bom-ref": "pkg:@jami-studio/harness-observability:packages/observability/package.json",
       "name": "@jami-studio/harness-observability",
-      "version": "0.0.0",
+      "version": "0.1.0",
       "description": "Harness-owned trace, audit, and evidence packet export foundations.",
       "licenses": [
         {
@@ -335,7 +335,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40jami-studio/harness-observability@0.0.0",
+      "purl": "pkg:npm/%40jami-studio/harness-observability@0.1.0",
       "properties": [
         {
           "name": "jami:harness:manifestPath",
@@ -359,7 +359,7 @@
       "type": "application",
       "bom-ref": "pkg:@jami-studio/harness-policy:packages/policy/package.json",
       "name": "@jami-studio/harness-policy",
-      "version": "0.0.0",
+      "version": "0.1.0",
       "description": "Harness-owned policy, approval, identity, secret-reference, and audit runtime spine.",
       "licenses": [
         {
@@ -368,7 +368,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40jami-studio/harness-policy@0.0.0",
+      "purl": "pkg:npm/%40jami-studio/harness-policy@0.1.0",
       "properties": [
         {
           "name": "jami:harness:manifestPath",
@@ -392,7 +392,7 @@
       "type": "application",
       "bom-ref": "pkg:@jami-studio/harness-provider-local:packages/provider-local/package.json",
       "name": "@jami-studio/harness-provider-local",
-      "version": "0.0.0",
+      "version": "0.1.0",
       "description": "Local deterministic provider adapter foundation for Jami Harness workflow execution.",
       "licenses": [
         {
@@ -401,7 +401,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40jami-studio/harness-provider-local@0.0.0",
+      "purl": "pkg:npm/%40jami-studio/harness-provider-local@0.1.0",
       "properties": [
         {
           "name": "jami:harness:manifestPath",
@@ -425,7 +425,7 @@
       "type": "application",
       "bom-ref": "pkg:@jami-studio/harness-runtime:packages/runtime/package.json",
       "name": "@jami-studio/harness-runtime",
-      "version": "0.0.0",
+      "version": "0.1.0",
       "description": "Harness-owned dependency-light run lifecycle and policy-gated emission kernel.",
       "licenses": [
         {
@@ -434,7 +434,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40jami-studio/harness-runtime@0.0.0",
+      "purl": "pkg:npm/%40jami-studio/harness-runtime@0.1.0",
       "properties": [
         {
           "name": "jami:harness:manifestPath",
@@ -458,7 +458,7 @@
       "type": "application",
       "bom-ref": "pkg:@jami-studio/harness-sdk:packages/sdk/package.json",
       "name": "@jami-studio/harness-sdk",
-      "version": "0.0.0",
+      "version": "0.1.0",
       "description": "Harness SDK foundation for local run creation, evidence inspection, and module injection.",
       "licenses": [
         {
@@ -467,7 +467,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40jami-studio/harness-sdk@0.0.0",
+      "purl": "pkg:npm/%40jami-studio/harness-sdk@0.1.0",
       "properties": [
         {
           "name": "jami:harness:manifestPath",
@@ -491,7 +491,7 @@
       "type": "application",
       "bom-ref": "pkg:@jami-studio/harness-store-local:packages/store-local/package.json",
       "name": "@jami-studio/harness-store-local",
-      "version": "0.0.0",
+      "version": "0.1.0",
       "description": "Local replaceable checkpoint store ports for Jami Harness runtime state.",
       "licenses": [
         {
@@ -500,7 +500,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40jami-studio/harness-store-local@0.0.0",
+      "purl": "pkg:npm/%40jami-studio/harness-store-local@0.1.0",
       "properties": [
         {
           "name": "jami:harness:manifestPath",
@@ -524,7 +524,7 @@
       "type": "application",
       "bom-ref": "pkg:@jami-studio/harness-tools:packages/tools/package.json",
       "name": "@jami-studio/harness-tools",
-      "version": "0.0.0",
+      "version": "0.1.0",
       "description": "Harness-owned tool registry, execution envelope, adapter manifests, and policy-gated function tool gateway foundation.",
       "licenses": [
         {
@@ -533,7 +533,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40jami-studio/harness-tools@0.0.0",
+      "purl": "pkg:npm/%40jami-studio/harness-tools@0.1.0",
       "properties": [
         {
           "name": "jami:harness:manifestPath",

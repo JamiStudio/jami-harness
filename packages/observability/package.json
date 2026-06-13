@@ -1,6 +1,6 @@
 {
   "name": "@jami-studio/harness-observability",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Harness-owned trace, audit, and evidence packet export foundations.",
   "license": "Apache-2.0",
   "repository": {
@@ -26,6 +26,6 @@
     "publishable": true
   },
   "dependencies": {
-    "@jami-studio/harness-artifacts": "workspace:0.0.0"
+    "@jami-studio/harness-artifacts": "workspace:0.1.0"
   }
 }

@@ -4,7 +4,7 @@
   "path": "/provider-store-observability.json",
   "sourceRepo": "jami-harness",
   "sourceCommit": "git:HEAD",
-  "sourceInputHash": "sha256:831346a572ba01364d4a1638bd8c6ccf60adc1a5d1b143609cc5f3397f775271",
+  "sourceInputHash": "sha256:7ef5b679de4199caddc951c202a9e76df710fe8fdf8f9b4deeba7a95f12f3220",
   "generatedAt": "deterministic:git-head-plus-hosted-route-input-hash",
   "freshnessClass": "current-head-official-source-lock",
   "status": "supported_preview_static_fail_closed",

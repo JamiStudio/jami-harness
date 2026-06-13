@@ -2,7 +2,7 @@
 // Do not edit by hand; run pnpm --filter @jami-studio/harness-contracts generate.
 
 export const generatedContractMetadata = {
-  generatedAt: "2026-06-12T09:31:30.905Z",
+  generatedAt: "2026-06-13T10:35:17.965Z",
   generatorVersion: "2026-06-09.contracts.1",
   source: "packages/contracts/schemas/*.schema.json"
 } as const;

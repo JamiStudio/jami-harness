@@ -1,6 +1,6 @@
 {
   "name": "@jami-studio/harness-workbench",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "description": "Dependency-free local workbench shell for Jami Harness runtime evidence, docs, and system maps.",
   "license": "Apache-2.0",

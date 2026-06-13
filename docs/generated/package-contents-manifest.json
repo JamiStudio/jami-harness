@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:1377542eac0e7869d618ef558dfe96f89e8adfd21417a13fbcba3d259943c107",
+  "sourceInputHash": "sha256:032f4c9078a398ebfcafb5fb80cd6b8f5003edfa59e8eb198b31410bf7e69588",
   "generatedAt": "deterministic:git-head-plus-package-input-hash",
   "command": "pnpm package:dry-run",
   "commandResult": "passed",
@@ -18,7 +18,7 @@
       "path": "apps/cli/package.json",
       "packageDir": "apps/cli",
       "name": "@jami-studio/harness-cli",
-      "version": "0.0.0",
+      "version": "0.1.0",
       "private": false,
       "publishConfig": {
         "access": "public"
@@ -28,7 +28,7 @@
         "README.md"
       ],
       "tarball": {
-        "filename": "jami-studio-harness-cli-0.0.0.tgz",
+        "filename": "jami-studio-harness-cli-0.1.0.tgz",
         "unpackedSize": 24864,
         "entryCount": 3
       },
@@ -37,7 +37,7 @@
           "path": "package.json",
           "size": 729,
           "mode": 420,
-          "sha256": "sha256:b24dddf13c2b7045d6fc44a175a97e278739526ea55137f55c64512c9232014f"
+          "sha256": "sha256:175b57b01b868745067a9c7c4ccb8385d2cff7582223adf254d262e5ddbd70ce"
         },
         {
           "path": "README.md",
@@ -62,7 +62,7 @@
       "path": "packages/artifacts/package.json",
       "packageDir": "packages/artifacts",
       "name": "@jami-studio/harness-artifacts",
-      "version": "0.0.0",
+      "version": "0.1.0",
       "private": false,
       "publishConfig": {
         "access": "public"
@@ -72,7 +72,7 @@
         "README.md"
       ],
       "tarball": {
-        "filename": "jami-studio-harness-artifacts-0.0.0.tgz",
+        "filename": "jami-studio-harness-artifacts-0.1.0.tgz",
         "unpackedSize": 6046,
         "entryCount": 3
       },
@@ -81,7 +81,7 @@
           "path": "package.json",
           "size": 615,
           "mode": 420,
-          "sha256": "sha256:2223ef60fb08a77b64aa13aa4fd657b43d182bedafb6e694340889906a1c4cbc"
+          "sha256": "sha256:09f72e9cc182c5536c80c3c7daea00a4105509ace454f99bef79b3f9cb1ae12a"
         },
         {
           "path": "README.md",
@@ -106,7 +106,7 @@
       "path": "packages/contracts/package.json",
       "packageDir": "packages/contracts",
       "name": "@jami-studio/harness-contracts",
-      "version": "0.0.0",
+      "version": "0.1.0",
       "private": false,
       "publishConfig": {
         "access": "public"
@@ -118,7 +118,7 @@
         "README.md"
       ],
       "tarball": {
-        "filename": "jami-studio-harness-contracts-0.0.0.tgz",
+        "filename": "jami-studio-harness-contracts-0.1.0.tgz",
         "unpackedSize": 245117,
         "entryCount": 98
       },
@@ -127,7 +127,7 @@
           "path": "package.json",
           "size": 1015,
           "mode": 420,
-          "sha256": "sha256:d4230eaef25cb604a0bda75c91f725cde01a80876a20700f2938d99eff0f6ada"
+          "sha256": "sha256:b8d56d886b64db3f6f041724b8ff94501d513ba5cb4c70dea54a33c189be2fb3"
         },
         {
           "path": "README.md",
@@ -139,19 +139,19 @@
           "path": "generated//contracts.ts",
           "size": 56886,
           "mode": 420,
-          "sha256": "sha256:9abd96944503d9a09bbe815bdbbc53b1c712c99991dd9385f50630dfa13dafee"
+          "sha256": "sha256:8aa7bca270ceba7e7452a5562d8c6ed4014510efa75a84c7ec8f6e2be882816e"
         },
         {
           "path": "generated//openapi.json",
           "size": 65608,
           "mode": 420,
-          "sha256": "sha256:a55a140f6e884a432dbc9aecdc2297846de3b702a7620d77c1fcb99ec27b4cff"
+          "sha256": "sha256:b0c090ddaba0d497bdcf1131fd3fee9d8d2e2fe9979dd48e2e95f559c685c171"
         },
         {
           "path": "generated//reference.json",
           "size": 8515,
           "mode": 420,
-          "sha256": "sha256:2d6b0b1641b9bfbe8ccc9f97c2a8d8498c6014bdf8674eb678e848abf46427f8"
+          "sha256": "sha256:0b9edd192c007fc9e48b1957a1ea44ed082acbdfa4551a1954bf8ca044353565"
         },
         {
           "path": "schemas//action-ref.schema.json",
@@ -722,7 +722,7 @@
       "path": "packages/core/package.json",
       "packageDir": "packages/core",
       "name": "@jami-studio/harness-core",
-      "version": "0.0.0",
+      "version": "0.1.0",
       "private": false,
       "publishConfig": {
         "access": "public"
@@ -732,7 +732,7 @@
         "README.md"
       ],
       "tarball": {
-        "filename": "jami-studio-harness-core-0.0.0.tgz",
+        "filename": "jami-studio-harness-core-0.1.0.tgz",
         "unpackedSize": 18255,
         "entryCount": 3
       },
@@ -741,7 +741,7 @@
           "path": "package.json",
           "size": 1092,
           "mode": 420,
-          "sha256": "sha256:93320a54a7769a12b0beecc7e4d0eee903089e1623b5902f97576287afe90533"
+          "sha256": "sha256:8743fce431057c57e9dbd7c85b00c854c906e5ffd15964e0b10efb1771665121"
         },
         {
           "path": "README.md",
@@ -766,7 +766,7 @@
       "path": "packages/memory/package.json",
       "packageDir": "packages/memory",
       "name": "@jami-studio/harness-memory",
-      "version": "0.0.0",
+      "version": "0.1.0",
       "private": false,
       "publishConfig": {
         "access": "public"
@@ -776,7 +776,7 @@
         "README.md"
       ],
       "tarball": {
-        "filename": "jami-studio-harness-memory-0.0.0.tgz",
+        "filename": "jami-studio-harness-memory-0.1.0.tgz",
         "unpackedSize": 11867,
         "entryCount": 3
       },
@@ -785,7 +785,7 @@
           "path": "package.json",
           "size": 622,
           "mode": 420,
-          "sha256": "sha256:8716ffee4f690865aafb49d0334aa7f3da6e2ed15862e7ca7cb6ea9ebcc4b394"
+          "sha256": "sha256:1ea94a4fbed652a76ccf11944d55eb25a3914ae666ef1403f881a2e63b1655a4"
         },
         {
           "path": "README.md",
@@ -810,7 +810,7 @@
       "path": "packages/observability/package.json",
       "packageDir": "packages/observability",
       "name": "@jami-studio/harness-observability",
-      "version": "0.0.0",
+      "version": "0.1.0",
       "private": false,
       "publishConfig": {
         "access": "public"
@@ -820,7 +820,7 @@
         "README.md"
       ],
       "tarball": {
-        "filename": "jami-studio-harness-observability-0.0.0.tgz",
+        "filename": "jami-studio-harness-observability-0.1.0.tgz",
         "unpackedSize": 15264,
         "entryCount": 3
       },
@@ -829,7 +829,7 @@
           "path": "package.json",
           "size": 691,
           "mode": 420,
-          "sha256": "sha256:b9ff96fb0341552272258fd0f06775cdb915c0f30616768f29d221699ef07feb"
+          "sha256": "sha256:4c56331a5810fb95349f9b78db498f7fcd7cae2d724f2ae6a2d2fcc7d88b964d"
         },
         {
           "path": "README.md",
@@ -854,7 +854,7 @@
       "path": "packages/policy/package.json",
       "packageDir": "packages/policy",
       "name": "@jami-studio/harness-policy",
-      "version": "0.0.0",
+      "version": "0.1.0",
       "private": false,
       "publishConfig": {
         "access": "public"
@@ -864,7 +864,7 @@
         "README.md"
       ],
       "tarball": {
-        "filename": "jami-studio-harness-policy-0.0.0.tgz",
+        "filename": "jami-studio-harness-policy-0.1.0.tgz",
         "unpackedSize": 10859,
         "entryCount": 3
       },
@@ -873,7 +873,7 @@
           "path": "package.json",
           "size": 613,
           "mode": 420,
-          "sha256": "sha256:0ad2d73cbca77f6fdac099d3d8e9bed2ae26cc36df55bc00de06aa95e7d0dc8a"
+          "sha256": "sha256:3c42abc4fa6c0c06492402bd39ddc312514337256f2d4b6a6ff3222bacb61a6f"
         },
         {
           "path": "README.md",
@@ -898,7 +898,7 @@
       "path": "packages/provider-local/package.json",
       "packageDir": "packages/provider-local",
       "name": "@jami-studio/harness-provider-local",
-      "version": "0.0.0",
+      "version": "0.1.0",
       "private": false,
       "publishConfig": {
         "access": "public"
@@ -908,7 +908,7 @@
         "README.md"
       ],
       "tarball": {
-        "filename": "jami-studio-harness-provider-local-0.0.0.tgz",
+        "filename": "jami-studio-harness-provider-local-0.1.0.tgz",
         "unpackedSize": 13457,
         "entryCount": 3
       },
@@ -917,7 +917,7 @@
           "path": "package.json",
           "size": 567,
           "mode": 420,
-          "sha256": "sha256:2024a20d3de9f597177723bdaaaf85b0a4c6f1986b8554c647541f092ca21b47"
+          "sha256": "sha256:880c060635cfac5b2e7e48d2c0f6a6c81d32a573a2cee0d2a09c0d62db4f50a5"
         },
         {
           "path": "README.md",
@@ -942,7 +942,7 @@
       "path": "packages/runtime/package.json",
       "packageDir": "packages/runtime",
       "name": "@jami-studio/harness-runtime",
-      "version": "0.0.0",
+      "version": "0.1.0",
       "private": false,
       "publishConfig": {
         "access": "public"
@@ -952,7 +952,7 @@
         "README.md"
       ],
       "tarball": {
-        "filename": "jami-studio-harness-runtime-0.0.0.tgz",
+        "filename": "jami-studio-harness-runtime-0.1.0.tgz",
         "unpackedSize": 14699,
         "entryCount": 3
       },
@@ -961,7 +961,7 @@
           "path": "package.json",
           "size": 687,
           "mode": 420,
-          "sha256": "sha256:820506d2d60d7a9fe4847689ef387f1aae0c5479c6a45a9776e5c09d4c244e0b"
+          "sha256": "sha256:c6e6fb07b80e763be9a52940ce168141a372ad2699fe8936613af25b77494081"
         },
         {
           "path": "README.md",
@@ -986,7 +986,7 @@
       "path": "packages/sdk/package.json",
       "packageDir": "packages/sdk",
       "name": "@jami-studio/harness-sdk",
-      "version": "0.0.0",
+      "version": "0.1.0",
       "private": false,
       "publishConfig": {
         "access": "public"
@@ -996,7 +996,7 @@
         "README.md"
       ],
       "tarball": {
-        "filename": "jami-studio-harness-sdk-0.0.0.tgz",
+        "filename": "jami-studio-harness-sdk-0.1.0.tgz",
         "unpackedSize": 23113,
         "entryCount": 3
       },
@@ -1005,7 +1005,7 @@
           "path": "package.json",
           "size": 800,
           "mode": 420,
-          "sha256": "sha256:8e620cdff4eb5ca491e7521e7b124016305ed0dacbc1438cfe0845851b23d897"
+          "sha256": "sha256:27b3bf6debfc3c0fedacd843114ff2938c7beae8bbaea2bf2a34a1b6a066692f"
         },
         {
           "path": "README.md",
@@ -1030,7 +1030,7 @@
       "path": "packages/store-local/package.json",
       "packageDir": "packages/store-local",
       "name": "@jami-studio/harness-store-local",
-      "version": "0.0.0",
+      "version": "0.1.0",
       "private": false,
       "publishConfig": {
         "access": "public"
@@ -1040,7 +1040,7 @@
         "README.md"
       ],
       "tarball": {
-        "filename": "jami-studio-harness-store-local-0.0.0.tgz",
+        "filename": "jami-studio-harness-store-local-0.1.0.tgz",
         "unpackedSize": 12203,
         "entryCount": 3
       },
@@ -1049,7 +1049,7 @@
           "path": "package.json",
           "size": 549,
           "mode": 420,
-          "sha256": "sha256:f63adf657b0402471a46da04765f0797b5979a209af2ee4a3f435b9b89cd092e"
+          "sha256": "sha256:00b72dd8637bef53cd638cf5cf04e83510c910dd87083b541b8f0fadfdd257af"
         },
         {
           "path": "README.md",
@@ -1074,7 +1074,7 @@
       "path": "packages/tools/package.json",
       "packageDir": "packages/tools",
       "name": "@jami-studio/harness-tools",
-      "version": "0.0.0",
+      "version": "0.1.0",
       "private": false,
       "publishConfig": {
         "access": "public"
@@ -1084,7 +1084,7 @@
         "README.md"
       ],
       "tarball": {
-        "filename": "jami-studio-harness-tools-0.0.0.tgz",
+        "filename": "jami-studio-harness-tools-0.1.0.tgz",
         "unpackedSize": 52895,
         "entryCount": 3
       },
@@ -1093,7 +1093,7 @@
           "path": "package.json",
           "size": 841,
           "mode": 420,
-          "sha256": "sha256:3b7e19bfff626c14773bd26e86fc468bb36b8b65a6cd57ce78bf7d38a29b2d9a"
+          "sha256": "sha256:0f46ec9328fc724a9402ffb6fe8e3208acc002a06f807ca070517005dd8e1782"
         },
         {
           "path": "README.md",
