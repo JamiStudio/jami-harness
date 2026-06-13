@@ -13,6 +13,7 @@ const manifestPath = "docs/generated/hosted-route-manifest.json";
 const sourceLockPath = "docs/operations/hosted-route-source-lock.md";
 const generatedAt = "deterministic:git-head-plus-hosted-route-input-hash";
 const command = "pnpm hosted:routes:check";
+const publicHarnessBaseUrl = "https://registry.jami.studio/harness/";
 
 const officialSources = [
   source("cloudflare_pages_direct_upload", "Cloudflare Pages Direct Upload", "https://developers.cloudflare.com/pages/get-started/direct-upload/", [
@@ -67,15 +68,15 @@ const manifest = {
   routeBase: {
     localDirectory: "apps/workbench/dist",
     previewServeCommand: "npx serve apps/workbench/dist",
-    intendedHostedTarget: "Cloudflare Pages or equivalent static asset hosting after account and DNS authorization",
-    publicUrl: null,
-    publicUrlStatus: "not_provisioned",
+    intendedHostedTarget: "Existing registry Cloudflare Pages project served from the /harness/ path",
+    publicUrl: publicHarnessBaseUrl,
+    publicUrlStatus: "selected_pending_smoke",
   },
   officialSources,
   routes: buildRoutes(),
   humanInterventions: [
-    "Create or authorize the Cloudflare Pages project for the harness status/control static route bundle.",
-    "Point the accepted DNS hostname to the deployed Cloudflare Pages project before public hosted claims.",
+    "Publish the harness status/control static route bundle under the existing registry Cloudflare Pages project at /harness/.",
+    "Run pnpm hosted:smoke -- --require-hosted with JAMI_HARNESS_HOSTED_BASE_URL=https://registry.jami.studio/harness/ before public hosted-route claims.",
     "Provision a Neon project, branch, role, migration path, and secret storage for the hosted store adapter before hosted-store claims.",
     "Provision hosted provider credentials and secret references for each accepted provider adapter before hosted-provider claims.",
     "Provision an OTLP endpoint and secret header storage before hosted observability export claims.",
@@ -124,7 +125,7 @@ function buildRoutes() {
       status: "supported_preview_static_fail_closed",
       claimable: false,
       failClosed: true,
-      safeClaim: "A static harness status route is generated for preview serving from apps/workbench/dist; no public hosted deployment has run.",
+      safeClaim: "A static harness status route is generated for preview serving and selected for publication at https://registry.jami.studio/harness/status.json; public hosted smoke must pass before it is claimed live.",
       evidence: {
         sourceCommit: "git:HEAD",
         docsSourceManifest: {
@@ -140,12 +141,11 @@ function buildRoutes() {
       },
       readiness: [
         state("local_static_route_generation", "supported_local_evidence", "Generated route files can be checked without a hosted account."),
-        state("public_cloudflare_pages_deploy", "fail_closed_account_required", "Cloudflare project and DNS target are not provisioned."),
-        state("hosted_smoke", "fail_closed_url_required", "No public URL exists to smoke-test."),
+        state("public_cloudflare_pages_deploy", "selected_pending_deploy", "The accepted target is the existing registry Cloudflare Pages project under /harness/."),
+        state("hosted_smoke", "fail_closed_smoke_required", "The public URL must pass pnpm hosted:smoke -- --require-hosted before live claims."),
       ],
       requiredBeforePublicClaim: [
-        "Create or authorize the Cloudflare Pages project.",
-        "Deploy apps/workbench/dist or the accepted static output directory.",
+        "Copy or publish apps/workbench/dist into the registry static bundle under public/harness/.",
         "Smoke-test the public status route and record response headers plus cache policy.",
       ],
     },

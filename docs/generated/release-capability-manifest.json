@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:fcf3093c02d8329f13ecf7f09dfc1cd61c683ee918e6db2df2733e75a4ee3924",
+  "sourceInputHash": "sha256:e7ca6969c4b6d89df4b9c41fa31bbe346508f94cdbd64c0d7380b09786befd4d",
   "generatedAt": "deterministic:git-head-plus-release-capability-input-hash",
   "command": "pnpm release:capabilities:check",
   "commandResult": "passed",
@@ -315,7 +315,7 @@
       "verifiedOn": "2026-06-12",
       "observations": [
         "Cloudflare Pages can deploy a prebuilt static asset folder through Wrangler direct upload or dashboard upload.",
-        "The harness route bundle is only a local static output until a Cloudflare project, deploy, DNS target, and hosted smoke exist."
+        "The harness route bundle targets the existing registry Cloudflare Pages project under https://registry.jami.studio/harness/ and requires hosted smoke before live claims."
       ]
     },
     {
@@ -396,18 +396,18 @@
     },
     {
       "path": "docs/operations/hosted-route-source-lock.md",
-      "sha256": "sha256:4486944aebc7cc96db93debbec336e22bf49191d817908e7b658a0c805e9619a",
-      "bytes": 4298
+      "sha256": "sha256:68d9ba3850e3740de95b0d5a3d4ae069e4e10470b44ebe0894855d23aecde878",
+      "bytes": 4849
     },
     {
       "path": "docs/operations/release-capability-source-lock.md",
-      "sha256": "sha256:0cb2a403a7b3b4d6724c81117d86813219a4bdedb60786adc1bc8b404aa6564a",
-      "bytes": 7423
+      "sha256": "sha256:a26fcb1fc14ef53bab53bfc541f9a9dc4540289ed350a50f33633c0f0638b276",
+      "bytes": 7651
     },
     {
       "path": "docs/operations/release-readiness.md",
-      "sha256": "sha256:845c8afd44d14224560daabbe90e51f467b0c38fee2659d732cb7b8a6d379976",
-      "bytes": 23529
+      "sha256": "sha256:08451413692c5c2f4963beed135ecc4b342d5c795b1a58bfe4f5a5c35eb10001",
+      "bytes": 24003
     },
     {
       "path": "docs/operations/sbom-source-lock.md",
@@ -486,8 +486,8 @@
     },
     {
       "path": "scripts/hosted/generate-hosted-routes.mjs",
-      "sha256": "sha256:14a4ae4062ae3ee3d6c2ca894931fbfb5f1b708667b6f6aca007ddf6c244d2ea",
-      "bytes": 19166
+      "sha256": "sha256:ad2476d83a9b60517946de4fe1d71302470c38a3eaa2e95c73dbfbcb8a2d0b02",
+      "bytes": 19427
     },
     {
       "path": "scripts/release/check-package-contents.mjs",
@@ -496,13 +496,13 @@
     },
     {
       "path": "scripts/release/check-readiness.mjs",
-      "sha256": "sha256:bdab3bef6945ffbec4c6c2ca2dfe2fa4b418f87f61006d6bca2621f2c4fbcd23",
-      "bytes": 23200
+      "sha256": "sha256:5d1fb926c2d43e82a8aabab810cbecd9bfca0a6eabd645737835359bd3acea2b",
+      "bytes": 23518
     },
     {
       "path": "scripts/release/generate-capability-manifest.mjs",
-      "sha256": "sha256:be792e32ad9fe45e946c3c7960ee5318f8c7fb78ebe2f40caa628804f4626364",
-      "bytes": 24516
+      "sha256": "sha256:c108b0328873405910ce343606ae01d61e4bc0d3ce9ca1f177fcf2672fe8ef0b",
+      "bytes": 24685
     },
     {
       "path": "scripts/release/generate-sbom.mjs",
@@ -595,11 +595,11 @@
     },
     {
       "capabilityId": "cap_hosted_status_control_preview_routes",
-      "surface": "preview-deployable hosted status/control route bundle",
+      "surface": "registry-hosted status/control route bundle",
       "status": "supported_local_evidence",
       "claimable": true,
       "failClosed": false,
-      "safeClaim": "The repo can generate static preview JSON routes for harness status, release readiness, and provider/store/observability readiness; no public hosted URL is live.",
+      "safeClaim": "The repo can generate static JSON routes for harness status, release readiness, and provider/store/observability readiness targeted at https://registry.jami.studio/harness/; live claims require hosted smoke after deployment.",
       "commandEvidence": [
         "pnpm hosted:routes",
         "pnpm hosted:routes:check"
@@ -859,7 +859,7 @@
     "Install and source-lock the exact Mintlify CLI/package, then run mint validate locally before claiming a Mintlify build check.",
     "Select and authorize a hosted docs target before public docs hosting, Mintlify deployment, Vercel, or Cloudflare claims.",
     "Implement hosted provider, store, and workbench adapters with source-lock evidence and fail-closed fixtures before advertising hosted capability.",
-    "Create or authorize the Cloudflare Pages project and DNS target before claiming hosted harness status/control routes.",
+    "Deploy and smoke the harness status/control static route bundle under the existing registry Cloudflare Pages project at https://registry.jami.studio/harness/ before live hosted-route claims.",
     "Provision Neon and OTLP endpoint secrets outside tracked files before claiming hosted store or hosted observability routes."
   ]
 }

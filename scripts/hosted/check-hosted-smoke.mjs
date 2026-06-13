@@ -110,7 +110,7 @@ async function smokeHostedRoutes(url) {
   const routePaths = ["/status.json", "/release-readiness.json", "/provider-store-observability.json", "/healthz.json"];
   const responses = [];
   for (const routePath of routePaths) {
-    const target = new URL(routePath, url);
+    const target = routeUrl(url, routePath);
     const response = await fetchWithTimeout(target);
     if (!response.ok) {
       return {
@@ -131,6 +131,13 @@ async function smokeHostedRoutes(url) {
     });
   }
   return { status: "passed", baseUrl: redactUrl(url), responses };
+}
+
+function routeUrl(baseUrl, routePath) {
+  const normalizedBase = baseUrl.pathname.endsWith("/")
+    ? baseUrl
+    : new URL(`${baseUrl.toString().replace(/\/?$/, "/")}`);
+  return new URL(`.${routePath}`, normalizedBase);
 }
 
 async function fetchWithTimeout(url) {

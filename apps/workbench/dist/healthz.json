@@ -4,7 +4,7 @@
   "path": "/healthz.json",
   "sourceRepo": "jami-harness",
   "sourceCommit": "git:HEAD",
-  "sourceInputHash": "sha256:fa429c4b57ce006ea5170efbc3f6d088984993c2071e5f2b4837c8ac0860314f",
+  "sourceInputHash": "sha256:e2d0a8e090564b43718c08db68cb0cc5f3bf560965a90fcbd5cbbd7b1c52fa5c",
   "generatedAt": "deterministic:git-head-plus-hosted-route-input-hash",
   "freshnessClass": "current-head-official-source-lock",
   "status": "supported_preview_static_fail_closed",
@@ -13,7 +13,7 @@
   "safeClaim": "A static preview health route proves the route bundle can be generated and parsed locally; it is not hosted uptime evidence.",
   "evidence": {
     "generatedRouteCount": 4,
-    "sourceInputHash": "sha256:fa429c4b57ce006ea5170efbc3f6d088984993c2071e5f2b4837c8ac0860314f",
+    "sourceInputHash": "sha256:e2d0a8e090564b43718c08db68cb0cc5f3bf560965a90fcbd5cbbd7b1c52fa5c",
     "secretScan": "passed"
   },
   "readiness": [
@@ -32,8 +32,8 @@
     "Deploy the static bundle and run an HTTP smoke against the public health route."
   ],
   "humanInterventions": [
-    "Create or authorize the Cloudflare Pages project for the harness status/control static route bundle.",
-    "Point the accepted DNS hostname to the deployed Cloudflare Pages project before public hosted claims.",
+    "Publish the harness status/control static route bundle under the existing registry Cloudflare Pages project at /harness/.",
+    "Run pnpm hosted:smoke -- --require-hosted with JAMI_HARNESS_HOSTED_BASE_URL=https://registry.jami.studio/harness/ before public hosted-route claims.",
     "Provision a Neon project, branch, role, migration path, and secret storage for the hosted store adapter before hosted-store claims.",
     "Provision hosted provider credentials and secret references for each accepted provider adapter before hosted-provider claims.",
     "Provision an OTLP endpoint and secret header storage before hosted observability export claims.",

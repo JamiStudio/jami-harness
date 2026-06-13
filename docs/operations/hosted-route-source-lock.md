@@ -6,15 +6,17 @@ Owner: Jami Harness
 
 ## Purpose
 
-This record locks the current official sources used by the local hosted status/control
-route manifest. The manifest is preview-deployable static output for harness status,
-release readiness, and provider/store/observability readiness. It does not prove a public
-hosted service is live.
+This record locks the current official sources used by the hosted status/control route
+manifest. The manifest is deployable static output for harness status, release readiness,
+and provider/store/observability readiness. The accepted public target is the existing
+registry Cloudflare Pages project under `https://registry.jami.studio/harness/`; it is
+not a separate harness marketing site.
 
-The current implementation does not call Cloudflare, Neon, OpenTelemetry collectors,
-hosted providers, DNS, or account APIs. It records route requirements and verifies that
-generated static route files remain synchronized with this source-lock record and local
-release evidence.
+The current implementation does not call Neon, OpenTelemetry collectors, hosted
+providers, or account APIs. It records route requirements and verifies that generated
+static route files remain synchronized with this source-lock record and local release
+evidence. Live hosted-route claims still require `pnpm hosted:smoke -- --require-hosted`
+against the accepted public URL.
 
 ## Official Sources Verified
 
@@ -34,12 +36,13 @@ Verified on 2026-06-12:
 ## Source Findings
 
 - Cloudflare Pages Direct Upload supports deploying a prebuilt asset folder through
-  Wrangler or dashboard upload. This repo only prepares the asset folder; no Cloudflare
-  project, upload, domain, or production deployment is recorded.
+  Wrangler or dashboard upload. The selected production target is the already-authorized
+  `jami-registry` Pages project at `registry.jami.studio`, with the harness bundle served
+  from `/harness/`.
 - Cloudflare Pages applies custom static response headers from an `_headers` file in the
   static asset directory. The generated route bundle uses `_headers` for JSON content
-  type, `no-store`, and `nosniff` headers, but this remains unproven until served by the
-  hosted target.
+  type, `no-store`, and `nosniff` headers, and the registry bundle mirrors those rules for
+  `/harness/*.json`.
 - Neon application connections require details from a Neon project and branch. A Neon
   connection string includes role, password, hostname, and database name, so hosted-store
   route output must list required secret names/actions without committing connection
@@ -65,14 +68,16 @@ Verified on 2026-06-12:
   - `/provider-store-observability.json`
   - `/healthz.json`
   - `_headers`
+- `JAMI_HARNESS_HOSTED_BASE_URL=https://registry.jami.studio/harness/ pnpm hosted:smoke -- --require-hosted`
+  is the acceptance command for the public route bundle.
 - The route check validates JSON output and scans generated route files for common
   secret-shaped markers.
 
 ## Unsupported Or Not Claimed
 
-- No Cloudflare Pages project was created.
-- No DNS target was configured.
-- No public hosted URL was smoke-tested.
+- No separate Cloudflare Pages project is required for the harness status/control bundle.
+- No new DNS target is required; `registry.jami.studio` is the accepted public host.
+- Public hosted URL smoke remains required before claiming the route live.
 - No Neon project, branch, role, migration, or connection secret was provisioned.
 - No hosted provider credentials or provider account routes were used.
 - No OTLP endpoint, collector, or hosted observability sink was configured.

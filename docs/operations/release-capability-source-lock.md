@@ -71,7 +71,9 @@ Verified on 2026-06-12:
 - Cloudflare Pages can accept a prebuilt static asset folder by direct upload, and
   Cloudflare Pages custom headers are configured with an `_headers` file in the static
   asset directory. The harness now generates static status/control JSON route files and
-  `_headers`, but no Cloudflare project, DNS target, deploy, or hosted smoke exists.
+  `_headers`; the selected public target is the existing `jami-registry` Pages project
+  under `https://registry.jami.studio/harness/`. Live route claims still require hosted
+  smoke evidence against that URL.
 - Neon connection details come from a Neon project and branch, and the connection string
   includes role, password, hostname, and database name. Hosted store readiness must list
   secret names and human actions without writing connection values to tracked output.
@@ -111,8 +113,9 @@ Verified on 2026-06-12:
 - No Mintlify CLI validation, hosted build, or hosted publish was run.
 - No Vercel, Cloudflare, or other hosted docs target was selected or called.
 - No hosted provider, hosted durable store, or hosted workbench was implemented.
-- No Cloudflare Pages harness status/control project, DNS route, deploy, or hosted smoke
-  was run.
+- No separate Cloudflare Pages harness status/control project or DNS route is required.
+- Hosted smoke against `https://registry.jami.studio/harness/` remains required before
+  live hosted-route claims.
 - No Neon project, branch, migration, role, or connection secret was provisioned.
 - No OpenTelemetry collector, OTLP endpoint, header secret storage, or hosted export
   smoke was configured.

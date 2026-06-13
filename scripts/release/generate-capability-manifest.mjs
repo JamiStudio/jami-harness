@@ -47,7 +47,7 @@ const officialSources = [
   ]),
   source("cloudflare_pages_direct_upload", "Cloudflare Pages Direct Upload", "https://developers.cloudflare.com/pages/get-started/direct-upload/", [
     "Cloudflare Pages can deploy a prebuilt static asset folder through Wrangler direct upload or dashboard upload.",
-    "The harness route bundle is only a local static output until a Cloudflare project, deploy, DNS target, and hosted smoke exist.",
+    "The harness route bundle targets the existing registry Cloudflare Pages project under https://registry.jami.studio/harness/ and requires hosted smoke before live claims.",
   ], "2026-06-12"),
   source("cloudflare_pages_headers", "Cloudflare Pages custom headers", "https://developers.cloudflare.com/pages/configuration/headers/", [
     "Cloudflare Pages applies custom response headers from a _headers file in the static asset directory.",
@@ -124,7 +124,7 @@ const manifest = {
     "Install and source-lock the exact Mintlify CLI/package, then run mint validate locally before claiming a Mintlify build check.",
     "Select and authorize a hosted docs target before public docs hosting, Mintlify deployment, Vercel, or Cloudflare claims.",
     "Implement hosted provider, store, and workbench adapters with source-lock evidence and fail-closed fixtures before advertising hosted capability.",
-    "Create or authorize the Cloudflare Pages project and DNS target before claiming hosted harness status/control routes.",
+    "Deploy and smoke the harness status/control static route bundle under the existing registry Cloudflare Pages project at https://registry.jami.studio/harness/ before live hosted-route claims.",
     "Provision Neon and OTLP endpoint secrets outside tracked files before claiming hosted store or hosted observability routes.",
   ],
 };
@@ -178,8 +178,8 @@ function buildCapabilities() {
     }),
     localCapability({
       capabilityId: "cap_hosted_status_control_preview_routes",
-      surface: "preview-deployable hosted status/control route bundle",
-      safeClaim: "The repo can generate static preview JSON routes for harness status, release readiness, and provider/store/observability readiness; no public hosted URL is live.",
+      surface: "registry-hosted status/control route bundle",
+      safeClaim: "The repo can generate static JSON routes for harness status, release readiness, and provider/store/observability readiness targeted at https://registry.jami.studio/harness/; live claims require hosted smoke after deployment.",
       commands: ["pnpm hosted:routes", "pnpm hosted:routes:check"],
       evidence: [
         "scripts/hosted/generate-hosted-routes.mjs",

@@ -26,7 +26,7 @@ test("workbench model is sourced from SDK runtime evidence and generated docs ma
   assert.equal(model.views.memory.contextPack.itemCount, 1);
   assert.equal(model.views.capabilities.controlSurfaces.some((surface) => surface.operation === "workbench" && surface.status === "supported_local_static"), true);
   assert.equal(model.views.capabilities.controlSurfaces.some((surface) => surface.operation === "migration" && surface.status === "fail_closed_unsupported"), true);
-  assert.equal(model.views.capabilities.hostedRoutes.publicUrlStatus, "not_provisioned");
+  assert.equal(model.views.capabilities.hostedRoutes.publicUrlStatus, "selected_pending_smoke");
   assert.equal(model.views.capabilities.hostedRoutes.routes.some((route) => route.path === "/provider-store-observability.json" && route.failClosed === true), true);
   assert.equal(model.views.capabilities.hostedRoutes.humanInterventions.some((action) => action.includes("Cloudflare Pages")), true);
   assert.equal(model.views.docsPreview.some((doc) => doc.path === "docs/generated/system-map.md"), true);

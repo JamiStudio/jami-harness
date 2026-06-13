@@ -87,12 +87,12 @@ const unavailableCommands = [
   {
     command: "vercel/cloudflare deploy --dry-run",
     status: "unavailable",
-    reason: "hosted docs/control-plane deployment target is not selected or authorized",
+    reason: "hosted docs and runtime control-plane deployment targets are not selected; harness status/control static routes use the existing registry Cloudflare Pages project under /harness/",
   },
   {
     command: "Cloudflare Pages hosted route smoke",
     status: "unavailable",
-    reason: "static harness status/control routes are generated locally, but no Cloudflare Pages project, DNS target, deployment, or public URL smoke exists",
+    reason: "static harness status/control routes target https://registry.jami.studio/harness/ on the existing registry Pages project; public URL smoke is required after deploy before live route claims",
   },
   {
     command: "Neon hosted store smoke",
@@ -107,9 +107,9 @@ const unavailableCommands = [
 ];
 
 const humanInterventions = [
-  "Select and authorize the harness hosted docs/control target before Mintlify, Vercel, Cloudflare, or other harness-hosted route claims are made.",
+  "Select and authorize the harness hosted docs/runtime control-plane target before Mintlify, Vercel, Cloudflare, or other hosted runtime claims are made.",
   "Refresh repo-local source-lock evidence for any release tool, hosted service, protocol, or third-party source used by the release.",
-  "Create or authorize the Cloudflare Pages project and DNS target before claiming hosted harness status/control routes.",
+  "Deploy and smoke the harness status/control static route bundle under the existing registry Cloudflare Pages project at https://registry.jami.studio/harness/ before live hosted-route claims.",
   "Provision Neon and OTLP endpoint secrets outside tracked files before claiming hosted store or hosted observability routes.",
 ];
 
@@ -211,7 +211,7 @@ const claims = [
     "pnpm release:capabilities",
     "pnpm release:capabilities:check",
   ]),
-  claim("Preview hosted status/control routes are generated as static JSON with fail-closed hosted provider/store/observability readiness", "supported", [
+  claim("Hosted status/control routes are generated as static JSON for the registry /harness/ path with fail-closed hosted provider/store/observability readiness", "supported", [
     "scripts/hosted/generate-hosted-routes.mjs",
     "scripts/hosted/check-hosted-smoke.mjs",
     "docs/operations/hosted-route-source-lock.md",
@@ -254,7 +254,7 @@ const readiness = {
   readyToPublish: blockerCount === 0,
   dryRun,
   summary: blockerCount === 0
-    ? "Package publishing, public package install evidence, and GitHub Release artifact evidence are complete; hosted harness runtime/control lanes remain unavailable until real hosted targets and secrets are configured."
+    ? "Package publishing, public package install evidence, GitHub Release artifact evidence, and registry-hosted status/control static route preparation are complete; hosted runtime/provider/store/observability lanes remain unavailable until real targets and secrets are configured."
     : "Release audit completed with publish-blocking gaps. No external publishing was attempted.",
   packages: manifests.map(({ path, manifest }) => ({
     path,

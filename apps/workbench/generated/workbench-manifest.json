@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:673c922e24d880252efc93cdfcefcf47c08b94236e305768f29aa771f5923377",
+  "sourceInputHash": "sha256:b0eebc750b3adee4aab51fe5eb1e15180c8d3e9819546d4765e97dd23c5e5232",
   "generatedAt": "deterministic:local-workbench-source-tree",
   "freshnessClass": "deterministic_current_source_tree",
   "generator": {
@@ -43,28 +43,28 @@
     },
     {
       "path": "apps/workbench/dist/healthz.json",
-      "sha256": "sha256:d1a0e0bf559dc07e9558b6c38c3f036239268d83d397f263366e2d6160215082",
-      "bytes": 2021
+      "sha256": "sha256:c7924046d848ae510cc895201c074817b031b255245f739a1e830fa8185261e3",
+      "bytes": 2089
     },
     {
       "path": "apps/workbench/dist/provider-store-observability.json",
-      "sha256": "sha256:41ba07a6344f9636bfcb2a5df3be2a6c56d3e201fddc76a9343067c1c249a97a",
-      "bytes": 4727
+      "sha256": "sha256:71964d648f9d94a1787cd28bcc42b82da50543ba86ccdd5164e15d49f7f36ffe",
+      "bytes": 4795
     },
     {
       "path": "apps/workbench/dist/release-readiness.json",
-      "sha256": "sha256:9c8f47a2f7502f6935d73c3279a802014c9bfc0045a407018b0f5be292503a0f",
-      "bytes": 4092
+      "sha256": "sha256:36a389dfc8430039073d1fb9522dce9b9d0f1bceabf510a1d6aff0a5ff22154c",
+      "bytes": 4160
     },
     {
       "path": "apps/workbench/dist/status.json",
-      "sha256": "sha256:a5a414d9e0ffebbc8d36f35e4f5c90e8a855a897cbfc649b664977b19c4004d1",
-      "bytes": 2697
+      "sha256": "sha256:e382dc8b7d45615a0727fd124545bba3ef9b29ab64349ab50b1f3095c9d51e16",
+      "bytes": 2883
     },
     {
       "path": "apps/workbench/generated/hosted-route-manifest.json",
-      "sha256": "sha256:c33194479f95770f027600a97744f8ab8662b0e3a7449fd2869b468c96eb603a",
-      "bytes": 14938
+      "sha256": "sha256:e1e26a3db1f628e4dc0ba68787fafd4ee1c541671cea1ba8da9bea87069bb91f",
+      "bytes": 15148
     },
     {
       "path": "apps/workbench/package.json",
@@ -78,8 +78,8 @@
     },
     {
       "path": "apps/workbench/test/workbench.test.mjs",
-      "sha256": "sha256:2af1596d41a6dedfe1124c3aea7a7d3a4a6a4df702a97db4d9e100cc8ef22d07",
-      "bytes": 4568
+      "sha256": "sha256:582d99f3c9acf384d8be7bf2f06352c8a45799a4b2ab618e38a92b658ef31e0d",
+      "bytes": 4575
     },
     {
       "path": "docs/generated/docs-source-manifest.json",
@@ -93,8 +93,8 @@
     },
     {
       "path": "docs/generated/hosted-route-manifest.json",
-      "sha256": "sha256:c33194479f95770f027600a97744f8ab8662b0e3a7449fd2869b468c96eb603a",
-      "bytes": 14938
+      "sha256": "sha256:e1e26a3db1f628e4dc0ba68787fafd4ee1c541671cea1ba8da9bea87069bb91f",
+      "bytes": 15148
     },
     {
       "path": "docs/generated/install-readiness-manifest.json",
@@ -108,8 +108,8 @@
     },
     {
       "path": "docs/generated/release-capability-manifest.json",
-      "sha256": "sha256:33fd6283aaa6564447f776f4c115299c58dc42dd43049f26a8257ecd1200d3e8",
-      "bytes": 32329
+      "sha256": "sha256:4816291ddfc09a6a233f41f12aad6ca958588ce8aea295b1e909e57cb0a1fb34",
+      "bytes": 32498
     },
     {
       "path": "docs/generated/sbom.cdx.json",
@@ -1065,7 +1065,7 @@
       },
       "releaseCapabilities": {
         "schemaVersion": "2026-06-09.release-capability-manifest",
-        "sourceInputHash": "sha256:fcf3093c02d8329f13ecf7f09dfc1cd61c683ee918e6db2df2733e75a4ee3924",
+        "sourceInputHash": "sha256:e7ca6969c4b6d89df4b9c41fa31bbe346508f94cdbd64c0d7380b09786befd4d",
         "unsupportedCount": 6,
         "unsupportedSurfaces": [
           "Mintlify validation and hosted publishing",
@@ -1078,8 +1078,8 @@
       },
       "hostedRoutes": {
         "schemaVersion": "2026-06-12.hosted-route-manifest",
-        "sourceInputHash": "sha256:fa429c4b57ce006ea5170efbc3f6d088984993c2071e5f2b4837c8ac0860314f",
-        "publicUrlStatus": "not_provisioned",
+        "sourceInputHash": "sha256:e2d0a8e090564b43718c08db68cb0cc5f3bf560965a90fcbd5cbbd7b1c52fa5c",
+        "publicUrlStatus": "selected_pending_smoke",
         "localDirectory": "apps/workbench/dist",
         "previewServeCommand": "npx serve apps/workbench/dist",
         "routes": [
@@ -1090,7 +1090,7 @@
             "status": "supported_preview_static_fail_closed",
             "claimable": false,
             "failClosed": true,
-            "safeClaim": "A static harness status route is generated for preview serving from apps/workbench/dist; no public hosted deployment has run."
+            "safeClaim": "A static harness status route is generated for preview serving and selected for publication at https://registry.jami.studio/harness/status.json; public hosted smoke must pass before it is claimed live."
           },
           {
             "routeId": "release-readiness",
@@ -1121,8 +1121,8 @@
           }
         ],
         "humanInterventions": [
-          "Create or authorize the Cloudflare Pages project for the harness status/control static route bundle.",
-          "Point the accepted DNS hostname to the deployed Cloudflare Pages project before public hosted claims.",
+          "Publish the harness status/control static route bundle under the existing registry Cloudflare Pages project at /harness/.",
+          "Run pnpm hosted:smoke -- --require-hosted with JAMI_HARNESS_HOSTED_BASE_URL=https://registry.jami.studio/harness/ before public hosted-route claims.",
           "Provision a Neon project, branch, role, migration path, and secret storage for the hosted store adapter before hosted-store claims.",
           "Provision hosted provider credentials and secret references for each accepted provider adapter before hosted-provider claims.",
           "Provision an OTLP endpoint and secret header storage before hosted observability export claims.",

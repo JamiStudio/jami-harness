@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:fa429c4b57ce006ea5170efbc3f6d088984993c2071e5f2b4837c8ac0860314f",
+  "sourceInputHash": "sha256:e2d0a8e090564b43718c08db68cb0cc5f3bf560965a90fcbd5cbbd7b1c52fa5c",
   "generatedAt": "deterministic:git-head-plus-hosted-route-input-hash",
   "command": "pnpm hosted:routes:check",
   "commandResult": "passed",
@@ -13,9 +13,9 @@
   "routeBase": {
     "localDirectory": "apps/workbench/dist",
     "previewServeCommand": "npx serve apps/workbench/dist",
-    "intendedHostedTarget": "Cloudflare Pages or equivalent static asset hosting after account and DNS authorization",
-    "publicUrl": null,
-    "publicUrlStatus": "not_provisioned"
+    "intendedHostedTarget": "Existing registry Cloudflare Pages project served from the /harness/ path",
+    "publicUrl": "https://registry.jami.studio/harness/",
+    "publicUrlStatus": "selected_pending_smoke"
   },
   "officialSources": [
     {
@@ -83,7 +83,7 @@
       "status": "supported_preview_static_fail_closed",
       "claimable": false,
       "failClosed": true,
-      "safeClaim": "A static harness status route is generated for preview serving from apps/workbench/dist; no public hosted deployment has run.",
+      "safeClaim": "A static harness status route is generated for preview serving and selected for publication at https://registry.jami.studio/harness/status.json; public hosted smoke must pass before it is claimed live.",
       "evidence": {
         "sourceCommit": "git:HEAD",
         "docsSourceManifest": {
@@ -93,7 +93,7 @@
         },
         "releaseCapabilityManifest": {
           "path": "docs/generated/release-capability-manifest.json",
-          "sourceInputHash": "sha256:fcf3093c02d8329f13ecf7f09dfc1cd61c683ee918e6db2df2733e75a4ee3924",
+          "sourceInputHash": "sha256:e7ca6969c4b6d89df4b9c41fa31bbe346508f94cdbd64c0d7380b09786befd4d",
           "capabilityCount": 15
         }
       },
@@ -105,18 +105,17 @@
         },
         {
           "surface": "public_cloudflare_pages_deploy",
-          "status": "fail_closed_account_required",
-          "reason": "Cloudflare project and DNS target are not provisioned."
+          "status": "selected_pending_deploy",
+          "reason": "The accepted target is the existing registry Cloudflare Pages project under /harness/."
         },
         {
           "surface": "hosted_smoke",
-          "status": "fail_closed_url_required",
-          "reason": "No public URL exists to smoke-test."
+          "status": "fail_closed_smoke_required",
+          "reason": "The public URL must pass pnpm hosted:smoke -- --require-hosted before live claims."
         }
       ],
       "requiredBeforePublicClaim": [
-        "Create or authorize the Cloudflare Pages project.",
-        "Deploy apps/workbench/dist or the accepted static output directory.",
+        "Copy or publish apps/workbench/dist into the registry static bundle under public/harness/.",
         "Smoke-test the public status route and record response headers plus cache policy."
       ]
     },
@@ -304,7 +303,7 @@
       "safeClaim": "A static preview health route proves the route bundle can be generated and parsed locally; it is not hosted uptime evidence.",
       "evidence": {
         "generatedRouteCount": 4,
-        "sourceInputHash": "sha256:fa429c4b57ce006ea5170efbc3f6d088984993c2071e5f2b4837c8ac0860314f",
+        "sourceInputHash": "sha256:e2d0a8e090564b43718c08db68cb0cc5f3bf560965a90fcbd5cbbd7b1c52fa5c",
         "secretScan": "passed"
       },
       "readiness": [
@@ -325,8 +324,8 @@
     }
   ],
   "humanInterventions": [
-    "Create or authorize the Cloudflare Pages project for the harness status/control static route bundle.",
-    "Point the accepted DNS hostname to the deployed Cloudflare Pages project before public hosted claims.",
+    "Publish the harness status/control static route bundle under the existing registry Cloudflare Pages project at /harness/.",
+    "Run pnpm hosted:smoke -- --require-hosted with JAMI_HARNESS_HOSTED_BASE_URL=https://registry.jami.studio/harness/ before public hosted-route claims.",
     "Provision a Neon project, branch, role, migration path, and secret storage for the hosted store adapter before hosted-store claims.",
     "Provision hosted provider credentials and secret references for each accepted provider adapter before hosted-provider claims.",
     "Provision an OTLP endpoint and secret header storage before hosted observability export claims.",
