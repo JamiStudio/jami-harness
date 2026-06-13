@@ -160,9 +160,9 @@ function buildSmokeManifest(packageDryRuns) {
 
 function packageDryRun(entry) {
   validatePublishableManifest(entry);
-  const result = run("npm", ["pack", "--dry-run", "--json"], {
+  const result = run("pnpm", ["pack", "--dry-run", "--json"], {
     cwd: join(repoRoot, entry.packageDir),
-    label: `npm pack --dry-run ${entry.manifest.name}`,
+    label: `pnpm pack --dry-run ${entry.manifest.name}`,
   });
   let parsed = parseJsonObject(result.stdout);
   let files;
@@ -174,7 +174,7 @@ function packageDryRun(entry) {
       return { path, size: stats.size, mode: stats.mode & 0o777 };
     });
   } else {
-    // spawn in this env often yields empty stdout for --json even though direct shell succeeds; use policy + disk
+    // Use policy + disk if the package manager does not emit a parseable file list in this environment.
     files = getSyntheticPackedFiles(entry);
   }
   return {
@@ -189,18 +189,18 @@ function packageDryRun(entry) {
 }
 
 function packPackage(entry, packDir) {
-  // Always pack to explicit destination (side-effect creates the .tgz reliably even when stdout from node spawn is empty).
-  run("npm", ["pack", "--json", "--pack-destination", packDir], {
+  // pnpm pack rewrites workspace: dependency ranges in tarball metadata for external npm installs.
+  run("pnpm", ["pack", "--json", "--pack-destination", packDir], {
     cwd: join(repoRoot, entry.packageDir),
-    label: `npm pack ${entry.manifest.name}`,
+    label: `pnpm pack ${entry.manifest.name}`,
   });
   // Find the produced tgz by glob (name may be mangled for scoped; only one expected).
   const destFiles = readdirSync(packDir).filter((f) => f.endsWith(".tgz"));
-  if (destFiles.length === 0) fail(`npm pack did not create any .tgz in ${packDir} for ${entry.manifest.name}`);
+  if (destFiles.length === 0) fail(`pnpm pack did not create any .tgz in ${packDir} for ${entry.manifest.name}`);
   // prefer the one matching the package (simple contains)
   let chosen = destFiles.find((f) => f.includes(entry.manifest.name.split("/").pop() || "")) || destFiles[0];
   const path = join(packDir, chosen);
-  if (!existsSync(path)) fail(`npm pack did not create ${path}`);
+  if (!existsSync(path)) fail(`pnpm pack did not create ${path}`);
   const bytes = readFileSync(path);
   // parsed may be null; use synthetic or empty for the manifest record
   const parsed = parseJsonObject(""); // force null path
