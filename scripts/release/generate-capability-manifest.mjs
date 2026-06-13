@@ -456,7 +456,7 @@ function source(id, title, url, observations, verifiedOn = "2026-06-09") {
 function gitInfo() {
   return {
     remote: runGit(["remote", "get-url", "origin"]),
-    ref: runGit(["rev-parse", "--abbrev-ref", "HEAD"]),
+    ref: process.env.GITHUB_REF_NAME || runGit(["rev-parse", "--abbrev-ref", "HEAD"]),
   };
 }
 

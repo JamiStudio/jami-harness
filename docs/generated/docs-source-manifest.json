@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:eea3aff683d4064e826751c42ad8a196f000d884ff087bdd14cc2a60d044ab38",
+  "sourceInputHash": "sha256:f002e089163431939712bd0bd3b739812a44d8b1bb2e224c726fbfa69a5c053c",
   "generatedAt": "deterministic:git-head-plus-input-hash",
   "freshnessClass": "deterministic_current_source_tree",
   "command": "pnpm docs:generate -- --check",
@@ -293,7 +293,7 @@
     },
     {
       "path": "docs/generated/release-capability-manifest.json",
-      "sha256": "sha256:39c9b04f4ad4cc5fd205966afc7b71a717d1a773e2c03acb8d50673b030ab3fa",
+      "sha256": "sha256:d23f3c3a221859fdda830159944840418fe5ef82103a1c71c5a3e5d0ab3efe19",
       "bytes": 32601
     },
     {
@@ -923,8 +923,8 @@
     },
     {
       "path": "scripts/release/generate-capability-manifest.mjs",
-      "sha256": "sha256:a135407829e8e78561ba824bcd2a96739cd96e14740f9b36b414637be17998aa",
-      "bytes": 23821
+      "sha256": "sha256:07514798565f1feb8f14498c170118a348f39d5559e6a932995c4cf6631e81f7",
+      "bytes": 23852
     }
   ],
   "acceptedContractReferences": [

@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:1ba0249d979ae57b70af1d80dce3901cc2ac74cab491b8e96ccfc5992cb164fb",
+  "sourceInputHash": "sha256:d2636f309085226867dbc5f4fe1edce0a9d31a05f557250760ff213d8092d9b1",
   "generatedAt": "deterministic:git-head-plus-hosted-route-input-hash",
   "command": "pnpm hosted:routes:check",
   "commandResult": "passed",
@@ -88,12 +88,12 @@
         "sourceCommit": "git:HEAD",
         "docsSourceManifest": {
           "path": "docs/generated/docs-source-manifest.json",
-          "sourceInputHash": "sha256:eea3aff683d4064e826751c42ad8a196f000d884ff087bdd14cc2a60d044ab38",
+          "sourceInputHash": "sha256:f002e089163431939712bd0bd3b739812a44d8b1bb2e224c726fbfa69a5c053c",
           "generatedOutputCount": 16
         },
         "releaseCapabilityManifest": {
           "path": "docs/generated/release-capability-manifest.json",
-          "sourceInputHash": "sha256:8a81e241b0ebf8f9b6fcce239bc2b3b18879344b74027eaa5439bee0ac096bec",
+          "sourceInputHash": "sha256:ef10ada49fa3cfa81eae6882a3f6eb8608cda618a827656699c19dc3483b6872",
           "capabilityCount": 15
         }
       },
@@ -315,7 +315,7 @@
       "safeClaim": "A static preview health route proves the route bundle can be generated and parsed locally; it is not hosted uptime evidence.",
       "evidence": {
         "generatedRouteCount": 4,
-        "sourceInputHash": "sha256:1ba0249d979ae57b70af1d80dce3901cc2ac74cab491b8e96ccfc5992cb164fb",
+        "sourceInputHash": "sha256:d2636f309085226867dbc5f4fe1edce0a9d31a05f557250760ff213d8092d9b1",
         "secretScan": "passed"
       },
       "readiness": [
