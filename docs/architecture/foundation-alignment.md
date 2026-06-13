@@ -12,8 +12,8 @@ deliberate contract surface under the `@jami-studio/*` family.
 
 ## Sibling Repositories
 
-- `jami-harness`: source at `C:\Users\james\dev\orgs\oss\registry\jami-harness`.
-- `studio-ui`: source at `C:\Users\james\dev\orgs\oss\registry\studio-ui`.
+- `jami-harness`: source at `C:\Users\james\dev\orgs\oss\jami-harness`.
+- `studio-ui`: source at `C:\Users\james\dev\orgs\oss\studio-ui`.
 
 The repositories should remain separate until a later decision record proves that one
 workspace would reduce real release or integration friction. Planning convenience is not
@@ -192,6 +192,6 @@ The first integration should be contract-first:
 ## Cross-Links
 
 - Harness roadmap: `docs/roadmaps/2026-06-07-jami-harness-production-plan.md`
-- Studio UI roadmap: `C:\Users\james\dev\orgs\oss\registry\studio-ui\docs\roadmaps\2026-06-07-studio-ui-production-shape-plan.md`
+- Studio UI roadmap: `C:\Users\james\dev\orgs\oss\studio-ui\docs\roadmaps\2026-06-07-studio-ui-production-shape-plan.md`
 - Harness product architecture: `docs/architecture/product-architecture.md`
-- Studio UI product shape: `C:\Users\james\dev\orgs\oss\registry\studio-ui\docs\architecture\studio-ui-product-shape.md`
+- Studio UI product shape: `C:\Users\james\dev\orgs\oss\studio-ui\docs\architecture\studio-ui-product-shape.md`

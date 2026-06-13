@@ -5,7 +5,7 @@ Status: Active end-to-end implementation; local foundation only
 Source reports: `docs/research/2026-06-07-jami-harness-production-feasibility-report.md`; `docs/research/master/00-orchestration/plan.md`; `docs/research/master/00-orchestration/synthesis.md`; crossflow adversarial review at `C:\Users\james\dev\orgs\oss\registry\docs\research\2026-06-08-harness-ui-plan-adversarial-review.md`
 Owner: Jami Studio
 Surface: Jami Harness root workspace
-Sibling foundation: `C:\Users\james\dev\orgs\oss\registry\studio-ui`
+Sibling foundation: `C:\Users\james\dev\orgs\oss\studio-ui`
 
 ## Purpose
 

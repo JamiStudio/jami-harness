@@ -2,7 +2,7 @@
 
 Working from: `docs/roadmaps/2026-06-07-jami-harness-production-plan.md`
 
-Sibling foundation context: `C:\Users\james\dev\orgs\oss\registry\studio-ui` and
+Sibling foundation context: `C:\Users\james\dev\orgs\oss\studio-ui` and
 `docs/architecture/foundation-alignment.md`.
 
 ## Your Role: The Orchestrator
@@ -240,7 +240,7 @@ Implementation standards:
 - Verify drift-prone framework/provider/API/protocol/licensing facts against official
   sources before locking them in.
 - If you find a cross-repo mismatch requiring Studio UI changes, report it instead of
-  editing `C:\Users\james\dev\orgs\oss\registry\studio-ui`.
+  editing `C:\Users\james\dev\orgs\oss\studio-ui`.
 
 Verification (run the narrowest complete set for what you touched):
 - Docs-only: read back changed Markdown, `pnpm docs:check`, and `git diff --check`.
