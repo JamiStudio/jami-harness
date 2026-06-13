@@ -1,7 +1,7 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:aee572a1-8e98-583c-af94-60aed6359440",
+  "serialNumber": "urn:uuid:7f51b040-b36c-5874-a692-fe115c6c9cfd",
   "version": 1,
   "metadata": {
     "tools": {
@@ -70,7 +70,7 @@
       },
       {
         "name": "jami:harness:sourceInputHash",
-        "value": "bed0bbdd3ce2ed80f75452bb8177ea8bbaa8b30e0c33ae637b0be390ba451bd4"
+        "value": "1c0adaabf5a1283a59519355d183ed4396f14a498a6413bdeee9e248b4c0327e"
       },
       {
         "name": "jami:harness:commands",
@@ -116,7 +116,7 @@
         },
         {
           "name": "jami:harness:private",
-          "value": "true"
+          "value": "false"
         },
         {
           "name": "jami:harness:repository",
@@ -182,7 +182,7 @@
         },
         {
           "name": "jami:harness:private",
-          "value": "true"
+          "value": "false"
         },
         {
           "name": "jami:harness:repository",
@@ -215,7 +215,7 @@
         },
         {
           "name": "jami:harness:private",
-          "value": "true"
+          "value": "false"
         },
         {
           "name": "jami:harness:repository",
@@ -248,7 +248,7 @@
         },
         {
           "name": "jami:harness:private",
-          "value": "true"
+          "value": "false"
         },
         {
           "name": "jami:harness:repository",
@@ -310,7 +310,7 @@
         },
         {
           "name": "jami:harness:private",
-          "value": "true"
+          "value": "false"
         },
         {
           "name": "jami:harness:repository",
@@ -343,7 +343,7 @@
         },
         {
           "name": "jami:harness:private",
-          "value": "true"
+          "value": "false"
         },
         {
           "name": "jami:harness:repository",
@@ -376,7 +376,7 @@
         },
         {
           "name": "jami:harness:private",
-          "value": "true"
+          "value": "false"
         },
         {
           "name": "jami:harness:repository",
@@ -409,7 +409,7 @@
         },
         {
           "name": "jami:harness:private",
-          "value": "true"
+          "value": "false"
         },
         {
           "name": "jami:harness:repository",
@@ -442,7 +442,7 @@
         },
         {
           "name": "jami:harness:private",
-          "value": "true"
+          "value": "false"
         },
         {
           "name": "jami:harness:repository",
@@ -475,7 +475,7 @@
         },
         {
           "name": "jami:harness:private",
-          "value": "true"
+          "value": "false"
         },
         {
           "name": "jami:harness:repository",
@@ -508,7 +508,7 @@
         },
         {
           "name": "jami:harness:private",
-          "value": "true"
+          "value": "false"
         },
         {
           "name": "jami:harness:repository",
@@ -541,7 +541,7 @@
         },
         {
           "name": "jami:harness:private",
-          "value": "true"
+          "value": "false"
         },
         {
           "name": "jami:harness:repository",
@@ -557,7 +557,10 @@
   "dependencies": [
     {
       "ref": "pkg:@jami-studio/harness-cli:apps/cli/package.json",
-      "dependsOn": []
+      "dependsOn": [
+        "pkg:@jami-studio/harness-sdk:packages/sdk/package.json",
+        "pkg:@jami-studio/harness-store-local:packages/store-local/package.json"
+      ]
     },
     {
       "ref": "pkg:@jami-studio/harness-workbench:apps/workbench/package.json",
@@ -577,7 +580,15 @@
     },
     {
       "ref": "pkg:@jami-studio/harness-core:packages/core/package.json",
-      "dependsOn": []
+      "dependsOn": [
+        "pkg:@jami-studio/harness-artifacts:packages/artifacts/package.json",
+        "pkg:@jami-studio/harness-memory:packages/memory/package.json",
+        "pkg:@jami-studio/harness-observability:packages/observability/package.json",
+        "pkg:@jami-studio/harness-policy:packages/policy/package.json",
+        "pkg:@jami-studio/harness-provider-local:packages/provider-local/package.json",
+        "pkg:@jami-studio/harness-store-local:packages/store-local/package.json",
+        "pkg:@jami-studio/harness-tools:packages/tools/package.json"
+      ]
     },
     {
       "ref": "pkg:@jami-studio/harness-docs:packages/docs/package.json",
@@ -589,7 +600,9 @@
     },
     {
       "ref": "pkg:@jami-studio/harness-observability:packages/observability/package.json",
-      "dependsOn": []
+      "dependsOn": [
+        "pkg:@jami-studio/harness-artifacts:packages/artifacts/package.json"
+      ]
     },
     {
       "ref": "pkg:@jami-studio/harness-policy:packages/policy/package.json",
@@ -601,11 +614,17 @@
     },
     {
       "ref": "pkg:@jami-studio/harness-runtime:packages/runtime/package.json",
-      "dependsOn": []
+      "dependsOn": [
+        "pkg:@jami-studio/harness-policy:packages/policy/package.json"
+      ]
     },
     {
       "ref": "pkg:@jami-studio/harness-sdk:packages/sdk/package.json",
-      "dependsOn": []
+      "dependsOn": [
+        "pkg:@jami-studio/harness-artifacts:packages/artifacts/package.json",
+        "pkg:@jami-studio/harness-core:packages/core/package.json",
+        "pkg:@jami-studio/harness-runtime:packages/runtime/package.json"
+      ]
     },
     {
       "ref": "pkg:@jami-studio/harness-store-local:packages/store-local/package.json",
@@ -613,7 +632,11 @@
     },
     {
       "ref": "pkg:@jami-studio/harness-tools:packages/tools/package.json",
-      "dependsOn": []
+      "dependsOn": [
+        "pkg:@jami-studio/harness-artifacts:packages/artifacts/package.json",
+        "pkg:@jami-studio/harness-observability:packages/observability/package.json",
+        "pkg:@jami-studio/harness-policy:packages/policy/package.json"
+      ]
     }
   ]
 }
