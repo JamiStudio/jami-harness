@@ -462,7 +462,9 @@ function gitInfo() {
 
 function normalizeRemote(remote) {
   if (!remote) return remote;
-  if (/^https:\/\/github\.com\/[^/]+\/[^/]+$/.test(remote)) return `${remote}.git`;
+  if (/^https:\/\/github\.com\/[^/]+\/[^/]+(?:\.git)?$/.test(remote)) {
+    return `${remote.replace(/\.git$/, "")}.git`;
+  }
   return remote;
 }
 
