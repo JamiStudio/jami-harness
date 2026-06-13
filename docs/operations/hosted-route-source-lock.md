@@ -15,8 +15,9 @@ not a separate harness marketing site.
 The current implementation does not call Neon, OpenTelemetry collectors, hosted
 providers, or account APIs. It records route requirements and verifies that generated
 static route files remain synchronized with this source-lock record and local release
-evidence. Live hosted-route claims still require `pnpm hosted:smoke -- --require-hosted`
-against the accepted public URL.
+evidence. Live hosted-route claims for the current bundle are backed by
+`JAMI_HARNESS_HOSTED_BASE_URL=https://registry.jami.studio/harness/ pnpm hosted:smoke -- --require-hosted`,
+which passed on 2026-06-13.
 
 ## Official Sources Verified
 
@@ -69,7 +70,8 @@ Verified on 2026-06-12:
   - `/healthz.json`
   - `_headers`
 - `JAMI_HARNESS_HOSTED_BASE_URL=https://registry.jami.studio/harness/ pnpm hosted:smoke -- --require-hosted`
-  is the acceptance command for the public route bundle.
+  passed on 2026-06-13 for `/harness/status.json`, `/harness/release-readiness.json`,
+  `/harness/provider-store-observability.json`, and `/harness/healthz.json`.
 - The route check validates JSON output and scans generated route files for common
   secret-shaped markers.
 
@@ -77,7 +79,8 @@ Verified on 2026-06-12:
 
 - No separate Cloudflare Pages project is required for the harness status/control bundle.
 - No new DNS target is required; `registry.jami.studio` is the accepted public host.
-- Public hosted URL smoke remains required before claiming the route live.
+- Hosted provider, hosted store, and hosted observability readiness remain fail-closed
+  even though the static status/control route bundle is live and smoked.
 - No Neon project, branch, role, migration, or connection secret was provisioned.
 - No hosted provider credentials or provider account routes were used.
 - No OTLP endpoint, collector, or hosted observability sink was configured.

@@ -4,13 +4,13 @@
   "path": "/release-readiness.json",
   "sourceRepo": "jami-harness",
   "sourceCommit": "git:HEAD",
-  "sourceInputHash": "sha256:e2d0a8e090564b43718c08db68cb0cc5f3bf560965a90fcbd5cbbd7b1c52fa5c",
+  "sourceInputHash": "sha256:27c43392717c995b08414221246bd4ef5a6928e7f172cd5f2f90b8fc7e672b03",
   "generatedAt": "deterministic:git-head-plus-hosted-route-input-hash",
   "freshnessClass": "current-head-official-source-lock",
-  "status": "supported_preview_static_fail_closed",
-  "claimable": false,
+  "status": "supported_public_hosted_static",
+  "claimable": true,
   "failClosed": true,
-  "safeClaim": "A static release-readiness route is generated from release manifests; public npm provenance and GitHub release attestations are supported, while hosted docs remain blocked.",
+  "safeClaim": "A static release-readiness route is hosted from release manifests; public npm provenance and GitHub release attestations are supported, while hosted docs remain blocked.",
   "evidence": {
     "packagePublishing": {
       "capabilityId": "cap_npm_publish_provenance",
@@ -89,8 +89,7 @@
     "Run pnpm hosted:smoke -- --require-hosted with the final public harness base URL before hosted route claims."
   ],
   "humanInterventions": [
-    "Publish the harness status/control static route bundle under the existing registry Cloudflare Pages project at /harness/.",
-    "Run pnpm hosted:smoke -- --require-hosted with JAMI_HARNESS_HOSTED_BASE_URL=https://registry.jami.studio/harness/ before public hosted-route claims.",
+    "Rerun JAMI_HARNESS_HOSTED_BASE_URL=https://registry.jami.studio/harness/ pnpm hosted:smoke -- --require-hosted after changes to the harness status/control route bundle.",
     "Provision a Neon project, branch, role, migration path, and secret storage for the hosted store adapter before hosted-store claims.",
     "Provision hosted provider credentials and secret references for each accepted provider adapter before hosted-provider claims.",
     "Provision an OTLP endpoint and secret header storage before hosted observability export claims.",

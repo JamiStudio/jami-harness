@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:b0eebc750b3adee4aab51fe5eb1e15180c8d3e9819546d4765e97dd23c5e5232",
+  "sourceInputHash": "sha256:257d6bc8097a428c0df7324578f1919634f724e6528a7d4a2d0a1ad01b1c48c7",
   "generatedAt": "deterministic:local-workbench-source-tree",
   "freshnessClass": "deterministic_current_source_tree",
   "generator": {
@@ -43,28 +43,28 @@
     },
     {
       "path": "apps/workbench/dist/healthz.json",
-      "sha256": "sha256:c7924046d848ae510cc895201c074817b031b255245f739a1e830fa8185261e3",
-      "bytes": 2089
+      "sha256": "sha256:e27ec7b97e9301f6be05476c9d7f734d1cbafd0a92f964ff84cdddae7d9170ed",
+      "bytes": 2012
     },
     {
       "path": "apps/workbench/dist/provider-store-observability.json",
-      "sha256": "sha256:71964d648f9d94a1787cd28bcc42b82da50543ba86ccdd5164e15d49f7f36ffe",
-      "bytes": 4795
+      "sha256": "sha256:9fae3033bb1520226d66f90e5e023f5a800957465b72832ecaaf26b0880e0a2e",
+      "bytes": 4679
     },
     {
       "path": "apps/workbench/dist/release-readiness.json",
-      "sha256": "sha256:36a389dfc8430039073d1fb9522dce9b9d0f1bceabf510a1d6aff0a5ff22154c",
-      "bytes": 4160
+      "sha256": "sha256:885c6560c6f7707893ce780a54730fc6185daf296bcda55efddc375454e822e6",
+      "bytes": 4041
     },
     {
       "path": "apps/workbench/dist/status.json",
-      "sha256": "sha256:e382dc8b7d45615a0727fd124545bba3ef9b29ab64349ab50b1f3095c9d51e16",
-      "bytes": 2883
+      "sha256": "sha256:17d761ae9b0fe7732ecc26903d0a8a6e7a66c643b07274c33be5975b54bfbc09",
+      "bytes": 2633
     },
     {
       "path": "apps/workbench/generated/hosted-route-manifest.json",
-      "sha256": "sha256:e1e26a3db1f628e4dc0ba68787fafd4ee1c541671cea1ba8da9bea87069bb91f",
-      "bytes": 15148
+      "sha256": "sha256:5a8568f38cb7297739dc361df542b82c5e58113cd6b50059a3af3d540cc68b14",
+      "bytes": 15081
     },
     {
       "path": "apps/workbench/package.json",
@@ -78,8 +78,8 @@
     },
     {
       "path": "apps/workbench/test/workbench.test.mjs",
-      "sha256": "sha256:582d99f3c9acf384d8be7bf2f06352c8a45799a4b2ab618e38a92b658ef31e0d",
-      "bytes": 4575
+      "sha256": "sha256:ac3568313112acc41fc33de8883fb2ef8fcc01f55063c9c7bca1ca9c053da54c",
+      "bytes": 4559
     },
     {
       "path": "docs/generated/docs-source-manifest.json",
@@ -93,8 +93,8 @@
     },
     {
       "path": "docs/generated/hosted-route-manifest.json",
-      "sha256": "sha256:e1e26a3db1f628e4dc0ba68787fafd4ee1c541671cea1ba8da9bea87069bb91f",
-      "bytes": 15148
+      "sha256": "sha256:5a8568f38cb7297739dc361df542b82c5e58113cd6b50059a3af3d540cc68b14",
+      "bytes": 15081
     },
     {
       "path": "docs/generated/install-readiness-manifest.json",
@@ -108,8 +108,8 @@
     },
     {
       "path": "docs/generated/release-capability-manifest.json",
-      "sha256": "sha256:4816291ddfc09a6a233f41f12aad6ca958588ce8aea295b1e909e57cb0a1fb34",
-      "bytes": 32498
+      "sha256": "sha256:b04756801ee64c63e18945eb4aba8592e0dc660cccb4f1f511c06aaabeca1667",
+      "bytes": 32577
     },
     {
       "path": "docs/generated/sbom.cdx.json",
@@ -1065,7 +1065,7 @@
       },
       "releaseCapabilities": {
         "schemaVersion": "2026-06-09.release-capability-manifest",
-        "sourceInputHash": "sha256:e7ca6969c4b6d89df4b9c41fa31bbe346508f94cdbd64c0d7380b09786befd4d",
+        "sourceInputHash": "sha256:0aa3baabeaa517b99674f9f1e30c4bc6d5577501fc85fd71785689cc9f6f24d4",
         "unsupportedCount": 6,
         "unsupportedSurfaces": [
           "Mintlify validation and hosted publishing",
@@ -1078,8 +1078,8 @@
       },
       "hostedRoutes": {
         "schemaVersion": "2026-06-12.hosted-route-manifest",
-        "sourceInputHash": "sha256:e2d0a8e090564b43718c08db68cb0cc5f3bf560965a90fcbd5cbbd7b1c52fa5c",
-        "publicUrlStatus": "selected_pending_smoke",
+        "sourceInputHash": "sha256:27c43392717c995b08414221246bd4ef5a6928e7f172cd5f2f90b8fc7e672b03",
+        "publicUrlStatus": "live_smoke_passed",
         "localDirectory": "apps/workbench/dist",
         "previewServeCommand": "npx serve apps/workbench/dist",
         "routes": [
@@ -1087,26 +1087,26 @@
             "routeId": "status",
             "path": "/status.json",
             "outputPath": "apps/workbench/dist/status.json",
-            "status": "supported_preview_static_fail_closed",
-            "claimable": false,
+            "status": "supported_public_hosted_static",
+            "claimable": true,
             "failClosed": true,
-            "safeClaim": "A static harness status route is generated for preview serving and selected for publication at https://registry.jami.studio/harness/status.json; public hosted smoke must pass before it is claimed live."
+            "safeClaim": "The static harness status route is hosted at https://registry.jami.studio/harness/status.json and has public hosted smoke evidence for the current generated bundle."
           },
           {
             "routeId": "release-readiness",
             "path": "/release-readiness.json",
             "outputPath": "apps/workbench/dist/release-readiness.json",
-            "status": "supported_preview_static_fail_closed",
-            "claimable": false,
+            "status": "supported_public_hosted_static",
+            "claimable": true,
             "failClosed": true,
-            "safeClaim": "A static release-readiness route is generated from release manifests; public npm provenance and GitHub release attestations are supported, while hosted docs remain blocked."
+            "safeClaim": "A static release-readiness route is hosted from release manifests; public npm provenance and GitHub release attestations are supported, while hosted docs remain blocked."
           },
           {
             "routeId": "provider-store-observability",
             "path": "/provider-store-observability.json",
             "outputPath": "apps/workbench/dist/provider-store-observability.json",
-            "status": "supported_preview_static_fail_closed",
-            "claimable": false,
+            "status": "supported_public_hosted_static",
+            "claimable": true,
             "failClosed": true,
             "safeClaim": "A static readiness route enumerates hosted provider, Neon store, and OTLP observability prerequisites; the hosted services are not live."
           },
@@ -1117,12 +1117,11 @@
             "status": "supported_preview_static_fail_closed",
             "claimable": false,
             "failClosed": true,
-            "safeClaim": "A static preview health route proves the route bundle can be generated and parsed locally; it is not hosted uptime evidence."
+            "safeClaim": "A static hosted health route proves the current route bundle can be served and parsed from the registry host."
           }
         ],
         "humanInterventions": [
-          "Publish the harness status/control static route bundle under the existing registry Cloudflare Pages project at /harness/.",
-          "Run pnpm hosted:smoke -- --require-hosted with JAMI_HARNESS_HOSTED_BASE_URL=https://registry.jami.studio/harness/ before public hosted-route claims.",
+          "Rerun JAMI_HARNESS_HOSTED_BASE_URL=https://registry.jami.studio/harness/ pnpm hosted:smoke -- --require-hosted after changes to the harness status/control route bundle.",
           "Provision a Neon project, branch, role, migration path, and secret storage for the hosted store adapter before hosted-store claims.",
           "Provision hosted provider credentials and secret references for each accepted provider adapter before hosted-provider claims.",
           "Provision an OTLP endpoint and secret header storage before hosted observability export claims.",

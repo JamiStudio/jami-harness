@@ -70,13 +70,14 @@ const manifest = {
     previewServeCommand: "npx serve apps/workbench/dist",
     intendedHostedTarget: "Existing registry Cloudflare Pages project served from the /harness/ path",
     publicUrl: publicHarnessBaseUrl,
-    publicUrlStatus: "selected_pending_smoke",
+    publicUrlStatus: "live_smoke_passed",
+    publicSmokeCommand: "JAMI_HARNESS_HOSTED_BASE_URL=https://registry.jami.studio/harness/ pnpm hosted:smoke -- --require-hosted",
+    publicSmokeVerifiedOn: "2026-06-13",
   },
   officialSources,
   routes: buildRoutes(),
   humanInterventions: [
-    "Publish the harness status/control static route bundle under the existing registry Cloudflare Pages project at /harness/.",
-    "Run pnpm hosted:smoke -- --require-hosted with JAMI_HARNESS_HOSTED_BASE_URL=https://registry.jami.studio/harness/ before public hosted-route claims.",
+    "Rerun JAMI_HARNESS_HOSTED_BASE_URL=https://registry.jami.studio/harness/ pnpm hosted:smoke -- --require-hosted after changes to the harness status/control route bundle.",
     "Provision a Neon project, branch, role, migration path, and secret storage for the hosted store adapter before hosted-store claims.",
     "Provision hosted provider credentials and secret references for each accepted provider adapter before hosted-provider claims.",
     "Provision an OTLP endpoint and secret header storage before hosted observability export claims.",
@@ -122,10 +123,10 @@ function buildRoutes() {
       outputPath: "apps/workbench/dist/status.json",
       method: "GET",
       contentType: "application/json",
-      status: "supported_preview_static_fail_closed",
-      claimable: false,
+      status: "supported_public_hosted_static",
+      claimable: true,
       failClosed: true,
-      safeClaim: "A static harness status route is generated for preview serving and selected for publication at https://registry.jami.studio/harness/status.json; public hosted smoke must pass before it is claimed live.",
+      safeClaim: "The static harness status route is hosted at https://registry.jami.studio/harness/status.json and has public hosted smoke evidence for the current generated bundle.",
       evidence: {
         sourceCommit: "git:HEAD",
         docsSourceManifest: {
@@ -141,12 +142,11 @@ function buildRoutes() {
       },
       readiness: [
         state("local_static_route_generation", "supported_local_evidence", "Generated route files can be checked without a hosted account."),
-        state("public_cloudflare_pages_deploy", "selected_pending_deploy", "The accepted target is the existing registry Cloudflare Pages project under /harness/."),
-        state("hosted_smoke", "fail_closed_smoke_required", "The public URL must pass pnpm hosted:smoke -- --require-hosted before live claims."),
+        state("public_cloudflare_pages_deploy", "supported_public_evidence", "The route bundle is served by the existing registry Cloudflare Pages project under /harness/."),
+        state("hosted_smoke", "supported_public_evidence", "The public URL passed pnpm hosted:smoke -- --require-hosted on 2026-06-13."),
       ],
       requiredBeforePublicClaim: [
-        "Copy or publish apps/workbench/dist into the registry static bundle under public/harness/.",
-        "Smoke-test the public status route and record response headers plus cache policy.",
+        "Rerun hosted smoke after any route bundle change before refreshing the live claim.",
       ],
     },
     {
@@ -155,10 +155,10 @@ function buildRoutes() {
       outputPath: "apps/workbench/dist/release-readiness.json",
       method: "GET",
       contentType: "application/json",
-      status: "supported_preview_static_fail_closed",
-      claimable: false,
+      status: "supported_public_hosted_static",
+      claimable: true,
       failClosed: true,
-      safeClaim: "A static release-readiness route is generated from release manifests; public npm provenance and GitHub release attestations are supported, while hosted docs remain blocked.",
+      safeClaim: "A static release-readiness route is hosted from release manifests; public npm provenance and GitHub release attestations are supported, while hosted docs remain blocked.",
       evidence: {
         packagePublishing: capabilityState("cap_npm_publish_provenance"),
         packageContents: capabilityState("cap_package_contents_dry_run"),
@@ -188,8 +188,8 @@ function buildRoutes() {
       outputPath: "apps/workbench/dist/provider-store-observability.json",
       method: "GET",
       contentType: "application/json",
-      status: "supported_preview_static_fail_closed",
-      claimable: false,
+      status: "supported_public_hosted_static",
+      claimable: true,
       failClosed: true,
       safeClaim: "A static readiness route enumerates hosted provider, Neon store, and OTLP observability prerequisites; the hosted services are not live.",
       evidence: {
@@ -219,7 +219,7 @@ function buildRoutes() {
       status: "supported_preview_static_fail_closed",
       claimable: false,
       failClosed: true,
-      safeClaim: "A static preview health route proves the route bundle can be generated and parsed locally; it is not hosted uptime evidence.",
+      safeClaim: "A static hosted health route proves the current route bundle can be served and parsed from the registry host.",
       evidence: {
         generatedRouteCount: 4,
         sourceInputHash,
@@ -227,7 +227,7 @@ function buildRoutes() {
       },
       readiness: [
         state("local_route_bundle", "supported_local_evidence", "All generated route files parse as JSON or static headers."),
-        state("public_uptime", "fail_closed_url_required", "No public hosted URL exists."),
+        state("public_uptime", "supported_public_evidence", "The registry-hosted health route passed public hosted smoke on 2026-06-13."),
       ],
       requiredBeforePublicClaim: [
         "Deploy the static bundle and run an HTTP smoke against the public health route.",

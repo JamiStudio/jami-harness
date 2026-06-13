@@ -38,8 +38,8 @@ ledger below is closed.
   under `apps/workbench/dist/` for `/status.json`, `/release-readiness.json`,
   `/provider-store-observability.json`, `/healthz.json`, and `_headers`. The selected
   public target is `https://registry.jami.studio/harness/` on the existing registry
-  Cloudflare Pages project; live public acceptance requires hosted smoke against that
-  URL.
+  Cloudflare Pages project. Hosted smoke against that URL passed for the current bundle on
+  2026-06-13.
 - Publishable package manifests are public-package ready and the public npm release has
   executed for `@jami-studio/*@0.1.0` through the trusted GitHub Actions lane. The current
   source prepares a `0.1.1` patch for `@jami-studio/harness-core`,
@@ -116,7 +116,6 @@ results.
 | GitHub release attestation | The `v0.1.0` harness release bundle attestation verifies; any new release artifact requires a new attestation verification. | Create the release artifact through the accepted workflow and verify it with `gh attestation verify`. |
 | Mintlify validation/build/publish | Mintlify-ready `docs.json` and MDX drafts are generated locally, but the Mintlify CLI/package is not installed or source-locked in this repo. Current official CLI docs list `mint validate` as the strict local documentation build validation command. | Add source-lock evidence for the exact Mintlify CLI/package, install it intentionally, and run `mint validate` or the accepted current local build check before public docs hosting claims. |
 | Vercel or Cloudflare deploy dry run | The harness status/control target is selected as the existing registry Cloudflare Pages project under `/harness/`; separate hosted docs/runtime targets remain unselected. | Publish the accepted static bundle and record deploy evidence for changed static routes. |
-| Cloudflare Pages hosted route smoke | Static status/control route files are generated locally and selected for `https://registry.jami.studio/harness/`; public URL smoke is required before live claims. | Deploy the accepted static bundle and run `JAMI_HARNESS_HOSTED_BASE_URL=https://registry.jami.studio/harness/ pnpm hosted:smoke -- --require-hosted`. |
 | Neon hosted store smoke | No Neon project, branch, role, migration, or connection secret is configured. | Provision Neon, store connection material in the accepted secret system, run migrations, and smoke persisted run/checkpoint/artifact/trace state. |
 | OTLP hosted observability export smoke | No OTLP endpoint, collector, or secret header storage is configured. | Provision the OTLP endpoint and secret header resolver, then smoke trace and metric export with redacted evidence. |
 
@@ -136,7 +135,7 @@ results.
 | Full local source-checkout, clean tarball, and public npm install paths are inspectable and generated into release docs. | Supported for current foundations | `packages/sdk/src/index.mjs`, `apps/cli/src/cli.mjs`, `docs/generated/install-readiness-manifest.json`, `docs/generated/package-install-smoke.json`, `packages/sdk/test/sdk.test.mjs`, `apps/cli/test/cli.test.mjs`, `pnpm sdk:test`, `pnpm cli:test`, `pnpm docs:generate -- --check`, clean public npm install smoke evidence. | "The repo documents and exposes the current local source-checkout path, clean tarball smoke, and public npm install path; hosted runtime routes remain unavailable." |
 | Local SBOM dry-run generation can produce and drift-check a CycloneDX workspace package-manifest inventory. | Supported for current source records | `scripts/release/generate-sbom.mjs`, `docs/operations/sbom-source-lock.md`, `docs/generated/sbom.cdx.json`, `pnpm sbom:generate`, `pnpm sbom:check`. | "The repo includes a local SBOM dry-run artifact for workspace package manifests; release artifacts are not signed, attested, or publish-ready." |
 | Release and hosted capability readiness can be generated and drift-checked from current package metadata, official-source links, and local evidence. | Supported for current local evidence | `scripts/release/generate-capability-manifest.mjs`, `docs/operations/release-capability-source-lock.md`, `docs/generated/release-capability-manifest.json`, `pnpm release:capabilities`, `pnpm release:capabilities:check`. | "The repo includes a generated release capability manifest; unsupported publish, provenance, attestation, Mintlify, hosted docs, hosted provider, hosted store, and hosted workbench surfaces fail closed." |
-| Hosted status/control routes can be generated and drift-checked as static JSON for the selected registry host path. | Supported for current local evidence | `scripts/hosted/generate-hosted-routes.mjs`, `docs/operations/hosted-route-source-lock.md`, `docs/generated/hosted-route-manifest.json`, `apps/workbench/dist/status.json`, `apps/workbench/dist/release-readiness.json`, `apps/workbench/dist/provider-store-observability.json`, `apps/workbench/dist/healthz.json`, `apps/workbench/dist/_headers`, `pnpm hosted:routes`, `pnpm hosted:routes:check`. | "The repo can generate static status/control routes for `https://registry.jami.studio/harness/`; live claims require the hosted smoke to pass after deployment." |
+| Hosted status/control routes can be generated, drift-checked, served, and smoked as static JSON for the selected registry host path. | Supported for current public evidence | `scripts/hosted/generate-hosted-routes.mjs`, `docs/operations/hosted-route-source-lock.md`, `docs/generated/hosted-route-manifest.json`, `apps/workbench/dist/status.json`, `apps/workbench/dist/release-readiness.json`, `apps/workbench/dist/provider-store-observability.json`, `apps/workbench/dist/healthz.json`, `apps/workbench/dist/_headers`, `pnpm hosted:routes`, `pnpm hosted:routes:check`, `JAMI_HARNESS_HOSTED_BASE_URL=https://registry.jami.studio/harness/ pnpm hosted:smoke -- --require-hosted`. | "The repo generates and serves static status/control routes at `https://registry.jami.studio/harness/`; provider, store, and observability readiness still fail closed." |
 | Hosted provider runtime, executable full MCP/OpenAPI/shell/browser/code/provider-as-tool/A2A adapters, hosted workbench, hosted stores, Mintlify build/publish, or public docs hosting exist. | Unsupported | CLI, SDK, tools, and provider README files state unavailable hosted/protocol surfaces; this release gate records hosted docs and runtime blockers; roadmap Workstreams 4, 6, 8, and 9 remain open. | "Those surfaces are planned and currently unavailable." |
 | Release artifacts are signed, attested, externally published, or publish-ready. | Supported for `v0.1.0`; patch releases require fresh evidence | GitHub Release `v0.1.0`, package publish workflow, release artifact workflow, package install smoke, and attestation verification evidence. | "The `0.1.0` public package and release artifact lane is complete; future changed package behavior needs a new patch release." |
 
@@ -221,16 +220,18 @@ Current unsupported surfaces:
 
 - Separate Cloudflare Pages project creation or DNS route configuration for harness
   status/control.
-- Public hosted route smoke after registry deploy.
+- Hosted status/control route smoke must be rerun after registry route bundle changes.
 - Neon-backed hosted store runtime.
 - Hosted provider runtime.
 - OTLP hosted observability export.
 - Hosted workbench/control plane.
 
-The route bundle is not a hosted-route acceptance record until the registry deployment is
-live and `pnpm hosted:smoke -- --require-hosted` passes against
-`https://registry.jami.studio/harness/`. It keeps hosted provider, store, and
-observability claims fail-closed until those account/env actions are completed.
+The route bundle is a hosted-route acceptance record for the current static status,
+release-readiness, provider/store/observability readiness, and health routes because
+`pnpm hosted:smoke -- --require-hosted` passed against
+`https://registry.jami.studio/harness/` on 2026-06-13. It keeps hosted provider, store,
+and observability runtime claims fail-closed until those account/env actions are
+completed.
 
 ## Install And Module Replacement Readiness
 
@@ -301,8 +302,8 @@ stubbed around:
 - Confirm GitHub release, tag, Actions, and artifact attestation permissions for any new
   release artifact.
 - Select and authorize a public docs target before Mintlify, Vercel, or Cloudflare claims.
-- Publish the harness status/control bundle under the existing registry Cloudflare Pages
-  project and record hosted smoke before live route claims.
+- Rerun hosted status/control smoke after any registry route bundle change before
+  refreshing live route claims.
 - Provision Neon project, branch, role, migration path, and secret storage before hosted
   store claims.
 - Provision hosted provider credentials and OTLP endpoint/header secret storage before

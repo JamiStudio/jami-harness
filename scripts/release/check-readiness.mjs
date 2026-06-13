@@ -90,11 +90,6 @@ const unavailableCommands = [
     reason: "hosted docs and runtime control-plane deployment targets are not selected; harness status/control static routes use the existing registry Cloudflare Pages project under /harness/",
   },
   {
-    command: "Cloudflare Pages hosted route smoke",
-    status: "unavailable",
-    reason: "static harness status/control routes target https://registry.jami.studio/harness/ on the existing registry Pages project; public URL smoke is required after deploy before live route claims",
-  },
-  {
     command: "Neon hosted store smoke",
     status: "unavailable",
     reason: "no Neon project, branch, role, migration, or connection secret is configured",
@@ -109,7 +104,7 @@ const unavailableCommands = [
 const humanInterventions = [
   "Select and authorize the harness hosted docs/runtime control-plane target before Mintlify, Vercel, Cloudflare, or other hosted runtime claims are made.",
   "Refresh repo-local source-lock evidence for any release tool, hosted service, protocol, or third-party source used by the release.",
-  "Deploy and smoke the harness status/control static route bundle under the existing registry Cloudflare Pages project at https://registry.jami.studio/harness/ before live hosted-route claims.",
+  "Rerun the harness hosted status/control smoke after any route bundle change before refreshing live route claims.",
   "Provision Neon and OTLP endpoint secrets outside tracked files before claiming hosted store or hosted observability routes.",
 ];
 
@@ -254,7 +249,7 @@ const readiness = {
   readyToPublish: blockerCount === 0,
   dryRun,
   summary: blockerCount === 0
-    ? "Package publishing, public package install evidence, GitHub Release artifact evidence, and registry-hosted status/control static route preparation are complete; hosted runtime/provider/store/observability lanes remain unavailable until real targets and secrets are configured."
+    ? "Package publishing, public package install evidence, GitHub Release artifact evidence, and registry-hosted status/control route smoke are complete; hosted runtime/provider/store/observability lanes remain unavailable until real targets and secrets are configured."
     : "Release audit completed with publish-blocking gaps. No external publishing was attempted.",
   packages: manifests.map(({ path, manifest }) => ({
     path,

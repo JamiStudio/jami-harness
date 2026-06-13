@@ -4,16 +4,16 @@
   "path": "/healthz.json",
   "sourceRepo": "jami-harness",
   "sourceCommit": "git:HEAD",
-  "sourceInputHash": "sha256:e2d0a8e090564b43718c08db68cb0cc5f3bf560965a90fcbd5cbbd7b1c52fa5c",
+  "sourceInputHash": "sha256:27c43392717c995b08414221246bd4ef5a6928e7f172cd5f2f90b8fc7e672b03",
   "generatedAt": "deterministic:git-head-plus-hosted-route-input-hash",
   "freshnessClass": "current-head-official-source-lock",
   "status": "supported_preview_static_fail_closed",
   "claimable": false,
   "failClosed": true,
-  "safeClaim": "A static preview health route proves the route bundle can be generated and parsed locally; it is not hosted uptime evidence.",
+  "safeClaim": "A static hosted health route proves the current route bundle can be served and parsed from the registry host.",
   "evidence": {
     "generatedRouteCount": 4,
-    "sourceInputHash": "sha256:e2d0a8e090564b43718c08db68cb0cc5f3bf560965a90fcbd5cbbd7b1c52fa5c",
+    "sourceInputHash": "sha256:27c43392717c995b08414221246bd4ef5a6928e7f172cd5f2f90b8fc7e672b03",
     "secretScan": "passed"
   },
   "readiness": [
@@ -24,16 +24,15 @@
     },
     {
       "surface": "public_uptime",
-      "status": "fail_closed_url_required",
-      "reason": "No public hosted URL exists."
+      "status": "supported_public_evidence",
+      "reason": "The registry-hosted health route passed public hosted smoke on 2026-06-13."
     }
   ],
   "requiredBeforePublicClaim": [
     "Deploy the static bundle and run an HTTP smoke against the public health route."
   ],
   "humanInterventions": [
-    "Publish the harness status/control static route bundle under the existing registry Cloudflare Pages project at /harness/.",
-    "Run pnpm hosted:smoke -- --require-hosted with JAMI_HARNESS_HOSTED_BASE_URL=https://registry.jami.studio/harness/ before public hosted-route claims.",
+    "Rerun JAMI_HARNESS_HOSTED_BASE_URL=https://registry.jami.studio/harness/ pnpm hosted:smoke -- --require-hosted after changes to the harness status/control route bundle.",
     "Provision a Neon project, branch, role, migration path, and secret storage for the hosted store adapter before hosted-store claims.",
     "Provision hosted provider credentials and secret references for each accepted provider adapter before hosted-provider claims.",
     "Provision an OTLP endpoint and secret header storage before hosted observability export claims.",

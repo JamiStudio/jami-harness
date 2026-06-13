@@ -124,7 +124,7 @@ const manifest = {
     "Install and source-lock the exact Mintlify CLI/package, then run mint validate locally before claiming a Mintlify build check.",
     "Select and authorize a hosted docs target before public docs hosting, Mintlify deployment, Vercel, or Cloudflare claims.",
     "Implement hosted provider, store, and workbench adapters with source-lock evidence and fail-closed fixtures before advertising hosted capability.",
-    "Deploy and smoke the harness status/control static route bundle under the existing registry Cloudflare Pages project at https://registry.jami.studio/harness/ before live hosted-route claims.",
+    "Rerun the harness hosted status/control smoke after any route bundle change before refreshing live route claims.",
     "Provision Neon and OTLP endpoint secrets outside tracked files before claiming hosted store or hosted observability routes.",
   ],
 };
@@ -179,8 +179,8 @@ function buildCapabilities() {
     localCapability({
       capabilityId: "cap_hosted_status_control_preview_routes",
       surface: "registry-hosted status/control route bundle",
-      safeClaim: "The repo can generate static JSON routes for harness status, release readiness, and provider/store/observability readiness targeted at https://registry.jami.studio/harness/; live claims require hosted smoke after deployment.",
-      commands: ["pnpm hosted:routes", "pnpm hosted:routes:check"],
+      safeClaim: "The repo generates static JSON routes for harness status, release readiness, and provider/store/observability readiness targeted at https://registry.jami.studio/harness/; the current bundle has hosted smoke evidence for status, release-readiness, and health routes.",
+      commands: ["pnpm hosted:routes", "pnpm hosted:routes:check", "JAMI_HARNESS_HOSTED_BASE_URL=https://registry.jami.studio/harness/ pnpm hosted:smoke -- --require-hosted"],
       evidence: [
         "scripts/hosted/generate-hosted-routes.mjs",
         "docs/operations/hosted-route-source-lock.md",
