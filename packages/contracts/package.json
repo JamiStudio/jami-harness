@@ -1,7 +1,6 @@
 {
   "name": "@jami-studio/harness-contracts",
   "version": "0.0.0",
-  "private": true,
   "description": "Harness-owned shared contracts, JSON Schema anchors, and compatibility fixtures.",
   "license": "Apache-2.0",
   "repository": {
@@ -21,5 +20,17 @@
     "generate": "node scripts/generate-contracts.mjs",
     "generate:check": "node scripts/generate-contracts.mjs --check",
     "validate": "node scripts/validate-contracts.mjs"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "generated/",
+    "schemas/",
+    "fixtures/",
+    "README.md"
+  ],
+  "jamiRelease": {
+    "publishable": true
   }
 }

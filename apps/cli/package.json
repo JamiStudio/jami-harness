@@ -1,7 +1,6 @@
 {
   "name": "@jami-studio/harness-cli",
   "version": "0.0.0",
-  "private": true,
   "description": "Agent-first CLI foundation for local Jami Harness runs and evidence inspection.",
   "license": "Apache-2.0",
   "repository": {
@@ -15,5 +14,19 @@
   },
   "scripts": {
     "test": "node --test test/*.test.mjs"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "src/",
+    "README.md"
+  ],
+  "jamiRelease": {
+    "publishable": true
+  },
+  "dependencies": {
+    "@jami-studio/harness-sdk": "workspace:0.0.0",
+    "@jami-studio/harness-store-local": "workspace:0.0.0"
   }
 }

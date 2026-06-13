@@ -1,6 +1,5 @@
 {
   "name": "@jami-studio/harness-store-local",
-  "private": true,
   "version": "0.0.0",
   "description": "Local replaceable checkpoint store ports for Jami Harness runtime state.",
   "license": "Apache-2.0",
@@ -12,5 +11,15 @@
   "type": "module",
   "exports": {
     ".": "./src/index.mjs"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "src/",
+    "README.md"
+  ],
+  "jamiRelease": {
+    "publishable": true
   }
 }

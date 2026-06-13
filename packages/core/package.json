@@ -1,7 +1,6 @@
 {
   "name": "@jami-studio/harness-core",
   "version": "0.0.0",
-  "private": true,
   "description": "Core composition layer for harness runtime, policy, tools, memory, context, artifacts, observability, stores, providers, and docs-output ports.",
   "license": "Apache-2.0",
   "repository": {
@@ -15,5 +14,24 @@
   },
   "scripts": {
     "test": "node --test test/*.test.mjs"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "src/",
+    "README.md"
+  ],
+  "jamiRelease": {
+    "publishable": true
+  },
+  "dependencies": {
+    "@jami-studio/harness-artifacts": "workspace:0.0.0",
+    "@jami-studio/harness-memory": "workspace:0.0.0",
+    "@jami-studio/harness-observability": "workspace:0.0.0",
+    "@jami-studio/harness-policy": "workspace:0.0.0",
+    "@jami-studio/harness-provider-local": "workspace:0.0.0",
+    "@jami-studio/harness-store-local": "workspace:0.0.0",
+    "@jami-studio/harness-tools": "workspace:0.0.0"
   }
 }

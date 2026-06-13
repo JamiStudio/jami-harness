@@ -1,7 +1,6 @@
 {
   "name": "@jami-studio/harness-runtime",
   "version": "0.0.0",
-  "private": true,
   "description": "Harness-owned dependency-light run lifecycle and policy-gated emission kernel.",
   "license": "Apache-2.0",
   "repository": {
@@ -15,5 +14,18 @@
   },
   "scripts": {
     "test": "node --test test/*.test.mjs"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "src/",
+    "README.md"
+  ],
+  "jamiRelease": {
+    "publishable": true
+  },
+  "dependencies": {
+    "@jami-studio/harness-policy": "workspace:0.0.0"
   }
 }

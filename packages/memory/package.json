@@ -1,7 +1,6 @@
 {
   "name": "@jami-studio/harness-memory",
   "version": "0.0.0",
-  "private": true,
   "description": "Harness-owned memory, search, citation, permission filtering, and context replay foundations.",
   "license": "Apache-2.0",
   "repository": {
@@ -15,5 +14,15 @@
   },
   "scripts": {
     "test": "node --test test/*.test.mjs"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "src/",
+    "README.md"
+  ],
+  "jamiRelease": {
+    "publishable": true
   }
 }

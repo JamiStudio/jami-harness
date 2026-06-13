@@ -1,7 +1,6 @@
 {
   "name": "@jami-studio/harness-provider-local",
   "version": "0.0.0",
-  "private": true,
   "type": "module",
   "description": "Local deterministic provider adapter foundation for Jami Harness workflow execution.",
   "license": "Apache-2.0",
@@ -12,5 +11,15 @@
   },
   "exports": {
     ".": "./src/index.mjs"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "src/",
+    "README.md"
+  ],
+  "jamiRelease": {
+    "publishable": true
   }
 }

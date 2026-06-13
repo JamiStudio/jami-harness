@@ -1,7 +1,6 @@
 {
   "name": "@jami-studio/harness-policy",
   "version": "0.0.0",
-  "private": true,
   "description": "Harness-owned policy, approval, identity, secret-reference, and audit runtime spine.",
   "license": "Apache-2.0",
   "repository": {
@@ -15,5 +14,15 @@
   },
   "scripts": {
     "test": "node --test test/*.test.mjs"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "src/",
+    "README.md"
+  ],
+  "jamiRelease": {
+    "publishable": true
   }
 }
