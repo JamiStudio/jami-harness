@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:952f910beb7c19db5d666277062f1cc574a0eb76b8eeb5fa56d8b331caa491ef",
+  "sourceInputHash": "sha256:eea3aff683d4064e826751c42ad8a196f000d884ff087bdd14cc2a60d044ab38",
   "generatedAt": "deterministic:git-head-plus-input-hash",
   "freshnessClass": "deterministic_current_source_tree",
   "command": "pnpm docs:generate -- --check",
@@ -293,7 +293,7 @@
     },
     {
       "path": "docs/generated/release-capability-manifest.json",
-      "sha256": "sha256:7e98febb014388bca3fc0094b0e9e4bd9ed1f248e601b8facbca34260c3780fb",
+      "sha256": "sha256:39c9b04f4ad4cc5fd205966afc7b71a717d1a773e2c03acb8d50673b030ab3fa",
       "bytes": 32601
     },
     {

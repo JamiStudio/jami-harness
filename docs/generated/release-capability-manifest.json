@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:e9ecbec482fb98aed3960f8376c6a986993b222a99d4e31ed8d84d96f09ea81d",
+  "sourceInputHash": "sha256:8a81e241b0ebf8f9b6fcce239bc2b3b18879344b74027eaa5439bee0ac096bec",
   "generatedAt": "deterministic:git-head-plus-release-capability-input-hash",
   "command": "pnpm release:capabilities:check",
   "commandResult": "passed",
@@ -381,12 +381,12 @@
     },
     {
       "path": "docs/generated/package-contents-manifest.json",
-      "sha256": "sha256:95e194566fac2d4e8dec8cb341303f0b3f217f0c69096a6d89ba5f70eb8ebb53",
-      "bytes": 25220
+      "sha256": "sha256:dfebe94ada6ff268403b3cad2cfdf245a147e5a28696927b4be0e3a0d80e8ebf",
+      "bytes": 37665
     },
     {
       "path": "docs/generated/package-install-smoke.json",
-      "sha256": "sha256:95ecc3ce3e14ca4e062582dc64a9e77ad8bbfbcd3d735568c1ffd25cfbb63ab4",
+      "sha256": "sha256:a18832703536a70464515e37b220aab7d6cd18f7539ea05e246bb1952591d3af",
       "bytes": 6879
     },
     {
@@ -491,8 +491,8 @@
     },
     {
       "path": "scripts/release/check-package-contents.mjs",
-      "sha256": "sha256:a6c3102f9eedc893425964d4bad4b058290a2ef2f6115f7d8ad0f5a881d6af57",
-      "bytes": 18872
+      "sha256": "sha256:ac493c32c43b8bf437b8fe157bcdc447f33d0379e6deb594fe843db1d6621ea2",
+      "bytes": 19075
     },
     {
       "path": "scripts/release/check-readiness.mjs",

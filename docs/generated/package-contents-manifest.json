@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:39ab050cacb68e390e91627ba9ca28a1735a796058b35f181a2d93432429ded6",
+  "sourceInputHash": "sha256:1127725c41e32eee6abc3161cd5acb8c3a40a41dd9f147996ee35e2ad89fc15b",
   "generatedAt": "deterministic:git-head-plus-package-input-hash",
   "command": "pnpm package:dry-run",
   "commandResult": "passed",
@@ -36,17 +36,20 @@
         {
           "path": "package.json",
           "size": 729,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:b24dddf13c2b7045d6fc44a175a97e278739526ea55137f55c64512c9232014f"
         },
         {
           "path": "README.md",
           "size": 3880,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:acb5bbe62bfeb4dc97c1b9077dddc8f72bc7c287f278c1eccae36c3ef789dae0"
         },
         {
           "path": "src//cli.mjs",
           "size": 20255,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:0b4ea1f1ce163205d0c9e048139ae6677133c7efa9538cbfb5ffb5e7e0e40da3"
         }
       ],
       "secretScan": {
@@ -77,17 +80,20 @@
         {
           "path": "package.json",
           "size": 615,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:2223ef60fb08a77b64aa13aa4fd657b43d182bedafb6e694340889906a1c4cbc"
         },
         {
           "path": "README.md",
           "size": 652,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:d061bd1532d31a3d3ad88b48588296ab0f8cef13ec219da063097a016efa8a6f"
         },
         {
           "path": "src//index.mjs",
           "size": 4779,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:60dcdcbf14b4e508145cafb1070b6ed89a81b66c9490ffed42cdc9bc20ca1152"
         }
       ],
       "secretScan": {
@@ -120,492 +126,590 @@
         {
           "path": "package.json",
           "size": 1015,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:d4230eaef25cb604a0bda75c91f725cde01a80876a20700f2938d99eff0f6ada"
         },
         {
           "path": "README.md",
           "size": 5774,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:db75b926217c98659d54addadd9da5fcf9f08acc4971932d9e2f56981334ec4f"
         },
         {
           "path": "generated//contracts.ts",
           "size": 56886,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:9abd96944503d9a09bbe815bdbbc53b1c712c99991dd9385f50630dfa13dafee"
         },
         {
           "path": "generated//openapi.json",
           "size": 65608,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:a55a140f6e884a432dbc9aecdc2297846de3b702a7620d77c1fcb99ec27b4cff"
         },
         {
           "path": "generated//reference.json",
           "size": 8515,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:2d6b0b1641b9bfbe8ccc9f97c2a8d8498c6014bdf8674eb678e848abf46427f8"
         },
         {
           "path": "schemas//action-ref.schema.json",
           "size": 1474,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:480ed6efe2dc7e67965b1f02da22bfc5be125d2834bd832acb2ccc08d8db1b4a"
         },
         {
           "path": "schemas//approval-request.schema.json",
           "size": 1725,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:5111848cd4c4273eb057abcf1290448cdc3a8e3aea75c015cebfcfe4e1e0ee8d"
         },
         {
           "path": "schemas//artifact-record.schema.json",
           "size": 2498,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:cead8cbaa0e7b38abab96d9694ec78d2503c1779a3cd2c38d72d56300dd991a7"
         },
         {
           "path": "schemas//artifact-view.schema.json",
           "size": 2037,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:e8e68f9883712f2c0c260d4525982b7322f0776b1c54be87ed4bb4bfc405864a"
         },
         {
           "path": "schemas//audit-event.schema.json",
           "size": 1694,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:75ed9010d1c8714f4b580ed5dc871e7a9766a1e0c1795366611ee08e78840c7b"
         },
         {
           "path": "schemas//capability-manifest.schema.json",
           "size": 2676,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:d2b9158735c65c344a39681a3f4192673c731c57fbe28ba23acc0feac37c33de"
         },
         {
           "path": "schemas//context-pack.schema.json",
           "size": 1951,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:941be00871025ccfd6eec3104c2897f255ddab161d98c189da7c10dd4f224b8f"
         },
         {
           "path": "schemas//evidence-packet.schema.json",
           "size": 2762,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:0366b93ef3648c4ca5531106489f24f0c4b999f63ce86c3ad19cfa7e73103dc5"
         },
         {
           "path": "schemas//memory-record.schema.json",
           "size": 3119,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:68c51cdf76e4566d578da56bcc209b2f05eae2d473d3db3e553b371469b1b803"
         },
         {
           "path": "schemas//metric-record.schema.json",
           "size": 2115,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:0c16e094ef92c6a1a4ecaa591287369ae9c0aa4d38a3fb72f0e8a7bd1775d69a"
         },
         {
           "path": "schemas//policy-decision.schema.json",
           "size": 2134,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:af1482dcf8b952d5f1e0b8b1aaee71a129c2210c7e48820d6bfe683c8a1e9821"
         },
         {
           "path": "schemas//primitive-manifest.schema.json",
           "size": 1591,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:961e994bedcf22cfc7913a2ca0c29ee8aa2d65c719e53f8eadb2f921157efb85"
         },
         {
           "path": "schemas//run-event.schema.json",
           "size": 2207,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:d592e871ad1b8185747e459a3eb5d6e260ceaa2bd7ff991fa00622db0fb0b480"
         },
         {
           "path": "schemas//secret-ref.schema.json",
           "size": 961,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:560a632ecfcf875a81a6f120cb1e59fc374103b951095c4cba46c03f47fa3436"
         },
         {
           "path": "schemas//suite-ref.schema.json",
           "size": 1291,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:ca582de6ee2788d7c2f103d0ead973403c53ff963e7740f4219ff62c8f4f0b6e"
         },
         {
           "path": "schemas//theme-ref.schema.json",
           "size": 1362,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:5c6cf0de65978e5a86e78fe6a6281e5c3ee72e130e703e47ce7597cf45cca4bf"
         },
         {
           "path": "schemas//threat-model-fixture-catalog.schema.json",
           "size": 1998,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:113e0bee977673c519badf0f82151bc28d8dde957720858ba09c96b418f04232"
         },
         {
           "path": "schemas//tool-execution.schema.json",
           "size": 2319,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:86e17f03c15c99555f766f6434c014e43f5ff73cc8891c7e4e2b0b8ecf0ecd78"
         },
         {
           "path": "schemas//trace-event.schema.json",
           "size": 1673,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:384da496e3b58fa3e206ff384243855608259f0c795cd1ce4f7f2b87ab45fdb4"
         },
         {
           "path": "schemas//ui-payload.schema.json",
           "size": 2081,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:b9919032e8b64c8931a91de72693831f721d71f355125001337dc99acd6825ef"
         },
         {
           "path": "fixtures//artifacts/valid-artifact-record.json",
           "size": 1056,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:98eab29dc50fcf9f57f517abba2d44c67e9b6fdfca65be0f6e5af2edb341f91b"
         },
         {
           "path": "fixtures//compatibility/denied-action-ref.json",
           "size": 691,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:542b2e6e266a5a9b3d77d76f19969c907384a532129cfd90ce6069c8e186ba87"
         },
         {
           "path": "fixtures//compatibility/invalid-denied-action-ref.json",
           "size": 526,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:2fefeda80413ed77158336b54339fb496be7bd28d1dbc524ac1d1e3af82e9a03"
         },
         {
           "path": "fixtures//compatibility/invalid-renderer-error-run-event.json",
           "size": 555,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:0f698167cc48de81becdfa0c9adbbead4b1019f2392801ecb425a2a0590e29b9"
         },
         {
           "path": "fixtures//compatibility/invalid-ui-payload.json",
           "size": 528,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:c01353fb9b65801c10007099fc6ac577659717df3e7b54ffe87fcfc2572ad970"
         },
         {
           "path": "fixtures//compatibility/invalid-ui-unsafe-prop.json",
           "size": 795,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:3b6e12bb3c59e98a0649768c5521999dfd3caeb66ff07ec9ce6bc48367565496"
         },
         {
           "path": "fixtures//compatibility/renderer-error-run-event.json",
           "size": 579,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:13db8159fb036b6b8a6a82ae96349822d4416671ab686f9edbace4f3653a5f71"
         },
         {
           "path": "fixtures//compatibility/unsupported-ui-component.json",
           "size": 775,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:dc8f99f400f92ec4d5dda50858a1ac1f6ee5267023a476b134265a47563ad03b"
         },
         {
           "path": "fixtures//compatibility/valid-artifact-view.json",
           "size": 987,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:807ecd33d21fbe25af7a7a9bcc7385f7a974b5faa484bc6be4b59829aa9259b4"
         },
         {
           "path": "fixtures//compatibility/valid-suite-ref.json",
           "size": 755,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:089bc9136736257816f525f6a6389b792e67797b2ce440667f852f82ce132bb4"
         },
         {
           "path": "fixtures//compatibility/valid-theme-ref.json",
           "size": 630,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:53c997692c04bc52924461b692086d4303818334bf0a9b9c77401d7f43b4728e"
         },
         {
           "path": "fixtures//compatibility/valid-ui-payload.json",
           "size": 903,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:b32ae3180178cc30bdd1ffc0d08d04a074c0bbd41effd9b4593d22ee11a7717c"
         },
         {
           "path": "fixtures//manifests/capability-manifest.json",
           "size": 1044,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:58e136e32b2957c1f05f72499786b721d1357c8f89ec0d261fc41dc185707855"
         },
         {
           "path": "fixtures//manifests/primitive-manifest.json",
           "size": 983,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:a4204294538238de3fae3f60e6fb49895dd629a8813e6ba37161387f99fe950d"
         },
         {
           "path": "fixtures//memory/invalid-memory-cross-actor-leakage.json",
           "size": 1166,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:ce8da9c3dbaa49da489fb9a67e86141c3a1af56f603cb6e935c3530c739b990f"
         },
         {
           "path": "fixtures//memory/valid-context-pack.json",
           "size": 911,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:c434297196bcf46856a41a5915ff4424f8a6e73082c7cc1bd892fb345f23d7d2"
         },
         {
           "path": "fixtures//memory/valid-memory-record.json",
           "size": 1289,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:4dcf1286c5107faa4f2ca7b5854222bac9e104b2df85ba971505aff90575f21c"
         },
         {
           "path": "fixtures//observability/invalid-evidence-packet-no-command.json",
           "size": 828,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:a7da6446c444672c57a40489b04b11f1a929867c85a1045e819a3e063d39c30c"
         },
         {
           "path": "fixtures//observability/valid-evidence-packet.json",
           "size": 1509,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:a159439927b5b1551100ab9cfe422056ba1f9068582ab49bafef5b2f2dd1c975"
         },
         {
           "path": "fixtures//observability/valid-metric-record.json",
           "size": 771,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:f06a8679a581b8bbd35549954d44789b7e5be8412b5840f363e0c300a7fb83a9"
         },
         {
           "path": "fixtures//observability/valid-trace-event.json",
           "size": 884,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:ab1d06f07f477fb1741b4900e8d1acabf78671aa6ef5811e1e17b0e297b044e5"
         },
         {
           "path": "fixtures//policy/invalid-approval-replay-token.json",
           "size": 852,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:2380846c0e6b1d18243b43b00036cf22ffb1d09162bd25b18c19cd59ed067900"
         },
         {
           "path": "fixtures//policy/invalid-policy-decision-without-audit.json",
           "size": 691,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:2886e894f4149ebc65172b0d70679ef9c73ddc41eba54fae0fbf583353ade78e"
         },
         {
           "path": "fixtures//policy/invalid-secret-ref-value-leak.json",
           "size": 488,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:4db1f7d46320916c8a74f42eb16ebb4f335913a090abef431a09124ff3b0f35d"
         },
         {
           "path": "fixtures//policy/valid-approval-request.json",
           "size": 839,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:d4745c2c64d16bf2490f24bf801aa84502aca6a9466e5b0319aeb0b79b39b4a9"
         },
         {
           "path": "fixtures//policy/valid-audit-event-denied-action.json",
           "size": 798,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:1d9ab36cf9b6dc6f83729b17723733fd6fcbf078561e9f10c1a3b313b0a2c192"
         },
         {
           "path": "fixtures//policy/valid-policy-decision-deny-cross-scope-action.json",
           "size": 852,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:8da01c195aaf37cadbd84dfaad8883d2cfa7244be808ec527c0facb6e40c9a96"
         },
         {
           "path": "fixtures//policy/valid-policy-decision-deny-mcp-transport-abuse.json",
           "size": 875,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:c23f5918d0a57357f417a26286f123b848a6bbcf29cf07c510afa6f352e3c510"
         },
         {
           "path": "fixtures//policy/valid-policy-decision-deny-prompt-injection.json",
           "size": 984,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:bc646e9248a9a2bbe8bb9df705430b03f766f9fa15d9fc5d9090cd58dc574da2"
         },
         {
           "path": "fixtures//policy/valid-policy-decision-deny-secret-exfiltration.json",
           "size": 1020,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:73a07c0270db23beb21e00da6c48c75ebaa7d48ae405285a22287879c26d1f66"
         },
         {
           "path": "fixtures//policy/valid-policy-decision-deny-tool-metadata-poisoning.json",
           "size": 891,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:0cc869861650c2980ec8fa77d740dd61975ada6b28d1c842b58a20193567208a"
         },
         {
           "path": "fixtures//policy/valid-secret-ref.json",
           "size": 512,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:2f9f02ec8a15c2912d482f210d5cd57adb9567a605657f0f2e9e409438d98a49"
         },
         {
           "path": "fixtures//shared-seams/phase2-action-ref-approved.json",
           "size": 734,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:e0de37764bd5c9103f17125c5153b4b648aa1546be71c50e2d14e9ce9b32affe"
         },
         {
           "path": "fixtures//shared-seams/phase2-action-ref-denied.json",
           "size": 751,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:26104e8c14283bdc94679df4210193e959fa728d98f78a807c9520b4fb0291be"
         },
         {
           "path": "fixtures//shared-seams/phase2-action-ref-display-only.json",
           "size": 621,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:b56deaafb0fd79bc36549d36757492283a5ad25f1dc8b25368e5be68d29d9563"
         },
         {
           "path": "fixtures//shared-seams/phase2-action-ref-expired.json",
           "size": 688,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:a6033c098a5edb6118876eef90aab2262c4903d049c0029c69a4d1a373c6dc0a"
         },
         {
           "path": "fixtures//shared-seams/phase2-action-ref-missing-audit.json",
           "size": 680,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:5a604980e50551d5f19ee471cbeb249bff324f921aca4f59d92b5249f3f54dd7"
         },
         {
           "path": "fixtures//shared-seams/phase2-action-ref-pending-approval.json",
           "size": 685,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:b70983b4454b2ac866f4788d1f1824a92881da7318b5ed89c8545a024346612b"
         },
         {
           "path": "fixtures//shared-seams/phase2-action-ref-states.json",
           "size": 817,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:6a9a0ec872bf40337036914296b4101f2843a5d887739945d4cd572753d1b8ca"
         },
         {
           "path": "fixtures//shared-seams/phase2-artifact-view-states.json",
           "size": 1277,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:df1c873883f6a4c1803871a99e863dca683ec3d287b2f70098e474a20e925d44"
         },
         {
           "path": "fixtures//shared-seams/phase2-capability-manifest-states.json",
           "size": 2371,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:d0e460a2a896b9bc76ec1c7b83ee1e36021200b46109ee60d46d45377050d2f4"
         },
         {
           "path": "fixtures//shared-seams/phase2-context-pack-states.json",
           "size": 1278,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:1f58a429ae399f8024da0da20f94b8e4c489529f45207da1c11cd4efd406f17b"
         },
         {
           "path": "fixtures//shared-seams/phase2-memory-record-states.json",
           "size": 1281,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:c1cf9e4adc6e2a44f9e3dc953ef6890ef1b070b682f9c75a64035e6edeee42a2"
         },
         {
           "path": "fixtures//shared-seams/phase2-run-event-approval-required.json",
           "size": 768,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:46f41743088a42ae3f6e903b8fc99f7387e169bb54224ed8e095029c3f346d4a"
         },
         {
           "path": "fixtures//shared-seams/phase2-run-event-artifact-emitted.json",
           "size": 747,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:7906663a86ef7ead2171768eac2d32d0d8eb005b37713ef28be29e71d89959b1"
         },
         {
           "path": "fixtures//shared-seams/phase2-run-event-cancelled.json",
           "size": 656,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:11a351d9785d16dd849292d197dfc7f2de537ceffc0751f141858d554475e234"
         },
         {
           "path": "fixtures//shared-seams/phase2-run-event-cancelling.json",
           "size": 683,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:5a7bd4e906eab3d0bcde8928c959a139a729d13a31b867df3d347109cf0413ec"
         },
         {
           "path": "fixtures//shared-seams/phase2-run-event-complete.json",
           "size": 653,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:40944e935eab8e13c3e6bc5b7e8ccb1ff2d4033bd52a34865db525ca27765dd2"
         },
         {
           "path": "fixtures//shared-seams/phase2-run-event-failed.json",
           "size": 655,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:211540824ae7767b87ed0d7a0f9959e3a74b7c024365615c49925710bb59177a"
         },
         {
           "path": "fixtures//shared-seams/phase2-run-event-lifecycle.json",
           "size": 807,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:8d098e5a1af5eb2cfea8757db2c70a2e94f971acb3bc4a7c6d11acff0522b7ab"
         },
         {
           "path": "fixtures//shared-seams/phase2-run-event-progress.json",
           "size": 660,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:20bf900db42a83df5048051fd53b6c798931cfef0a397081bf2e39df11d56be1"
         },
         {
           "path": "fixtures//shared-seams/phase2-run-event-recovered.json",
           "size": 673,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:ee34904bbe4f8d2a5ce8b6d4bb63409cef1535f95cf3d81ab36f798713cee63e"
         },
         {
           "path": "fixtures//shared-seams/phase2-run-event-redacted.json",
           "size": 672,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:b5561d26cf26160eb98e28c0abeb66a2356394ab56fdf7a05f0a5bfddb0ff31a"
         },
         {
           "path": "fixtures//shared-seams/phase2-run-event-retrying.json",
           "size": 652,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:7702a8177f5d1e4f73a8d984027f4d3b2d995701a944308eb5eaa0821a1e9d35"
         },
         {
           "path": "fixtures//shared-seams/phase2-run-event-start.json",
           "size": 640,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:207178eef00eb54b4cefa8982f366a083c9acd1a2446772a7e0f0bec70d59b4e"
         },
         {
           "path": "fixtures//shared-seams/phase2-run-event-tool-running.json",
           "size": 677,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:ccea2961674f4de1797531d03ae3256369d6fb568598bfb585e4286640fc7703"
         },
         {
           "path": "fixtures//shared-seams/phase2-suite-ref-states.json",
           "size": 1180,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:7cd65196ad6868e5f8a19a191776cb095887e797f5949a45b4a532d2282ebab1"
         },
         {
           "path": "fixtures//shared-seams/phase2-theme-ref-states.json",
           "size": 885,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:f38d1f0201e4a46b82edd5566f3dd756485a98ad096b5812aec52e560ae3699e"
         },
         {
           "path": "fixtures//shared-seams/phase2-ui-payload-handler-props.json",
           "size": 804,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:05950a735cdcc157090b95754b2eb560dbc86cda697ab07b0a4fad930c128a38"
         },
         {
           "path": "fixtures//shared-seams/phase2-ui-payload-html-script.json",
           "size": 829,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:17e05fba2f099caed4066e41acf65d514c4b38c6b6d358f8868e57bdd1f176c8"
         },
         {
           "path": "fixtures//shared-seams/phase2-ui-payload-invalid-props.json",
           "size": 913,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:fe10801fc8caa4bb1b1195beebdcbb78040b3695defc5ad7cc2945abdaf4c1c7"
         },
         {
           "path": "fixtures//shared-seams/phase2-ui-payload-package-import.json",
           "size": 818,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:ccc1c4761373bd7e904a79fafe164717b18cc0c1df4760c9f9114bf8d65d0c61"
         },
         {
           "path": "fixtures//shared-seams/phase2-ui-payload-secret-shaped-values.json",
           "size": 860,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:24b29dc6afdfa05da440c053a318f56ddbd5c4f0afe87b97e6b63bd532c93e26"
         },
         {
           "path": "fixtures//shared-seams/phase2-ui-payload-serialized-react-marker.json",
           "size": 874,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:fcb74e2a17c6071f6da19132b77cc4a0167f04b3dd8f06071f41c466df3bd94b"
         },
         {
           "path": "fixtures//shared-seams/phase2-ui-payload-stale-vocabulary.json",
           "size": 873,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:a8faf3dd0009ab4ed30cf8be72f1b98b8746c7e3e3812ff4df4b2c6524157164"
         },
         {
           "path": "fixtures//shared-seams/phase2-ui-payload-unknown-component.json",
           "size": 869,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:ea7f088b7d1147490c177a8ba429e216d6fd46a88dff890b67ecfbbd7a39929c"
         },
         {
           "path": "fixtures//shared-seams/phase2-ui-payload-unsafe-values.json",
           "size": 1026,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:24bd4713b7c39254bfe32095cd37497bd6756c5531e49fe6593aecadc9e1a4ca"
         },
         {
           "path": "fixtures//shared-seams/phase2-ui-payload-valid-tree.json",
           "size": 1403,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:74daf494c9915d25287e9da71da46b87a4331d7178553e8ee5bf8658ed6cd67d"
         },
         {
           "path": "fixtures//threat-model/fixture-catalog.json",
           "size": 5186,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:b6a1c17f4663eae832bfe6dab96e7b5e14974aedfa2efbbac64c62f7f09fed2e"
         },
         {
           "path": "fixtures//tools/invalid-tool-execution-missing-audit.json",
           "size": 782,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:99804503c1c1bc40445ccff9b6d9615aac3138be453b2b626ff1383d8ad1af38"
         },
         {
           "path": "fixtures//tools/valid-tool-execution-completed.json",
           "size": 1037,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:437407d3088cf93206b9a346d4abe18a024f353871ee7a88180e1ca9e5a4ba05"
         },
         {
           "path": "fixtures//tools/valid-tool-execution-denied.json",
           "size": 1088,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:1ededeb40e9eeb723b4c1255d170d8ae6570196b360edab36a397add2a9a0dcb"
         },
         {
           "path": "fixtures//tools/valid-tool-execution-unsupported.json",
           "size": 1131,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:95938764c71a026dee78ac487d31600af0412a3655ba0f8e96f9da6944f5717c"
         }
       ],
       "secretScan": {
@@ -636,17 +740,20 @@
         {
           "path": "package.json",
           "size": 1092,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:93320a54a7769a12b0beecc7e4d0eee903089e1623b5902f97576287afe90533"
         },
         {
           "path": "README.md",
           "size": 635,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:78af4a26e77c83e894232fb3b1060861401a0155a629ced307d09605d1698ba1"
         },
         {
           "path": "src//index.mjs",
           "size": 16528,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:d47f5226b944ff737d601fedcfc133a6a991d90f4206f9933f3c80ad6b4c0f8e"
         }
       ],
       "secretScan": {
@@ -677,17 +784,20 @@
         {
           "path": "package.json",
           "size": 622,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:8716ffee4f690865aafb49d0334aa7f3da6e2ed15862e7ca7cb6ea9ebcc4b394"
         },
         {
           "path": "README.md",
           "size": 853,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:23d9f8c9a6206f08add53ba379ba7d4b1be6550964e3091da2f1f0ec78af8333"
         },
         {
           "path": "src//index.mjs",
           "size": 10392,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:12828f0fe83bcc6d3521b9cf7f700badbaa304ecb5e5c17fb69f77fc8b000d67"
         }
       ],
       "secretScan": {
@@ -718,17 +828,20 @@
         {
           "path": "package.json",
           "size": 691,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:b9ff96fb0341552272258fd0f06775cdb915c0f30616768f29d221699ef07feb"
         },
         {
           "path": "README.md",
           "size": 838,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:281039af89c4ee8ace8d3d074175693d404898fb352f7b6fa06fb8862997dd80"
         },
         {
           "path": "src//index.mjs",
           "size": 13735,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:ade9abce6151625f65edece7402c20ae83c2ea0046b8f8166b10aee0ef9b986e"
         }
       ],
       "secretScan": {
@@ -759,17 +872,20 @@
         {
           "path": "package.json",
           "size": 613,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:0ad2d73cbca77f6fdac099d3d8e9bed2ae26cc36df55bc00de06aa95e7d0dc8a"
         },
         {
           "path": "README.md",
           "size": 1028,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:57dd5125de81df63f6c9b4bcc7226e3ca0979906efc6f30da55c30a8dd0a78e5"
         },
         {
           "path": "src//index.mjs",
           "size": 9218,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:a9d0d996ca1b2761ce5e6179d3f4ab3ae07eda1e9b8c3fb3d2a70dc63bfb57f0"
         }
       ],
       "secretScan": {
@@ -800,17 +916,20 @@
         {
           "path": "package.json",
           "size": 567,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:2024a20d3de9f597177723bdaaaf85b0a4c6f1986b8554c647541f092ca21b47"
         },
         {
           "path": "README.md",
           "size": 1223,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:913e0d5d43942d837565b97eba77a1467eb521c3d57e54d18d7daf6a20ab165e"
         },
         {
           "path": "src//index.mjs",
           "size": 11667,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:e713ccf53309430d779c5df431fc4453727f88b574f2c6149b45362ed27a91e7"
         }
       ],
       "secretScan": {
@@ -841,17 +960,20 @@
         {
           "path": "package.json",
           "size": 687,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:820506d2d60d7a9fe4847689ef387f1aae0c5479c6a45a9776e5c09d4c244e0b"
         },
         {
           "path": "README.md",
           "size": 912,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:70fc4522a6f2dc50947e0028d34a8c25238b5b4016b4fdad746387ffcbf0745c"
         },
         {
           "path": "src//index.mjs",
           "size": 13100,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:739ae42530635a76ea5279eb20de3c62bbfdf8e2db052cb1654891494dcd2d60"
         }
       ],
       "secretScan": {
@@ -882,17 +1004,20 @@
         {
           "path": "package.json",
           "size": 800,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:8e620cdff4eb5ca491e7521e7b124016305ed0dacbc1438cfe0845851b23d897"
         },
         {
           "path": "README.md",
           "size": 3325,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:9bfdf900d3408e1f429bf8746a694c5c1c3754e452bf3d9f25740bba8c332bf8"
         },
         {
           "path": "src//index.mjs",
           "size": 18988,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:beafa041d4b61a6e47b4e072607b94cbf7e05a1067c52c56f15901495624fbb1"
         }
       ],
       "secretScan": {
@@ -923,17 +1048,20 @@
         {
           "path": "package.json",
           "size": 549,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:f63adf657b0402471a46da04765f0797b5979a209af2ee4a3f435b9b89cd092e"
         },
         {
           "path": "README.md",
           "size": 833,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:d70f21b900cf6a5011bc73ab5e72dc7d43f2f048ee383c5d9e3f152dbd7aba7b"
         },
         {
           "path": "src//index.mjs",
           "size": 10821,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:2fb11aa229de01e80c39909859067111ec92daaf78360bc9c9ddb72bb955eb14"
         }
       ],
       "secretScan": {
@@ -964,17 +1092,20 @@
         {
           "path": "package.json",
           "size": 841,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:3b7e19bfff626c14773bd26e86fc468bb36b8b65a6cd57ce78bf7d38a29b2d9a"
         },
         {
           "path": "README.md",
           "size": 2601,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:f2e6e87d1098c665cc813eb98f109d7650e944112c1f599fb4e470217a60fc85"
         },
         {
           "path": "src//index.mjs",
           "size": 49453,
-          "mode": 438
+          "mode": 438,
+          "sha256": "sha256:6339e7a8bc596a1759649421cabad436e985749e00c400a826c3e87224feb8f4"
         }
       ],
       "secretScan": {

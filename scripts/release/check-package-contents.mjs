@@ -85,6 +85,7 @@ function buildContentsManifest(packageDryRuns) {
         path: file.path,
         size: file.size,
         mode: file.mode,
+        sha256: file.sha256,
       })),
       secretScan: scanPackageFiles(entry, pack.files),
     })),
@@ -170,8 +171,9 @@ function packageDryRun(entry) {
   if (parsed && Array.isArray(parsed.files)) {
     files = parsed.files.map((file) => {
       const path = file.path;
-      const stats = statSync(join(repoRoot, entry.packageDir, path));
-      return { path, size: stats.size, mode: stats.mode & 0o777 };
+      const fullPath = join(repoRoot, entry.packageDir, path);
+      const stats = statSync(fullPath);
+      return { path, size: stats.size, mode: stats.mode & 0o777, sha256: sha256(readFileSync(fullPath)) };
     });
   } else {
     // Use policy + disk if the package manager does not emit a parseable file list in this environment.
@@ -380,7 +382,7 @@ function getSyntheticPackedFiles(entry) {
     if (existsSync(p)) {
       try {
         const st = statSync(p);
-        if (st.isFile()) out.push({ path: f, size: st.size, mode: st.mode & 0o777 });
+        if (st.isFile()) out.push({ path: f, size: st.size, mode: st.mode & 0o777, sha256: sha256(readFileSync(p)) });
       } catch {}
     }
   }
@@ -390,7 +392,7 @@ function getSyntheticPackedFiles(entry) {
         const abs = join(absDir, ent.name);
         const rel = relPrefix ? `${relPrefix}/${ent.name}` : ent.name;
         if (ent.isFile()) {
-          try { const s = statSync(abs); out.push({ path: rel, size: s.size, mode: s.mode & 0o777 }); } catch {}
+          try { const s = statSync(abs); out.push({ path: rel, size: s.size, mode: s.mode & 0o777, sha256: sha256(readFileSync(abs)) }); } catch {}
         } else if (ent.isDirectory()) {
           walkDir(abs, rel);
         }
@@ -404,7 +406,7 @@ function getSyntheticPackedFiles(entry) {
     try {
       const st = statSync(p);
       if (st.isFile()) {
-        out.push({ path: clean, size: st.size, mode: st.mode & 0o777 });
+        out.push({ path: clean, size: st.size, mode: st.mode & 0o777, sha256: sha256(readFileSync(p)) });
       } else if (st.isDirectory()) {
         walkDir(p, clean);
       }
