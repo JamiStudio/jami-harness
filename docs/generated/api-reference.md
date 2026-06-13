@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:50908ca9b1c5d52193bc18541016dd43ac18dbb65bebbb09c6fbecd3e9556b35`
+- Source input hash: `sha256:20d682e2b0aea1e6b2a587ececb13831352a39bf74f640db4028014cc55b5713`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`

@@ -30,6 +30,7 @@ const sourceInputHash = hashJson({
   script: sha256(readFileSync(fileURLToPath(import.meta.url), "utf8")),
 });
 const git = gitInfo();
+const gitModes = gitModeMap();
 const dryRuns = publishable.map((entry) => packageDryRun(entry));
 const contentsManifest = buildContentsManifest(dryRuns);
 const smokeManifest = runSmoke ? buildSmokeManifest(dryRuns) : undefined;
@@ -173,7 +174,7 @@ function packageDryRun(entry) {
       const path = file.path;
       const fullPath = join(repoRoot, entry.packageDir, path);
       const stats = statSync(fullPath);
-      return { path, size: stats.size, mode: stats.mode & 0o777, sha256: sha256(readFileSync(fullPath)) };
+      return { path, size: stats.size, mode: packageFileMode(entry, path), sha256: sha256(readFileSync(fullPath)) };
     });
   } else {
     // Use policy + disk if the package manager does not emit a parseable file list in this environment.
@@ -382,7 +383,7 @@ function getSyntheticPackedFiles(entry) {
     if (existsSync(p)) {
       try {
         const st = statSync(p);
-        if (st.isFile()) out.push({ path: f, size: st.size, mode: st.mode & 0o777, sha256: sha256(readFileSync(p)) });
+        if (st.isFile()) out.push({ path: f, size: st.size, mode: packageFileMode(entry, f), sha256: sha256(readFileSync(p)) });
       } catch {}
     }
   }
@@ -392,7 +393,7 @@ function getSyntheticPackedFiles(entry) {
         const abs = join(absDir, ent.name);
         const rel = relPrefix ? `${relPrefix}/${ent.name}` : ent.name;
         if (ent.isFile()) {
-          try { const s = statSync(abs); out.push({ path: rel, size: s.size, mode: s.mode & 0o777, sha256: sha256(readFileSync(abs)) }); } catch {}
+          try { const s = statSync(abs); out.push({ path: rel, size: s.size, mode: packageFileMode(entry, rel), sha256: sha256(readFileSync(abs)) }); } catch {}
         } else if (ent.isDirectory()) {
           walkDir(abs, rel);
         }
@@ -406,7 +407,7 @@ function getSyntheticPackedFiles(entry) {
     try {
       const st = statSync(p);
       if (st.isFile()) {
-        out.push({ path: clean, size: st.size, mode: st.mode & 0o777, sha256: sha256(readFileSync(p)) });
+        out.push({ path: clean, size: st.size, mode: packageFileMode(entry, clean), sha256: sha256(readFileSync(p)) });
       } else if (st.isDirectory()) {
         walkDir(p, clean);
       }
@@ -437,6 +438,22 @@ function gitInfo() {
     remote: normalizeRemote(safeGit(["remote", "get-url", "origin"])),
     ref: normalizeRef(),
   };
+}
+
+function packageFileMode(entry, packageRelativePath) {
+  const repoRelativePath = `${entry.packageDir}/${packageRelativePath}`.replace(/\\/g, "/");
+  const mode = gitModes.get(repoRelativePath);
+  return mode === "100755" ? 0o755 : 0o644;
+}
+
+function gitModeMap() {
+  const output = safeGit(["ls-files", "--stage"]) ?? "";
+  const modes = new Map();
+  for (const line of output.split(/\r?\n/)) {
+    const match = line.match(/^(\d+)\s+[0-9a-f]+\s+\d+\t(.+)$/);
+    if (match) modes.set(match[2], match[1]);
+  }
+  return modes;
 }
 
 function normalizeRemote(remote) {

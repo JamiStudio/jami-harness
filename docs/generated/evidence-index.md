@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:50908ca9b1c5d52193bc18541016dd43ac18dbb65bebbb09c6fbecd3e9556b35`
+- Source input hash: `sha256:20d682e2b0aea1e6b2a587ececb13831352a39bf74f640db4028014cc55b5713`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -84,7 +84,7 @@
 - `apps/workbench/test/workbench.test.mjs` (sha256:2af1596d41a6dedfe1124c3aea7a7d3a4a6a4df702a97db4d9e100cc8ef22d07)
 - `docs/architecture/modular-responsibility-map.md` (sha256:62977d9dc1faa1dabf527aa20cd63317e4c147a912985437e89f91b1ed9a10ac)
 - `docs/architecture/product-architecture.md` (sha256:d9b30effc258fc3d4164596fd9bf81902330706254f24d9da7c0e01b2cdff968)
-- `docs/generated/release-capability-manifest.json` (sha256:71765e5099baf0e2fefa09a974016d1c4d27b07ff130c3750e38717511b7e29a)
+- `docs/generated/release-capability-manifest.json` (sha256:a6fb0846f0565947eb36546d328c808d0867cd56cfcc838b1f346e13a15fb9f8)
 - `docs/operations/release-capability-source-lock.md` (sha256:0cb2a403a7b3b4d6724c81117d86813219a4bdedb60786adc1bc8b404aa6564a)
 - `docs/operations/release-readiness.md` (sha256:26235ae3935a85b91da777e50e636c01a16df4453aa239796d56d43cebb0ec16)
 - `evals/smoke.mjs` (sha256:af584c4b94ca943837f91f3be25a48c174339d016ea0bb5c82633f4151f1b674)
