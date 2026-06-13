@@ -1,7 +1,7 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:2917a5ec-834d-5cfb-a529-0eadb3f93b28",
+  "serialNumber": "urn:uuid:eaf479c2-7b62-5f9e-9248-725a644a7748",
   "version": 1,
   "metadata": {
     "tools": {
@@ -70,7 +70,7 @@
       },
       {
         "name": "jami:harness:sourceInputHash",
-        "value": "3953ee354fd470fea0b6ac8b00c673f36c53058e97229665731b26393c92cb15"
+        "value": "e83b533a86729c50b23e846b73e108fe0a73a95a5064661cc9d66566138df6bd"
       },
       {
         "name": "jami:harness:commands",
@@ -99,7 +99,7 @@
       "type": "application",
       "bom-ref": "pkg:@jami-studio/harness-cli:apps/cli/package.json",
       "name": "@jami-studio/harness-cli",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Agent-first CLI foundation for local Jami Harness runs and evidence inspection.",
       "licenses": [
         {
@@ -108,7 +108,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40jami-studio/harness-cli@0.1.0",
+      "purl": "pkg:npm/%40jami-studio/harness-cli@0.1.1",
       "properties": [
         {
           "name": "jami:harness:manifestPath",
@@ -231,7 +231,7 @@
       "type": "application",
       "bom-ref": "pkg:@jami-studio/harness-core:packages/core/package.json",
       "name": "@jami-studio/harness-core",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Core composition layer for harness runtime, policy, tools, memory, context, artifacts, observability, stores, providers, and docs-output ports.",
       "licenses": [
         {
@@ -240,7 +240,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40jami-studio/harness-core@0.1.0",
+      "purl": "pkg:npm/%40jami-studio/harness-core@0.1.1",
       "properties": [
         {
           "name": "jami:harness:manifestPath",
@@ -458,7 +458,7 @@
       "type": "application",
       "bom-ref": "pkg:@jami-studio/harness-sdk:packages/sdk/package.json",
       "name": "@jami-studio/harness-sdk",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Harness SDK foundation for local run creation, evidence inspection, and module injection.",
       "licenses": [
         {
@@ -467,7 +467,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40jami-studio/harness-sdk@0.1.0",
+      "purl": "pkg:npm/%40jami-studio/harness-sdk@0.1.1",
       "properties": [
         {
           "name": "jami:harness:manifestPath",

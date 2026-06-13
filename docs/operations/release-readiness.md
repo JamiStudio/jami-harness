@@ -9,8 +9,9 @@ This document is the release, supply-chain, hosted-readiness, and public-claims 
 Jami Harness. It records what can be claimed from current evidence and what must stay
 blocked until the repo has real command evidence or a human account intervention.
 
-No command in this repo publishes to npm, creates a GitHub release, deploys public docs,
-or calls a hosted provider. The current provider path is a first-party local
+No command in this repo deploys public docs, calls a hosted provider, writes a hosted
+store, or exports to a hosted OTLP sink. The public npm/GitHub release lane has been
+executed for `0.1.0`; the current provider path remains a first-party local
 deterministic adapter only. Hosted-provider actions remain blocked until the intervention
 ledger below is closed.
 
@@ -31,15 +32,19 @@ ledger below is closed.
   `docs/generated/release-capability-manifest.json` from package metadata, release docs,
   local SBOM/docs evidence, release scripts, and official-source links in
   `docs/operations/release-capability-source-lock.md`.
-- Hosted status/control route commands exist as `pnpm hosted:routes` and
-  `pnpm hosted:routes:check`. They emit and verify
+- Hosted status/control route commands exist as `pnpm hosted:routes`,
+  `pnpm hosted:routes:check`, and `pnpm hosted:smoke`. They emit, verify, and smoke
   `docs/generated/hosted-route-manifest.json`, a workbench mirror, and preview static
   route files under `apps/workbench/dist/` for `/status.json`,
   `/release-readiness.json`, `/provider-store-observability.json`, `/healthz.json`, and
-  `_headers`. These are local preview artifacts only; no public URL has been deployed or
-  smoke-tested.
-- All package manifests remain `private: true`. That is intentional until package scope,
-  publish metadata, npm provenance, and account permissions are accepted.
+  `_headers`. These are local preview artifacts only; no harness public status/control
+  URL has been deployed or smoke-tested.
+- Publishable package manifests are public-package ready and the public npm release has
+  executed for `@jami-studio/*@0.1.0` through the trusted GitHub Actions lane. The current
+  source prepares a `0.1.1` patch for `@jami-studio/harness-core`,
+  `@jami-studio/harness-sdk`, and `@jami-studio/harness-cli` so public SDK/CLI inspection
+  no longer reports stale release blockers. The root, docs, and workbench packages remain
+  intentionally private because they are not published package surfaces.
 - `packages/docs` now generates local docs artifacts from accepted source records into
   `docs/generated/` and a Mintlify-ready draft under `apps/docs/`.
 - `docs/generated/docs-source-manifest.json` records source records, accepted contracts
@@ -73,6 +78,8 @@ pnpm release:capabilities
 pnpm release:capabilities:check
 pnpm hosted:routes
 pnpm hosted:routes:check
+pnpm hosted:smoke
+pnpm hosted:smoke:test
 pnpm policy:test
 pnpm runtime:test
 pnpm tools:test
@@ -104,8 +111,8 @@ results.
 
 | Surface | Current state | Required before claim |
 | --- | --- | --- |
-| `npm publish --dry-run --provenance` | Packages remain private and npm automation scope is not recorded. | Confirm npm account/org access, package scope, `publishConfig`, provenance, and package contents. |
-| GitHub release attestation | Artifact attestation workflow is not implemented. | Add a release workflow or local attestation procedure and verify it against a dry-run artifact. |
+| npm publish/provenance patch release | The `0.1.0` public release is complete; this source tree prepares `0.1.1` for changed core/SDK/CLI package behavior. | Run package dry-run/smoke, publish `@jami-studio/harness-core@0.1.1`, `@jami-studio/harness-sdk@0.1.1`, and `@jami-studio/harness-cli@0.1.1` with provenance, then rerun clean public install/import smoke. |
+| GitHub release attestation | The `v0.1.0` harness release bundle attestation verifies; any new release artifact requires a new attestation verification. | Create the release artifact through the accepted workflow and verify it with `gh attestation verify`. |
 | Mintlify validation/build/publish | Mintlify-ready `docs.json` and MDX drafts are generated locally, but the Mintlify CLI/package is not installed or source-locked in this repo. Current official CLI docs list `mint validate` as the strict local documentation build validation command. | Add source-lock evidence for the exact Mintlify CLI/package, install it intentionally, and run `mint validate` or the accepted current local build check before public docs hosting claims. |
 | Vercel or Cloudflare deploy dry run | Hosted target is not selected or authorized. | Record account/project target and dry-run/deploy evidence. |
 | Cloudflare Pages hosted route smoke | Preview static status/control route files are generated locally, but no Cloudflare Pages project, DNS target, deploy, or public URL smoke exists. | Create or authorize the Cloudflare Pages project, deploy the accepted static bundle, point DNS, and record HTTP smoke evidence for the public route URLs. |
@@ -125,12 +132,12 @@ results.
 | Local latency, token-estimate, external-billable-cost, and tool-call metrics plus deterministic regression eval smokes exist. | Supported for current local fixtures | `packages/observability/src/index.mjs`, `packages/observability/test/observability.test.mjs`, `evals/smoke.mjs`, `pnpm observability:test`, `pnpm eval:smoke`. | "The repo records local redacted usage metrics for current fixtures, including estimated tokens and zero external billable provider cost for the local deterministic provider; hosted observability, external eval backends, hosted-provider billing, and total compute cost are not claimed." |
 | Policy, runtime, memory, artifacts, and observability fail closed on current negative fixtures. | Supported for current fixtures | Package tests and contract fixtures listed in `packages/contracts/README.md`. | "Current foundation fixtures cover fail-closed policy/runtime/evidence cases." |
 | Local docs generation can produce quickstart, user manual, API/reference summary, system map, changelog draft, evidence index, docs-source manifest, and Mintlify-ready navigation draft. | Supported for current source records | `packages/docs/scripts/generate-docs.mjs`, `docs/generated/docs-source-manifest.json`, `apps/docs/docs.json`, `pnpm docs:generate -- --check`. | "The repo includes local generated docs artifacts and a Mintlify-ready draft; hosted docs are not published." |
-| Full local source-checkout install and modular BYO paths are inspectable and generated into release docs. | Supported for current local foundations | `packages/sdk/src/index.mjs`, `apps/cli/src/cli.mjs`, `docs/generated/install-readiness-manifest.json`, `packages/sdk/test/sdk.test.mjs`, `apps/cli/test/cli.test.mjs`, `pnpm sdk:test`, `pnpm cli:test`, `pnpm docs:generate -- --check`. | "The repo documents and exposes the current local source-checkout install path plus modular replacement paths; public package installation remains unavailable." |
+| Full local source-checkout, clean tarball, and public npm install paths are inspectable and generated into release docs. | Supported for current foundations | `packages/sdk/src/index.mjs`, `apps/cli/src/cli.mjs`, `docs/generated/install-readiness-manifest.json`, `docs/generated/package-install-smoke.json`, `packages/sdk/test/sdk.test.mjs`, `apps/cli/test/cli.test.mjs`, `pnpm sdk:test`, `pnpm cli:test`, `pnpm docs:generate -- --check`, clean public npm install smoke evidence. | "The repo documents and exposes the current local source-checkout path, clean tarball smoke, and public npm install path; hosted runtime routes remain unavailable." |
 | Local SBOM dry-run generation can produce and drift-check a CycloneDX workspace package-manifest inventory. | Supported for current source records | `scripts/release/generate-sbom.mjs`, `docs/operations/sbom-source-lock.md`, `docs/generated/sbom.cdx.json`, `pnpm sbom:generate`, `pnpm sbom:check`. | "The repo includes a local SBOM dry-run artifact for workspace package manifests; release artifacts are not signed, attested, or publish-ready." |
 | Release and hosted capability readiness can be generated and drift-checked from current package metadata, official-source links, and local evidence. | Supported for current local evidence | `scripts/release/generate-capability-manifest.mjs`, `docs/operations/release-capability-source-lock.md`, `docs/generated/release-capability-manifest.json`, `pnpm release:capabilities`, `pnpm release:capabilities:check`. | "The repo includes a generated release capability manifest; unsupported publish, provenance, attestation, Mintlify, hosted docs, hosted provider, hosted store, and hosted workbench surfaces fail closed." |
 | Preview hosted status/control routes can be generated and drift-checked as static JSON. | Supported for current local evidence | `scripts/hosted/generate-hosted-routes.mjs`, `docs/operations/hosted-route-source-lock.md`, `docs/generated/hosted-route-manifest.json`, `apps/workbench/dist/status.json`, `apps/workbench/dist/release-readiness.json`, `apps/workbench/dist/provider-store-observability.json`, `apps/workbench/dist/healthz.json`, `apps/workbench/dist/_headers`, `pnpm hosted:routes`, `pnpm hosted:routes:check`. | "The repo can generate preview static status/control routes; no hosted route is live until Cloudflare/DNS is provisioned and smoked." |
-| Hosted provider runtime, executable full MCP/OpenAPI/shell/browser/code/provider-as-tool/A2A adapters, hosted workbench, hosted stores, release publishing, Mintlify build/publish, or public docs hosting exist. | Unsupported | CLI, SDK, tools, and provider README files state unavailable hosted/protocol surfaces; this release gate records hosted docs and publishing blockers; roadmap Workstreams 4, 6, 8, and 9 remain open. | "Those surfaces are planned and currently unavailable." |
-| Release artifacts are signed, attested, externally published, or publish-ready. | Unsupported | This release gate, `private: true` package manifests, and unavailable command ledger. | "The repo has release-readiness policy, local SBOM dry-run evidence, and audit commands; publishable artifacts are not ready." |
+| Hosted provider runtime, executable full MCP/OpenAPI/shell/browser/code/provider-as-tool/A2A adapters, hosted workbench, hosted stores, Mintlify build/publish, or public docs hosting exist. | Unsupported | CLI, SDK, tools, and provider README files state unavailable hosted/protocol surfaces; this release gate records hosted docs and runtime blockers; roadmap Workstreams 4, 6, 8, and 9 remain open. | "Those surfaces are planned and currently unavailable." |
+| Release artifacts are signed, attested, externally published, or publish-ready. | Supported for `v0.1.0`; patch releases require fresh evidence | GitHub Release `v0.1.0`, package publish workflow, release artifact workflow, package install smoke, and attestation verification evidence. | "The `0.1.0` public package and release artifact lane is complete; future changed package behavior needs a new patch release." |
 
 ## SBOM Policy
 
@@ -172,17 +179,16 @@ Current local implementation:
 - `pnpm verify` runs the release capability manifest drift check before generated docs and
   release readiness audits.
 - `pnpm release:readiness` and `pnpm release:dry-run` verify that the generated manifest
-  marks package contents dry-runs, clean local tarball install smoke, and the static
-  preview route bundle as local evidence while keeping npm publishing/provenance,
-  GitHub attestations, Mintlify validation/publishing, hosted public docs, hosted
-  provider runtime, hosted durable stores, hosted observability sinks, and hosted
+  marks package contents dry-runs, clean local tarball install smoke, public npm
+  provenance, GitHub release attestations, and the static preview route bundle as
+  supported evidence while keeping Mintlify validation/publishing, hosted public docs,
+  hosted provider runtime, hosted durable stores, hosted observability sinks, and hosted
   workbench surfaces fail-closed unsupported.
 
 Current unsupported surfaces:
 
-- npm publish/provenance/trusted publishing.
-- npm publish/provenance/trusted publishing.
-- GitHub release artifact attestations.
+- New npm publish/provenance/trusted-publishing patch release after package behavior changes.
+- New GitHub release artifact attestations after package behavior changes.
 - Mintlify CLI validation or hosted docs publishing.
 - Hosted public docs on Mintlify, Vercel, Cloudflare, or any other target.
 - Hosted provider runtime.
@@ -234,8 +240,12 @@ node apps/cli/src/cli.mjs run --json
 node apps/cli/src/cli.mjs inspect --json
 ```
 
-This is not a public npm package install. All manifests remain `private: true` until
-package contents, provenance, scope, and account interventions close.
+The public npm install path is supported for the published `@jami-studio/*@0.1.0`
+harness packages. The corrected public SDK/CLI inspection path is prepared as a `0.1.1`
+patch for `@jami-studio/harness-core`, `@jami-studio/harness-sdk`, and
+`@jami-studio/harness-cli`. Source-checkout and clean tarball smokes remain useful local
+gates; package behavior changes require the patch version and public install smoke before
+external acceptance can cite them.
 
 Current module replacement evidence is exposed by `harness.inspect().installPaths`,
 `jami map --json`, `jami docs --json`, and
@@ -263,7 +273,7 @@ Current module replacement evidence is exposed by `harness.inspect().installPath
 
 ## Package Provenance And Attestation Policy
 
-Before removing `private: true` from any publishable manifest:
+Before publishing a changed package version:
 
 - Add package `files` or an equivalent contents policy so docs archives, `.env` files,
   local state, logs, and research-only archives cannot enter npm packages accidentally.
@@ -283,8 +293,10 @@ Before removing `private: true` from any publishable manifest:
 These are real account or product actions. They must be recorded as interventions, not
 stubbed around:
 
-- Confirm npm organization access for `@jami-studio` and provenance/OIDC setup.
-- Confirm GitHub release, tag, Actions, and artifact attestation permissions.
+- Confirm npm organization access for `@jami-studio` and provenance/OIDC setup for any
+  new patch release.
+- Confirm GitHub release, tag, Actions, and artifact attestation permissions for any new
+  release artifact.
 - Select and authorize a public docs target before Mintlify, Vercel, or Cloudflare claims.
 - Create or authorize the Cloudflare Pages project and DNS target before hosted harness
   status/control route claims.

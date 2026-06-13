@@ -75,7 +75,12 @@ jobs:
             packages/core \
             packages/sdk \
             apps/cli; do
+            package=$(node -p "require('./$pkg/package.json').name")
             name=$(node -p "require('./$pkg/package.json').name.replace('@', '').replace('/', '-')")
             version=$(node -p "require('./$pkg/package.json').version")
+            if npm view "${package}@${version}" version >/dev/null 2>&1; then
+              echo "Skipping ${package}@${version}; already published"
+              continue
+            fi
             npm publish "./release-packs/${name}-${version}.tgz" --provenance --access public
           done

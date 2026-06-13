@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:eebcabcf1fce33e56a6a69f56c630a40c83723b4a93ac9e597e669108a830589",
+  "sourceInputHash": "sha256:fa429c4b57ce006ea5170efbc3f6d088984993c2071e5f2b4837c8ac0860314f",
   "generatedAt": "deterministic:git-head-plus-hosted-route-input-hash",
   "command": "pnpm hosted:routes:check",
   "commandResult": "passed",
@@ -88,12 +88,12 @@
         "sourceCommit": "git:HEAD",
         "docsSourceManifest": {
           "path": "docs/generated/docs-source-manifest.json",
-          "sourceInputHash": "sha256:0d5af4597649446143f5db5c1392cb0a05051da85ce89461cc5208417bdae73f",
+          "sourceInputHash": "sha256:aacf0d0c05ad75bbea7c79f84191df948923f5d6ce93f78fa5764dfb86ea7915",
           "generatedOutputCount": 16
         },
         "releaseCapabilityManifest": {
           "path": "docs/generated/release-capability-manifest.json",
-          "sourceInputHash": "sha256:1a73147caeccd1979c0ee5019b658171399ae3e579fa18f3efcc9ece4a4c620c",
+          "sourceInputHash": "sha256:fcf3093c02d8329f13ecf7f09dfc1cd61c683ee918e6db2df2733e75a4ee3924",
           "capabilityCount": 15
         }
       },
@@ -129,7 +129,7 @@
       "status": "supported_preview_static_fail_closed",
       "claimable": false,
       "failClosed": true,
-      "safeClaim": "A static release-readiness route is generated from local release manifests; package publishing, attestations, and hosted docs remain blocked.",
+      "safeClaim": "A static release-readiness route is generated from release manifests; public npm provenance and GitHub release attestations are supported, while hosted docs remain blocked.",
       "evidence": {
         "packagePublishing": {
           "capabilityId": "cap_npm_publish_provenance",
@@ -185,23 +185,27 @@
         {
           "surface": "local_release_readiness_audit",
           "status": "supported_local_evidence",
-          "reason": "Release readiness and dry-run audits are local and non-publishing."
+          "reason": "Release readiness and dry-run audits are supported."
         },
         {
           "surface": "npm_publish",
-          "status": "fail_closed_account_required",
-          "reason": "Packages remain private and npm trusted publishing is not configured."
+          "status": "supported_public_evidence",
+          "reason": "Harness packages are published at 0.1.0 with trusted GitHub Actions provenance evidence."
         },
         {
           "surface": "github_attestation",
-          "status": "fail_closed_workflow_required",
-          "reason": "No release artifact or attestation workflow exists."
+          "status": "supported_public_evidence",
+          "reason": "The v0.1.0 release bundle attestation verifies against studio-jami/jami-harness."
+        },
+        {
+          "surface": "hosted_smoke_command",
+          "status": "supported_configurable_evidence",
+          "reason": "pnpm hosted:smoke verifies local static routes and can require a configured public base URL."
         }
       ],
       "requiredBeforePublicClaim": [
-        "Close package contents, npm provenance, and package scope gates.",
-        "Create and verify release artifact attestations.",
-        "Record public docs URL and package version evidence."
+        "Record public docs URL evidence before hosted docs claims.",
+        "Run pnpm hosted:smoke -- --require-hosted with the final public harness base URL before hosted route claims."
       ]
     },
     {
@@ -300,7 +304,7 @@
       "safeClaim": "A static preview health route proves the route bundle can be generated and parsed locally; it is not hosted uptime evidence.",
       "evidence": {
         "generatedRouteCount": 4,
-        "sourceInputHash": "sha256:eebcabcf1fce33e56a6a69f56c630a40c83723b4a93ac9e597e669108a830589",
+        "sourceInputHash": "sha256:fa429c4b57ce006ea5170efbc3f6d088984993c2071e5f2b4837c8ac0860314f",
         "secretScan": "passed"
       },
       "readiness": [

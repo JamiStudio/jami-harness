@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:1a73147caeccd1979c0ee5019b658171399ae3e579fa18f3efcc9ece4a4c620c",
+  "sourceInputHash": "sha256:fcf3093c02d8329f13ecf7f09dfc1cd61c683ee918e6db2df2733e75a4ee3924",
   "generatedAt": "deterministic:git-head-plus-release-capability-input-hash",
   "command": "pnpm release:capabilities:check",
   "commandResult": "passed",
@@ -18,7 +18,7 @@
       {
         "path": "apps/cli/package.json",
         "name": "@jami-studio/harness-cli",
-        "version": "0.1.0",
+        "version": "0.1.1",
         "private": false,
         "license": "Apache-2.0",
         "repository": "git+https://github.com/studio-jami/jami-harness.git",
@@ -85,7 +85,7 @@
       {
         "path": "packages/core/package.json",
         "name": "@jami-studio/harness-core",
-        "version": "0.1.0",
+        "version": "0.1.1",
         "private": false,
         "license": "Apache-2.0",
         "repository": "git+https://github.com/studio-jami/jami-harness.git",
@@ -185,7 +185,7 @@
       {
         "path": "packages/sdk/package.json",
         "name": "@jami-studio/harness-sdk",
-        "version": "0.1.0",
+        "version": "0.1.1",
         "private": false,
         "license": "Apache-2.0",
         "repository": "git+https://github.com/studio-jami/jami-harness.git",
@@ -366,7 +366,7 @@
   "sourceRecords": [
     {
       "path": "apps/cli/package.json",
-      "sha256": "sha256:175b57b01b868745067a9c7c4ccb8385d2cff7582223adf254d262e5ddbd70ce",
+      "sha256": "sha256:0ccc70112e3220b696304069e9531a526ebe58cc0e4d46a44219640a91913951",
       "bytes": 729
     },
     {
@@ -381,17 +381,17 @@
     },
     {
       "path": "docs/generated/package-contents-manifest.json",
-      "sha256": "sha256:a6c08bbc30d0412278e4faf9add5c97bde2c16aa78a00f104074ba94aa3adb05",
+      "sha256": "sha256:89817b151ca765fd6338a544a562dae5055c0e8c10d20c6288304c5d4e13e1ca",
       "bytes": 37665
     },
     {
       "path": "docs/generated/package-install-smoke.json",
-      "sha256": "sha256:a021626f76925b5e48770deb454a6a1cfd026646c8ba947a9b6abf0500cbebd3",
-      "bytes": 4862
+      "sha256": "sha256:abe367c4ffa79d7348110a79f00577004ee2f71b69980632e73ed95e3f0d91bd",
+      "bytes": 4881
     },
     {
       "path": "docs/generated/sbom.cdx.json",
-      "sha256": "sha256:71eaaa4373671549d59d3ef761ba3cc44372c016767718da90518c5045b9536d",
+      "sha256": "sha256:0725d931809abc05b0aec85569d2ad628e24f80a1f64d94102ee03de45c5e63a",
       "bytes": 19177
     },
     {
@@ -406,8 +406,8 @@
     },
     {
       "path": "docs/operations/release-readiness.md",
-      "sha256": "sha256:26235ae3935a85b91da777e50e636c01a16df4453aa239796d56d43cebb0ec16",
-      "bytes": 22213
+      "sha256": "sha256:845c8afd44d14224560daabbe90e51f467b0c38fee2659d732cb7b8a6d379976",
+      "bytes": 23529
     },
     {
       "path": "docs/operations/sbom-source-lock.md",
@@ -416,8 +416,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "sha256:9f89b58aafa9ab2d0cc0e36cb14e3eb44a7b2c800862f7b0c522bd3a30ef1a21",
-      "bytes": 4303
+      "sha256": "sha256:0a40972573f47ccca8b878139edc2ded1bc102c9bc68b041ddbca8f085495897",
+      "bytes": 4556
     },
     {
       "path": "packages/artifacts/package.json",
@@ -431,7 +431,7 @@
     },
     {
       "path": "packages/core/package.json",
-      "sha256": "sha256:8743fce431057c57e9dbd7c85b00c854c906e5ffd15964e0b10efb1771665121",
+      "sha256": "sha256:f4a0b7b6588c7a0b4b2cdf9d378985d1a65516c60447d1b5089218b98ae6d3c1",
       "bytes": 1092
     },
     {
@@ -466,7 +466,7 @@
     },
     {
       "path": "packages/sdk/package.json",
-      "sha256": "sha256:27b3bf6debfc3c0fedacd843114ff2938c7beae8bbaea2bf2a34a1b6a066692f",
+      "sha256": "sha256:4bf213de7909c1bc13ce3dcd03524d324d13036728aec1ab9fe52535293b9e69",
       "bytes": 800
     },
     {
@@ -486,8 +486,8 @@
     },
     {
       "path": "scripts/hosted/generate-hosted-routes.mjs",
-      "sha256": "sha256:cc9c7970df4c6934c86e3b22592e38dae7888201e742bcff7b7f3cd61205b9b3",
-      "bytes": 18904
+      "sha256": "sha256:14a4ae4062ae3ee3d6c2ca894931fbfb5f1b708667b6f6aca007ddf6c244d2ea",
+      "bytes": 19166
     },
     {
       "path": "scripts/release/check-package-contents.mjs",
@@ -496,13 +496,13 @@
     },
     {
       "path": "scripts/release/check-readiness.mjs",
-      "sha256": "sha256:47500821ab6b092e0773d6404bca1318540e78f7eb49ac4a2b2d3fb396345e88",
-      "bytes": 22747
+      "sha256": "sha256:bdab3bef6945ffbec4c6c2ca2dfe2fa4b418f87f61006d6bca2621f2c4fbcd23",
+      "bytes": 23200
     },
     {
       "path": "scripts/release/generate-capability-manifest.mjs",
-      "sha256": "sha256:a3cbae563f651947d969bbe715d523a2bd3fb39a778735568b4bc694f518e924",
-      "bytes": 24440
+      "sha256": "sha256:be792e32ad9fe45e946c3c7960ee5318f8c7fb78ebe2f40caa628804f4626364",
+      "bytes": 24516
     },
     {
       "path": "scripts/release/generate-sbom.mjs",
@@ -672,10 +672,11 @@
       "status": "supported_public_evidence",
       "claimable": true,
       "failClosed": false,
-      "safeClaim": "All harness packages are published at 0.1.0 through the trusted GitHub Actions package workflow with npm provenance and post-publish install smoke evidence.",
+      "safeClaim": "Harness packages were published at 0.1.0 through the trusted GitHub Actions package workflow; changed core/SDK/CLI package behavior is prepared for a 0.1.1 provenance patch release.",
       "commandEvidence": [
         "gh run view 27464403402 --repo studio-jami/jami-harness",
-        "npm view @jami-studio/harness-cli@0.1.0"
+        "npm view @jami-studio/harness-cli@0.1.0",
+        "npm view @jami-studio/harness-cli@0.1.1"
       ],
       "sourceEvidence": [
         "https://github.com/studio-jami/jami-harness/actions/runs/27464403402",

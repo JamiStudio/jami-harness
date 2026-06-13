@@ -124,7 +124,7 @@ function controlSurfaces() {
     surface("docs", "supported_repo_generator", "Repo-level docs generation exists; SDK docs-output injection is still unavailable."),
     surface("map", "supported_local", "Reports the local module map and adapter inspection state."),
     surface("workbench", "supported_local_static", "Local static workbench generation is supported; hosted workbench/control is unsupported."),
-    surface("release", "supported_local_audit_only", "Non-publishing release readiness and dry-run audits exist; publishing, provenance, and attestations remain unavailable."),
+    surface("release", "supported_public_evidence", "Release readiness, package contents, public npm provenance, clean install smoke, GitHub Release, and artifact attestation evidence exist; hosted docs/runtime routes remain unavailable."),
     surface("doctor", "supported_local", "Reports module diagnostics and exact next local setup steps."),
     surface("verify", "supported_local", "Checks local CLI state and core module availability."),
     surface("migration", "fail_closed_unsupported", "Checkpoint/store migration runner is not implemented."),

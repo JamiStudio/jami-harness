@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:0d5af4597649446143f5db5c1392cb0a05051da85ce89461cc5208417bdae73f",
+  "sourceInputHash": "sha256:aacf0d0c05ad75bbea7c79f84191df948923f5d6ce93f78fa5764dfb86ea7915",
   "generatedAt": "deterministic:git-head-plus-input-hash",
   "freshnessClass": "deterministic_current_source_tree",
   "command": "pnpm docs:generate -- --check",
@@ -18,12 +18,18 @@
   "fullLocalHarness": {
     "pathId": "full_local_source_checkout",
     "status": "supported_local_source_checkout",
-    "packageInstallStatus": "local_tarball_install_smoke_passed_registry_publish_unavailable",
+    "packageInstallStatus": "public_npm_install_smoke_passed",
     "installCommands": [
       "pnpm install --frozen-lockfile",
       "node apps/cli/src/cli.mjs init --json",
       "node apps/cli/src/cli.mjs run --json",
       "node apps/cli/src/cli.mjs inspect --json"
+    ],
+    "publicInstallCommands": [
+      "npm install @jami-studio/harness-cli@0.1.1 @jami-studio/harness-sdk@0.1.1",
+      "npx jami init --json",
+      "npx jami run --json",
+      "npx jami inspect --json"
     ],
     "evidenceCommands": [
       "pnpm sdk:test",
@@ -33,7 +39,9 @@
       "pnpm eval:smoke",
       "pnpm release:readiness",
       "pnpm package:dry-run:check",
-      "pnpm package:smoke:check"
+      "pnpm package:smoke:check",
+      "npm install @jami-studio/harness-cli@0.1.1 @jami-studio/harness-sdk@0.1.1",
+      "npx jami inspect --json"
     ],
     "sourceEvidence": [
       "packages/sdk/src/index.mjs",
@@ -44,8 +52,7 @@
       "docs/operations/release-readiness.md"
     ],
     "unavailableReasons": [
-      "Public npm install is claimed for the published `@jami-studio/*@0.1.0` harness packages, with trusted GitHub Actions publish evidence and clean external install smoke.",
-      "Hosted providers, hosted stores, hosted workbench, release publishing, Mintlify build/publish, hosted public docs, and attestations remain unavailable."
+      "Hosted providers, hosted stores, hosted workbench, Mintlify build/publish, hosted public docs, and SDK docs-output injection remain unavailable."
     ]
   },
   "modularPaths": [
@@ -193,13 +200,10 @@
     }
   ],
   "unsupportedSurfaces": [
-    "public npm install",
     "hosted provider runtime",
     "hosted durable stores",
     "hosted workbench",
-    "release publishing",
     "Mintlify build/publish",
-    "hosted public docs",
-    "release attestations"
+    "hosted public docs"
   ]
 }

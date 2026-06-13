@@ -49,7 +49,9 @@ test("creates a local run with evidence, artifacts, traces, and inspectable modu
   assert.equal(inspection.sourceLocks.some((sourceLock) => sourceLock.adapterId === "adapter_mcp" && sourceLock.status === "locked"), true);
   assert.equal(inspection.installPaths.fullLocalHarness.status, "supported_local_source_checkout");
   assert.equal(inspection.installPaths.fullLocalHarness.evidenceCommands.includes("pnpm core:test"), true);
-  assert.equal(inspection.installPaths.fullLocalHarness.packageInstallStatus, "local_tarball_install_smoke_passed_registry_publish_unavailable");
+  assert.equal(inspection.installPaths.fullLocalHarness.packageInstallStatus, "public_npm_install_smoke_passed");
+  assert.equal(inspection.installPaths.unsupportedSurfaces.includes("public npm install"), false);
+  assert.equal(inspection.installPaths.unsupportedSurfaces.includes("release attestations"), false);
   assert.equal(inspection.installPaths.modularPaths.some((path) => path.pathId === "byo_memory" && path.status === "supported_port"), true);
   assert.equal(inspection.installPaths.modularPaths.some((path) => path.pathId === "byo_docs_output" && path.status === "repo_generator_supported_sdk_output_unavailable"), true);
   assert.equal(inspection.installPaths.unsupportedSurfaces.includes("Mintlify build/publish"), true);

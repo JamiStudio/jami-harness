@@ -188,12 +188,18 @@ function buildInstallPaths(modules) {
     fullLocalHarness: {
       pathId: "full_local_source_checkout",
       status: "supported_local_source_checkout",
-      packageInstallStatus: "local_tarball_install_smoke_passed_registry_publish_unavailable",
+      packageInstallStatus: "public_npm_install_smoke_passed",
       installCommands: [
         "pnpm install --frozen-lockfile",
         "node apps/cli/src/cli.mjs init --json",
         "node apps/cli/src/cli.mjs run --json",
         "node apps/cli/src/cli.mjs inspect --json",
+      ],
+      publicInstallCommands: [
+        "npm install @jami-studio/harness-cli@0.1.1 @jami-studio/harness-sdk@0.1.1",
+        "npx jami init --json",
+        "npx jami run --json",
+        "npx jami inspect --json",
       ],
       evidenceCommands: [
         "pnpm core:test",
@@ -201,6 +207,8 @@ function buildInstallPaths(modules) {
         "pnpm cli:test",
         "pnpm docs:generate -- --check",
         "pnpm release:readiness",
+        "npm install @jami-studio/harness-cli@0.1.1 @jami-studio/harness-sdk@0.1.1",
+        "npx jami inspect --json",
       ],
       activeModules: [
         "runtime",
@@ -219,8 +227,7 @@ function buildInstallPaths(modules) {
         available: modules[name]?.available === true,
       })),
       unavailableReasons: [
-        "Local tarball package install smoke is available, but public npm installation is not claimed until trusted-provenance publishing is executed.",
-        "Hosted providers, hosted stores, hosted workbench, release publishing, hosted docs, and SDK docs-output injection remain unavailable.",
+        "Hosted providers, hosted stores, hosted workbench, hosted docs, and SDK docs-output injection remain unavailable.",
         "Local static workbench generation is available through pnpm workbench:generate; it is not a hosted control plane.",
       ],
     },
@@ -237,14 +244,11 @@ function buildInstallPaths(modules) {
       modularPath({ pathId: "byo_docs_output", moduleName: "docsOutput", sdkOption: "docsOutput", status: "repo_generator_supported_sdk_output_unavailable", defaultMode: modules.docsOutput.mode, evidence: ["packages/docs/scripts/generate-docs.mjs", "pnpm docs:generate -- --check"], unavailableReason: modules.docsOutput.unavailableReasons[0] }),
     ],
     unsupportedSurfaces: [
-      "public npm install",
       "hosted provider runtime",
       "hosted durable stores",
       "hosted workbench",
-      "release publishing",
       "Mintlify build/publish",
       "hosted public docs",
-      "release attestations",
     ],
   };
 }

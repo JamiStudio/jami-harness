@@ -14,6 +14,9 @@ test("composes default harness modules through core-owned ports", () => {
   assert.equal(inspection.modules.some((module) => module.name === "provider" && module.mode === "local_deterministic"), true);
   assert.equal(inspection.modules.some((module) => module.name === "checkpointStore" && module.mode === "memory"), true);
   assert.equal(inspection.installPaths.fullLocalHarness.evidenceCommands.includes("pnpm core:test"), true);
+  assert.equal(inspection.installPaths.fullLocalHarness.packageInstallStatus, "public_npm_install_smoke_passed");
+  assert.equal(inspection.installPaths.unsupportedSurfaces.includes("public npm install"), false);
+  assert.equal(inspection.installPaths.unsupportedSurfaces.includes("release attestations"), false);
   assert.equal(core.tools.get("tool_local_echo").toolId, "tool_local_echo");
   assert.equal(core.toolAdapters.some((adapter) => adapter.adapterId === "adapter_openapi" && adapter.support === "unsupported"), true);
   assert.equal(core.sourceLocks.some((sourceLock) => sourceLock.adapterId === "adapter_mcp" && sourceLock.status === "locked"), true);

@@ -5,14 +5,14 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:0d5af4597649446143f5db5c1392cb0a05051da85ce89461cc5208417bdae73f`
+- Source input hash: `sha256:aacf0d0c05ad75bbea7c79f84191df948923f5d6ce93f78fa5764dfb86ea7915`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
 
 ## Current Install Posture
 
-The root package is `jami-harness` at version `0.1.0`. Publishable package manifests are locally pack-ready, but public registry installation is not claimed until trusted provenance publishing is configured and executed.
+The root package is `jami-harness` at version `0.1.0`. Harness packages are published at `@jami-studio/*@0.1.0` with trusted GitHub Actions provenance and clean external install smoke evidence.
 
 ## Local Commands
 
@@ -30,7 +30,7 @@ node apps/cli/src/cli.mjs inspect --json
 
 ## Full Local Harness Path
 
-The supported install paths today are a local source checkout, the generated clean local tarball install smoke, and public npm installation from the published `@jami-studio/*@0.1.0` harness packages.
+The supported install paths today are a local source checkout, the generated clean local tarball install smoke, and public npm installation from the published harness packages. The corrected CLI/SDK inspection path is prepared for `@jami-studio/harness-cli@0.1.1` and `@jami-studio/harness-sdk@0.1.1`.
 
 ```powershell
 pnpm install --frozen-lockfile
@@ -76,7 +76,7 @@ The same evidence is emitted as structured JSON in `docs/generated/install-readi
 
 ## Not Claimed
 
-- Packages are not publish-ready.
+- Hosted harness provider, store, observability, and control/runtime routes are not implemented.
 - Hosted docs are not deployed.
 - Mintlify validation/build/publish has not run in this repo.
 - Hosted model providers are not implemented; the provider foundation is local deterministic only.

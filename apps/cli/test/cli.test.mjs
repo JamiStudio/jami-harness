@@ -73,7 +73,7 @@ test("run writes inspectable evidence, checkpoint, and map output reports missin
     assert.equal(toolsPayload.toolAdapterManifests.some((manifest) => manifest.capabilityId === "cap_shell_tool_gateway"), true);
     assert.equal(workbenchPayload.status, "local_static_available");
     assert.equal(workbenchPayload.unavailable.some((surface) => surface.surface === "hosted workbench/control"), true);
-    assert.equal(releasePayload.status, "local_audit_available_publish_unsupported");
+    assert.equal(releasePayload.status, "public_release_evidence_available_hosted_runtime_unsupported");
     assert.equal(releasePayload.failClosed, true);
   } finally {
     await rm(cwd, { recursive: true, force: true });

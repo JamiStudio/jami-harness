@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:0d5af4597649446143f5db5c1392cb0a05051da85ce89461cc5208417bdae73f`
+- Source input hash: `sha256:aacf0d0c05ad75bbea7c79f84191df948923f5d6ce93f78fa5764dfb86ea7915`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -57,5 +57,6 @@
 - 2026-06-12-phase2-shared-seam-fixtures (`.changes/2026-06-12-phase2-shared-seam-fixtures.md`)
 - 2026-06-12-phase2-shared-seam-state-evidence (`.changes/2026-06-12-phase2-shared-seam-state-evidence.md`)
 - 2026-06-12-phase2-ui-payload-negative-fixtures (`.changes/2026-06-12-phase2-ui-payload-negative-fixtures.md`)
+- 2026-06-13-public-inspection-patch (`.changes/2026-06-13-public-inspection-patch.md`)
 - stream5-cli-sdk-fail-closed-ids (`.changes/stream5-cli-sdk-fail-closed-ids.md`)
 - stream5-cli-sdk-foundation (`.changes/stream5-cli-sdk-foundation.md`)

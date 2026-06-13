@@ -266,17 +266,21 @@ async function releaseCommand(cwd, parsed, io) {
   io.out(formatOutput({
     ok: true,
     command: "release",
-    status: "local_audit_available_publish_unsupported",
-    supportedCommands: ["pnpm release:readiness", "pnpm release:dry-run", "pnpm release:capabilities:check"],
+    status: "public_release_evidence_available_hosted_runtime_unsupported",
+    supportedCommands: [
+      "pnpm release:readiness",
+      "pnpm release:dry-run",
+      "pnpm release:capabilities:check",
+      "pnpm package:dry-run:check",
+      "pnpm package:smoke:check",
+    ],
     manifestPath: "docs/generated/release-capability-manifest.json",
     unsupported,
     unavailable: [
-      "npm publishing",
-      "package contents dry-run",
-      "trusted publishing/provenance",
-      "GitHub attestations",
-      "signed release archives",
       "hosted docs/workbench deployment",
+      "hosted provider runtime",
+      "hosted durable stores",
+      "hosted observability sinks",
     ],
     failClosed: true,
   }, parsed));

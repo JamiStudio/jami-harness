@@ -218,10 +218,11 @@ function buildCapabilities() {
     publicCapability({
       capabilityId: "cap_npm_publish_provenance",
       surface: "npm publish with provenance",
-      safeClaim: "All harness packages are published at 0.1.0 through the trusted GitHub Actions package workflow with npm provenance and post-publish install smoke evidence.",
+      safeClaim: "Harness packages were published at 0.1.0 through the trusted GitHub Actions package workflow; changed core/SDK/CLI package behavior is prepared for a 0.1.1 provenance patch release.",
       commands: [
         "gh run view 27464403402 --repo studio-jami/jami-harness",
         "npm view @jami-studio/harness-cli@0.1.0",
+        "npm view @jami-studio/harness-cli@0.1.1",
       ],
       evidence: [
         "https://github.com/studio-jami/jami-harness/actions/runs/27464403402",

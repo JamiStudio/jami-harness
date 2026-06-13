@@ -158,7 +158,7 @@ function buildRoutes() {
       status: "supported_preview_static_fail_closed",
       claimable: false,
       failClosed: true,
-      safeClaim: "A static release-readiness route is generated from local release manifests; package publishing, attestations, and hosted docs remain blocked.",
+      safeClaim: "A static release-readiness route is generated from release manifests; public npm provenance and GitHub release attestations are supported, while hosted docs remain blocked.",
       evidence: {
         packagePublishing: capabilityState("cap_npm_publish_provenance"),
         packageContents: capabilityState("cap_package_contents_dry_run"),
@@ -172,14 +172,14 @@ function buildRoutes() {
         },
       },
       readiness: [
-        state("local_release_readiness_audit", "supported_local_evidence", "Release readiness and dry-run audits are local and non-publishing."),
-        state("npm_publish", "fail_closed_account_required", "Packages remain private and npm trusted publishing is not configured."),
-        state("github_attestation", "fail_closed_workflow_required", "No release artifact or attestation workflow exists."),
+        state("local_release_readiness_audit", "supported_local_evidence", "Release readiness and dry-run audits are supported."),
+        state("npm_publish", "supported_public_evidence", "Harness packages are published at 0.1.0 with trusted GitHub Actions provenance evidence."),
+        state("github_attestation", "supported_public_evidence", "The v0.1.0 release bundle attestation verifies against studio-jami/jami-harness."),
+        state("hosted_smoke_command", "supported_configurable_evidence", "pnpm hosted:smoke verifies local static routes and can require a configured public base URL."),
       ],
       requiredBeforePublicClaim: [
-        "Close package contents, npm provenance, and package scope gates.",
-        "Create and verify release artifact attestations.",
-        "Record public docs URL and package version evidence.",
+        "Record public docs URL evidence before hosted docs claims.",
+        "Run pnpm hosted:smoke -- --require-hosted with the final public harness base URL before hosted route claims.",
       ],
     },
     {
@@ -322,6 +322,7 @@ function collectSourceRecords() {
     "package.json",
     sourceLockPath,
     "scripts/hosted/generate-hosted-routes.mjs",
+    "scripts/hosted/check-hosted-smoke.mjs",
     "scripts/release/generate-capability-manifest.mjs",
     "scripts/release/check-readiness.mjs",
     "apps/workbench/scripts/generate-workbench.mjs",

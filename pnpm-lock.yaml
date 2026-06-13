@@ -11,7 +11,7 @@ importers:
   apps/cli:
     dependencies:
       '@jami-studio/harness-sdk':
-        specifier: workspace:0.1.0
+        specifier: workspace:0.1.1
         version: link:../../packages/sdk
       '@jami-studio/harness-store-local':
         specifier: workspace:0.1.0
@@ -73,7 +73,7 @@ importers:
         specifier: workspace:0.1.0
         version: link:../artifacts
       '@jami-studio/harness-core':
-        specifier: workspace:0.1.0
+        specifier: workspace:0.1.1
         version: link:../core
       '@jami-studio/harness-runtime':
         specifier: workspace:0.1.0

@@ -56,6 +56,6 @@ Local filesystem checkpoint/resume and approval evidence are available through
 SDK docs-output injection as not wired. A dependency-free local static workbench is
 generated through `pnpm workbench:generate` from current SDK/CLI/runtime evidence and
 generated docs manifests. Public package installation, hosted workbench, hosted stores,
-hosted provider runtime, release publishing, Mintlify build/publish, and full MCP/OpenAPI/
+hosted provider runtime, Mintlify build/publish, and full MCP/OpenAPI/
 shell/browser/code/provider-as-tool/A2A execution remain unavailable until those surfaces
 exist with current source-lock evidence.

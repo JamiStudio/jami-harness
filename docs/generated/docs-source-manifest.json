@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:0d5af4597649446143f5db5c1392cb0a05051da85ce89461cc5208417bdae73f",
+  "sourceInputHash": "sha256:aacf0d0c05ad75bbea7c79f84191df948923f5d6ce93f78fa5764dfb86ea7915",
   "generatedAt": "deterministic:git-head-plus-input-hash",
   "freshnessClass": "deterministic_current_source_tree",
   "command": "pnpm docs:generate -- --check",
@@ -232,6 +232,11 @@
       "bytes": 368
     },
     {
+      "path": ".changes/2026-06-13-public-inspection-patch.md",
+      "sha256": "sha256:f3adbfc3e03ebd05e5ae9a657be043e20ab48a6b62edec68810e0f509229cf4e",
+      "bytes": 444
+    },
+    {
       "path": ".changes/README.md",
       "sha256": "sha256:e528bf4b90ab589bfc83ffed78e37918f56ac94240e5eedebc8d03265e09e52f",
       "bytes": 433
@@ -248,23 +253,23 @@
     },
     {
       "path": "apps/cli/README.md",
-      "sha256": "sha256:acb5bbe62bfeb4dc97c1b9077dddc8f72bc7c287f278c1eccae36c3ef789dae0",
-      "bytes": 3880
+      "sha256": "sha256:4614d7ad62e557faac3997bb1beb5569d914293709a3b7aa68a15075dcbdcc2c",
+      "bytes": 3860
     },
     {
       "path": "apps/cli/package.json",
-      "sha256": "sha256:175b57b01b868745067a9c7c4ccb8385d2cff7582223adf254d262e5ddbd70ce",
+      "sha256": "sha256:0ccc70112e3220b696304069e9531a526ebe58cc0e4d46a44219640a91913951",
       "bytes": 729
     },
     {
       "path": "apps/cli/src/cli.mjs",
-      "sha256": "sha256:0b4ea1f1ce163205d0c9e048139ae6677133c7efa9538cbfb5ffb5e7e0e40da3",
-      "bytes": 20255
+      "sha256": "sha256:59d6156f42e680dfc3c952ec0c0a9ce11e2f41c1e5315f1bccf068b9f794fb68",
+      "bytes": 20310
     },
     {
       "path": "apps/cli/test/cli.test.mjs",
-      "sha256": "sha256:84486392faba0fadd95157cef7f4fbfd6fd683d5db4e37b3d8316992c4409f0c",
-      "bytes": 11662
+      "sha256": "sha256:2c2185a1fd4bd298b06aa7d85f78bca6704d9a22004cef21f9fc7a8bf2b2f516",
+      "bytes": 11681
     },
     {
       "path": "apps/workbench/package.json",
@@ -293,8 +298,8 @@
     },
     {
       "path": "docs/generated/release-capability-manifest.json",
-      "sha256": "sha256:58b87c8a3b5af6e17c5f31ddc5121a46b3853108f5bb3f642962378af1f14275",
-      "bytes": 32253
+      "sha256": "sha256:33fd6283aaa6564447f776f4c115299c58dc42dd43049f26a8257ecd1200d3e8",
+      "bytes": 32329
     },
     {
       "path": "docs/operations/release-capability-source-lock.md",
@@ -303,8 +308,8 @@
     },
     {
       "path": "docs/operations/release-readiness.md",
-      "sha256": "sha256:26235ae3935a85b91da777e50e636c01a16df4453aa239796d56d43cebb0ec16",
-      "bytes": 22213
+      "sha256": "sha256:845c8afd44d14224560daabbe90e51f467b0c38fee2659d732cb7b8a6d379976",
+      "bytes": 23529
     },
     {
       "path": "evals/smoke.mjs",
@@ -313,8 +318,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "sha256:9f89b58aafa9ab2d0cc0e36cb14e3eb44a7b2c800862f7b0c522bd3a30ef1a21",
-      "bytes": 4303
+      "sha256": "sha256:0a40972573f47ccca8b878139edc2ded1bc102c9bc68b041ddbca8f085495897",
+      "bytes": 4556
     },
     {
       "path": "packages/artifacts/package.json",
@@ -803,23 +808,23 @@
     },
     {
       "path": "packages/core/README.md",
-      "sha256": "sha256:78af4a26e77c83e894232fb3b1060861401a0155a629ced307d09605d1698ba1",
-      "bytes": 635
+      "sha256": "sha256:1c7d0a9a9967e59d6fd4b3ea35f91b6382dd667bc02e07c3666a242e09dc381c",
+      "bytes": 663
     },
     {
       "path": "packages/core/package.json",
-      "sha256": "sha256:8743fce431057c57e9dbd7c85b00c854c906e5ffd15964e0b10efb1771665121",
+      "sha256": "sha256:f4a0b7b6588c7a0b4b2cdf9d378985d1a65516c60447d1b5089218b98ae6d3c1",
       "bytes": 1092
     },
     {
       "path": "packages/core/src/index.mjs",
-      "sha256": "sha256:d47f5226b944ff737d601fedcfc133a6a991d90f4206f9933f3c80ad6b4c0f8e",
-      "bytes": 16528
+      "sha256": "sha256:aa94b86b643bbce76f141cfee75269215dbaa66a10549d79c35715debf301d60",
+      "bytes": 16580
     },
     {
       "path": "packages/core/test/core.test.mjs",
-      "sha256": "sha256:496fdc2663628834c8e96820476c97f3df9d6f1101bf92c5b652f53085eb3142",
-      "bytes": 3479
+      "sha256": "sha256:1585aac18b0f02a7a6ffb4d7996bf7b27c3312a3646c2ef9707c8cca31fafa7c",
+      "bytes": 3793
     },
     {
       "path": "packages/docs/package.json",
@@ -828,8 +833,8 @@
     },
     {
       "path": "packages/docs/scripts/generate-docs.mjs",
-      "sha256": "sha256:7e5f7479678b62d0a98fedbb13ff93b58ff11667f2fa37695bd1a8895762fb77",
-      "bytes": 28511
+      "sha256": "sha256:a79898c36d21b569441d61def202f4f555bb17a7fa13f79302b3af129729df17",
+      "bytes": 28551
     },
     {
       "path": "packages/memory/package.json",
@@ -878,23 +883,23 @@
     },
     {
       "path": "packages/sdk/README.md",
-      "sha256": "sha256:9bfdf900d3408e1f429bf8746a694c5c1c3754e452bf3d9f25740bba8c332bf8",
-      "bytes": 3325
+      "sha256": "sha256:5c85c8a90f3f952d9152e6b43851a2d81d1f9fc61d80b3288832f93a41b2f324",
+      "bytes": 3276
     },
     {
       "path": "packages/sdk/package.json",
-      "sha256": "sha256:27b3bf6debfc3c0fedacd843114ff2938c7beae8bbaea2bf2a34a1b6a066692f",
+      "sha256": "sha256:4bf213de7909c1bc13ce3dcd03524d324d13036728aec1ab9fe52535293b9e69",
       "bytes": 800
     },
     {
       "path": "packages/sdk/src/index.mjs",
-      "sha256": "sha256:beafa041d4b61a6e47b4e072607b94cbf7e05a1067c52c56f15901495624fbb1",
-      "bytes": 18988
+      "sha256": "sha256:9b54eeb16b47077b35dbc9ed758dcb696d7e88f7e9e8701ae430278da99fee16",
+      "bytes": 19052
     },
     {
       "path": "packages/sdk/test/sdk.test.mjs",
-      "sha256": "sha256:f1bdaaff6f60346209200533723a3c6ed88bf3349073c4850e1e2294aff5fd18",
-      "bytes": 11464
+      "sha256": "sha256:cf65b39da8069977089acde8cea513b4754b08edc1c10397579d193d9685b02a",
+      "bytes": 11632
     },
     {
       "path": "packages/store-local/package.json",
@@ -918,13 +923,13 @@
     },
     {
       "path": "scripts/release/check-readiness.mjs",
-      "sha256": "sha256:47500821ab6b092e0773d6404bca1318540e78f7eb49ac4a2b2d3fb396345e88",
-      "bytes": 22747
+      "sha256": "sha256:bdab3bef6945ffbec4c6c2ca2dfe2fa4b418f87f61006d6bca2621f2c4fbcd23",
+      "bytes": 23200
     },
     {
       "path": "scripts/release/generate-capability-manifest.mjs",
-      "sha256": "sha256:a3cbae563f651947d969bbe715d523a2bd3fb39a778735568b4bc694f518e924",
-      "bytes": 24440
+      "sha256": "sha256:be792e32ad9fe45e946c3c7960ee5318f8c7fb78ebe2f40caa628804f4626364",
+      "bytes": 24516
     }
   ],
   "acceptedContractReferences": [
@@ -1367,10 +1372,6 @@
     {
       "surface": "Hosted public docs",
       "reason": "No hosted docs target has been selected or authorized."
-    },
-    {
-      "surface": "Public package installation",
-      "reason": "Clean local tarball install smoke is proven, but no public registry publish with trusted provenance has been performed."
     }
   ]
 }

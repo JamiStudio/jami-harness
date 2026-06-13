@@ -169,10 +169,6 @@ function buildOutputs(model, baseProvenance) {
         surface: "Hosted public docs",
         reason: "No hosted docs target has been selected or authorized.",
       },
-      {
-        surface: "Public package installation",
-        reason: "Clean local tarball install smoke is proven, but no public registry publish with trusted provenance has been performed.",
-      },
     ],
   };
 
@@ -198,7 +194,7 @@ function quickstart(model) {
   return [
     "## Current Install Posture",
     "",
-    `The root package is \`${model.rootManifest.name}\` at version \`${model.rootManifest.version}\`. Publishable package manifests are locally pack-ready, but public registry installation is not claimed until trusted provenance publishing is configured and executed.`,
+    `The root package is \`${model.rootManifest.name}\` at version \`${model.rootManifest.version}\`. Harness packages are published at \`@jami-studio/*@0.1.0\` with trusted GitHub Actions provenance and clean external install smoke evidence.`,
     "",
     "## Local Commands",
     "",
@@ -216,7 +212,7 @@ function quickstart(model) {
     "",
     "## Full Local Harness Path",
     "",
-    "The supported install paths today are a local source checkout, the generated clean local tarball install smoke, and public npm installation from the published `@jami-studio/*@0.1.0` harness packages.",
+    "The supported install paths today are a local source checkout, the generated clean local tarball install smoke, and public npm installation from the published harness packages. The corrected CLI/SDK inspection path is prepared for `@jami-studio/harness-cli@0.1.1` and `@jami-studio/harness-sdk@0.1.1`.",
     "",
     "```powershell",
     ...installReadinessManifest(model, {}).fullLocalHarness.installCommands,
@@ -234,7 +230,7 @@ function quickstart(model) {
     "",
     "## Not Claimed",
     "",
-    "- Packages are not publish-ready.",
+    "- Hosted harness provider, store, observability, and control/runtime routes are not implemented.",
     "- Hosted docs are not deployed.",
     "- Mintlify validation/build/publish has not run in this repo.",
     "- Hosted model providers are not implemented; the provider foundation is local deterministic only.",
@@ -267,7 +263,7 @@ function userManual(model) {
     "",
     "`apps/workbench/dist/index.html` is a dependency-free local static shell generated from SDK runtime evidence, explicit local CLI state when provided, generated docs previews, and the generated system map. It is not a hosted workbench or Studio UI package integration.",
     "",
-    "`docs/generated/release-capability-manifest.json` is the executable local release/hosted capability ledger. It keeps unsupported publish, provenance, attestation, Mintlify validation, hosted docs, hosted provider, hosted store, and hosted workbench claims fail-closed until command evidence exists.",
+    "`docs/generated/release-capability-manifest.json` is the executable release/hosted capability ledger. It records public npm provenance and GitHub release attestation evidence while keeping Mintlify validation, hosted docs, hosted provider, hosted store, hosted observability, and hosted workbench claims fail-closed until command evidence exists.",
     "",
     "Local metric records and `pnpm eval:smoke` provide deterministic regression coverage for tool safety, docs generation, memory recall, and recovery without a hosted observability or external eval backend.",
     "",
@@ -378,8 +374,8 @@ function evidenceIndex(model) {
     "- Local deterministic regression eval smoke exists for tool safety, docs generation, memory recall, and recovery.",
     "- Local static workbench generation exists for run timeline, approvals, artifacts, traces, memory/context, docs preview, and system-map inspection from current local evidence.",
     "- Tool adapter source inspection exists for supported function and trusted MCP fixture paths plus fail-closed OpenAPI, shell, browser, code, provider-as-tool, and A2A dry-run evidence.",
-    "- Release and hosted capability readiness is generated into `docs/generated/release-capability-manifest.json`, with package contents dry-runs and clean local tarball install smoke marked supported local evidence, while npm publish/provenance, GitHub attestations, Mintlify validation/publishing, hosted docs, hosted providers, hosted stores, and hosted workbench surfaces remain fail-closed.",
-    "- Release publishing, hosted docs, hosted model providers, executable full protocol/local tool adapters, attestation, and package release artifacts remain unavailable until their gates close.",
+    "- Release and hosted capability readiness is generated into `docs/generated/release-capability-manifest.json`, with package contents dry-runs, clean local tarball install smoke, public npm provenance, and GitHub release attestations marked supported evidence, while Mintlify validation/publishing, hosted docs, hosted providers, hosted stores, hosted observability, and hosted workbench surfaces remain fail-closed.",
+    "- Hosted docs, hosted model providers, executable full protocol/local tool adapters, hosted observability, and hosted control/runtime routes remain unavailable until their gates close.",
     "",
     "## Evidence Inputs",
     "",
@@ -395,12 +391,18 @@ function installReadinessManifest(model, provenance) {
     fullLocalHarness: {
       pathId: "full_local_source_checkout",
       status: "supported_local_source_checkout",
-      packageInstallStatus: "local_tarball_install_smoke_passed_registry_publish_unavailable",
+      packageInstallStatus: "public_npm_install_smoke_passed",
       installCommands: [
         "pnpm install --frozen-lockfile",
         "node apps/cli/src/cli.mjs init --json",
         "node apps/cli/src/cli.mjs run --json",
         "node apps/cli/src/cli.mjs inspect --json",
+      ],
+      publicInstallCommands: [
+        "npm install @jami-studio/harness-cli@0.1.1 @jami-studio/harness-sdk@0.1.1",
+        "npx jami init --json",
+        "npx jami run --json",
+        "npx jami inspect --json",
       ],
       evidenceCommands: [
         "pnpm sdk:test",
@@ -411,6 +413,8 @@ function installReadinessManifest(model, provenance) {
         "pnpm release:readiness",
         "pnpm package:dry-run:check",
         "pnpm package:smoke:check",
+        "npm install @jami-studio/harness-cli@0.1.1 @jami-studio/harness-sdk@0.1.1",
+        "npx jami inspect --json",
       ],
       sourceEvidence: [
         "packages/sdk/src/index.mjs",
@@ -421,20 +425,16 @@ function installReadinessManifest(model, provenance) {
         "docs/operations/release-readiness.md",
       ],
       unavailableReasons: [
-        "Public npm install is claimed for the published `@jami-studio/*@0.1.0` harness packages, with trusted GitHub Actions publish evidence and clean external install smoke.",
-        "Hosted providers, hosted stores, hosted workbench, release publishing, Mintlify build/publish, hosted public docs, and attestations remain unavailable.",
+        "Hosted providers, hosted stores, hosted workbench, Mintlify build/publish, hosted public docs, and SDK docs-output injection remain unavailable.",
       ],
     },
     modularPaths: installPathRecords(model),
     unsupportedSurfaces: [
-      "public npm install",
       "hosted provider runtime",
       "hosted durable stores",
       "hosted workbench",
-      "release publishing",
       "Mintlify build/publish",
       "hosted public docs",
-      "release attestations",
     ],
   };
 }

@@ -42,9 +42,8 @@ This package does not implement OpenAI, Anthropic, Google, xAI, Azure OpenAI, Be
 other hosted provider execution. It also does not implement executable full
 MCP/OpenAPI/shell/browser/code/provider-as-tool/A2A adapters beyond the current function
 tool, trusted MCP fixture, and fail-closed adapter inspection foundations, durable hosted
-stores, public package installation, SDK-level docs-output injection, release publishing,
-runtime cancellation orchestration, manual retry orchestration, checkpoint/store
-migrations, or a hosted control plane. Repo-level docs generation exists through
+stores, SDK-level docs-output injection, runtime cancellation orchestration, manual retry
+orchestration, checkpoint/store migrations, or a hosted control plane. Repo-level docs generation exists through
 `pnpm docs:generate` and is recorded in `docs/generated/install-readiness-manifest.json`.
 
 ```js
