@@ -92,6 +92,10 @@ importers:
       '@jami-studio/harness-artifacts':
         specifier: workspace:0.1.0
         version: link:../artifacts
+    optionalDependencies:
+      posthog-node:
+        specifier: ^5.37.0
+        version: 5.37.0
 
   packages/policy: {}
 
@@ -134,3 +138,35 @@ importers:
       '@jami-studio/harness-policy':
         specifier: workspace:0.1.0
         version: link:../policy
+
+packages:
+
+  '@posthog/core@1.32.3':
+    resolution: {integrity: sha512-vwOEMfZvGv5XxNWV7p9I52NSmvFNMhyW2IHpIoUHW5jLkgUrknzJW1H/qxVGSIrNNVQkfsoaDFzDhJdg10pgrA==}
+
+  '@posthog/types@1.386.3':
+    resolution: {integrity: sha512-LqJoiQi2eyWn7rCUgnn+D+F3Efp6+04o72bjSX6kWHx0nFaYNC/nJuAIRliDTY/X7GPIUAaHAcSjbMI/9wfX1Q==}
+
+  posthog-node@5.37.0:
+    resolution: {integrity: sha512-wFwWGcqAqZ1WJRlNNYc92veV83d1lOQcP4Lq0q7Kar9GdZLPpiFYHeudyybYJnjZjkI9v06vLvY/Og5CZIfByg==}
+    engines: {node: ^20.20.0 || >=22.22.0}
+    peerDependencies:
+      rxjs: ^7.0.0
+    peerDependenciesMeta:
+      rxjs:
+        optional: true
+
+snapshots:
+
+  '@posthog/core@1.32.3':
+    dependencies:
+      '@posthog/types': 1.386.3
+    optional: true
+
+  '@posthog/types@1.386.3':
+    optional: true
+
+  posthog-node@5.37.0:
+    dependencies:
+      '@posthog/core': 1.32.3
+    optional: true

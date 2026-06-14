@@ -6,7 +6,13 @@ import {
   createNoopMemoryPort,
   createNoopSearchAdapter,
 } from "@jami-studio/harness-memory";
-import { createRunObservability } from "@jami-studio/harness-observability";
+import {
+  createNoopTelemetrySink,
+  createPostHogTelemetrySink,
+  createRunObservability,
+  resolveTelemetryGate,
+  withTelemetry,
+} from "@jami-studio/harness-observability";
 import { createDefaultPolicyEngine } from "@jami-studio/harness-policy";
 import { createHostedProviderRouter } from "@jami-studio/harness-provider-hosted";
 import { createDeterministicProvider } from "@jami-studio/harness-provider-local";
@@ -29,12 +35,48 @@ export class HarnessCoreError extends Error {
   }
 }
 
+// Compose the observability port, opting in to OSS-safe external telemetry only when
+// the env-driven gate permits it and the caller did not inject a custom port. The
+// gate (opt-in flag, DO_NOT_TRACK, no-CI, project key) lives in the observability
+// package; here we just bind the default port to a vendor sink when allowed.
+function composeObservability(options, { now, artifactStore }) {
+  if (options.observability) {
+    return { observability: options.observability, telemetry: undefined };
+  }
+
+  const base = createRunObservability({ now, artifactStore });
+  if (options.disableTelemetry === true) {
+    return { observability: base, telemetry: { enabled: false, reason: "disabled_by_option" } };
+  }
+
+  const env = options.env ?? process.env;
+  const gate = options.telemetryGate ?? resolveTelemetryGate(env);
+  if (!gate.enabled) {
+    return { observability: base, telemetry: { enabled: false, reason: gate.reason } };
+  }
+
+  const sink =
+    options.telemetrySink ??
+    createPostHogTelemetrySink({
+      key: gate.key,
+      host: gate.host,
+      distinctId: options.telemetryDistinctId ?? env.JAMI_TELEMETRY_DISTINCT_ID,
+      captureContent: false,
+      onError: typeof options.onTelemetryError === "function" ? options.onTelemetryError : undefined,
+    });
+
+  return {
+    observability: withTelemetry(base, sink ?? createNoopTelemetrySink()),
+    telemetry: { enabled: true, reason: gate.reason, sink: sink?.kind ?? "noop", host: gate.host },
+  };
+}
+
 export function composeHarnessCore(options = {}) {
   const now = options.now ?? (() => new Date());
   const artifactStore = options.artifactStore ?? createInMemoryArtifactStore({ now });
   assertPort("artifactStore", artifactStore, ["write", "read", "list"]);
 
-  const observability = options.observability ?? createRunObservability({ now, artifactStore });
+  const { observability, telemetry } = composeObservability(options, { now, artifactStore });
   assertPort("observability", observability, ["trace", "exportEvidencePacket"]);
 
   const memory = options.memory ?? (options.disableMemory ? createNoopMemoryPort() : createInMemoryMemoryPort({ now }));
@@ -104,6 +146,12 @@ export function composeHarnessCore(options = {}) {
     sourceLocks,
     toolAdapters,
     toolAdapterManifests,
+    telemetry,
+    async shutdownTelemetry() {
+      if (typeof observability.shutdown === "function") {
+        await observability.shutdown();
+      }
+    },
     inspect() {
       return {
         schemaVersion: CORE_SCHEMA_VERSION,
@@ -113,6 +161,12 @@ export function composeHarnessCore(options = {}) {
         sourceLocks,
         toolAdapters,
         toolAdapterManifests,
+        telemetry: {
+          enabled: telemetry?.enabled === true,
+          reason: telemetry?.reason ?? "disabled",
+          sink: telemetry?.enabled === true ? telemetry?.sink ?? "noop" : "none",
+          posture: "oss_safe_opt_in_run_metadata_only_no_replay_no_autocapture",
+        },
         boundaries: {
           coreComposition: "package_owned_default_ports",
           toolGateway: "foundation_only",
@@ -122,6 +176,7 @@ export function composeHarnessCore(options = {}) {
           checkpointStore: checkpointStore.capabilities?.durable ? "durable_local" : "memory_only",
           providerRuntime: provider.capabilities?.provider === true ? provider.capabilities.mode : "unsupported",
           hostedProviders: provider.capabilities?.mode === "provider_router_local_plus_hosted" ? "fail_closed_openai_adapter_available" : "custom_or_unsupported",
+          telemetry: telemetry?.enabled === true ? "oss_safe_opt_in_enabled" : "off_by_default",
         },
       };
     },
