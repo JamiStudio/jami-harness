@@ -31,10 +31,10 @@ Canonical repo identity: `jami-harness` at `https://github.com/studio-jami/jami-
   `_ops/planning/jami-harness/{research,roadmaps,decisions}/` (see
   `_ops/planning/source-of-truth-policy.md`). Do not keep plan, research, or feasibility
   copies in this repo.
-- Orchestration guidance lives under `_ops/planning/jami-harness/agents/`. Plan/report
-  standards live under `_ops/planning/_standards/`; docs standards live under
-  `registry/docs/engineering/standards/docs-standards.md`. Do not add in-repo agent or
-  plan/report standard files.
+- Orchestration guidance lives under `_ops/planning/jami-harness/agents/`. Plan/report and
+  docs standards are canonical in `_ops/planning/_standards/`, symlinked here at
+  `docs/_standards/`; follow the dev-docs standard for internal docs. User docs publish
+  through `registry` and follow the user-manual standard. Do not add in-repo standard files.
 - Durable product architecture lives under [docs/architecture/](docs/architecture/),
   [docs/owned-core/](docs/owned-core/), and [docs/operations/](docs/operations/). `docs/` is
   the canonical product-docs source that publishes outward to the registry docs host.
