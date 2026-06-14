@@ -18,7 +18,7 @@ stays in sync with this source-lock record.
 
 ## Official Sources Verified
 
-Verified on 2026-06-09:
+Verified on 2026-06-09 and refreshed on 2026-06-14:
 
 - npm provenance statements: `https://docs.npmjs.com/generating-provenance-statements/`
 - npm trusted publishing: `https://docs.npmjs.com/trusted-publishers/`
@@ -31,7 +31,7 @@ Verified on 2026-06-09:
 - Mintlify `docs.json` settings:
   `https://www.mintlify.com/docs/organize/settings-reference`
 
-Verified on 2026-06-12:
+Verified on 2026-06-12 and refreshed on 2026-06-14:
 
 - Cloudflare Pages Direct Upload:
   `https://developers.cloudflare.com/pages/get-started/direct-upload/`

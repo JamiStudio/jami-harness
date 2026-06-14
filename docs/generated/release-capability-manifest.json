@@ -6,7 +6,7 @@
   "sourceRef": "main",
   "sourceRefResolution": "pinned-default-publication-branch",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:b7e09ec63a13cc50b2f08376e4a54454495d90de8198cc99151e971a1239fa00",
+  "sourceInputHash": "sha256:69486b8f16606dca0dce812cc0bded5d555e2966c5c870fa16662f640e2431dc",
   "generatedAt": "deterministic:git-head-plus-release-capability-input-hash",
   "command": "pnpm release:capabilities:check",
   "commandResult": "passed",
@@ -262,11 +262,99 @@
   },
   "officialSources": [
     {
+      "id": "mcp_2025_11_25",
+      "title": "Model Context Protocol 2025-11-25 specification",
+      "url": "https://modelcontextprotocol.io/specification/2025-11-25",
+      "official": true,
+      "verifiedOn": "2026-06-14",
+      "observations": [
+        "The official MCP specification identifies 2025-11-25 as the latest version.",
+        "Harness MCP support must stay version-pinned and fail closed outside the implemented trusted fixture path."
+      ]
+    },
+    {
+      "id": "mcp_tools_2025_11_25",
+      "title": "Model Context Protocol tools",
+      "url": "https://modelcontextprotocol.io/specification/2025-11-25/server/tools",
+      "official": true,
+      "verifiedOn": "2026-06-14",
+      "observations": [
+        "MCP tools are server-exposed callable capabilities with names, descriptions, schemas, and annotations.",
+        "Tool metadata remains untrusted input for policy and redaction purposes."
+      ]
+    },
+    {
+      "id": "shadcn_registry_index",
+      "title": "shadcn registry requirements",
+      "url": "https://ui.shadcn.com/docs/registry/registry-index",
+      "official": true,
+      "verifiedOn": "2026-06-14",
+      "observations": [
+        "A public shadcn registry is expected to expose flat registry JSON files.",
+        "Harness may reference Studio UI registry outputs, but Studio UI owns registry item implementation and hosting."
+      ]
+    },
+    {
+      "id": "shadcn_registry_item_schema",
+      "title": "shadcn registry item schema",
+      "url": "https://ui.shadcn.com/docs/registry/registry-item-json",
+      "official": true,
+      "verifiedOn": "2026-06-14",
+      "observations": [
+        "registry-item.json records custom registry item metadata, dependencies, and files.",
+        "Harness shared references must remain typed data and must not copy Studio UI registry implementation."
+      ]
+    },
+    {
+      "id": "openai_agents_sdk",
+      "title": "OpenAI Agents SDK",
+      "url": "https://developers.openai.com/api/docs/guides/agents",
+      "official": true,
+      "verifiedOn": "2026-06-14",
+      "observations": [
+        "OpenAI Agents SDK docs describe agents as applications that plan, call tools, collaborate across specialists, and maintain state for multi-step work.",
+        "Harness-owned orchestration, tool execution, approvals, and state remain product contracts instead of direct SDK assumptions."
+      ]
+    },
+    {
+      "id": "openai_agents_running",
+      "title": "OpenAI Agents SDK running agents",
+      "url": "https://developers.openai.com/api/docs/guides/agents/running-agents",
+      "official": true,
+      "verifiedOn": "2026-06-14",
+      "observations": [
+        "Running-agents guidance covers streaming output and conversation-state strategy.",
+        "Hosted provider support must not be claimed until the harness has source-locked provider behavior, auth, redaction, tool-call, trace, and recovery fixtures."
+      ]
+    },
+    {
+      "id": "owasp_llm_top_10_2025",
+      "title": "OWASP Top 10 for LLMs and Gen AI Apps",
+      "url": "https://genai.owasp.org/llm-top-10/",
+      "official": true,
+      "verifiedOn": "2026-06-14",
+      "observations": [
+        "OWASP's 2025 LLM risk list includes prompt injection, sensitive information disclosure, supply-chain, plugin/tool, and agency risks relevant to harness policy gates.",
+        "Security claims must stay backed by fail-closed policy fixtures and redaction evidence."
+      ]
+    },
+    {
+      "id": "owasp_prompt_injection",
+      "title": "OWASP LLM01:2025 Prompt Injection",
+      "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/",
+      "official": true,
+      "verifiedOn": "2026-06-14",
+      "observations": [
+        "Prompt injection occurs when user prompts alter model behavior or output in unintended ways.",
+        "Harness policy and tool metadata handling must treat external instructions as untrusted."
+      ]
+    },
+    {
       "id": "npm_provenance",
       "title": "npm provenance statements",
       "url": "https://docs.npmjs.com/generating-provenance-statements/",
       "official": true,
-      "verifiedOn": "2026-06-09",
+      "verifiedOn": "2026-06-14",
       "observations": [
         "npm publish --provenance requires a supported cloud CI/CD provider, repository metadata, and supported npm CLI.",
         "npm audit signatures verifies downloaded package provenance attestations."
@@ -277,7 +365,7 @@
       "title": "npm trusted publishing",
       "url": "https://docs.npmjs.com/trusted-publishers/",
       "official": true,
-      "verifiedOn": "2026-06-09",
+      "verifiedOn": "2026-06-14",
       "observations": [
         "Trusted publishing uses OIDC from supported cloud CI/CD providers and can generate provenance automatically for public packages from public repositories.",
         "GitHub trusted publishing requires a configured workflow filename and id-token: write in the workflow."
@@ -288,7 +376,7 @@
       "title": "npm publish command",
       "url": "https://docs.npmjs.com/cli/v10/commands/npm-publish/",
       "official": true,
-      "verifiedOn": "2026-06-09",
+      "verifiedOn": "2026-06-14",
       "observations": [
         "npm publish has dry-run and provenance/provenance-file configuration, but publish changes are still gated by manifest and account state.",
         "Package file inclusion must be controlled before any package contents claim."
@@ -299,7 +387,7 @@
       "title": "GitHub artifact attestations overview",
       "url": "https://docs.github.com/en/actions/concepts/security/artifact-attestations",
       "official": true,
-      "verifiedOn": "2026-06-09",
+      "verifiedOn": "2026-06-14",
       "observations": [
         "Artifact attestations establish build provenance and integrity guarantees for release artifacts.",
         "Attestations must be verified to provide consumer value."
@@ -310,7 +398,7 @@
       "title": "GitHub artifact attestation workflow",
       "url": "https://docs.github.com/en/enterprise-cloud@latest/actions/how-tos/secure-your-work/use-artifact-attestations/use-artifact-attestations",
       "official": true,
-      "verifiedOn": "2026-06-09",
+      "verifiedOn": "2026-06-14",
       "observations": [
         "Generating attestations requires workflow permissions including id-token: write and attestations: write plus actions/attest.",
         "GitHub CLI verification uses gh attestation verify against the artifact and repository."
@@ -431,9 +519,14 @@
       "bytes": 5126
     },
     {
+      "path": "docs/operations/production-current-source-lock.md",
+      "sha256": "sha256:6cfec8ebfeaf52a9134864d010a663dbce20854f3600d25d1dc451bf6fc1d3a6",
+      "bytes": 6076
+    },
+    {
       "path": "docs/operations/release-capability-source-lock.md",
-      "sha256": "sha256:46eabfa7096c6b03dd9694c2ce4913474376a919a78de81146accef9ca517521",
-      "bytes": 7714
+      "sha256": "sha256:0b8843bc4ce39fb08525446e80c08a6904075a7e0aec80793129ea34503fa093",
+      "bytes": 7770
     },
     {
       "path": "docs/operations/release-readiness.md",
@@ -537,13 +630,13 @@
     },
     {
       "path": "scripts/release/check-readiness.mjs",
-      "sha256": "sha256:96a9f7fb3c1b1477bda91af5eda52d1236d3b0c782ccf20aca011cac9a9d7a6c",
-      "bytes": 23166
+      "sha256": "sha256:858efa29e7200dcc3174e3b96f5bc12b5bcc04fff07df6ee46f4c6515f02f2ec",
+      "bytes": 23169
     },
     {
       "path": "scripts/release/generate-capability-manifest.mjs",
-      "sha256": "sha256:f963b76e7dfdbdb3edd2a7d160ce68b2779230f95b5b6c50603abc566ae96c64",
-      "bytes": 24556
+      "sha256": "sha256:91192f447f90dc78d4d62ce8fcd34e3ba149d1ff24c388ba62ccd733a664c035",
+      "bytes": 44474
     },
     {
       "path": "scripts/release/generate-sbom.mjs",
@@ -891,6 +984,323 @@
         "Configure an OTLP endpoint and secret header resolver outside tracked files.",
         "Run hosted trace and metric export smokes with redacted evidence.",
         "Record failure behavior for missing, empty, malformed, and unauthorized exporter configuration."
+      ]
+    }
+  ],
+  "productionAcceptanceMatrix": [
+    {
+      "routeId": "route_mcp_trusted_fixture_tools",
+      "plannedRoute": "Trusted in-process MCP initialize, tools/list, and tools/call mapping through the policy-gated tool envelope.",
+      "sourceLockRecord": "docs/operations/mcp-source-lock.md",
+      "ownerPackage": "@jami-studio/harness-tools",
+      "verificationCommand": "pnpm tools:test",
+      "localGateCommand": "tools:test",
+      "evidenceArtifacts": [
+        "packages/tools/src/index.mjs",
+        "packages/tools/test/tools.test.mjs",
+        "packages/contracts/fixtures/tools/valid-tool-execution-completed.json",
+        "packages/contracts/fixtures/policy/valid-policy-decision-deny-mcp-transport-abuse.json"
+      ],
+      "implementationPaths": [
+        "packages/tools/src/index.mjs"
+      ],
+      "fixturePaths": [
+        "packages/tools/test/tools.test.mjs",
+        "packages/contracts/fixtures/tools/valid-tool-execution-completed.json"
+      ],
+      "hostedPublicClaim": "No hosted/public transport claim; local trusted fixture route only.",
+      "supportState": "supported_local_evidence",
+      "officialSourceIds": [
+        "mcp_2025_11_25",
+        "mcp_tools_2025_11_25"
+      ],
+      "blockers": [],
+      "requiredBeforeClaim": []
+    },
+    {
+      "routeId": "route_tool_adapters_fail_closed",
+      "plannedRoute": "OpenAPI, shell, browser, code, provider-as-tool, A2A, remote MCP, stdio MCP, and MCP resources/prompts/tasks.",
+      "sourceLockRecord": "docs/operations/production-current-source-lock.md",
+      "ownerPackage": "@jami-studio/harness-tools",
+      "verificationCommand": "pnpm tools:test",
+      "localGateCommand": "tools:test",
+      "evidenceArtifacts": [
+        "packages/tools/src/index.mjs",
+        "packages/tools/test/tools.test.mjs"
+      ],
+      "implementationPaths": [],
+      "fixturePaths": [
+        "packages/tools/test/tools.test.mjs",
+        "packages/contracts/fixtures/tools/valid-tool-execution-unsupported.json"
+      ],
+      "hostedPublicClaim": "Unavailable until source locks, executable adapters, policy fixtures, and evidence packets land.",
+      "supportState": "fail_closed_unsupported",
+      "officialSourceIds": [
+        "mcp_2025_11_25",
+        "openai_agents_sdk"
+      ],
+      "blockers": [
+        "No executable adapter implementation exists for these external routes.",
+        "Only fail-closed unsupported manifests and dry-run evidence are present."
+      ],
+      "requiredBeforeClaim": [
+        "Add route-specific source-lock records.",
+        "Implement adapters behind the tool execution envelope.",
+        "Add positive, denied, malformed, redacted, trace, audit, and evidence fixtures."
+      ]
+    },
+    {
+      "routeId": "route_local_deterministic_provider",
+      "plannedRoute": "Local deterministic provider route for source-checkout and package-smoke evidence runs.",
+      "sourceLockRecord": "docs/operations/production-current-source-lock.md",
+      "ownerPackage": "@jami-studio/harness-provider-local",
+      "verificationCommand": "pnpm provider:test",
+      "localGateCommand": "provider:test",
+      "evidenceArtifacts": [
+        "packages/provider-local/src/index.mjs",
+        "packages/provider-local/test/provider-local.test.mjs"
+      ],
+      "implementationPaths": [
+        "packages/provider-local/src/index.mjs"
+      ],
+      "fixturePaths": [
+        "packages/provider-local/test/provider-local.test.mjs"
+      ],
+      "hostedPublicClaim": "Local package/runtime route only; no hosted model provider claim.",
+      "supportState": "supported_local_evidence",
+      "officialSourceIds": [],
+      "blockers": [],
+      "requiredBeforeClaim": []
+    },
+    {
+      "routeId": "route_hosted_provider_runtime",
+      "plannedRoute": "Hosted OpenAI/Anthropic/Google/xAI/Azure/Bedrock provider execution with auth, streaming, tools, cost, redaction, retry, and cancellation.",
+      "sourceLockRecord": "docs/operations/production-current-source-lock.md",
+      "ownerPackage": "@jami-studio/harness-provider-hosted",
+      "verificationCommand": "pnpm provider:test",
+      "localGateCommand": "provider:test",
+      "evidenceArtifacts": [
+        "packages/provider-hosted/src/index.mjs",
+        "packages/provider-hosted/test/provider-hosted.test.mjs"
+      ],
+      "implementationPaths": [],
+      "fixturePaths": [
+        "packages/provider-hosted/test/provider-hosted.test.mjs"
+      ],
+      "hostedPublicClaim": "Unavailable; hosted provider execution must fail closed.",
+      "supportState": "fail_closed_unsupported",
+      "officialSourceIds": [
+        "openai_agents_sdk",
+        "openai_agents_running"
+      ],
+      "blockers": [
+        "No hosted provider source-lock, auth resolver, streaming, hosted tool-call, usage/cost, or cancellation implementation exists.",
+        "Provider-hosted package currently proves fail-closed behavior only."
+      ],
+      "requiredBeforeClaim": [
+        "Select accepted hosted provider routes.",
+        "Add current official provider source-lock records.",
+        "Implement auth, redaction, policy, trace, retry, cancellation, usage/cost, and negative fixtures."
+      ]
+    },
+    {
+      "routeId": "route_policy_default_deny_security",
+      "plannedRoute": "Default-deny policy decisions, secret-reference hygiene, prompt-injection/tool-metadata poisoning denial, replay rejection, and audit evidence.",
+      "sourceLockRecord": "docs/operations/production-current-source-lock.md",
+      "ownerPackage": "@jami-studio/harness-policy",
+      "verificationCommand": "pnpm policy:test",
+      "localGateCommand": "policy:test",
+      "evidenceArtifacts": [
+        "packages/policy/src/index.mjs",
+        "packages/policy/test/policy.test.mjs",
+        "packages/contracts/fixtures/policy/valid-policy-decision-deny-prompt-injection.json",
+        "packages/contracts/fixtures/policy/invalid-secret-ref-value-leak.json"
+      ],
+      "implementationPaths": [
+        "packages/policy/src/index.mjs"
+      ],
+      "fixturePaths": [
+        "packages/policy/test/policy.test.mjs",
+        "packages/contracts/fixtures/policy/valid-policy-decision-deny-prompt-injection.json",
+        "packages/contracts/fixtures/policy/invalid-secret-ref-value-leak.json"
+      ],
+      "hostedPublicClaim": "Supported local governance contract; no enterprise policy-engine or hosted SIEM claim.",
+      "supportState": "supported_local_evidence",
+      "officialSourceIds": [
+        "owasp_llm_top_10_2025",
+        "owasp_prompt_injection"
+      ],
+      "blockers": [],
+      "requiredBeforeClaim": []
+    },
+    {
+      "routeId": "route_studio_ui_shared_contract_refs",
+      "plannedRoute": "Harness-side shared data references for uiPayload, artifactView, actionRef, themeRef, workspaceRef, evidencePacket, memoryRecord, contextPack, and capabilityManifest.",
+      "sourceLockRecord": "docs/operations/production-current-source-lock.md",
+      "ownerPackage": "@jami-studio/harness-contracts",
+      "verificationCommand": "pnpm contracts:check",
+      "localGateCommand": "contracts:check",
+      "evidenceArtifacts": [
+        "packages/contracts/schemas/capability-manifest.schema.json",
+        "packages/contracts/fixtures/shared-seams/phase2-capability-manifest-states.json",
+        "docs/architecture/foundation-alignment.md"
+      ],
+      "implementationPaths": [
+        "packages/contracts/schemas/capability-manifest.schema.json"
+      ],
+      "fixturePaths": [
+        "packages/contracts/fixtures/shared-seams/phase2-capability-manifest-states.json"
+      ],
+      "hostedPublicClaim": "Harness emits typed data only; Studio UI owns registry item implementation and resident rendering.",
+      "supportState": "supported_local_evidence",
+      "officialSourceIds": [
+        "shadcn_registry_index",
+        "shadcn_registry_item_schema"
+      ],
+      "blockers": [],
+      "requiredBeforeClaim": []
+    },
+    {
+      "routeId": "route_package_contents_and_install",
+      "plannedRoute": "Package contents dry run and clean local tarball install smoke for harness-owned publishable packages.",
+      "sourceLockRecord": "docs/operations/release-capability-source-lock.md",
+      "ownerPackage": "@jami-studio/harness",
+      "verificationCommand": "pnpm package:smoke:check",
+      "localGateCommand": "package:smoke:check",
+      "evidenceArtifacts": [
+        "scripts/release/check-package-contents.mjs",
+        "docs/generated/package-contents-manifest.json",
+        "docs/generated/package-install-smoke.json"
+      ],
+      "implementationPaths": [
+        "scripts/release/check-package-contents.mjs"
+      ],
+      "fixturePaths": [
+        "docs/generated/package-install-smoke.json"
+      ],
+      "hostedPublicClaim": "Supported local install proof and public package smoke evidence for the recorded package set.",
+      "supportState": "supported_public_evidence",
+      "officialSourceIds": [
+        "npm_publish"
+      ],
+      "blockers": [],
+      "requiredBeforeClaim": []
+    },
+    {
+      "routeId": "route_npm_provenance",
+      "plannedRoute": "npm package publication through trusted publishing/provenance for accepted public packages.",
+      "sourceLockRecord": "docs/operations/release-capability-source-lock.md",
+      "ownerPackage": "@jami-studio/harness",
+      "verificationCommand": "pnpm release:capabilities:check",
+      "localGateCommand": "release:capabilities:check",
+      "evidenceArtifacts": [
+        "https://github.com/studio-jami/jami-harness/actions/runs/27464403402",
+        "docs/generated/package-contents-manifest.json",
+        "docs/generated/package-install-smoke.json"
+      ],
+      "implementationPaths": [
+        "scripts/release/generate-capability-manifest.mjs"
+      ],
+      "fixturePaths": [
+        "docs/generated/package-install-smoke.json"
+      ],
+      "hostedPublicClaim": "Published package/provenance claim is limited to the versions and workflow evidence recorded in the capability manifest.",
+      "supportState": "supported_public_evidence",
+      "officialSourceIds": [
+        "npm_provenance",
+        "npm_trusted_publishing",
+        "npm_publish"
+      ],
+      "blockers": [],
+      "requiredBeforeClaim": []
+    },
+    {
+      "routeId": "route_github_release_attestation",
+      "plannedRoute": "GitHub release artifact and attestation evidence for the v0.1.0 release bundle.",
+      "sourceLockRecord": "docs/operations/release-capability-source-lock.md",
+      "ownerPackage": "@jami-studio/harness",
+      "verificationCommand": "pnpm release:capabilities:check",
+      "localGateCommand": "release:capabilities:check",
+      "evidenceArtifacts": [
+        "https://github.com/studio-jami/jami-harness/releases/tag/v0.1.0",
+        "https://github.com/studio-jami/jami-harness/actions/runs/27471444596",
+        "docs/generated/release-capability-manifest.json"
+      ],
+      "implementationPaths": [
+        "scripts/release/generate-capability-manifest.mjs"
+      ],
+      "fixturePaths": [
+        "docs/generated/release-capability-manifest.json"
+      ],
+      "hostedPublicClaim": "Release attestation claim is limited to the v0.1.0 bundle evidence recorded in the capability manifest.",
+      "supportState": "supported_public_evidence",
+      "officialSourceIds": [
+        "github_artifact_attestations",
+        "github_attest_action"
+      ],
+      "blockers": [],
+      "requiredBeforeClaim": []
+    },
+    {
+      "routeId": "route_hosted_status_control_static",
+      "plannedRoute": "Static harness status/control routes served from the registry Cloudflare Pages project under /harness/.",
+      "sourceLockRecord": "docs/operations/hosted-route-source-lock.md",
+      "ownerPackage": "@jami-studio/harness-workbench",
+      "verificationCommand": "pnpm hosted:routes:check",
+      "localGateCommand": "hosted:routes:check",
+      "evidenceArtifacts": [
+        "scripts/hosted/generate-hosted-routes.mjs",
+        "docs/generated/hosted-route-manifest.json",
+        "apps/workbench/dist/status.json",
+        "apps/workbench/dist/release-readiness.json",
+        "apps/workbench/dist/provider-store-observability.json",
+        "apps/workbench/dist/healthz.json"
+      ],
+      "implementationPaths": [
+        "scripts/hosted/generate-hosted-routes.mjs"
+      ],
+      "fixturePaths": [
+        "docs/generated/hosted-route-manifest.json",
+        "apps/workbench/dist/healthz.json"
+      ],
+      "hostedPublicClaim": "Current public route claim is limited to static status/control JSON on https://registry.jami.studio/harness/ with hosted smoke evidence.",
+      "supportState": "supported_public_evidence",
+      "officialSourceIds": [
+        "cloudflare_pages_direct_upload",
+        "cloudflare_pages_headers"
+      ],
+      "blockers": [],
+      "requiredBeforeClaim": []
+    },
+    {
+      "routeId": "route_hosted_stores_observability_workbench",
+      "plannedRoute": "Hosted durable stores, hosted observability sinks, and hosted workbench/control plane.",
+      "sourceLockRecord": "docs/operations/hosted-route-source-lock.md",
+      "ownerPackage": "@jami-studio/harness-workbench",
+      "verificationCommand": "pnpm hosted:routes:check",
+      "localGateCommand": "hosted:routes:check",
+      "evidenceArtifacts": [
+        "docs/generated/hosted-route-manifest.json",
+        "apps/workbench/generated/workbench-manifest.json"
+      ],
+      "implementationPaths": [],
+      "fixturePaths": [
+        "docs/generated/hosted-route-manifest.json"
+      ],
+      "hostedPublicClaim": "Unavailable; generated static readiness routes only name missing secret/account actions.",
+      "supportState": "fail_closed_unsupported",
+      "officialSourceIds": [
+        "neon_connection_string",
+        "opentelemetry_otlp_exporter",
+        "opentelemetry_env_spec"
+      ],
+      "blockers": [
+        "No hosted database/object-store adapter, OTLP endpoint, collector, secret resolver, or hosted control-plane backend exists.",
+        "The workbench is a local static generated shell, not a hosted control plane."
+      ],
+      "requiredBeforeClaim": [
+        "Implement hosted adapters behind the existing store, observability, and workbench seams.",
+        "Record secret names without values and run hosted smoke fixtures."
       ]
     }
   ],

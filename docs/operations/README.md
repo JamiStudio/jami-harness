@@ -25,4 +25,5 @@ Current operating procedures:
 - [Changelog system](changelog.md)
 - [Telemetry & privacy](telemetry.md)
 - [MCP source lock](mcp-source-lock.md)
+- [Production current-source lock](production-current-source-lock.md)
 - [Release readiness](release-readiness.md)

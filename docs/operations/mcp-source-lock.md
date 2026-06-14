@@ -1,14 +1,14 @@
 # MCP Source Lock
 
 Status: active source-lock evidence
-Recorded: 2026-06-09
+Recorded: 2026-06-14
 Owner: Jami Harness
 
 ## Locked Source
 
 - Protocol: Model Context Protocol
 - Spec version: `2025-11-25`
-- Freshness: official docs mark `2025-11-25` as latest on 2026-06-09
+- Freshness: official docs mark `2025-11-25` as latest on 2026-06-14
 - License/provenance: no vendored MCP source or SDK code is copied into this repo in this pass; the adapter is a dependency-free harness implementation against the public protocol pages listed below
 
 Official source pages verified for this pass:
