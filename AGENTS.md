@@ -8,7 +8,9 @@ Canonical repo identity: `jami-harness` at `https://github.com/studio-jami/jami-
 
 ## Source Truth
 
-- Read [docs/engineering/agents/goal.md](docs/engineering/agents/goal.md) before coordinated project work.
+- Read the canonical agent goal under `_ops/projects/jami-harness/planning/agents/goal.md`
+  before coordinated project work. The in-repo `docs/engineering/agents/goal.md` file is only
+  a local pointer.
 - Cross-repo planning (roadmaps, decisions, research, the production feasibility report and plan) is canonical in `_ops`, not this repo, per `_ops/docs/source-of-truth-policy.md`. Read the active roadmap and research under `_ops/projects/jami-harness/planning/{roadmaps,research,decisions}/` before dispatching or executing implementation work.
 - Read the shared master rebuild corpus under `_ops/shared/research/master/` for context before changing project direction.
 - The live filesystem is authoritative. Imported project docs are evidence, not proof of harness implementation.
@@ -28,8 +30,11 @@ Canonical repo identity: `jami-harness` at `https://github.com/studio-jami/jami-
 ## Documentation Rules
 
 - The feasibility report and active plans are canonical in `_ops` under `_ops/projects/jami-harness/planning/{research,roadmaps}/` (see `_ops/docs/source-of-truth-policy.md`); they are no longer kept in this repo.
-- Orchestration guidance lives under [docs/engineering/agents/](docs/engineering/agents/).
-- Style standards live under [docs/engineering/standards/](docs/engineering/standards/).
+- Orchestration guidance lives under `_ops/projects/jami-harness/planning/agents/`.
+  In-repo `docs/engineering/agents/` files are pointers only.
+- Plan/report standards live under `_ops/planning/standards/`; docs standards live under
+  `registry/docs/engineering/standards/docs-standards.md`. In-repo
+  `docs/engineering/standards/` files are pointers only.
 - Durable product architecture lives under [docs/architecture/](docs/architecture/), [docs/owned-core/](docs/owned-core/), and [docs/operations/](docs/operations/).
 - Changelog fragments live under [.changes/](.changes/). Add one for production-meaningful behavior, docs, operations, automation, or release changes.
 - Public docs are prepared for Mintlify later, but `docs/` remains the canonical source until publishing setup is accepted.

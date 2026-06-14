@@ -10,8 +10,10 @@ const root = process.cwd();
 // production plan were relocated to
 // `_ops/projects/jami-harness/planning/{research,roadmaps}/`, so this gate no
 // longer requires in-repo copies (and must not, or it would force their
-// recreation against policy). Durable architecture/operations/standards/agent
-// docs remain canonical in-repo and are still required below.
+// recreation against policy). Standards and agent files below remain required
+// only as local pointer stubs; canonical bodies live in `_ops/planning/standards/`,
+// `_ops/projects/jami-harness/planning/agents/`, and
+// `registry/docs/engineering/standards/docs-standards.md`.
 const requiredFiles = [
   "AGENTS.md",
   "README.md",
