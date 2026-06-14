@@ -19,24 +19,26 @@ Canonical repo identity: `jami-harness` at `https://github.com/studio-jami/jami-
 - Keep permanent decisions in `_ops/planning/jami-harness/decisions/` (canonical) and durable architecture/operations docs in-repo. Keep active task sequencing in the `_ops` roadmaps.
 - Never write secrets, API keys, tokens, connection strings with credentials, signed URLs, or private account material into tracked files.
 
-## Worktree Rules
+## Working Rules
 
-- This root may be a context workspace before it becomes a Git repository. If Git metadata is absent, continue from files and do not block on `git status`.
-- Preserve imported project directories unless a plan explicitly moves or extracts material.
-- Do not clean, rewrite, or reorganize `_legacy/`, `references/`, or imported product trees as a side effect of harness planning.
 - Use PowerShell-native commands on this Windows host. Prefer `rg` for search.
+- Preserve unrelated user changes and other agents' work. Move, clean, or reorganize a
+  directory only when a plan explicitly calls for it, never as a side effect of other work.
 
 ## Documentation Rules
 
-- The feasibility report and active plans are canonical in `_ops` under `_ops/planning/jami-harness/{research,roadmaps}/` (see `_ops/planning/source-of-truth-policy.md`); they are no longer kept in this repo.
-- Orchestration guidance lives under `_ops/planning/jami-harness/agents/`. In-repo
-  `docs/engineering/agents/` files are retired and ignored.
-- Plan/report standards live under `_ops/planning/_standards/`; docs standards live under
-  `registry/docs/engineering/standards/docs-standards.md`. In-repo plan/report standard
-  files are retired and ignored.
-- Durable product architecture lives under [docs/architecture/](docs/architecture/), [docs/owned-core/](docs/owned-core/), and [docs/operations/](docs/operations/).
+- Cross-repo planning is canonical in `_ops` under
+  `_ops/planning/jami-harness/{research,roadmaps,decisions}/` (see
+  `_ops/planning/source-of-truth-policy.md`). Do not keep plan, research, or feasibility
+  copies in this repo.
+- Orchestration guidance lives under `_ops/planning/jami-harness/agents/`. Plan/report
+  standards live under `_ops/planning/_standards/`; docs standards live under
+  `registry/docs/engineering/standards/docs-standards.md`. Do not add in-repo agent or
+  plan/report standard files.
+- Durable product architecture lives under [docs/architecture/](docs/architecture/),
+  [docs/owned-core/](docs/owned-core/), and [docs/operations/](docs/operations/). `docs/` is
+  the canonical product-docs source that publishes outward to the registry docs host.
 - Changelog fragments live under [.changes/](.changes/). Add one for production-meaningful behavior, docs, operations, automation, or release changes.
-- Public docs are prepared for Mintlify later, but `docs/` remains the canonical source until publishing setup is accepted.
 
 ## Modular Capability Rules
 
@@ -67,7 +69,7 @@ rendering into this repo.
 
 ## Verification
 
-- Docs-only changes: read back changed Markdown and run `git diff --check` when Git exists.
+- Docs-only changes: read back changed Markdown and run `git diff --check`.
 - Current docs gate: `pnpm docs:check`.
 - Full local gate: `pnpm verify`.
 - Planning changes: confirm links resolve locally and no stale project-specific commands remain.
@@ -76,3 +78,32 @@ rendering into this repo.
 - External protocol/provider claims: verify against official sources before locking them in.
 - Current official sources override stale or future-dated planning claims.
 - GitHub Actions are manual fallback while minutes are limited. Do not push unverified work and expect CI to catch it.
+
+## Execution Standard
+
+- Agents have full access and a green light to complete requested work. Build to a sturdy,
+  industry-standard, production-ready shape.
+- No mocks, stubs, hidden demo paths, broad compatibility shims, weakened checks, or
+  claims-only completion unless the user explicitly asks for a disposable experiment.
+- Work from first principles. When a constraint, error, or surprise appears, ask why it
+  exists and keep asking several layers deep until the cause leaves our control — that is
+  where the real fix begins. Do not choose a deep refactor or a tactical patch until
+  discovery shows the connected decisions and the direct and indirect effects.
+- Keep a calculated appetite for cutting ceremony that slows velocity without improving the
+  product. Never trade away integrity, security, correctness, or evidence quality for speed.
+- No-cost constraint: stay within approved subscriptions, credits, and free tiers. Cost is
+  approved only once the product demands it; stop and report rather than incur spend.
+
+## Closeout
+
+Before final response:
+
+- Stop helper processes started during the session.
+- Confirm no secrets were written to tracked files or command output artifacts.
+- Keep the active `_ops` roadmap, durable docs, and changelog fragments accurate.
+- Leave unrelated dirty/untracked files untouched, and preserve other agents' work.
+- Report what changed, what was verified, and what could not run because the surface does
+  not exist yet.
+- Commit completed work: stage only the intentional changeset, use a conventional commit
+  subject and body, and push to the configured remote. Do not leave completed work
+  local-only unless the user asks.
