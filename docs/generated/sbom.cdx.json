@@ -1,7 +1,7 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:e2f735c7-eb21-5f1d-a044-5f63f2e62f64",
+  "serialNumber": "urn:uuid:f65d5fc7-5f78-5d02-af2f-0dc4b9818b39",
   "version": 1,
   "metadata": {
     "tools": {
@@ -69,8 +69,12 @@
         "value": "main"
       },
       {
+        "name": "jami:harness:sourceRefResolution",
+        "value": "pinned-default-publication-branch"
+      },
+      {
         "name": "jami:harness:sourceInputHash",
-        "value": "0a8c355cb30cceba9a1f322c9ea7b853190863c787758b336da38acb5a330510"
+        "value": "798af3be32e96f344819ff5c7e53b3cf5aa2138719bc6b3bf065f2ce693b05fb"
       },
       {
         "name": "jami:harness:commands",
@@ -286,6 +290,39 @@
         {
           "name": "jami:harness:repository",
           "value": "git+https://github.com/studio-jami/jami-harness.git"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "pkg:@jami-studio/harness:packages/harness/package.json",
+      "name": "@jami-studio/harness",
+      "version": "0.1.1",
+      "description": "Batteries-included Jami Harness entrypoint that composes the published runtime, SDK, core, tools, memory, store, provider, artifacts, observability, and policy packages.",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40jami-studio/harness@0.1.1",
+      "properties": [
+        {
+          "name": "jami:harness:manifestPath",
+          "value": "packages/harness/package.json"
+        },
+        {
+          "name": "jami:harness:private",
+          "value": "false"
+        },
+        {
+          "name": "jami:harness:repository",
+          "value": "git+https://github.com/studio-jami/jami-harness.git"
+        },
+        {
+          "name": "jami:harness:repositoryDirectory",
+          "value": "packages/harness"
         }
       ]
     },
@@ -627,6 +664,21 @@
     {
       "ref": "pkg:@jami-studio/harness-docs:packages/docs/package.json",
       "dependsOn": []
+    },
+    {
+      "ref": "pkg:@jami-studio/harness:packages/harness/package.json",
+      "dependsOn": [
+        "pkg:@jami-studio/harness-artifacts:packages/artifacts/package.json",
+        "pkg:@jami-studio/harness-core:packages/core/package.json",
+        "pkg:@jami-studio/harness-memory:packages/memory/package.json",
+        "pkg:@jami-studio/harness-observability:packages/observability/package.json",
+        "pkg:@jami-studio/harness-policy:packages/policy/package.json",
+        "pkg:@jami-studio/harness-provider-local:packages/provider-local/package.json",
+        "pkg:@jami-studio/harness-runtime:packages/runtime/package.json",
+        "pkg:@jami-studio/harness-sdk:packages/sdk/package.json",
+        "pkg:@jami-studio/harness-store-local:packages/store-local/package.json",
+        "pkg:@jami-studio/harness-tools:packages/tools/package.json"
+      ]
     },
     {
       "ref": "pkg:@jami-studio/harness-memory:packages/memory/package.json",

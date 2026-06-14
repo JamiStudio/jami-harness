@@ -13,6 +13,13 @@ const outputPath = "docs/generated/sbom.cdx.json";
 const outputFullPath = join(repoRoot, outputPath);
 const specVersion = "1.7";
 const sourceCommit = "git:HEAD";
+// The SBOM is a release artifact for the default publication branch, so its
+// sourceRef is branch-STABLE: pinned to this constant rather than read from the
+// volatile current checkout (git rev-parse --abbrev-ref HEAD) or CI ref
+// (GITHUB_REF_NAME / GITHUB_REF). Reading the live branch would embed a feature
+// branch name and re-break `sbom:check` on merge to the default branch. The
+// pinned value is reproducible on any branch and in CI.
+const DEFAULT_PUBLICATION_BRANCH = "main";
 const resolvedSourceCommit = git(["rev-parse", "HEAD"]) ?? "working-tree";
 const resolvedCommitDate = git(["log", "-1", "--format=%cI"]) ?? "unknown";
 const sourceRef = normalizeRef() ?? "unknown";
@@ -56,6 +63,7 @@ const bom = {
       property("jami:harness:sourceCommit", sourceCommit),
       property("jami:harness:sourceCommitResolutionCommand", "git rev-parse HEAD"),
       property("jami:harness:sourceRef", sourceRef),
+      property("jami:harness:sourceRefResolution", "pinned-default-publication-branch"),
       property("jami:harness:sourceInputHash", sourceInputHash),
       property("jami:harness:commands", "pnpm sbom:generate; pnpm sbom:check"),
       property("jami:harness:commandResult", "passed"),
@@ -180,12 +188,7 @@ function normalizeRemote(remote) {
 }
 
 function normalizeRef() {
-  const githubRefName = process.env.GITHUB_REF_NAME;
-  if (githubRefName) return githubRefName;
-  const githubRef = process.env.GITHUB_REF;
-  if (githubRef?.startsWith("refs/heads/")) return githubRef.slice("refs/heads/".length);
-  const gitRef = git(["rev-parse", "--abbrev-ref", "HEAD"]);
-  return gitRef === "HEAD" ? "main" : gitRef;
+  return DEFAULT_PUBLICATION_BRANCH;
 }
 
 function hashJson(value) {

@@ -279,7 +279,7 @@ const run = await harness.run({ runId: "run_package_smoke" });
 if (run.status !== "completed") throw new Error("installed SDK run did not complete");
 assertions.push("sdk run completes through installed package graph");
 const core = composeHarnessCore();
-if (core.inspect().boundaries.providerRuntime !== "local_deterministic_only") {
+if (core.inspect().boundaries.providerRuntime !== "provider_router_local_plus_hosted") {
   throw new Error("core provider boundary changed");
 }
 assertions.push("core inspect works through package imports");

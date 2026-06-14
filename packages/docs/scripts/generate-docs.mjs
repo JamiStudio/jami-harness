@@ -488,10 +488,10 @@ function installPathRecords(model) {
       pathId: "byo_provider",
       module: "provider",
       sdkOption: "provider",
-      defaultPackage: "@jami-studio/harness-provider-local",
-      status: "supported_port_local_only",
+      defaultPackage: "@jami-studio/harness-provider-hosted",
+      status: "supported_port_local_plus_hosted_fail_closed",
       commandEvidence: ["pnpm provider:test", "pnpm sdk:test", "pnpm cli:test"],
-      notes: "The local deterministic provider is supported; hosted providers fail closed until source-lock, auth, redaction, policy, trace, and adapter fixtures land.",
+      notes: "The default provider router runs the local deterministic route and exposes a fail-closed hosted OpenAI route; hosted execution requires explicit provider env vars, and streaming, hosted tool calls, structured output schemas, and cancellation are not wired yet.",
     }),
     installPathRecord(model, {
       pathId: "byo_policy",
