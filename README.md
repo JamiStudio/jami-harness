@@ -10,10 +10,10 @@ This workspace currently includes imported project context from `daily-briefs`, 
 
 - [Project charter](docs/project/charter.md)
 - [Docs index](docs/README.md)
-- Master synthesis: `_ops/shared/research/master/`
-- Production feasibility report: `_ops/projects/jami-harness/planning/research/2026-06-07-jami-harness-production-feasibility-report.md`
-- Active production plan: `_ops/projects/jami-harness/planning/roadmaps/2026-06-07-jami-harness-production-plan.md`
-- Agent orchestration goal: `_ops/projects/jami-harness/planning/agents/goal.md`
+- Master synthesis: `_ops/planning/_research/master/`
+- Production feasibility report: `_ops/planning/jami-harness/research/2026-06-07-jami-harness-production-feasibility-report.md`
+- Active production plan: `_ops/planning/jami-harness/roadmaps/2026-06-14-jami-agent-harness-production-completion.md`
+- Agent orchestration goal: `_ops/planning/jami-harness/agents/goal.md`
 - [Candidate stack](docs/architecture/candidate-stack.md)
 - [Owned core map](docs/owned-core/README.md)
 - [Release readiness gate](docs/operations/release-readiness.md)
