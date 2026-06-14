@@ -215,6 +215,33 @@ test("PostHog sink emits an $ai_generation run summary with usage but no content
   assert.equal("$ai_output_choices" in message.properties, false);
 });
 
+test("PostHog sink never emits run-summary subject PII or prompt content even with captureContent requested", async () => {
+  const client = createFakeClient();
+  const sink = createPostHogTelemetrySink({ key: "phc_test", client, captureContent: true });
+
+  sink.captureRunSummary({
+    runId: "run_demo",
+    evidenceId: "ev_demo",
+    subject: "Jane Doe jane@example.com SSN 123-45-6789",
+    input: "Jane Doe jane@example.com SSN 123-45-6789 prompt",
+    output: "Jane Doe jane@example.com SSN 123-45-6789 response",
+    traces: [{ kind: "provider", attributes: { providerId: "provider_local_deterministic" } }],
+    metrics: [],
+    events: [],
+  });
+  await new Promise((resolve) => setImmediate(resolve));
+
+  assert.equal(client.events.length, 1);
+  const message = client.events[0];
+  assert.equal("harness_subject" in message.properties, false);
+  assert.equal("$ai_input" in message.properties, false);
+  assert.equal("$ai_output_choices" in message.properties, false);
+  const serialized = JSON.stringify(message);
+  assert.equal(serialized.includes("Jane Doe"), false);
+  assert.equal(serialized.includes("jane@example.com"), false);
+  assert.equal(serialized.includes("123-45-6789"), false);
+});
+
 test("PostHog sink maps a provider trace to an $ai_generation span event", async () => {
   const client = createFakeClient();
   const sink = createPostHogTelemetrySink({ key: "phc_test", client });

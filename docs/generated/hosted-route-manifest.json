@@ -4,8 +4,9 @@
   "sourceRemote": "https://github.com/studio-jami/jami-harness.git",
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
+  "sourceRefResolution": "pinned-default-publication-branch",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:27c43392717c995b08414221246bd4ef5a6928e7f172cd5f2f90b8fc7e672b03",
+  "sourceInputHash": "sha256:a8c5d9853de14275ab6c222a2f2167adda6d25e163f1e28955b148c1804ced8d",
   "generatedAt": "deterministic:git-head-plus-hosted-route-input-hash",
   "command": "pnpm hosted:routes:check",
   "commandResult": "passed",
@@ -90,12 +91,12 @@
         "sourceCommit": "git:HEAD",
         "docsSourceManifest": {
           "path": "docs/generated/docs-source-manifest.json",
-          "sourceInputHash": "sha256:aacf0d0c05ad75bbea7c79f84191df948923f5d6ce93f78fa5764dfb86ea7915",
+          "sourceInputHash": "sha256:a52741d69148d89657e4e8a04a051123e87a3e2ad7130ee5af252fe86e7d1fff",
           "generatedOutputCount": 16
         },
         "releaseCapabilityManifest": {
           "path": "docs/generated/release-capability-manifest.json",
-          "sourceInputHash": "sha256:0aa3baabeaa517b99674f9f1e30c4bc6d5577501fc85fd71785689cc9f6f24d4",
+          "sourceInputHash": "sha256:9663264dd5e8c2a96343903fb76c766420426ef242469e655e80b11e91e9200a",
           "capabilityCount": 15
         }
       },
@@ -178,7 +179,7 @@
           "path": "docs/generated/sbom.cdx.json",
           "bomFormat": "CycloneDX",
           "specVersion": "1.7",
-          "componentCount": 14
+          "componentCount": 16
         }
       },
       "readiness": [
@@ -304,7 +305,7 @@
       "safeClaim": "A static hosted health route proves the current route bundle can be served and parsed from the registry host.",
       "evidence": {
         "generatedRouteCount": 4,
-        "sourceInputHash": "sha256:27c43392717c995b08414221246bd4ef5a6928e7f172cd5f2f90b8fc7e672b03",
+        "sourceInputHash": "sha256:a8c5d9853de14275ab6c222a2f2167adda6d25e163f1e28955b148c1804ced8d",
         "secretScan": "passed"
       },
       "readiness": [

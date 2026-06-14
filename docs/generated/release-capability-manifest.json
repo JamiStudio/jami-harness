@@ -3,9 +3,10 @@
   "sourceRepo": "jami-harness",
   "sourceRemote": "https://github.com/studio-jami/jami-harness.git",
   "sourceCommit": "git:HEAD",
-  "sourceRef": "feat/docs-canon",
+  "sourceRef": "main",
+  "sourceRefResolution": "pinned-default-publication-branch",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:9bd69fd827ed74ee8fba9a1e0f648282df84b258e6213333647c671b7c1aad13",
+  "sourceInputHash": "sha256:9663264dd5e8c2a96343903fb76c766420426ef242469e655e80b11e91e9200a",
   "generatedAt": "deterministic:git-head-plus-release-capability-input-hash",
   "command": "pnpm release:capabilities:check",
   "commandResult": "passed",
@@ -411,13 +412,13 @@
     },
     {
       "path": "docs/generated/package-contents-manifest.json",
-      "sha256": "sha256:61948e22fb5c21b2f8a4484813a92baee338a59a94d88732ae35f96afe5045ee",
-      "bytes": 40572
+      "sha256": "sha256:5d667cc2b0159852d90763f74d20aebabda1d0f16552da5cab2543696c9f198b",
+      "bytes": 40623
     },
     {
       "path": "docs/generated/package-install-smoke.json",
-      "sha256": "sha256:3c9bee6d3594b6e0ead28ea60c4dca4f991aa626e4d76213780d90daf3788c73",
-      "bytes": 5606
+      "sha256": "sha256:b46f53b647d97c7f01518412b46ecac6625bb43cb7034a68fa42d4d719ea2fdb",
+      "bytes": 5657
     },
     {
       "path": "docs/generated/sbom.cdx.json",
@@ -526,13 +527,13 @@
     },
     {
       "path": "scripts/hosted/generate-hosted-routes.mjs",
-      "sha256": "sha256:a8a1965c128782d51d252382b4957cecb8da4cee6dc285b3c55ac31eeb4bdca8",
-      "bytes": 19356
+      "sha256": "sha256:766fc02be0bf242d6d50a1c3d689809734d97e55c79513a27abd43c8059419a7",
+      "bytes": 19156
     },
     {
       "path": "scripts/release/check-package-contents.mjs",
-      "sha256": "sha256:f8b942f74feec4f756fa57fdcc18be302b7999e62a1c5891481f103a97b14909",
-      "bytes": 20870
+      "sha256": "sha256:209606bc10ab151dc25a809175935ad8bc0d96eee2fdf326bcbd7587594e61bd",
+      "bytes": 20735
     },
     {
       "path": "scripts/release/check-readiness.mjs",
@@ -541,8 +542,8 @@
     },
     {
       "path": "scripts/release/generate-capability-manifest.mjs",
-      "sha256": "sha256:8cbc1ce44fafa1b40b9697b70b32e7007edd233632d3254d71e9614471dcfbb0",
-      "bytes": 24756
+      "sha256": "sha256:f963b76e7dfdbdb3edd2a7d160ce68b2779230f95b5b6c50603abc566ae96c64",
+      "bytes": 24556
     },
     {
       "path": "scripts/release/generate-sbom.mjs",

@@ -194,7 +194,7 @@ export function withTelemetry(base, sink = createNoopTelemetrySink()) {
       safeSink.captureRunSummary?.({
         runId: result.packet?.evidenceId ? input.runId : input.runId,
         evidenceId: result.packet?.evidenceId,
-        subject: result.packet?.subject,
+        subject: undefined,
         source: result.packet?.source,
         containsSecrets: result.packet?.redaction?.containsSecrets === true,
         metrics: result.metrics ?? [],

@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:fd33cee4c60f4a6b82a529d82febb9aab7e7547a52660aad14c2a6f1ec1b4fbb`
+- Source input hash: `sha256:a52741d69148d89657e4e8a04a051123e87a3e2ad7130ee5af252fe86e7d1fff`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -70,5 +70,5 @@ flowchart LR
 
 - Contract schemas: 20
 - Contract fixtures: 73
-- Package manifests: 16
-- Changelog fragments: 46
+- Package manifests: 17
+- Changelog fragments: 49

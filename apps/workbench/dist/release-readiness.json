@@ -4,7 +4,7 @@
   "path": "/release-readiness.json",
   "sourceRepo": "jami-harness",
   "sourceCommit": "git:HEAD",
-  "sourceInputHash": "sha256:27c43392717c995b08414221246bd4ef5a6928e7f172cd5f2f90b8fc7e672b03",
+  "sourceInputHash": "sha256:a8c5d9853de14275ab6c222a2f2167adda6d25e163f1e28955b148c1804ced8d",
   "generatedAt": "deterministic:git-head-plus-hosted-route-input-hash",
   "freshnessClass": "current-head-official-source-lock",
   "status": "supported_public_hosted_static",
@@ -59,7 +59,7 @@
       "path": "docs/generated/sbom.cdx.json",
       "bomFormat": "CycloneDX",
       "specVersion": "1.7",
-      "componentCount": 14
+      "componentCount": 16
     }
   },
   "readiness": [

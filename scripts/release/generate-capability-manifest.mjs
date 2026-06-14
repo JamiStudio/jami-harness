@@ -15,6 +15,7 @@ const sourceLockPath = "docs/operations/release-capability-source-lock.md";
 const sourceLockFullPath = join(repoRoot, sourceLockPath);
 const command = "pnpm release:capabilities:check";
 const generatedAt = "deterministic:git-head-plus-release-capability-input-hash";
+const DEFAULT_PUBLICATION_BRANCH = "main";
 
 const officialSources = [
   source("npm_provenance", "npm provenance statements", "https://docs.npmjs.com/generating-provenance-statements/", [
@@ -93,6 +94,7 @@ const manifest = {
   sourceRemote: git.remote ?? "unknown",
   sourceCommit: "git:HEAD",
   sourceRef: git.ref ?? "unknown",
+  sourceRefResolution: "pinned-default-publication-branch",
   sourceCommitResolutionCommand: "git rev-parse HEAD",
   sourceInputHash,
   generatedAt,
@@ -483,12 +485,7 @@ function normalizeRemote(remote) {
 }
 
 function normalizeRef() {
-  const githubRefName = process.env.GITHUB_REF_NAME;
-  if (githubRefName) return githubRefName;
-  const githubRef = process.env.GITHUB_REF;
-  if (githubRef?.startsWith("refs/heads/")) return githubRef.slice("refs/heads/".length);
-  const gitRef = runGit(["rev-parse", "--abbrev-ref", "HEAD"]);
-  return gitRef === "HEAD" ? "main" : gitRef;
+  return DEFAULT_PUBLICATION_BRANCH;
 }
 
 function runGit(args) {

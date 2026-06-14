@@ -3,9 +3,10 @@
   "sourceRepo": "jami-harness",
   "sourceRemote": "https://github.com/studio-jami/jami-harness.git",
   "sourceCommit": "git:HEAD",
-  "sourceRef": "feat/docs-canon",
+  "sourceRef": "main",
+  "sourceRefResolution": "pinned-default-publication-branch",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:21dfa159b0fcc94eddddc40554e23adf94f0431ad32340f74edee6869173c350",
+  "sourceInputHash": "sha256:59f059d6993ca421a5ccf2a14739cd85159e6525ed871826f9df8d9d12794ed4",
   "generatedAt": "deterministic:git-head-plus-package-input-hash",
   "command": "pnpm package:dry-run",
   "commandResult": "passed",
@@ -865,7 +866,7 @@
       ],
       "tarball": {
         "filename": "jami-studio-harness-observability-0.1.0.tgz",
-        "unpackedSize": 40167,
+        "unpackedSize": 39704,
         "entryCount": 5
       },
       "files": [
@@ -889,15 +890,15 @@
         },
         {
           "path": "src//posthog-sink.mjs",
-          "size": 13195,
+          "size": 12745,
           "mode": 420,
-          "sha256": "sha256:0699ded4f08f3e282a67a71b7980f27701f4eb1fce8d5c4367fc1e63ae634e60"
+          "sha256": "sha256:8a5598e66978e4eeabf997abc796e7ce1abe46a042d57df14c264badba9aa7c1"
         },
         {
           "path": "src//telemetry.mjs",
-          "size": 11476,
+          "size": 11463,
           "mode": 420,
-          "sha256": "sha256:9df7a30daaf56572444d903f27be0224f333fb0265afe47f52c0d1a6f4af10dc"
+          "sha256": "sha256:3b15eb09863418a18f4fa480b777f9359a9865894a95b76ed0e4a710e78bf100"
         }
       ],
       "secretScan": {

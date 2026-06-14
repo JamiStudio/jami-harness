@@ -14,6 +14,7 @@ const sourceLockPath = "docs/operations/hosted-route-source-lock.md";
 const generatedAt = "deterministic:git-head-plus-hosted-route-input-hash";
 const command = "pnpm hosted:routes:check";
 const publicHarnessBaseUrl = "https://registry.jami.studio/harness/";
+const DEFAULT_PUBLICATION_BRANCH = "main";
 
 const officialSources = [
   source("cloudflare_pages_direct_upload", "Cloudflare Pages Direct Upload", "https://developers.cloudflare.com/pages/get-started/direct-upload/", [
@@ -59,6 +60,7 @@ const manifest = {
   sourceRemote: git.remote ?? "unknown",
   sourceCommit: "git:HEAD",
   sourceRef: git.ref ?? "unknown",
+  sourceRefResolution: "pinned-default-publication-branch",
   sourceCommitResolutionCommand: "git rev-parse HEAD",
   sourceInputHash,
   generatedAt,
@@ -408,12 +410,7 @@ function normalizeRemote(remote) {
 }
 
 function normalizeRef() {
-  const githubRefName = process.env.GITHUB_REF_NAME;
-  if (githubRefName) return githubRefName;
-  const githubRef = process.env.GITHUB_REF;
-  if (githubRef?.startsWith("refs/heads/")) return githubRef.slice("refs/heads/".length);
-  const gitRef = runGit(["rev-parse", "--abbrev-ref", "HEAD"]);
-  return gitRef === "HEAD" ? "main" : gitRef;
+  return DEFAULT_PUBLICATION_BRANCH;
 }
 
 function runGit(gitArgs) {

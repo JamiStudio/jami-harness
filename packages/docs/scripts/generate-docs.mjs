@@ -10,6 +10,7 @@ const args = new Set(process.argv.slice(2));
 const check = args.has("--check");
 const generatorVersion = "2026-06-09.docs-source-manifest";
 const generatedAt = "deterministic:git-head-plus-input-hash";
+const DEFAULT_PUBLICATION_BRANCH = "main";
 
 const sourceRecords = collectSourceRecords();
 const inputHash = hashStable(sourceRecords.map(({ path, sha256 }) => ({ path, sha256 })));
@@ -20,6 +21,7 @@ const provenance = {
   sourceRemote: git.remote ?? "unknown",
   sourceCommit: "git:HEAD",
   sourceRef: git.ref ?? "unknown",
+  sourceRefResolution: "pinned-default-publication-branch",
   sourceCommitResolutionCommand: "git rev-parse HEAD",
   sourceInputHash: inputHash,
   generatedAt,
@@ -705,12 +707,7 @@ function normalizeRemote(remote) {
 }
 
 function normalizeRef() {
-  const githubRefName = process.env.GITHUB_REF_NAME;
-  if (githubRefName) return githubRefName;
-  const githubRef = process.env.GITHUB_REF;
-  if (githubRef?.startsWith("refs/heads/")) return githubRef.slice("refs/heads/".length);
-  const gitRef = runGit(["rev-parse", "--abbrev-ref", "HEAD"]);
-  return gitRef === "HEAD" ? "main" : gitRef;
+  return DEFAULT_PUBLICATION_BRANCH;
 }
 
 function runGit(args) {

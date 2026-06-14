@@ -11,9 +11,7 @@
 // Posture (OSS-safe, verified against PostHog LLM-observability docs):
 //   - We send RUN METADATA only: $ai_model, $ai_provider, $ai_latency,
 //     $ai_input_tokens, $ai_output_tokens, $ai_total_cost_usd, $ai_is_error, etc.
-//   - We DO NOT send $ai_input or $ai_output_choices (prompt/response content) unless
-//     the caller explicitly opts in AND the upstream records are unredacted — which,
-//     by the observability contract, they are not. Prompt fields are redacted upstream.
+//   - We DO NOT send $ai_input or $ai_output_choices (prompt/response content).
 //   - No PII: the distinct id is a stable, non-identifying installation/run token.
 //
 // The PostHog client is created lazily (dynamic import) only when this sink is
@@ -38,15 +36,14 @@ const DEFAULT_HOST = "https://us.posthog.com";
  * @param {object} [options.client] - a pre-built client (test seam); skips import.
  * @param {Function} [options.createClient] - async factory returning a client
  *   (test seam / custom loader). Defaults to importing `posthog-node`.
- * @param {boolean} [options.captureContent=false] - if true AND records are
- *   unredacted, include $ai_input/$ai_output_choices. Default false (metadata only).
+ * @param {boolean} [options.captureContent=false] - ignored; prompt/response
+ *   content egress is not supported by this public sink.
  * @param {Function} [options.onError] - optional diagnostic callback for load/send errors.
  * @returns {object} a telemetry sink (see withTelemetry contract) plus `ready()`.
  */
 export function createPostHogTelemetrySink(options = {}) {
   const host = nonEmpty(options.host) ?? DEFAULT_HOST;
   const distinctId = nonEmpty(options.distinctId) ?? "jami-harness-anonymous";
-  const captureContent = options.captureContent === true;
   const onError = typeof options.onError === "function" ? options.onError : () => {};
   // Hard cap on flush/shutdown so a short-lived process never blocks on telemetry.
   const shutdownTimeoutMs = Number.isFinite(options.shutdownTimeoutMs) && options.shutdownTimeoutMs > 0
@@ -173,12 +170,9 @@ export function createPostHogTelemetrySink(options = {}) {
         $ai_output_tokens: usage.outputTokens,
         $ai_total_cost_usd: usage.costUsd,
         $ai_is_error: failed,
-        // Content is intentionally omitted (run metadata only) unless explicitly enabled.
-        $ai_input: captureContent ? summary.input : undefined,
-        $ai_output_choices: captureContent ? summary.output : undefined,
+        // Content is intentionally omitted: this public sink sends run metadata only.
         harness_run_id: summary.runId,
         harness_evidence_id: summary.evidenceId,
-        harness_subject: summary.subject,
         harness_source_repo: summary.source?.repo,
         harness_source_ref: summary.source?.ref,
         harness_metric_count: metrics.length,
