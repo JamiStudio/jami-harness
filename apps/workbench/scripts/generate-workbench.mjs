@@ -10,6 +10,7 @@ import { createHarness } from "../../../packages/sdk/src/index.mjs";
 const repoRoot = dirname(dirname(dirname(dirname(fileURLToPath(import.meta.url)))));
 const generatorVersion = "2026-06-09.local-workbench";
 const deterministicNow = "2026-06-09T12:00:00.000Z";
+const DEFAULT_PUBLICATION_BRANCH = "main";
 const runId = "run_workbench_local";
 const args = parseArgs(process.argv.slice(2));
 
@@ -107,6 +108,7 @@ export async function buildWorkbenchModel(options = {}) {
     sourceRemote: git.remote ?? "unknown",
     sourceCommit: "git:HEAD",
     sourceRef: git.ref ?? "unknown",
+    sourceRefResolution: "pinned-default-publication-branch",
     sourceCommitResolutionCommand: "git rev-parse HEAD",
     sourceInputHash,
     generatedAt: "deterministic:local-workbench-source-tree",
@@ -856,12 +858,7 @@ function normalizeRemote(remote) {
 }
 
 function normalizeRef() {
-  const githubRefName = process.env.GITHUB_REF_NAME;
-  if (githubRefName) return githubRefName;
-  const githubRef = process.env.GITHUB_REF;
-  if (githubRef?.startsWith("refs/heads/")) return githubRef.slice("refs/heads/".length);
-  const gitRef = runGit(["rev-parse", "--abbrev-ref", "HEAD"]);
-  return gitRef === "HEAD" ? "main" : gitRef;
+  return DEFAULT_PUBLICATION_BRANCH;
 }
 
 function runGit(gitArgs) {

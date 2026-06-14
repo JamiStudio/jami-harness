@@ -27,5 +27,8 @@
   },
   "dependencies": {
     "@jami-studio/harness-artifacts": "workspace:0.1.0"
+  },
+  "optionalDependencies": {
+    "posthog-node": "^5.37.0"
   }
 }

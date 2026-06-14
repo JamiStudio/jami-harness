@@ -2,7 +2,7 @@
 // Do not edit by hand; run pnpm --filter @jami-studio/harness-contracts generate.
 
 export const generatedContractMetadata = {
-  generatedAt: "2026-06-13T10:35:17.965Z",
+  generatedAt: "2026-06-14T08:18:25.362Z",
   generatorVersion: "2026-06-09.contracts.1",
   source: "packages/contracts/schemas/*.schema.json"
 } as const;
@@ -1808,87 +1808,6 @@ export const SecretRefSchema = {
   "type": "object"
 } as const;
 
-export const SuiteRefSchema = {
-  "$id": "https://jami.studio/schemas/harness/suite-ref.schema.json",
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "additionalProperties": false,
-  "properties": {
-    "appShellId": {
-      "type": "string"
-    },
-    "evidenceRef": {
-      "type": "string"
-    },
-    "installedItems": {
-      "items": {
-        "type": "string"
-      },
-      "type": "array"
-    },
-    "lane": {
-      "enum": [
-        "workspace",
-        "docs",
-        "ops",
-        "governance",
-        "custom"
-      ],
-      "type": "string"
-    },
-    "optionalHarnessCapabilities": {
-      "items": {
-        "type": "string"
-      },
-      "type": "array"
-    },
-    "registryState": {
-      "enum": [
-        "current",
-        "missing_dependency",
-        "unsupported_suite_version",
-        "stale_registry_item"
-      ],
-      "type": "string"
-    },
-    "routeMap": {
-      "items": {
-        "additionalProperties": false,
-        "properties": {
-          "path": {
-            "type": "string"
-          },
-          "routeId": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "routeId",
-          "path"
-        ],
-        "type": "object"
-      },
-      "type": "array"
-    },
-    "schemaVersion": {
-      "const": "2026-06-09"
-    },
-    "suiteId": {
-      "pattern": "^suite_[a-z0-9][a-z0-9_-]*$",
-      "type": "string"
-    }
-  },
-  "required": [
-    "schemaVersion",
-    "suiteId",
-    "lane",
-    "installedItems",
-    "routeMap",
-    "optionalHarnessCapabilities"
-  ],
-  "title": "suiteRef",
-  "type": "object"
-} as const;
-
 export const ThemeRefSchema = {
   "$id": "https://jami.studio/schemas/harness/theme-ref.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -2441,12 +2360,12 @@ export const UiPayloadSchema = {
     "schemaVersion": {
       "const": "2026-06-09"
     },
-    "suiteRef": {
-      "pattern": "^suite_[a-z0-9][a-z0-9_-]*$",
-      "type": "string"
-    },
     "themeRef": {
       "pattern": "^theme_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "workspaceRef": {
+      "pattern": "^workspace_[a-z0-9][a-z0-9_-]*$",
       "type": "string"
     }
   },
@@ -2458,6 +2377,87 @@ export const UiPayloadSchema = {
     "fallback"
   ],
   "title": "uiPayload",
+  "type": "object"
+} as const;
+
+export const WorkspaceRefSchema = {
+  "$id": "https://jami.studio/schemas/harness/workspace-ref.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "appShellId": {
+      "type": "string"
+    },
+    "audience": {
+      "enum": [
+        "workspace",
+        "docs",
+        "operations",
+        "governance",
+        "custom"
+      ],
+      "type": "string"
+    },
+    "evidenceRef": {
+      "type": "string"
+    },
+    "installedItems": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "optionalHarnessCapabilities": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "registryState": {
+      "enum": [
+        "current",
+        "missing_dependency",
+        "unsupported_workspace_version",
+        "stale_registry_item"
+      ],
+      "type": "string"
+    },
+    "routeMap": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "routeId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "routeId",
+          "path"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "schemaVersion": {
+      "const": "2026-06-09"
+    },
+    "workspaceId": {
+      "pattern": "^workspace_[a-z0-9][a-z0-9_-]*$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "workspaceId",
+    "audience",
+    "installedItems",
+    "routeMap",
+    "optionalHarnessCapabilities"
+  ],
+  "title": "workspaceRef",
   "type": "object"
 } as const;
 
@@ -2546,12 +2546,6 @@ export const harnessContractSchemas = {
     schema: SecretRefSchema,
     typeName: "SecretRef"
   },
-  "suiteRef": {
-    file: "schemas/suite-ref.schema.json",
-    id: "https://jami.studio/schemas/harness/suite-ref.schema.json",
-    schema: SuiteRefSchema,
-    typeName: "SuiteRef"
-  },
   "themeRef": {
     file: "schemas/theme-ref.schema.json",
     id: "https://jami.studio/schemas/harness/theme-ref.schema.json",
@@ -2581,6 +2575,12 @@ export const harnessContractSchemas = {
     id: "https://jami.studio/schemas/harness/ui-payload.schema.json",
     schema: UiPayloadSchema,
     typeName: "UiPayload"
+  },
+  "workspaceRef": {
+    file: "schemas/workspace-ref.schema.json",
+    id: "https://jami.studio/schemas/harness/workspace-ref.schema.json",
+    schema: WorkspaceRefSchema,
+    typeName: "WorkspaceRef"
   }
 } as const;
 
@@ -2599,9 +2599,9 @@ export type PolicyDecision = Record<string, unknown>;
 export type PrimitiveManifest = Record<string, unknown>;
 export type RunEvent = Record<string, unknown>;
 export type SecretRef = Record<string, unknown>;
-export type SuiteRef = Record<string, unknown>;
 export type ThemeRef = Record<string, unknown>;
 export type ThreatModelFixtureCatalog = Record<string, unknown>;
 export type ToolExecution = Record<string, unknown>;
 export type TraceEvent = Record<string, unknown>;
 export type UiPayload = Record<string, unknown>;
+export type WorkspaceRef = Record<string, unknown>;

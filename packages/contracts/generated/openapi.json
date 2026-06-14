@@ -1788,86 +1788,6 @@
         "title": "secretRef",
         "type": "object"
       },
-      "SuiteRef": {
-        "$id": "https://jami.studio/schemas/harness/suite-ref.schema.json",
-        "$schema": "https://json-schema.org/draft/2020-12/schema",
-        "additionalProperties": false,
-        "properties": {
-          "appShellId": {
-            "type": "string"
-          },
-          "evidenceRef": {
-            "type": "string"
-          },
-          "installedItems": {
-            "items": {
-              "type": "string"
-            },
-            "type": "array"
-          },
-          "lane": {
-            "enum": [
-              "workspace",
-              "docs",
-              "ops",
-              "governance",
-              "custom"
-            ],
-            "type": "string"
-          },
-          "optionalHarnessCapabilities": {
-            "items": {
-              "type": "string"
-            },
-            "type": "array"
-          },
-          "registryState": {
-            "enum": [
-              "current",
-              "missing_dependency",
-              "unsupported_suite_version",
-              "stale_registry_item"
-            ],
-            "type": "string"
-          },
-          "routeMap": {
-            "items": {
-              "additionalProperties": false,
-              "properties": {
-                "path": {
-                  "type": "string"
-                },
-                "routeId": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "routeId",
-                "path"
-              ],
-              "type": "object"
-            },
-            "type": "array"
-          },
-          "schemaVersion": {
-            "const": "2026-06-09"
-          },
-          "suiteId": {
-            "pattern": "^suite_[a-z0-9][a-z0-9_-]*$",
-            "type": "string"
-          }
-        },
-        "required": [
-          "schemaVersion",
-          "suiteId",
-          "lane",
-          "installedItems",
-          "routeMap",
-          "optionalHarnessCapabilities"
-        ],
-        "title": "suiteRef",
-        "type": "object"
-      },
       "ThemeRef": {
         "$id": "https://jami.studio/schemas/harness/theme-ref.schema.json",
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -2416,12 +2336,12 @@
           "schemaVersion": {
             "const": "2026-06-09"
           },
-          "suiteRef": {
-            "pattern": "^suite_[a-z0-9][a-z0-9_-]*$",
-            "type": "string"
-          },
           "themeRef": {
             "pattern": "^theme_[a-z0-9][a-z0-9_-]*$",
+            "type": "string"
+          },
+          "workspaceRef": {
+            "pattern": "^workspace_[a-z0-9][a-z0-9_-]*$",
             "type": "string"
           }
         },
@@ -2434,6 +2354,86 @@
         ],
         "title": "uiPayload",
         "type": "object"
+      },
+      "WorkspaceRef": {
+        "$id": "https://jami.studio/schemas/harness/workspace-ref.schema.json",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "appShellId": {
+            "type": "string"
+          },
+          "audience": {
+            "enum": [
+              "workspace",
+              "docs",
+              "operations",
+              "governance",
+              "custom"
+            ],
+            "type": "string"
+          },
+          "evidenceRef": {
+            "type": "string"
+          },
+          "installedItems": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "optionalHarnessCapabilities": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "registryState": {
+            "enum": [
+              "current",
+              "missing_dependency",
+              "unsupported_workspace_version",
+              "stale_registry_item"
+            ],
+            "type": "string"
+          },
+          "routeMap": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "routeId": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "routeId",
+                "path"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "schemaVersion": {
+            "const": "2026-06-09"
+          },
+          "workspaceId": {
+            "pattern": "^workspace_[a-z0-9][a-z0-9_-]*$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "workspaceId",
+          "audience",
+          "installedItems",
+          "routeMap",
+          "optionalHarnessCapabilities"
+        ],
+        "title": "workspaceRef",
+        "type": "object"
       }
     }
   },
@@ -2441,7 +2441,7 @@
     "title": "Jami Harness Contracts",
     "version": "2026-06-09",
     "x-jami-generated": {
-      "generatedAt": "2026-06-13T10:35:17.965Z",
+      "generatedAt": "2026-06-14T08:18:25.362Z",
       "generatorVersion": "2026-06-09.contracts.1",
       "source": "packages/contracts/schemas/*.schema.json"
     }

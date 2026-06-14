@@ -33,7 +33,7 @@
       "items": { "type": "string", "pattern": "^artv_[a-z0-9][a-z0-9_-]*$" }
     },
     "themeRef": { "type": "string", "pattern": "^theme_[a-z0-9][a-z0-9_-]*$" },
-    "suiteRef": { "type": "string", "pattern": "^suite_[a-z0-9][a-z0-9_-]*$" },
+    "workspaceRef": { "type": "string", "pattern": "^workspace_[a-z0-9][a-z0-9_-]*$" },
     "fallback": {
       "type": "object",
       "required": ["mode", "message"],

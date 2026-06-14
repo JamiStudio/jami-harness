@@ -32,6 +32,11 @@ export function createHarness(options = {}) {
     artifactStore,
     observability,
     memory,
+    telemetry: core.telemetry,
+
+    async shutdownTelemetry() {
+      await core.shutdownTelemetry();
+    },
 
     createRun(input = {}) {
       return createSdkRun({

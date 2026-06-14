@@ -1,6 +1,7 @@
 # Jami Harness Docs
 
-This docs tree is the canonical planning and operating source for Jami Harness.
+This docs tree is the canonical operating source for Jami Harness. Cross-repo planning,
+plan/report standards, and agent coordination are canonical in the sibling `_ops` repo.
 
 ## Start Here
 
@@ -13,11 +14,11 @@ This docs tree is the canonical planning and operating source for Jami Harness.
 
 ## Engineering Control Plane
 
-- [Agent goal](engineering/agents/goal.md)
-- [Orchestration reliability](engineering/agents/orchestration-reliability.md)
-- [Planning style](engineering/standards/planning-style.md)
-- [Report style](engineering/standards/report-style.md)
-- [Documentation standards](engineering/standards/docs-standards.md)
+- [Agent goal pointer](engineering/agents/goal.md)
+- [Orchestration reliability pointer](engineering/agents/orchestration-reliability.md)
+- [Planning style pointer](engineering/standards/planning-style.md)
+- [Report style pointer](engineering/standards/report-style.md)
+- [Documentation standards pointer](engineering/standards/docs-standards.md)
 
 ## Durable Directories
 
@@ -28,7 +29,7 @@ This docs tree is the canonical planning and operating source for Jami Harness.
 - `docs/decisions/` - accepted decision records.
 - `docs/research/` - dated feasibility and source reports.
 - `docs/roadmaps/` - active implementation plans.
-- `docs/engineering/` - agent workflow and quality standards.
+- `docs/engineering/` - local pointers to canonical agent workflow and quality standards.
 
 ## Publishing Model
 

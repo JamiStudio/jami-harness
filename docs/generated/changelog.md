@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:fd33cee4c60f4a6b82a529d82febb9aab7e7547a52660aad14c2a6f1ec1b4fbb`
+- Source input hash: `sha256:f2d867d72d42e74ded35c26cd557807bd93b097398e22a3f06d1db65e8840cd2`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -57,6 +57,9 @@
 - 2026-06-12-phase2-shared-seam-fixtures (`.changes/2026-06-12-phase2-shared-seam-fixtures.md`)
 - 2026-06-12-phase2-shared-seam-state-evidence (`.changes/2026-06-12-phase2-shared-seam-state-evidence.md`)
 - 2026-06-12-phase2-ui-payload-negative-fixtures (`.changes/2026-06-12-phase2-ui-payload-negative-fixtures.md`)
+- 2026-06-13-hosted-provider-adapter (`.changes/2026-06-13-hosted-provider-adapter.md`)
 - 2026-06-13-public-inspection-patch (`.changes/2026-06-13-public-inspection-patch.md`)
+- 2026-06-14-posthog-product-telemetry (`.changes/2026-06-14-posthog-product-telemetry.md`)
+- 2026-06-14-telemetry-audit-pass2 (`.changes/2026-06-14-telemetry-audit-pass2.md`)
 - stream5-cli-sdk-fail-closed-ids (`.changes/stream5-cli-sdk-fail-closed-ids.md`)
 - stream5-cli-sdk-foundation (`.changes/stream5-cli-sdk-foundation.md`)

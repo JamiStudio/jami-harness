@@ -21,7 +21,7 @@ test("canonical harness package exports the current batteries-included local ent
   assert.equal(result.status, "completed");
 
   const core = composeHarnessCore();
-  assert.equal(core.inspect().boundaries.providerRuntime, "local_deterministic_only");
+  assert.equal(core.inspect().boundaries.providerRuntime, "provider_router_local_plus_hosted");
   assert.ok(createToolRegistry().capabilities().supportedAdapters.includes("adapter_function"));
 
   const store = createInMemoryCheckpointStore();

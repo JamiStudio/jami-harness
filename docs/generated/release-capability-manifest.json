@@ -4,8 +4,9 @@
   "sourceRemote": "https://github.com/studio-jami/jami-harness.git",
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
+  "sourceRefResolution": "pinned-default-publication-branch",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:ee5a57d709287845bd735ce837c1d5d71f87f4e2f7d0da4d171826ba0ae22dc2",
+  "sourceInputHash": "sha256:b7e09ec63a13cc50b2f08376e4a54454495d90de8198cc99151e971a1239fa00",
   "generatedAt": "deterministic:git-head-plus-release-capability-input-hash",
   "command": "pnpm release:capabilities:check",
   "commandResult": "passed",
@@ -411,18 +412,18 @@
     },
     {
       "path": "docs/generated/package-contents-manifest.json",
-      "sha256": "sha256:be16021e35bb18d9fe78741eb19ce6bdf693c378fa8780bde2a1c1b8d3dedd23",
-      "bytes": 38884
+      "sha256": "sha256:e86cd957b38b096c17cd4d9f20b520950da6d38a09abdbf698dab308a8b0fd8e",
+      "bytes": 40635
     },
     {
       "path": "docs/generated/package-install-smoke.json",
-      "sha256": "sha256:4bf580d2dd81b8afa2a66af5155218dc713506c64963ffb1f4f6b687e18cbb24",
-      "bytes": 5271
+      "sha256": "sha256:2bd4b5eb76e9ea28d6c90f2c42bfd65c5dd9a37cd7e3ddd4974d51b18edc1fbb",
+      "bytes": 5657
     },
     {
       "path": "docs/generated/sbom.cdx.json",
-      "sha256": "sha256:fcde23e695caedea5d8c13b6df785b1d7b0c7ee6faab393c1f25f74a90584366",
-      "bytes": 21079
+      "sha256": "sha256:cb37bd00f4951ae43010477d31f211bdf77c9fc76413199d9e682ca0c1304143",
+      "bytes": 22516
     },
     {
       "path": "docs/operations/hosted-route-source-lock.md",
@@ -446,8 +447,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "sha256:15d555b648551db6dd727d8d6302b4b6b6eeeb7c6905ce3def146e8ad4a7c2f5",
-      "bytes": 4754
+      "sha256": "sha256:90655452382ef903d659ac78b5f2ba6f497c61100f7782d4d64f794461e413ae",
+      "bytes": 4901
     },
     {
       "path": "packages/artifacts/package.json",
@@ -481,8 +482,8 @@
     },
     {
       "path": "packages/observability/package.json",
-      "sha256": "sha256:4c56331a5810fb95349f9b78db498f7fcd7cae2d724f2ae6a2d2fcc7d88b964d",
-      "bytes": 691
+      "sha256": "sha256:4aeecccbcd7bf1cdccb60a9b3bc1bedccf4d03e7ad4c0c3a44de8dbab1d178e0",
+      "bytes": 754
     },
     {
       "path": "packages/policy/package.json",
@@ -526,28 +527,28 @@
     },
     {
       "path": "scripts/hosted/generate-hosted-routes.mjs",
-      "sha256": "sha256:a8a1965c128782d51d252382b4957cecb8da4cee6dc285b3c55ac31eeb4bdca8",
-      "bytes": 19356
+      "sha256": "sha256:766fc02be0bf242d6d50a1c3d689809734d97e55c79513a27abd43c8059419a7",
+      "bytes": 19156
     },
     {
       "path": "scripts/release/check-package-contents.mjs",
-      "sha256": "sha256:ae2e1ea4329a132a61ae52e60eea9eb87064af0483eba77eed6e8d9bf115ab8a",
-      "bytes": 20861
+      "sha256": "sha256:209606bc10ab151dc25a809175935ad8bc0d96eee2fdf326bcbd7587594e61bd",
+      "bytes": 20735
     },
     {
       "path": "scripts/release/check-readiness.mjs",
-      "sha256": "sha256:d6e65a53913cb129af50caa5521298e72ef4779c19643438c77f64c3c0f35240",
-      "bytes": 23135
+      "sha256": "sha256:96a9f7fb3c1b1477bda91af5eda52d1236d3b0c782ccf20aca011cac9a9d7a6c",
+      "bytes": 23166
     },
     {
       "path": "scripts/release/generate-capability-manifest.mjs",
-      "sha256": "sha256:8cbc1ce44fafa1b40b9697b70b32e7007edd233632d3254d71e9614471dcfbb0",
-      "bytes": 24756
+      "sha256": "sha256:f963b76e7dfdbdb3edd2a7d160ce68b2779230f95b5b6c50603abc566ae96c64",
+      "bytes": 24556
     },
     {
       "path": "scripts/release/generate-sbom.mjs",
-      "sha256": "sha256:b93773e9a58956d31b41e58da672387f858216ae1bfb1af1b396752cf19a3057",
-      "bytes": 7763
+      "sha256": "sha256:5ed193e2672a554f9b7c56e94f1f443eee8d69b4c9ef35e2904bde606bec6d26",
+      "bytes": 8041
     }
   ],
   "capabilities": [

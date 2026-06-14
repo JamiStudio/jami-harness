@@ -1,6 +1,13 @@
 import { createHash } from "node:crypto";
 import { createInMemoryArtifactStore } from "@jami-studio/harness-artifacts";
 
+export {
+  resolveTelemetryGate,
+  withTelemetry,
+  createNoopTelemetrySink,
+} from "./telemetry.mjs";
+export { createPostHogTelemetrySink } from "./posthog-sink.mjs";
+
 const SCHEMA_VERSION = "2026-06-09";
 const SENSITIVE_FIELD_PATTERN = /secret|apiKey|credential|password|privatePayload|plaintext|value|prompt|systemPrompt|developerPrompt|userPrompt|toolMetadata|tool_metadata|toolDescription|tool_description|toolSchema|tool_schema/i;
 const SENSITIVE_TOKEN_FIELD_PATTERN = /^token$|^token(value|secret|credential|key|payload|plaintext)$|[a-z0-9_-]*token$/i;

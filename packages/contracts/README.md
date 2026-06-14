@@ -15,7 +15,7 @@ implementation.
 - `artifactView`: harness artifact metadata and render intent.
 - `actionRef`: policy-gated action handles exposed through UI slots.
 - `themeRef`: references to Studio UI theme/token outputs.
-- `suiteRef`: references to Studio UI suite install graphs and optional harness capabilities.
+- `workspaceRef`: references to Studio UI workspace install graphs and optional harness capabilities.
 - `capabilityManifest`: harness module and adapter capability vocabulary.
 - `primitiveManifest`: composable primitive registry vocabulary.
 - `policyDecision`: default-deny policy decisions with actor, project, environment, scope, risk, approval, audit, evidence, and redaction references.
@@ -51,7 +51,7 @@ repos need before runtime or renderer work expands:
 - renderer error states
 - artifact views
 - theme references
-- suite references
+- workspace references
 - unsafe UI prop rejection
 - prompt injection denial
 - tool metadata poisoning denial
@@ -64,14 +64,14 @@ repos need before runtime or renderer work expands:
 - completed, denied, unsupported, and invalid tool execution records
 - threat-model fixture catalog coverage
 - Phase 2 shared seam coverage for `runEvent`, `uiPayload`, `artifactView`, `actionRef`,
-  `themeRef`, `suiteRef`, `evidencePacket`, `memoryRecord`, `contextPack`, and
+  `themeRef`, `workspaceRef`, `evidencePacket`, `memoryRecord`, `contextPack`, and
   `capabilityManifest`
 
 Studio UI should add matching consumer fixtures against these schema ids in its own
 lane rather than editing this package from the UI stream. The expected handshake for
 Studio UI is to consume `generated/openapi.json` or `generated/contracts.ts` for schema
 ids and read `generated/reference.json` for ownership notes, while keeping renderer,
-token, registry packaging, and suite install behavior in the UI repo.
+token, registry packaging, and workspace install behavior in the UI repo.
 
 The validation gate fails when any anchor lacks fixture coverage, when a fixture points
 outside `packages/contracts/schemas/`, or when cross-field contract semantics are
@@ -80,7 +80,7 @@ for the harness-owned seam families. Current semantic checks include denied-acti
 evidence, elevated-risk action confirmation, replay and expiry evidence, renderer error
 states, emitted UI payload references, policy decision payloads, data-only UI props,
 secret-shaped UI prop rejection, Studio UI renderer component references, replacement
-invariants, Studio UI registry item ids for suite refs, and Studio UI adapter
+invariants, Studio UI registry item ids for workspace refs, and Studio UI adapter
 compatibility for UI-reference primitives. Required negative fixtures cover invalid
 payloads, denied actions without denial evidence, renderer errors without error state,
 and unsafe UI props.

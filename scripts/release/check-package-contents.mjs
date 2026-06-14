@@ -17,6 +17,7 @@ const runSmoke = !contentsOnly;
 const contentsPath = "docs/generated/package-contents-manifest.json";
 const smokePath = "docs/generated/package-install-smoke.json";
 const generatedAt = "deterministic:git-head-plus-package-input-hash";
+const DEFAULT_PUBLICATION_BRANCH = "main";
 const packageFiles = discoverPackageFiles();
 const packageEntries = packageFiles.map((path) => ({
   path,
@@ -60,6 +61,7 @@ function buildContentsManifest(packageDryRuns) {
     sourceRemote: git.remote ?? "unknown",
     sourceCommit: "git:HEAD",
     sourceRef: git.ref ?? "unknown",
+    sourceRefResolution: "pinned-default-publication-branch",
     sourceCommitResolutionCommand: "git rev-parse HEAD",
     sourceInputHash,
     generatedAt,
@@ -124,6 +126,7 @@ function buildSmokeManifest(packageDryRuns) {
       sourceRemote: git.remote ?? "unknown",
       sourceCommit: "git:HEAD",
       sourceRef: git.ref ?? "unknown",
+      sourceRefResolution: "pinned-default-publication-branch",
       sourceCommitResolutionCommand: "git rev-parse HEAD",
       sourceInputHash,
       generatedAt,
@@ -279,7 +282,7 @@ const run = await harness.run({ runId: "run_package_smoke" });
 if (run.status !== "completed") throw new Error("installed SDK run did not complete");
 assertions.push("sdk run completes through installed package graph");
 const core = composeHarnessCore();
-if (core.inspect().boundaries.providerRuntime !== "local_deterministic_only") {
+if (core.inspect().boundaries.providerRuntime !== "provider_router_local_plus_hosted") {
   throw new Error("core provider boundary changed");
 }
 assertions.push("core inspect works through package imports");
@@ -481,12 +484,7 @@ function normalizeRemote(remote) {
 }
 
 function normalizeRef() {
-  const githubRefName = process.env.GITHUB_REF_NAME;
-  if (githubRefName) return githubRefName;
-  const githubRef = process.env.GITHUB_REF;
-  if (githubRef?.startsWith("refs/heads/")) return githubRef.slice("refs/heads/".length);
-  const gitRef = safeGit(["rev-parse", "--abbrev-ref", "HEAD"]);
-  return gitRef === "HEAD" ? "main" : gitRef;
+  return DEFAULT_PUBLICATION_BRANCH;
 }
 
 function safeGit(commandArgs) {

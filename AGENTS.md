@@ -8,14 +8,16 @@ Canonical repo identity: `jami-harness` at `https://github.com/studio-jami/jami-
 
 ## Source Truth
 
-- Read [docs/engineering/agents/goal.md](docs/engineering/agents/goal.md) before coordinated project work.
-- Read the active roadmap under [docs/roadmaps/](docs/roadmaps/) before dispatching or executing implementation work.
-- Read [docs/research/master/00-orchestration/plan.md](docs/research/master/00-orchestration/plan.md) and [docs/research/master/00-orchestration/synthesis.md](docs/research/master/00-orchestration/synthesis.md) for master rebuild context before changing project direction.
+- Read the canonical agent goal under `_ops/projects/jami-harness/planning/agents/goal.md`
+  before coordinated project work. The in-repo `docs/engineering/agents/goal.md` file is only
+  a local pointer.
+- Cross-repo planning (roadmaps, decisions, research, the production feasibility report and plan) is canonical in `_ops`, not this repo, per `_ops/docs/source-of-truth-policy.md`. Read the active roadmap and research under `_ops/projects/jami-harness/planning/{roadmaps,research,decisions}/` before dispatching or executing implementation work.
+- Read the shared master rebuild corpus under `_ops/shared/research/master/` for context before changing project direction.
 - The live filesystem is authoritative. Imported project docs are evidence, not proof of harness implementation.
 - Read [docs/architecture/foundation-alignment.md](docs/architecture/foundation-alignment.md) before changing harness-to-UI contracts or repo-boundary decisions.
 - Read [docs/architecture/modular-responsibility-map.md](docs/architecture/modular-responsibility-map.md) before changing package boundaries, adapter boundaries, or optional/default capability behavior.
 - Read [docs/operations/development-workflow.md](docs/operations/development-workflow.md) before changing verification, CI, docs generation, changelog, diagramming, or release behavior.
-- Keep permanent decisions in [docs/decisions/](docs/decisions/) or durable architecture/operations docs. Keep active task sequencing in roadmaps.
+- Keep permanent decisions in `_ops/projects/jami-harness/planning/decisions/` (canonical) and durable architecture/operations docs in-repo. Keep active task sequencing in the `_ops` roadmaps.
 - Never write secrets, API keys, tokens, connection strings with credentials, signed URLs, or private account material into tracked files.
 
 ## Worktree Rules
@@ -27,10 +29,12 @@ Canonical repo identity: `jami-harness` at `https://github.com/studio-jami/jami-
 
 ## Documentation Rules
 
-- The feasibility report lives under [docs/research/](docs/research/).
-- Active plans live under [docs/roadmaps/](docs/roadmaps/).
-- Orchestration guidance lives under [docs/engineering/agents/](docs/engineering/agents/).
-- Style standards live under [docs/engineering/standards/](docs/engineering/standards/).
+- The feasibility report and active plans are canonical in `_ops` under `_ops/projects/jami-harness/planning/{research,roadmaps}/` (see `_ops/docs/source-of-truth-policy.md`); they are no longer kept in this repo.
+- Orchestration guidance lives under `_ops/projects/jami-harness/planning/agents/`.
+  In-repo `docs/engineering/agents/` files are pointers only.
+- Plan/report standards live under `_ops/planning/standards/`; docs standards live under
+  `registry/docs/engineering/standards/docs-standards.md`. In-repo
+  `docs/engineering/standards/` files are pointers only.
 - Durable product architecture lives under [docs/architecture/](docs/architecture/), [docs/owned-core/](docs/owned-core/), and [docs/operations/](docs/operations/).
 - Changelog fragments live under [.changes/](.changes/). Add one for production-meaningful behavior, docs, operations, automation, or release changes.
 - Public docs are prepared for Mintlify later, but `docs/` remains the canonical source until publishing setup is accepted.
@@ -54,10 +58,10 @@ typed contracts and cross-links, not duplicated roadmaps or collapsed ownership.
 
 This repo owns agent runs, tools, policy, approvals, memory, artifacts, traces, evidence,
 runtime state, and agent-facing CLI/SDK surfaces. Studio UI owns tokens, UI
-primitives, registry items, resident rendering, workbench controls, suite packs, and UI
+primitives, registry items, resident rendering, workbench controls, workspace packs, and UI
 install/config flows.
 
-When a UI payload, artifact view, action ref, theme ref, or suite ref contract changes,
+When a UI payload, artifact view, action ref, theme ref, or workspace ref contract changes,
 update `docs/architecture/foundation-alignment.md` and the matching Studio UI doc. Do
 not move token decisions, primitive implementation, registry packaging, or resident UI
 rendering into this repo.

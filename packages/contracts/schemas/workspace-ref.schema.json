@@ -1,14 +1,14 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://jami.studio/schemas/harness/suite-ref.schema.json",
-  "title": "suiteRef",
+  "$id": "https://jami.studio/schemas/harness/workspace-ref.schema.json",
+  "title": "workspaceRef",
   "type": "object",
-  "required": ["schemaVersion", "suiteId", "lane", "installedItems", "routeMap", "optionalHarnessCapabilities"],
+  "required": ["schemaVersion", "workspaceId", "audience", "installedItems", "routeMap", "optionalHarnessCapabilities"],
   "additionalProperties": false,
   "properties": {
     "schemaVersion": { "const": "2026-06-09" },
-    "suiteId": { "type": "string", "pattern": "^suite_[a-z0-9][a-z0-9_-]*$" },
-    "lane": { "type": "string", "enum": ["workspace", "docs", "ops", "governance", "custom"] },
+    "workspaceId": { "type": "string", "pattern": "^workspace_[a-z0-9][a-z0-9_-]*$" },
+    "audience": { "type": "string", "enum": ["workspace", "docs", "operations", "governance", "custom"] },
     "appShellId": { "type": "string" },
     "installedItems": {
       "type": "array",
@@ -32,7 +32,7 @@
     },
     "registryState": {
       "type": "string",
-      "enum": ["current", "missing_dependency", "unsupported_suite_version", "stale_registry_item"]
+      "enum": ["current", "missing_dependency", "unsupported_workspace_version", "stale_registry_item"]
     },
     "evidenceRef": { "type": "string" }
   }

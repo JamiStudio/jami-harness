@@ -4,14 +4,15 @@
   "sourceRemote": "https://github.com/studio-jami/jami-harness.git",
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
+  "sourceRefResolution": "pinned-default-publication-branch",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:f001c7db6e907f1a7c2843d105a4c0ccbd3f906f8f5325380e1de624229b878d",
+  "sourceInputHash": "sha256:59f059d6993ca421a5ccf2a14739cd85159e6525ed871826f9df8d9d12794ed4",
   "generatedAt": "deterministic:git-head-plus-package-input-hash",
   "command": "pnpm package:smoke",
   "commandResult": "passed",
   "freshnessClass": "current-head-clean-local-tarball-install",
   "publishAttempted": false,
-  "packageCount": 13,
+  "packageCount": 14,
   "installedPackages": [
     "@jami-studio/harness-cli",
     "@jami-studio/harness-artifacts",
@@ -21,6 +22,7 @@
     "@jami-studio/harness-memory",
     "@jami-studio/harness-observability",
     "@jami-studio/harness-policy",
+    "@jami-studio/harness-provider-hosted",
     "@jami-studio/harness-provider-local",
     "@jami-studio/harness-runtime",
     "@jami-studio/harness-sdk",
@@ -32,7 +34,7 @@
       "name": "@jami-studio/harness-cli",
       "version": "0.1.1",
       "filename": "jami-studio-harness-cli-0.1.1.tgz",
-      "fileTreeSha256": "sha256:1572051346d5d424cf52fcc55572655799b695e8e030964bb165fbe885a80aeb",
+      "fileTreeSha256": "sha256:f3ab2d568d414c1e9af653bf5992a764813c276f61122c693c58a6482dac090b",
       "fileCount": 3
     },
     {
@@ -46,21 +48,21 @@
       "name": "@jami-studio/harness-contracts",
       "version": "0.1.0",
       "filename": "jami-studio-harness-contracts-0.1.0.tgz",
-      "fileTreeSha256": "sha256:79785073297235bc841287f86f08f130d9c70d0ffc6e474391ebb202d05f68c2",
+      "fileTreeSha256": "sha256:5aae0462b86903163d65aa72a6cdcf385f92875ffba5177e28aedeb4ada84814",
       "fileCount": 98
     },
     {
       "name": "@jami-studio/harness-core",
       "version": "0.1.1",
       "filename": "jami-studio-harness-core-0.1.1.tgz",
-      "fileTreeSha256": "sha256:2cb3a1734b1142a80c9bea6fb4f215bf86f68bfe32e06c7d6ad6eac346b18b91",
+      "fileTreeSha256": "sha256:81914b711d15b558feb807db15fafd88e541bf50fb1be78ac9d7403c9cdb3df1",
       "fileCount": 3
     },
     {
       "name": "@jami-studio/harness",
       "version": "0.1.1",
       "filename": "jami-studio-harness-0.1.1.tgz",
-      "fileTreeSha256": "sha256:68f78c03362bc444f42ff0b62c2210d1c4a607c2079af4a6eff2b62c27e3726f",
+      "fileTreeSha256": "sha256:660b9a647dc46e39f17f1b7f4b71b54dad75ea7e3cb63efc4b61ab6dcfc3fe32",
       "fileCount": 3
     },
     {
@@ -74,14 +76,21 @@
       "name": "@jami-studio/harness-observability",
       "version": "0.1.0",
       "filename": "jami-studio-harness-observability-0.1.0.tgz",
-      "fileTreeSha256": "sha256:f9f4d8da18356f1d26eb8cd03564f2a69638a16a3bc42a9d0d9ba8147b4bcbd4",
-      "fileCount": 3
+      "fileTreeSha256": "sha256:4f725eb73e414164f3da34d21f3e27b42511a5870075170bbe55868a60414bc5",
+      "fileCount": 5
     },
     {
       "name": "@jami-studio/harness-policy",
       "version": "0.1.0",
       "filename": "jami-studio-harness-policy-0.1.0.tgz",
       "fileTreeSha256": "sha256:d16c90b86b207b1eda46a9d14292c62ba7d0dcb3c77d3a4e45d4cbe00e390901",
+      "fileCount": 3
+    },
+    {
+      "name": "@jami-studio/harness-provider-hosted",
+      "version": "0.1.0",
+      "filename": "jami-studio-harness-provider-hosted-0.1.0.tgz",
+      "fileTreeSha256": "sha256:3205a13f82e96e1cf6cecf8412abafde99136e1fa9a338c7585931361c7c069b",
       "fileCount": 3
     },
     {
@@ -102,7 +111,7 @@
       "name": "@jami-studio/harness-sdk",
       "version": "0.1.1",
       "filename": "jami-studio-harness-sdk-0.1.1.tgz",
-      "fileTreeSha256": "sha256:8c4cb0ea27a931d2e9c8ea3e2336be11a725a4cdd7af42160bfeaf2733926e80",
+      "fileTreeSha256": "sha256:e4d81c59e67e5125ec5005931f12f3dd3fed0fe68bbf718ccdebf8db2f4efc01",
       "fileCount": 3
     },
     {

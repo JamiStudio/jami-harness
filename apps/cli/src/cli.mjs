@@ -68,14 +68,21 @@ async function runCommand(cwd, parsed, io) {
   const runId = validateRunId(parsed.options["run-id"] ?? parsed.options.runId ?? `run_${Date.now().toString(36)}`);
   const checkpointStore = createCliCheckpointStore(cwd);
   const harness = createHarness({ checkpointStore });
-  const result = await harness.run({
-    runId,
-    providerId: parsed.options["provider-id"] ?? parsed.options.providerId,
-    providerFailureMode: parsed.options["provider-failure-mode"] ?? parsed.options.providerFailureMode,
-    sourceRepo: "jami-harness",
-    sourceCommit: parsed.options.commit ?? "working-tree",
-    sourceRef: parsed.options.ref ?? "refs/heads/main",
-  });
+  let result;
+  try {
+    result = await harness.run({
+      runId,
+      providerId: parsed.options["provider-id"] ?? parsed.options.providerId,
+      providerFailureMode: parsed.options["provider-failure-mode"] ?? parsed.options.providerFailureMode,
+      sourceRepo: "jami-harness",
+      sourceCommit: parsed.options.commit ?? "working-tree",
+      sourceRef: parsed.options.ref ?? "refs/heads/main",
+    });
+  } finally {
+    // Flush opt-in telemetry before this short-lived process exits. No-op when
+    // telemetry is disabled (the default), so dev/CI runs stay fully offline.
+    await harness.shutdownTelemetry();
+  }
   const runPath = join(cwd, STATE_DIR, "runs", runId);
   await mkdir(runPath, { recursive: true });
   await writeFile(join(runPath, "evidence.json"), `${JSON.stringify(result.evidence, null, 2)}\n`, "utf8");

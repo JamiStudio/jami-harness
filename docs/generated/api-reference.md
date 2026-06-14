@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:fd33cee4c60f4a6b82a529d82febb9aab7e7547a52660aad14c2a6f1ec1b4fbb`
+- Source input hash: `sha256:f2d867d72d42e74ded35c26cd557807bd93b097398e22a3f06d1db65e8840cd2`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -28,12 +28,12 @@
 - `primitiveManifest` from `packages/contracts/schemas/primitive-manifest.schema.json` with schema id `https://jami.studio/schemas/harness/primitive-manifest.schema.json`.
 - `runEvent` from `packages/contracts/schemas/run-event.schema.json` with schema id `https://jami.studio/schemas/harness/run-event.schema.json`.
 - `secretRef` from `packages/contracts/schemas/secret-ref.schema.json` with schema id `https://jami.studio/schemas/harness/secret-ref.schema.json`.
-- `suiteRef` from `packages/contracts/schemas/suite-ref.schema.json` with schema id `https://jami.studio/schemas/harness/suite-ref.schema.json`.
 - `themeRef` from `packages/contracts/schemas/theme-ref.schema.json` with schema id `https://jami.studio/schemas/harness/theme-ref.schema.json`.
 - `threatModelFixtureCatalog` from `packages/contracts/schemas/threat-model-fixture-catalog.schema.json` with schema id `https://jami.studio/schemas/harness/threat-model-fixture-catalog.schema.json`.
 - `toolExecution` from `packages/contracts/schemas/tool-execution.schema.json` with schema id `https://jami.studio/schemas/harness/tool-execution.schema.json`.
 - `traceEvent` from `packages/contracts/schemas/trace-event.schema.json` with schema id `https://jami.studio/schemas/harness/trace-event.schema.json`.
 - `uiPayload` from `packages/contracts/schemas/ui-payload.schema.json` with schema id `https://jami.studio/schemas/harness/ui-payload.schema.json`.
+- `workspaceRef` from `packages/contracts/schemas/workspace-ref.schema.json` with schema id `https://jami.studio/schemas/harness/workspace-ref.schema.json`.
 
 ## OpenAPI Components
 
@@ -51,12 +51,12 @@
 - `PrimitiveManifest`
 - `RunEvent`
 - `SecretRef`
-- `SuiteRef`
 - `ThemeRef`
 - `ThreatModelFixtureCatalog`
 - `ToolExecution`
 - `TraceEvent`
 - `UiPayload`
+- `WorkspaceRef`
 
 ## Package Surfaces
 
@@ -71,6 +71,7 @@
 - `@jami-studio/harness-memory`
 - `@jami-studio/harness-observability`
 - `@jami-studio/harness-policy`
+- `@jami-studio/harness-provider-hosted`
 - `@jami-studio/harness-provider-local`
 - `@jami-studio/harness-runtime`
 - `@jami-studio/harness-sdk`

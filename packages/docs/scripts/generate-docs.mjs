@@ -10,6 +10,7 @@ const args = new Set(process.argv.slice(2));
 const check = args.has("--check");
 const generatorVersion = "2026-06-09.docs-source-manifest";
 const generatedAt = "deterministic:git-head-plus-input-hash";
+const DEFAULT_PUBLICATION_BRANCH = "main";
 
 const sourceRecords = collectSourceRecords();
 const inputHash = hashStable(sourceRecords.map(({ path, sha256 }) => ({ path, sha256 })));
@@ -20,6 +21,7 @@ const provenance = {
   sourceRemote: git.remote ?? "unknown",
   sourceCommit: "git:HEAD",
   sourceRef: git.ref ?? "unknown",
+  sourceRefResolution: "pinned-default-publication-branch",
   sourceCommitResolutionCommand: "git rev-parse HEAD",
   sourceInputHash: inputHash,
   generatedAt,
@@ -488,10 +490,10 @@ function installPathRecords(model) {
       pathId: "byo_provider",
       module: "provider",
       sdkOption: "provider",
-      defaultPackage: "@jami-studio/harness-provider-local",
-      status: "supported_port_local_only",
+      defaultPackage: "@jami-studio/harness-provider-hosted",
+      status: "supported_port_local_plus_hosted_fail_closed",
       commandEvidence: ["pnpm provider:test", "pnpm sdk:test", "pnpm cli:test"],
-      notes: "The local deterministic provider is supported; hosted providers fail closed until source-lock, auth, redaction, policy, trace, and adapter fixtures land.",
+      notes: "The default provider router runs the local deterministic route and exposes a fail-closed hosted OpenAI route; hosted execution requires explicit provider env vars, and streaming, hosted tool calls, structured output schemas, and cancellation are not wired yet.",
     }),
     installPathRecord(model, {
       pathId: "byo_policy",
@@ -705,12 +707,7 @@ function normalizeRemote(remote) {
 }
 
 function normalizeRef() {
-  const githubRefName = process.env.GITHUB_REF_NAME;
-  if (githubRefName) return githubRefName;
-  const githubRef = process.env.GITHUB_REF;
-  if (githubRef?.startsWith("refs/heads/")) return githubRef.slice("refs/heads/".length);
-  const gitRef = runGit(["rev-parse", "--abbrev-ref", "HEAD"]);
-  return gitRef === "HEAD" ? "main" : gitRef;
+  return DEFAULT_PUBLICATION_BRANCH;
 }
 
 function runGit(args) {

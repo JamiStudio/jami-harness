@@ -4,8 +4,9 @@
   "sourceRemote": "https://github.com/studio-jami/jami-harness.git",
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
+  "sourceRefResolution": "pinned-default-publication-branch",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:fd33cee4c60f4a6b82a529d82febb9aab7e7547a52660aad14c2a6f1ec1b4fbb",
+  "sourceInputHash": "sha256:f2d867d72d42e74ded35c26cd557807bd93b097398e22a3f06d1db65e8840cd2",
   "generatedAt": "deterministic:git-head-plus-input-hash",
   "freshnessClass": "deterministic_current_source_tree",
   "command": "pnpm docs:generate -- --check",
@@ -118,16 +119,16 @@
       "pathId": "byo_provider",
       "module": "provider",
       "sdkOption": "provider",
-      "defaultPackage": "@jami-studio/harness-provider-local",
-      "packageManifest": "packages/provider-local/package.json",
-      "status": "supported_port_local_only",
+      "defaultPackage": "@jami-studio/harness-provider-hosted",
+      "packageManifest": "packages/provider-hosted/package.json",
+      "status": "supported_port_local_plus_hosted_fail_closed",
       "commandEvidence": [
         "pnpm provider:test",
         "pnpm sdk:test",
         "pnpm cli:test"
       ],
       "inspection": "harness.inspect().installPaths.modularPaths[pathId=byo_provider]",
-      "notes": "The local deterministic provider is supported; hosted providers fail closed until source-lock, auth, redaction, policy, trace, and adapter fixtures land."
+      "notes": "The default provider router runs the local deterministic route and exposes a fail-closed hosted OpenAI route; hosted execution requires explicit provider env vars, and streaming, hosted tool calls, structured output schemas, and cancellation are not wired yet."
     },
     {
       "pathId": "byo_policy",

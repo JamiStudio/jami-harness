@@ -19,7 +19,13 @@ export {
 export { createFileSystemCheckpointStore, createInMemoryCheckpointStore } from "@jami-studio/harness-store-local";
 export { createDeterministicProvider, createUnsupportedExternalProvider, validateProviderRoute } from "@jami-studio/harness-provider-local";
 export { createInMemoryArtifactStore, toArtifactView } from "@jami-studio/harness-artifacts";
-export { createRunObservability } from "@jami-studio/harness-observability";
+export {
+  createRunObservability,
+  resolveTelemetryGate,
+  withTelemetry,
+  createNoopTelemetrySink,
+  createPostHogTelemetrySink,
+} from "@jami-studio/harness-observability";
 
 export const HARNESS_PACKAGE = {
   name: "@jami-studio/harness",

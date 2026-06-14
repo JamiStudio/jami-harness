@@ -1,12 +1,12 @@
 {
-  "$schema": "../../schemas/suite-ref.schema.json",
+  "$schema": "../../schemas/workspace-ref.schema.json",
   "expectedValid": true,
-  "caseId": "valid-suite-ref",
-  "description": "Suite references name Studio UI install graphs and optional harness capabilities without runtime imports.",
+  "caseId": "valid-workspace-ref",
+  "description": "Workspace references name Studio UI install graphs and optional harness capabilities without runtime imports.",
   "payload": {
     "schemaVersion": "2026-06-09",
-    "suiteId": "suite_workspace_ops",
-    "lane": "workspace",
+    "workspaceId": "workspace_ops",
+    "audience": "workspace",
     "appShellId": "studio-ui/workbench-shell",
     "installedItems": [
       "@jami-studio/ui/run-summary",

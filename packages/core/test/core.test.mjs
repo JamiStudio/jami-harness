@@ -40,6 +40,70 @@ test("preserves explicit module injection and install path inspection", () => {
   assert.equal(inspection.installPaths.modularPaths.find((path) => path.pathId === "byo_memory").defaultMode, "noop");
 });
 
+test("telemetry is OFF by default and the vendor sink is never composed", () => {
+  // Explicit empty-ish env so the test does not depend on the host environment.
+  const core = composeHarnessCore({ now, env: { JAMI_TELEMETRY: undefined } });
+  const inspection = core.inspect();
+
+  assert.equal(core.telemetry.enabled, false);
+  assert.equal(inspection.telemetry.enabled, false);
+  assert.equal(inspection.boundaries.telemetry, "off_by_default");
+  // The default observability port carries no telemetry capability when disabled.
+  assert.equal(core.observability.capabilities?.telemetry ?? "disabled", "disabled");
+  assert.equal(core.observability.telemetry, undefined);
+});
+
+test("telemetry stays OFF in CI even when the opt-in flag and key are set", () => {
+  const core = composeHarnessCore({
+    now,
+    env: { JAMI_TELEMETRY: "1", CI: "true", POSTHOG_KEY: "phc_test" },
+  });
+  assert.equal(core.telemetry.enabled, false);
+  assert.equal(core.telemetry.reason, "disabled_ci_environment");
+});
+
+test("telemetry composes the sink only when the gate is enabled", async () => {
+  const captured = { summaries: [], shutdowns: 0 };
+  const telemetrySink = {
+    kind: "fake-sink",
+    captureRunEvent() {},
+    captureTrace() {},
+    captureMetrics() {},
+    captureRunSummary: (summary) => captured.summaries.push(summary),
+    async shutdown() {
+      captured.shutdowns += 1;
+    },
+  };
+  const core = composeHarnessCore({
+    now,
+    env: { JAMI_TELEMETRY: "1", POSTHOG_KEY: "phc_test", POSTHOG_HOST: "https://us.posthog.com" },
+    telemetrySink,
+  });
+  const inspection = core.inspect();
+
+  assert.equal(core.telemetry.enabled, true);
+  assert.equal(inspection.telemetry.enabled, true);
+  assert.equal(inspection.telemetry.sink, "fake-sink");
+  assert.equal(inspection.boundaries.telemetry, "oss_safe_opt_in_enabled");
+  assert.equal(core.observability.capabilities.telemetry, "fake-sink");
+
+  // A run summary tees to the sink and shutdown flushes it.
+  core.observability.exportEvidencePacket({ runId: "run_demo", subject: "demo" });
+  assert.equal(captured.summaries.length, 1);
+  await core.shutdownTelemetry();
+  assert.equal(captured.shutdowns, 1);
+});
+
+test("disableTelemetry option forces telemetry off regardless of env", () => {
+  const core = composeHarnessCore({
+    now,
+    disableTelemetry: true,
+    env: { JAMI_TELEMETRY: "1", POSTHOG_KEY: "phc_test" },
+  });
+  assert.equal(core.telemetry.enabled, false);
+  assert.equal(core.telemetry.reason, "disabled_by_option");
+});
+
 test("fails closed when required core ports are malformed", () => {
   assert.throws(
     () => composeHarnessCore({ artifactStore: { capabilities: { mode: "custom" } } }),

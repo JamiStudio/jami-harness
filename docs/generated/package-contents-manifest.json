@@ -4,15 +4,16 @@
   "sourceRemote": "https://github.com/studio-jami/jami-harness.git",
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
+  "sourceRefResolution": "pinned-default-publication-branch",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:6978ea6e3b510f6a7b266eccdc3d5cc8ef9b3c904e865dbd113ac27377c7fcc1",
+  "sourceInputHash": "sha256:59f059d6993ca421a5ccf2a14739cd85159e6525ed871826f9df8d9d12794ed4",
   "generatedAt": "deterministic:git-head-plus-package-input-hash",
   "command": "pnpm package:dry-run",
   "commandResult": "passed",
   "freshnessClass": "current-head-local-pack-dry-run",
   "publishAttempted": false,
   "publishClaim": "none",
-  "packageCount": 13,
+  "packageCount": 14,
   "packages": [
     {
       "path": "apps/cli/package.json",
@@ -29,7 +30,7 @@
       ],
       "tarball": {
         "filename": "jami-studio-harness-cli-0.1.1.tgz",
-        "unpackedSize": 24899,
+        "unpackedSize": 25147,
         "entryCount": 3
       },
       "files": [
@@ -47,9 +48,9 @@
         },
         {
           "path": "src//cli.mjs",
-          "size": 20310,
+          "size": 20558,
           "mode": 420,
-          "sha256": "sha256:59d6156f42e680dfc3c952ec0c0a9ce11e2f41c1e5315f1bccf068b9f794fb68"
+          "sha256": "sha256:b5a0405e2c58c828c88822ebde49cccf3aaa35694c735c5f85202a05520120cc"
         }
       ],
       "secretScan": {
@@ -119,7 +120,7 @@
       ],
       "tarball": {
         "filename": "jami-studio-harness-contracts-0.1.0.tgz",
-        "unpackedSize": 245117,
+        "unpackedSize": 245415,
         "entryCount": 98
       },
       "files": [
@@ -131,27 +132,27 @@
         },
         {
           "path": "README.md",
-          "size": 5774,
+          "size": 5798,
           "mode": 420,
-          "sha256": "sha256:db75b926217c98659d54addadd9da5fcf9f08acc4971932d9e2f56981334ec4f"
+          "sha256": "sha256:8d307c92aaf317235fa691f229ae2127ec2c0e8b98208c0ece39f5f33151e427"
         },
         {
           "path": "generated//contracts.ts",
-          "size": 56886,
+          "size": 56961,
           "mode": 420,
-          "sha256": "sha256:8aa7bca270ceba7e7452a5562d8c6ed4014510efa75a84c7ec8f6e2be882816e"
+          "sha256": "sha256:70532df5e0aa9978977cd910bf59ad811d5273d685d69558f369f7ff4ca01db4"
         },
         {
           "path": "generated//openapi.json",
-          "size": 65608,
+          "size": 65659,
           "mode": 420,
-          "sha256": "sha256:b0c090ddaba0d497bdcf1131fd3fee9d8d2e2fe9979dd48e2e95f559c685c171"
+          "sha256": "sha256:143e5fe516dfbb567ff9aeb572ad6f653c28c0d0c8d7b888f66fa629aaf5ff62"
         },
         {
           "path": "generated//reference.json",
-          "size": 8515,
+          "size": 8539,
           "mode": 420,
-          "sha256": "sha256:0b9edd192c007fc9e48b1957a1ea44ed082acbdfa4551a1954bf8ca044353565"
+          "sha256": "sha256:9ed43889c919edd2222f8df1dd1b74ec9056a85cc94b020583e66be6213e9932"
         },
         {
           "path": "schemas//action-ref.schema.json",
@@ -238,12 +239,6 @@
           "sha256": "sha256:560a632ecfcf875a81a6f120cb1e59fc374103b951095c4cba46c03f47fa3436"
         },
         {
-          "path": "schemas//suite-ref.schema.json",
-          "size": 1291,
-          "mode": 420,
-          "sha256": "sha256:ca582de6ee2788d7c2f103d0ead973403c53ff963e7740f4219ff62c8f4f0b6e"
-        },
-        {
           "path": "schemas//theme-ref.schema.json",
           "size": 1362,
           "mode": 420,
@@ -269,9 +264,15 @@
         },
         {
           "path": "schemas//ui-payload.schema.json",
-          "size": 2081,
+          "size": 2089,
           "mode": 420,
-          "sha256": "sha256:b9919032e8b64c8931a91de72693831f721d71f355125001337dc99acd6825ef"
+          "sha256": "sha256:be1a909cd1dbe9f3625a59b665c8eef6b323b880d51849c6c831862cbebf91ff"
+        },
+        {
+          "path": "schemas//workspace-ref.schema.json",
+          "size": 1330,
+          "mode": 420,
+          "sha256": "sha256:cf3965eac35a208e7e2a53b08cf677c622d60556381d1a5200f31919e439f22b"
         },
         {
           "path": "fixtures//artifacts/valid-artifact-record.json",
@@ -328,12 +329,6 @@
           "sha256": "sha256:807ecd33d21fbe25af7a7a9bcc7385f7a974b5faa484bc6be4b59829aa9259b4"
         },
         {
-          "path": "fixtures//compatibility/valid-suite-ref.json",
-          "size": 755,
-          "mode": 420,
-          "sha256": "sha256:089bc9136736257816f525f6a6389b792e67797b2ce440667f852f82ce132bb4"
-        },
-        {
           "path": "fixtures//compatibility/valid-theme-ref.json",
           "size": 630,
           "mode": 420,
@@ -344,6 +339,12 @@
           "size": 903,
           "mode": 420,
           "sha256": "sha256:b32ae3180178cc30bdd1ffc0d08d04a074c0bbd41effd9b4593d22ee11a7717c"
+        },
+        {
+          "path": "fixtures//compatibility/valid-workspace-ref.json",
+          "size": 769,
+          "mode": 420,
+          "sha256": "sha256:6639c04b2ca7c5b99731187b1eb3a2f7329fb28d79f2718c34524230017c1882"
         },
         {
           "path": "fixtures//manifests/capability-manifest.json",
@@ -610,12 +611,6 @@
           "sha256": "sha256:ccea2961674f4de1797531d03ae3256369d6fb568598bfb585e4286640fc7703"
         },
         {
-          "path": "fixtures//shared-seams/phase2-suite-ref-states.json",
-          "size": 1180,
-          "mode": 420,
-          "sha256": "sha256:7cd65196ad6868e5f8a19a191776cb095887e797f5949a45b4a532d2282ebab1"
-        },
-        {
           "path": "fixtures//shared-seams/phase2-theme-ref-states.json",
           "size": 885,
           "mode": 420,
@@ -677,9 +672,15 @@
         },
         {
           "path": "fixtures//shared-seams/phase2-ui-payload-valid-tree.json",
-          "size": 1403,
+          "size": 1411,
           "mode": 420,
-          "sha256": "sha256:74daf494c9915d25287e9da71da46b87a4331d7178553e8ee5bf8658ed6cd67d"
+          "sha256": "sha256:67056c14c427ba203577f578a27de51e67690432a325ed85c9bc0c79df7149c4"
+        },
+        {
+          "path": "fixtures//shared-seams/phase2-workspace-ref-states.json",
+          "size": 1235,
+          "mode": 420,
+          "sha256": "sha256:a77b79cc978ae8eb66e79aa49a03493f4396c0d83bc0910a765eb2766074e61f"
         },
         {
           "path": "fixtures//threat-model/fixture-catalog.json",
@@ -733,7 +734,7 @@
       ],
       "tarball": {
         "filename": "jami-studio-harness-core-0.1.1.tgz",
-        "unpackedSize": 18873,
+        "unpackedSize": 20997,
         "entryCount": 3
       },
       "files": [
@@ -751,9 +752,53 @@
         },
         {
           "path": "src//index.mjs",
-          "size": 17055,
+          "size": 19179,
           "mode": 420,
-          "sha256": "sha256:3b997a4cc13bbe7c2c30e670cb5ba1bb0e1789e2454a932cdef001e5f6e725a7"
+          "sha256": "sha256:86f213af7dfbd445245d3db682132cca69421130b0451f84322b1af86ff876eb"
+        }
+      ],
+      "secretScan": {
+        "status": "passed",
+        "scanner": "high-confidence package file and content scan",
+        "scannedFileCount": 3
+      }
+    },
+    {
+      "path": "packages/harness/package.json",
+      "packageDir": "packages/harness",
+      "name": "@jami-studio/harness",
+      "version": "0.1.1",
+      "private": false,
+      "publishConfig": {
+        "access": "public"
+      },
+      "filesPolicy": [
+        "src/",
+        "README.md"
+      ],
+      "tarball": {
+        "filename": "jami-studio-harness-0.1.1.tgz",
+        "unpackedSize": 3490,
+        "entryCount": 3
+      },
+      "files": [
+        {
+          "path": "package.json",
+          "size": 1274,
+          "mode": 420,
+          "sha256": "sha256:ba1cbec4617ab4392438043c77a741a5a1e03dbfec3782736b7c1006821c5472"
+        },
+        {
+          "path": "README.md",
+          "size": 832,
+          "mode": 420,
+          "sha256": "sha256:fade2a01377d12b8a20946a811be7bff936ab563f4fe81448fadea8f0b46d7aa"
+        },
+        {
+          "path": "src//index.mjs",
+          "size": 1384,
+          "mode": 420,
+          "sha256": "sha256:8c0bb57cb5fb30e358c01aff539e77f1a66ccab9b7ef4618edabb55bd8463ba1"
         }
       ],
       "secretScan": {
@@ -821,15 +866,15 @@
       ],
       "tarball": {
         "filename": "jami-studio-harness-observability-0.1.0.tgz",
-        "unpackedSize": 15264,
-        "entryCount": 3
+        "unpackedSize": 39704,
+        "entryCount": 5
       },
       "files": [
         {
           "path": "package.json",
-          "size": 691,
+          "size": 754,
           "mode": 420,
-          "sha256": "sha256:4c56331a5810fb95349f9b78db498f7fcd7cae2d724f2ae6a2d2fcc7d88b964d"
+          "sha256": "sha256:4aeecccbcd7bf1cdccb60a9b3bc1bedccf4d03e7ad4c0c3a44de8dbab1d178e0"
         },
         {
           "path": "README.md",
@@ -839,15 +884,27 @@
         },
         {
           "path": "src//index.mjs",
-          "size": 13735,
+          "size": 13904,
           "mode": 420,
-          "sha256": "sha256:ade9abce6151625f65edece7402c20ae83c2ea0046b8f8166b10aee0ef9b986e"
+          "sha256": "sha256:ffb16b175afda9a92f0937b51666e1a3b815eae4ea21cb8f19bfe963c4274778"
+        },
+        {
+          "path": "src//posthog-sink.mjs",
+          "size": 12745,
+          "mode": 420,
+          "sha256": "sha256:8a5598e66978e4eeabf997abc796e7ce1abe46a042d57df14c264badba9aa7c1"
+        },
+        {
+          "path": "src//telemetry.mjs",
+          "size": 11463,
+          "mode": 420,
+          "sha256": "sha256:3b15eb09863418a18f4fa480b777f9359a9865894a95b76ed0e4a710e78bf100"
         }
       ],
       "secretScan": {
         "status": "passed",
         "scanner": "high-confidence package file and content scan",
-        "scannedFileCount": 3
+        "scannedFileCount": 5
       }
     },
     {
@@ -1041,7 +1098,7 @@
       ],
       "tarball": {
         "filename": "jami-studio-harness-sdk-0.1.1.tgz",
-        "unpackedSize": 23126,
+        "unpackedSize": 23235,
         "entryCount": 3
       },
       "files": [
@@ -1059,9 +1116,9 @@
         },
         {
           "path": "src//index.mjs",
-          "size": 19050,
+          "size": 19159,
           "mode": 420,
-          "sha256": "sha256:42833bd70bd6cb45313d4868912838b9bb5a61a4fc68059e9668459ddc0369cb"
+          "sha256": "sha256:520b45bbaefa59ed793fa766bc7cc44fa6f5cab246e5c6b0f10cc4bdf1253607"
         }
       ],
       "secretScan": {

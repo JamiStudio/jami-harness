@@ -47,12 +47,12 @@ subpackages expose stable ports for teams that bring their own infrastructure.
 ## Foundation Relationship
 
 - `@jami-studio/harness` owns the governed action loop, tool invocation, memory, runtime, policy hooks, and artifact lifecycle.
-- `studio-ui` / `@jami-studio/ui` owns design tokens, primitive component vocabulary, trusted runtime rendering, registry distribution, suite UI, workbench overlay, and UI install flows.
+- `studio-ui` / `@jami-studio/ui` owns design tokens, primitive component vocabulary, trusted runtime rendering, registry distribution, workspace UI, workbench overlay, and UI install flows.
 - `@jami-studio/orchestra` owns the dev-system orchestration surface over harness and UI.
 
 The full sibling boundary is maintained in `docs/architecture/foundation-alignment.md`.
 Harness-to-UI integration is contract-first: the harness emits typed `uiPayload`,
-`artifactView`, `actionRef`, `themeRef`, and `suiteRef` references; Studio UI
+`artifactView`, `actionRef`, `themeRef`, and `workspaceRef` references; Studio UI
 validates and renders them through resident allowlisted UI. Policy decisions, tool side
 effects, memory writes, provenance, trace emission, and runtime state remain harness
 responsibilities.

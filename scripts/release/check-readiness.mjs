@@ -226,7 +226,7 @@ const claims = [
     "packages/sdk/README.md",
     "packages/provider-local/README.md",
     "packages/tools/README.md",
-    "docs/roadmaps/2026-06-07-jami-harness-production-plan.md",
+    "_ops/projects/jami-harness/planning/roadmaps/2026-06-07-jami-harness-production-plan.md",
     "docs/generated/release-capability-manifest.json",
   ]),
 ];
