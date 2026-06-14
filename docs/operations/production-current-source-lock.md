@@ -82,6 +82,8 @@ a release-only route.
 `productionAcceptanceMatrix` with one row per externally influenced production route. Each
 row records:
 
+- generated capability ids covered by the row where the route corresponds to a manifest
+  capability claim
 - planned route
 - source-lock record
 - owner package
@@ -98,6 +100,8 @@ row records:
 record, an owner package in the workspace inventory, a package-script gate, implementation
 paths, fixture/evidence paths, evidence artifacts, or known official source ids. Fail-closed
 rows must name blockers and the proof required before a public support claim.
+`pnpm release:capabilities:check` also fails when any generated capability claim is not
+covered by a production acceptance matrix row.
 
 ## Unsupported Or Not Claimed
 

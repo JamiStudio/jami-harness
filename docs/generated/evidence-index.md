@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:76fa8b939c8d44a3b6bd333a357f7f8966acae06dcf8e8b734145c7a452a0133`
+- Source input hash: `sha256:a2a8514df1afbb53fc09ab848af199ed3f6e84fd5ad103a605a7589c282f1afd`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -77,6 +77,7 @@
 - `.changes/2026-06-14-posthog-product-telemetry.md` (sha256:79732233ba49d01dcf6f268c2c19e73c491b03f24203d73e7489780e4f2ccab5)
 - `.changes/2026-06-14-production-acceptance-matrix.md` (sha256:69bef3ac0f43257640af60161342c8e6756cc6abec6cdce91642e3bff9be86c2)
 - `.changes/2026-06-14-production-acceptance-pass2.md` (sha256:6e91d541e110e2b30d2ed21471958b2b69d704e13543931249d726d414ef06f0)
+- `.changes/2026-06-14-production-acceptance-pass3.md` (sha256:b1455479395b4e5853277a7c3f861647ea80e3d2f3fc8b3520b1bc3d87493868)
 - `.changes/2026-06-14-telemetry-audit-pass2.md` (sha256:9fe5e8c50dea70154e596c97a47a5d4f42c0ff468859312f53ea4e08f41ec5a7)
 - `.changes/README.md` (sha256:e528bf4b90ab589bfc83ffed78e37918f56ac94240e5eedebc8d03265e09e52f)
 - `.changes/stream5-cli-sdk-fail-closed-ids.md` (sha256:3b455ab2dfa9385a84a24beda28073ffbddcc2062e32ff4b1cb21a50814e1d4f)
@@ -90,7 +91,7 @@
 - `apps/workbench/test/workbench.test.mjs` (sha256:ac3568313112acc41fc33de8883fb2ef8fcc01f55063c9c7bca1ca9c053da54c)
 - `docs/architecture/modular-responsibility-map.md` (sha256:62977d9dc1faa1dabf527aa20cd63317e4c147a912985437e89f91b1ed9a10ac)
 - `docs/architecture/product-architecture.md` (sha256:fadeb21dce01de24bd9276c98b2d943a268ad35182ae0b7bc32ca4aa5a722ef8)
-- `docs/generated/release-capability-manifest.json` (sha256:f57cf637767eeb3c02a0965ef2719acd231549dae14df5885be1f99c05ff9881)
+- `docs/generated/release-capability-manifest.json` (sha256:2dfa5c5fc9808157e89ad92a5d20d7e8cc4a84f3f0909cd08d155267c8d55e4e)
 - `docs/operations/release-capability-source-lock.md` (sha256:0b8843bc4ce39fb08525446e80c08a6904075a7e0aec80793129ea34503fa093)
 - `docs/operations/release-readiness.md` (sha256:ed6c0378018a9cc55c89d5de6b0d6b275e62f048ce4156ece96bcde49ad4a7e7)
 - `evals/smoke.mjs` (sha256:af584c4b94ca943837f91f3be25a48c174339d016ea0bb5c82633f4151f1b674)
@@ -221,4 +222,4 @@
 - `packages/tools/package.json` (sha256:0f46ec9328fc724a9402ffb6fe8e3208acc002a06f807ca070517005dd8e1782)
 - `pnpm-workspace.yaml` (sha256:316f2a0038d464f103abd64d7338dacefc35d0d09e57c8296defa0d5ddb898fe)
 - `scripts/release/check-readiness.mjs` (sha256:858efa29e7200dcc3174e3b96f5bc12b5bcc04fff07df6ee46f4c6515f02f2ec)
-- `scripts/release/generate-capability-manifest.mjs` (sha256:2259ccc390675847dfaeb5f758fbe3cba078e6715b7a510c74145bb26a9332fb)
+- `scripts/release/generate-capability-manifest.mjs` (sha256:c9ef157e4722325fc25655af315cf1f7de373e6bc2c9319d059ce7a2aa53db3b)

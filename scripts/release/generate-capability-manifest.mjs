@@ -15,6 +15,8 @@ const sourceLockPath = "docs/operations/release-capability-source-lock.md";
 const sourceLockFullPath = join(repoRoot, sourceLockPath);
 const productionSourceLockPath = "docs/operations/production-current-source-lock.md";
 const productionSourceLockFullPath = join(repoRoot, productionSourceLockPath);
+const sbomSourceLockPath = "docs/operations/sbom-source-lock.md";
+const sbomSourceLockFullPath = join(repoRoot, sbomSourceLockPath);
 const command = "pnpm release:capabilities:check";
 const generatedAt = "deterministic:git-head-plus-release-capability-input-hash";
 const DEFAULT_PUBLICATION_BRANCH = "main";
@@ -100,6 +102,18 @@ const officialSources = [
     "OpenTelemetry environment variable behavior is stable except where noted.",
     "Empty environment variables are treated the same as unset values.",
   ], "2026-06-12"),
+  source("cyclonedx_spec_overview", "CycloneDX specification overview", "https://cyclonedx.org/specification/overview", [
+    "CycloneDX is the selected local SBOM format for the dependency-free workspace package-manifest dry-run artifact.",
+    "The generated SBOM remains local evidence until package contents, provenance, and attestations are accepted.",
+  ], "2026-06-09"),
+  source("cyclonedx_latest_json", "CycloneDX latest JSON reference", "https://cyclonedx.org/docs/latest", [
+    "The latest CycloneDX JSON reference identifies the current schema used by the local SBOM source lock.",
+    "SBOM schema changes must refresh the local generator and checked artifact together.",
+  ], "2026-06-09"),
+  source("npm_sbom_command", "npm sbom command", "https://docs.npmjs.com/cli/commands/npm-sbom/", [
+    "npm documents an SBOM command that can emit CycloneDX or SPDX.",
+    "This repo does not use npm sbom yet because current release tooling is dependency-free and pnpm-based.",
+  ], "2026-06-09"),
 ];
 
 const sourceLockText = existsSync(sourceLockFullPath)
@@ -108,7 +122,10 @@ const sourceLockText = existsSync(sourceLockFullPath)
 const productionSourceLockText = existsSync(productionSourceLockFullPath)
   ? readFileSync(productionSourceLockFullPath, "utf8")
   : "";
-validateSourceLockDoc(`${sourceLockText}\n${productionSourceLockText}`);
+const sbomSourceLockText = existsSync(sbomSourceLockFullPath)
+  ? readFileSync(sbomSourceLockFullPath, "utf8")
+  : "";
+validateSourceLockDoc(`${sourceLockText}\n${productionSourceLockText}\n${sbomSourceLockText}`);
 
 const git = gitInfo();
 const packageFiles = discoverPackageFiles();
@@ -386,6 +403,51 @@ function buildCapabilities() {
 function buildProductionAcceptanceMatrix() {
   return [
     acceptanceRow({
+      routeId: "route_release_readiness_audit",
+      capabilityIds: ["cap_release_readiness_audit", "cap_release_capability_manifest"],
+      plannedRoute: "Local non-publishing release readiness and release capability manifest audit.",
+      sourceLockRecord: sourceLockPath,
+      ownerPackage: "jami-harness",
+      verificationCommand: "pnpm release:readiness",
+      localGateCommand: "release:readiness",
+      evidenceArtifacts: [
+        "scripts/release/check-readiness.mjs",
+        "scripts/release/generate-capability-manifest.mjs",
+        "docs/operations/release-readiness.md",
+        "docs/generated/release-capability-manifest.json",
+      ],
+      implementationPaths: [
+        "scripts/release/check-readiness.mjs",
+        "scripts/release/generate-capability-manifest.mjs",
+      ],
+      fixturePaths: [
+        "docs/operations/release-readiness.md",
+        "docs/generated/release-capability-manifest.json",
+      ],
+      hostedPublicClaim: "Supported local audit only; it does not publish, tag, deploy, or call external account APIs.",
+      supportState: "supported_local_evidence",
+      officialSourceIds: ["npm_publish", "npm_provenance", "github_artifact_attestations"],
+    }),
+    acceptanceRow({
+      routeId: "route_local_sbom_dry_run",
+      capabilityIds: ["cap_local_sbom_dry_run"],
+      plannedRoute: "Local CycloneDX workspace package-manifest SBOM dry-run generation and drift check.",
+      sourceLockRecord: sbomSourceLockPath,
+      ownerPackage: "jami-harness",
+      verificationCommand: "pnpm sbom:check",
+      localGateCommand: "sbom:check",
+      evidenceArtifacts: [
+        "scripts/release/generate-sbom.mjs",
+        "docs/generated/sbom.cdx.json",
+        "docs/operations/sbom-source-lock.md",
+      ],
+      implementationPaths: ["scripts/release/generate-sbom.mjs"],
+      fixturePaths: ["docs/generated/sbom.cdx.json", "docs/operations/sbom-source-lock.md"],
+      hostedPublicClaim: "Supported local SBOM dry-run evidence only; not a package contents SBOM, signed release archive, provenance statement, or attestation.",
+      supportState: "supported_local_evidence",
+      officialSourceIds: ["cyclonedx_spec_overview", "cyclonedx_latest_json", "npm_sbom_command"],
+    }),
+    acceptanceRow({
       routeId: "route_mcp_trusted_fixture_tools",
       plannedRoute: "Trusted in-process MCP initialize, tools/list, and tools/call mapping through the policy-gated tool envelope.",
       sourceLockRecord: "docs/operations/mcp-source-lock.md",
@@ -443,6 +505,7 @@ function buildProductionAcceptanceMatrix() {
     }),
     acceptanceRow({
       routeId: "route_hosted_provider_runtime",
+      capabilityIds: ["cap_hosted_provider_runtime"],
       plannedRoute: "Hosted OpenAI/Anthropic/Google/xAI/Azure/Bedrock provider execution with auth, streaming, tools, cost, redaction, retry, and cancellation.",
       sourceLockRecord: productionSourceLockPath,
       ownerPackage: "@jami-studio/harness-provider-hosted",
@@ -507,6 +570,7 @@ function buildProductionAcceptanceMatrix() {
     }),
     acceptanceRow({
       routeId: "route_local_docs_generation",
+      capabilityIds: ["cap_local_docs_generation"],
       plannedRoute: "Local docs generation into repo-owned generated Markdown and Mintlify-ready draft config.",
       sourceLockRecord: sourceLockPath,
       ownerPackage: "@jami-studio/harness-docs",
@@ -525,6 +589,7 @@ function buildProductionAcceptanceMatrix() {
     }),
     acceptanceRow({
       routeId: "route_mintlify_validate_publish",
+      capabilityIds: ["cap_mintlify_validate_publish"],
       plannedRoute: "Mintlify validation, hosted Mintlify build, and hosted docs publishing for generated docs output.",
       sourceLockRecord: sourceLockPath,
       ownerPackage: "@jami-studio/harness-docs",
@@ -549,6 +614,7 @@ function buildProductionAcceptanceMatrix() {
     }),
     acceptanceRow({
       routeId: "route_hosted_public_docs",
+      capabilityIds: ["cap_hosted_public_docs"],
       plannedRoute: "Hosted public docs on Mintlify, Vercel, Cloudflare, or another selected docs target.",
       sourceLockRecord: sourceLockPath,
       ownerPackage: "@jami-studio/harness-docs",
@@ -573,6 +639,7 @@ function buildProductionAcceptanceMatrix() {
     }),
     acceptanceRow({
       routeId: "route_package_contents_and_install",
+      capabilityIds: ["cap_package_contents_dry_run", "cap_clean_local_package_install_smoke"],
       plannedRoute: "Package contents dry run and clean local tarball install smoke for harness-owned publishable packages.",
       sourceLockRecord: sourceLockPath,
       ownerPackage: "@jami-studio/harness",
@@ -591,6 +658,7 @@ function buildProductionAcceptanceMatrix() {
     }),
     acceptanceRow({
       routeId: "route_npm_provenance",
+      capabilityIds: ["cap_npm_publish_provenance"],
       plannedRoute: "npm package publication through trusted publishing/provenance for accepted public packages.",
       sourceLockRecord: sourceLockPath,
       ownerPackage: "@jami-studio/harness",
@@ -609,6 +677,7 @@ function buildProductionAcceptanceMatrix() {
     }),
     acceptanceRow({
       routeId: "route_github_release_attestation",
+      capabilityIds: ["cap_github_release_attestations"],
       plannedRoute: "GitHub release artifact and attestation evidence for the v0.1.0 release bundle.",
       sourceLockRecord: sourceLockPath,
       ownerPackage: "@jami-studio/harness",
@@ -627,6 +696,7 @@ function buildProductionAcceptanceMatrix() {
     }),
     acceptanceRow({
       routeId: "route_hosted_status_control_static",
+      capabilityIds: ["cap_hosted_status_control_preview_routes"],
       plannedRoute: "Static harness status/control routes served from the registry Cloudflare Pages project under /harness/.",
       sourceLockRecord: "docs/operations/hosted-route-source-lock.md",
       ownerPackage: "@jami-studio/harness-workbench",
@@ -648,6 +718,7 @@ function buildProductionAcceptanceMatrix() {
     }),
     acceptanceRow({
       routeId: "route_hosted_stores_observability_workbench",
+      capabilityIds: ["cap_hosted_durable_stores", "cap_hosted_workbench", "cap_hosted_observability_sinks"],
       plannedRoute: "Hosted durable stores, hosted observability sinks, and hosted workbench/control plane.",
       sourceLockRecord: "docs/operations/hosted-route-source-lock.md",
       ownerPackage: "@jami-studio/harness-workbench",
@@ -673,6 +744,7 @@ function buildProductionAcceptanceMatrix() {
 
 function acceptanceRow({
   routeId,
+  capabilityIds = [],
   plannedRoute,
   sourceLockRecord,
   ownerPackage,
@@ -689,6 +761,7 @@ function acceptanceRow({
 }) {
   return {
     routeId,
+    capabilityIds,
     plannedRoute,
     sourceLockRecord,
     ownerPackage,
@@ -767,8 +840,11 @@ function validateProductionAcceptanceMatrix(manifest) {
   const scripts = JSON.parse(readFileSync(join(repoRoot, "package.json"), "utf8")).scripts ?? {};
   const packageNames = new Set(manifest.packageSummary.packages.map((entry) => entry.name));
   const sourceIds = new Set(manifest.officialSources.map((entry) => entry.id));
+  const capabilityIds = new Set(manifest.capabilities.map((entry) => entry.capabilityId));
   const knownSupportStates = new Set(["supported_local_evidence", "supported_public_evidence", "fail_closed_unsupported"]);
   const requiredRouteIds = new Set([
+    "route_release_readiness_audit",
+    "route_local_sbom_dry_run",
     "route_mcp_trusted_fixture_tools",
     "route_tool_adapters_fail_closed",
     "route_local_deterministic_provider",
@@ -789,11 +865,21 @@ function validateProductionAcceptanceMatrix(manifest) {
     fail("production acceptance matrix is missing");
   }
   const seen = new Set();
+  const coveredCapabilityIds = new Set();
   for (const row of rows) {
     if (!row.routeId || seen.has(row.routeId)) {
       fail(`production acceptance matrix has a missing or duplicate route id: ${row.routeId ?? "<missing>"}`);
     }
     seen.add(row.routeId);
+    for (const capabilityId of row.capabilityIds ?? []) {
+      if (!capabilityIds.has(capabilityId)) {
+        fail(`${row.routeId} references unknown capability id: ${capabilityId}`);
+      }
+      if (coveredCapabilityIds.has(capabilityId)) {
+        fail(`capability id is covered by more than one production route: ${capabilityId}`);
+      }
+      coveredCapabilityIds.add(capabilityId);
+    }
     if (!requiredRouteIds.has(row.routeId)) {
       fail(`production acceptance matrix has an unexpected route id: ${row.routeId}`);
     }
@@ -840,6 +926,10 @@ function validateProductionAcceptanceMatrix(manifest) {
   const missingRoutes = [...requiredRouteIds].filter((routeId) => !seen.has(routeId));
   if (missingRoutes.length > 0) {
     fail(`production acceptance matrix is missing required route ids: ${missingRoutes.join(", ")}`);
+  }
+  const uncoveredCapabilities = [...capabilityIds].filter((capabilityId) => !coveredCapabilityIds.has(capabilityId));
+  if (uncoveredCapabilities.length > 0) {
+    fail(`production acceptance matrix is missing capability coverage for: ${uncoveredCapabilities.join(", ")}`);
   }
 }
 

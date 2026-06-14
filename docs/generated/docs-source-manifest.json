@@ -6,7 +6,7 @@
   "sourceRef": "main",
   "sourceRefResolution": "pinned-default-publication-branch",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:76fa8b939c8d44a3b6bd333a357f7f8966acae06dcf8e8b734145c7a452a0133",
+  "sourceInputHash": "sha256:a2a8514df1afbb53fc09ab848af199ed3f6e84fd5ad103a605a7589c282f1afd",
   "generatedAt": "deterministic:git-head-plus-input-hash",
   "freshnessClass": "deterministic_current_source_tree",
   "command": "pnpm docs:generate -- --check",
@@ -258,6 +258,11 @@
       "bytes": 569
     },
     {
+      "path": ".changes/2026-06-14-production-acceptance-pass3.md",
+      "sha256": "sha256:b1455479395b4e5853277a7c3f861647ea80e3d2f3fc8b3520b1bc3d87493868",
+      "bytes": 516
+    },
+    {
       "path": ".changes/2026-06-14-telemetry-audit-pass2.md",
       "sha256": "sha256:9fe5e8c50dea70154e596c97a47a5d4f42c0ff468859312f53ea4e08f41ec5a7",
       "bytes": 3035
@@ -324,8 +329,8 @@
     },
     {
       "path": "docs/generated/release-capability-manifest.json",
-      "sha256": "sha256:f57cf637767eeb3c02a0965ef2719acd231549dae14df5885be1f99c05ff9881",
-      "bytes": 56414
+      "sha256": "sha256:2dfa5c5fc9808157e89ad92a5d20d7e8cc4a84f3f0909cd08d155267c8d55e4e",
+      "bytes": 61281
     },
     {
       "path": "docs/operations/release-capability-source-lock.md",
@@ -979,8 +984,8 @@
     },
     {
       "path": "scripts/release/generate-capability-manifest.mjs",
-      "sha256": "sha256:2259ccc390675847dfaeb5f758fbe3cba078e6715b7a510c74145bb26a9332fb",
-      "bytes": 49711
+      "sha256": "sha256:c9ef157e4722325fc25655af315cf1f7de373e6bc2c9319d059ce7a2aa53db3b",
+      "bytes": 54769
     }
   ],
   "acceptedContractReferences": [
