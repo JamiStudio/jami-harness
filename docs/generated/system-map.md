@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:aacf0d0c05ad75bbea7c79f84191df948923f5d6ce93f78fa5764dfb86ea7915`
+- Source input hash: `sha256:fd33cee4c60f4a6b82a529d82febb9aab7e7547a52660aad14c2a6f1ec1b4fbb`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -25,6 +25,7 @@ flowchart LR
   artifacts[packages/artifacts]
   observability[packages/observability]
   evals[evals/smoke.mjs]
+  harness[packages/harness]
   core[packages/core]
   sdk[packages/sdk]
   cli[apps/cli]
@@ -44,6 +45,8 @@ flowchart LR
   memory --> core
   artifacts --> core
   observability --> core
+  sdk --> harness
+  core --> harness
   core --> sdk
   observability --> evals
   tools --> evals
@@ -67,5 +70,5 @@ flowchart LR
 
 - Contract schemas: 20
 - Contract fixtures: 73
-- Package manifests: 15
+- Package manifests: 16
 - Changelog fragments: 46

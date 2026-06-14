@@ -5,15 +5,15 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:0aa3baabeaa517b99674f9f1e30c4bc6d5577501fc85fd71785689cc9f6f24d4",
+  "sourceInputHash": "sha256:ee5a57d709287845bd735ce837c1d5d71f87f4e2f7d0da4d171826ba0ae22dc2",
   "generatedAt": "deterministic:git-head-plus-release-capability-input-hash",
   "command": "pnpm release:capabilities:check",
   "commandResult": "passed",
   "freshnessClass": "current-head-official-source-lock",
   "packageSummary": {
-    "packageCount": 15,
+    "packageCount": 17,
     "privatePackageCount": 3,
-    "publishablePackageCount": 12,
+    "publishablePackageCount": 14,
     "packages": [
       {
         "path": "apps/cli/package.json",
@@ -108,6 +108,21 @@
         "files": null
       },
       {
+        "path": "packages/harness/package.json",
+        "name": "@jami-studio/harness",
+        "version": "0.1.1",
+        "private": false,
+        "license": "Apache-2.0",
+        "repository": "git+https://github.com/studio-jami/jami-harness.git",
+        "publishConfig": {
+          "access": "public"
+        },
+        "files": [
+          "src/",
+          "README.md"
+        ]
+      },
+      {
         "path": "packages/memory/package.json",
         "name": "@jami-studio/harness-memory",
         "version": "0.1.0",
@@ -140,6 +155,21 @@
       {
         "path": "packages/policy/package.json",
         "name": "@jami-studio/harness-policy",
+        "version": "0.1.0",
+        "private": false,
+        "license": "Apache-2.0",
+        "repository": "git+https://github.com/studio-jami/jami-harness.git",
+        "publishConfig": {
+          "access": "public"
+        },
+        "files": [
+          "src/",
+          "README.md"
+        ]
+      },
+      {
+        "path": "packages/provider-hosted/package.json",
+        "name": "@jami-studio/harness-provider-hosted",
         "version": "0.1.0",
         "private": false,
         "license": "Apache-2.0",
@@ -381,18 +411,18 @@
     },
     {
       "path": "docs/generated/package-contents-manifest.json",
-      "sha256": "sha256:89817b151ca765fd6338a544a562dae5055c0e8c10d20c6288304c5d4e13e1ca",
-      "bytes": 37665
+      "sha256": "sha256:be16021e35bb18d9fe78741eb19ce6bdf693c378fa8780bde2a1c1b8d3dedd23",
+      "bytes": 38884
     },
     {
       "path": "docs/generated/package-install-smoke.json",
-      "sha256": "sha256:abe367c4ffa79d7348110a79f00577004ee2f71b69980632e73ed95e3f0d91bd",
-      "bytes": 4881
+      "sha256": "sha256:4bf580d2dd81b8afa2a66af5155218dc713506c64963ffb1f4f6b687e18cbb24",
+      "bytes": 5271
     },
     {
       "path": "docs/generated/sbom.cdx.json",
-      "sha256": "sha256:0725d931809abc05b0aec85569d2ad628e24f80a1f64d94102ee03de45c5e63a",
-      "bytes": 19177
+      "sha256": "sha256:fcde23e695caedea5d8c13b6df785b1d7b0c7ee6faab393c1f25f74a90584366",
+      "bytes": 21079
     },
     {
       "path": "docs/operations/hosted-route-source-lock.md",
@@ -416,8 +446,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "sha256:0a40972573f47ccca8b878139edc2ded1bc102c9bc68b041ddbca8f085495897",
-      "bytes": 4556
+      "sha256": "sha256:15d555b648551db6dd727d8d6302b4b6b6eeeb7c6905ce3def146e8ad4a7c2f5",
+      "bytes": 4754
     },
     {
       "path": "packages/artifacts/package.json",
@@ -431,13 +461,18 @@
     },
     {
       "path": "packages/core/package.json",
-      "sha256": "sha256:f4a0b7b6588c7a0b4b2cdf9d378985d1a65516c60447d1b5089218b98ae6d3c1",
-      "bytes": 1092
+      "sha256": "sha256:f3dae44cb6d8acf3e89bd8fac130ee4074e31ba0c026e344dc93cf34bed8c8bb",
+      "bytes": 1155
     },
     {
       "path": "packages/docs/package.json",
       "sha256": "sha256:92e32502913bcaa8a0d970e63ad97a9e2d1872056d32d5a6ec4882f5e04427cc",
       "bytes": 495
+    },
+    {
+      "path": "packages/harness/package.json",
+      "sha256": "sha256:ba1cbec4617ab4392438043c77a741a5a1e03dbfec3782736b7c1006821c5472",
+      "bytes": 1274
     },
     {
       "path": "packages/memory/package.json",
@@ -453,6 +488,11 @@
       "path": "packages/policy/package.json",
       "sha256": "sha256:3c42abc4fa6c0c06492402bd39ddc312514337256f2d4b6a6ff3222bacb61a6f",
       "bytes": 613
+    },
+    {
+      "path": "packages/provider-hosted/package.json",
+      "sha256": "sha256:613e77f6b5ee7c75bb62b0b3e933d514de9acfbe87ddf36c196680f3c29e0219",
+      "bytes": 635
     },
     {
       "path": "packages/provider-local/package.json",
@@ -491,8 +531,8 @@
     },
     {
       "path": "scripts/release/check-package-contents.mjs",
-      "sha256": "sha256:458066a36d65b8092054a94887ee926916e9c03b92c60124edb248d1e78773dc",
-      "bytes": 20194
+      "sha256": "sha256:ae2e1ea4329a132a61ae52e60eea9eb87064af0483eba77eed6e8d9bf115ab8a",
+      "bytes": 20861
     },
     {
       "path": "scripts/release/check-readiness.mjs",

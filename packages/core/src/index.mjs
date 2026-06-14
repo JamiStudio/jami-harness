@@ -203,7 +203,7 @@ function buildInstallPaths(modules) {
         "node apps/cli/src/cli.mjs inspect --json",
       ],
       publicInstallCommands: [
-        "npm install @jami-studio/harness-cli@0.1.1 @jami-studio/harness-sdk@0.1.1",
+        "npm install @jami-studio/harness@0.1.1 @jami-studio/harness-cli@0.1.1",
         "npx jami init --json",
         "npx jami run --json",
         "npx jami inspect --json",
@@ -214,7 +214,7 @@ function buildInstallPaths(modules) {
         "pnpm cli:test",
         "pnpm docs:generate -- --check",
         "pnpm release:readiness",
-        "npm install @jami-studio/harness-cli@0.1.1 @jami-studio/harness-sdk@0.1.1",
+        "npm install @jami-studio/harness@0.1.1 @jami-studio/harness-cli@0.1.1",
         "npx jami inspect --json",
       ],
       activeModules: [

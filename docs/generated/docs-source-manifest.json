@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:aacf0d0c05ad75bbea7c79f84191df948923f5d6ce93f78fa5764dfb86ea7915",
+  "sourceInputHash": "sha256:fd33cee4c60f4a6b82a529d82febb9aab7e7547a52660aad14c2a6f1ec1b4fbb",
   "generatedAt": "deterministic:git-head-plus-input-hash",
   "freshnessClass": "deterministic_current_source_tree",
   "command": "pnpm docs:generate -- --check",
@@ -283,8 +283,8 @@
     },
     {
       "path": "apps/workbench/test/workbench.test.mjs",
-      "sha256": "sha256:2af1596d41a6dedfe1124c3aea7a7d3a4a6a4df702a97db4d9e100cc8ef22d07",
-      "bytes": 4568
+      "sha256": "sha256:ac3568313112acc41fc33de8883fb2ef8fcc01f55063c9c7bca1ca9c053da54c",
+      "bytes": 4559
     },
     {
       "path": "docs/architecture/modular-responsibility-map.md",
@@ -298,18 +298,18 @@
     },
     {
       "path": "docs/generated/release-capability-manifest.json",
-      "sha256": "sha256:33fd6283aaa6564447f776f4c115299c58dc42dd43049f26a8257ecd1200d3e8",
-      "bytes": 32329
+      "sha256": "sha256:539dcfa257470355192b42dec2fabc1303555098cba876cc9a8842674168fe43",
+      "bytes": 33154
     },
     {
       "path": "docs/operations/release-capability-source-lock.md",
-      "sha256": "sha256:0cb2a403a7b3b4d6724c81117d86813219a4bdedb60786adc1bc8b404aa6564a",
-      "bytes": 7423
+      "sha256": "sha256:46eabfa7096c6b03dd9694c2ce4913474376a919a78de81146accef9ca517521",
+      "bytes": 7714
     },
     {
       "path": "docs/operations/release-readiness.md",
-      "sha256": "sha256:845c8afd44d14224560daabbe90e51f467b0c38fee2659d732cb7b8a6d379976",
-      "bytes": 23529
+      "sha256": "sha256:ed6c0378018a9cc55c89d5de6b0d6b275e62f048ce4156ece96bcde49ad4a7e7",
+      "bytes": 23885
     },
     {
       "path": "evals/smoke.mjs",
@@ -318,8 +318,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "sha256:0a40972573f47ccca8b878139edc2ded1bc102c9bc68b041ddbca8f085495897",
-      "bytes": 4556
+      "sha256": "sha256:05c7514eb2605e88816e51cd4c7dfb9730c8915fa1a25879edf19c10ab67d1a4",
+      "bytes": 4672
     },
     {
       "path": "packages/artifacts/package.json",
@@ -818,8 +818,8 @@
     },
     {
       "path": "packages/core/src/index.mjs",
-      "sha256": "sha256:aa94b86b643bbce76f141cfee75269215dbaa66a10549d79c35715debf301d60",
-      "bytes": 16580
+      "sha256": "sha256:ebb4437eecacf4f8d84c6e179a7e3f031f70dc11d62f545885bec073017efc80",
+      "bytes": 16572
     },
     {
       "path": "packages/core/test/core.test.mjs",
@@ -833,8 +833,28 @@
     },
     {
       "path": "packages/docs/scripts/generate-docs.mjs",
-      "sha256": "sha256:a79898c36d21b569441d61def202f4f555bb17a7fa13f79302b3af129729df17",
-      "bytes": 28551
+      "sha256": "sha256:8fc9a106f4cf00e2a09840a971cd663a32592f3073a03009858afdcd0cd8dd2f",
+      "bytes": 28863
+    },
+    {
+      "path": "packages/harness/README.md",
+      "sha256": "sha256:fade2a01377d12b8a20946a811be7bff936ab563f4fe81448fadea8f0b46d7aa",
+      "bytes": 832
+    },
+    {
+      "path": "packages/harness/package.json",
+      "sha256": "sha256:ba1cbec4617ab4392438043c77a741a5a1e03dbfec3782736b7c1006821c5472",
+      "bytes": 1274
+    },
+    {
+      "path": "packages/harness/src/index.mjs",
+      "sha256": "sha256:cb6cc3d8b54b102b6b0fb975f652ec34540b7aab8ddf5e8cb347faa6406b57d6",
+      "bytes": 1283
+    },
+    {
+      "path": "packages/harness/test/harness.test.mjs",
+      "sha256": "sha256:1e488c8a171308b9f8aaaa2c5863777f0dc97696cb6e42d76e2ff89ff6ef0039",
+      "bytes": 1182
     },
     {
       "path": "packages/memory/package.json",
@@ -923,13 +943,13 @@
     },
     {
       "path": "scripts/release/check-readiness.mjs",
-      "sha256": "sha256:bdab3bef6945ffbec4c6c2ca2dfe2fa4b418f87f61006d6bca2621f2c4fbcd23",
-      "bytes": 23200
+      "sha256": "sha256:d6e65a53913cb129af50caa5521298e72ef4779c19643438c77f64c3c0f35240",
+      "bytes": 23135
     },
     {
       "path": "scripts/release/generate-capability-manifest.mjs",
-      "sha256": "sha256:be792e32ad9fe45e946c3c7960ee5318f8c7fb78ebe2f40caa628804f4626364",
-      "bytes": 24516
+      "sha256": "sha256:8cbc1ce44fafa1b40b9697b70b32e7007edd233632d3254d71e9614471dcfbb0",
+      "bytes": 24756
     }
   ],
   "acceptedContractReferences": [

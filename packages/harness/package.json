@@ -1,0 +1,40 @@
+{
+  "name": "@jami-studio/harness",
+  "version": "0.1.1",
+  "description": "Batteries-included Jami Harness entrypoint that composes the published runtime, SDK, core, tools, memory, store, provider, artifacts, observability, and policy packages.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/studio-jami/jami-harness.git",
+    "directory": "packages/harness"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "src/",
+    "README.md"
+  ],
+  "jamiRelease": {
+    "publishable": true
+  },
+  "dependencies": {
+    "@jami-studio/harness-artifacts": "workspace:0.1.0",
+    "@jami-studio/harness-core": "workspace:0.1.1",
+    "@jami-studio/harness-memory": "workspace:0.1.0",
+    "@jami-studio/harness-observability": "workspace:0.1.0",
+    "@jami-studio/harness-policy": "workspace:0.1.0",
+    "@jami-studio/harness-provider-local": "workspace:0.1.0",
+    "@jami-studio/harness-runtime": "workspace:0.1.0",
+    "@jami-studio/harness-sdk": "workspace:0.1.1",
+    "@jami-studio/harness-store-local": "workspace:0.1.0",
+    "@jami-studio/harness-tools": "workspace:0.1.0"
+  }
+}

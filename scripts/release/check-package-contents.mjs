@@ -218,7 +218,9 @@ function packPackage(entry, packDir) {
 function validatePublishableManifest(entry) {
   const errors = [];
   const { manifest, path } = entry;
-  if (!manifest.name?.startsWith("@jami-studio/harness-")) errors.push("name must use @jami-studio/harness-*");
+  if (manifest.name !== "@jami-studio/harness" && !manifest.name?.startsWith("@jami-studio/harness-")) {
+    errors.push("name must use @jami-studio/harness or @jami-studio/harness-*");
+  }
   if (manifest.license !== "Apache-2.0") errors.push("license must be Apache-2.0");
   if (!manifest.repository?.url?.includes("github.com/studio-jami/jami-harness")) errors.push("repository must point at studio-jami/jami-harness");
   if (manifest.publishConfig?.access !== "public") errors.push("publishConfig.access must be public");
@@ -250,13 +252,23 @@ function scanPackageFiles(entry, files) {
 }
 
 function smokeScriptSource() {
-  return `import { createHarness } from "@jami-studio/harness-sdk";
+  return `import { HARNESS_PACKAGE, createHarness as createCanonicalHarness } from "@jami-studio/harness";
+import { createHarness } from "@jami-studio/harness-sdk";
 import { composeHarnessCore } from "@jami-studio/harness-core";
 import { createToolRegistry } from "@jami-studio/harness-tools";
 import { createRunLifecycleKernel } from "@jami-studio/harness-runtime";
 import { createInMemoryCheckpointStore } from "@jami-studio/harness-store-local";
 
 const assertions = [];
+if (HARNESS_PACKAGE.name !== "@jami-studio/harness") {
+  throw new Error("canonical harness package metadata missing");
+}
+assertions.push("canonical harness package imports cleanly");
+const canonicalHarness = createCanonicalHarness();
+if (!canonicalHarness.inspect().modules.some((module) => module.name === "runtime" && module.available)) {
+  throw new Error("canonical harness package did not expose runtime module");
+}
+assertions.push("canonical harness package composes runtime module");
 const harness = createHarness();
 const inspection = harness.inspect();
 if (!inspection.modules.some((module) => module.name === "runtime" && module.available)) {

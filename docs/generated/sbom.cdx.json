@@ -1,7 +1,7 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:eaf479c2-7b62-5f9e-9248-725a644a7748",
+  "serialNumber": "urn:uuid:e2f735c7-eb21-5f1d-a044-5f63f2e62f64",
   "version": 1,
   "metadata": {
     "tools": {
@@ -70,7 +70,7 @@
       },
       {
         "name": "jami:harness:sourceInputHash",
-        "value": "e83b533a86729c50b23e846b73e108fe0a73a95a5064661cc9d66566138df6bd"
+        "value": "0a8c355cb30cceba9a1f322c9ea7b853190863c787758b336da38acb5a330510"
       },
       {
         "name": "jami:harness:commands",
@@ -390,6 +390,39 @@
     },
     {
       "type": "application",
+      "bom-ref": "pkg:@jami-studio/harness-provider-hosted:packages/provider-hosted/package.json",
+      "name": "@jami-studio/harness-provider-hosted",
+      "version": "0.1.0",
+      "description": "Fail-closed hosted provider adapter foundation for Jami Harness.",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40jami-studio/harness-provider-hosted@0.1.0",
+      "properties": [
+        {
+          "name": "jami:harness:manifestPath",
+          "value": "packages/provider-hosted/package.json"
+        },
+        {
+          "name": "jami:harness:private",
+          "value": "false"
+        },
+        {
+          "name": "jami:harness:repository",
+          "value": "git+https://github.com/studio-jami/jami-harness.git"
+        },
+        {
+          "name": "jami:harness:repositoryDirectory",
+          "value": "packages/provider-hosted"
+        }
+      ]
+    },
+    {
+      "type": "application",
       "bom-ref": "pkg:@jami-studio/harness-provider-local:packages/provider-local/package.json",
       "name": "@jami-studio/harness-provider-local",
       "version": "0.1.0",
@@ -585,6 +618,7 @@
         "pkg:@jami-studio/harness-memory:packages/memory/package.json",
         "pkg:@jami-studio/harness-observability:packages/observability/package.json",
         "pkg:@jami-studio/harness-policy:packages/policy/package.json",
+        "pkg:@jami-studio/harness-provider-hosted:packages/provider-hosted/package.json",
         "pkg:@jami-studio/harness-provider-local:packages/provider-local/package.json",
         "pkg:@jami-studio/harness-store-local:packages/store-local/package.json",
         "pkg:@jami-studio/harness-tools:packages/tools/package.json"
@@ -607,6 +641,12 @@
     {
       "ref": "pkg:@jami-studio/harness-policy:packages/policy/package.json",
       "dependsOn": []
+    },
+    {
+      "ref": "pkg:@jami-studio/harness-provider-hosted:packages/provider-hosted/package.json",
+      "dependsOn": [
+        "pkg:@jami-studio/harness-provider-local:packages/provider-local/package.json"
+      ]
     },
     {
       "ref": "pkg:@jami-studio/harness-provider-local:packages/provider-local/package.json",

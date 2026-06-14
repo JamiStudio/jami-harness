@@ -52,6 +52,39 @@ importers:
 
   packages/docs: {}
 
+  packages/harness:
+    dependencies:
+      '@jami-studio/harness-artifacts':
+        specifier: workspace:0.1.0
+        version: link:../artifacts
+      '@jami-studio/harness-core':
+        specifier: workspace:0.1.1
+        version: link:../core
+      '@jami-studio/harness-memory':
+        specifier: workspace:0.1.0
+        version: link:../memory
+      '@jami-studio/harness-observability':
+        specifier: workspace:0.1.0
+        version: link:../observability
+      '@jami-studio/harness-policy':
+        specifier: workspace:0.1.0
+        version: link:../policy
+      '@jami-studio/harness-provider-local':
+        specifier: workspace:0.1.0
+        version: link:../provider-local
+      '@jami-studio/harness-runtime':
+        specifier: workspace:0.1.0
+        version: link:../runtime
+      '@jami-studio/harness-sdk':
+        specifier: workspace:0.1.1
+        version: link:../sdk
+      '@jami-studio/harness-store-local':
+        specifier: workspace:0.1.0
+        version: link:../store-local
+      '@jami-studio/harness-tools':
+        specifier: workspace:0.1.0
+        version: link:../tools
+
   packages/memory: {}
 
   packages/observability:

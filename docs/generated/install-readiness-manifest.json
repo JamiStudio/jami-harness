@@ -5,7 +5,7 @@
   "sourceCommit": "git:HEAD",
   "sourceRef": "main",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:aacf0d0c05ad75bbea7c79f84191df948923f5d6ce93f78fa5764dfb86ea7915",
+  "sourceInputHash": "sha256:fd33cee4c60f4a6b82a529d82febb9aab7e7547a52660aad14c2a6f1ec1b4fbb",
   "generatedAt": "deterministic:git-head-plus-input-hash",
   "freshnessClass": "deterministic_current_source_tree",
   "command": "pnpm docs:generate -- --check",
@@ -26,7 +26,7 @@
       "node apps/cli/src/cli.mjs inspect --json"
     ],
     "publicInstallCommands": [
-      "npm install @jami-studio/harness-cli@0.1.1 @jami-studio/harness-sdk@0.1.1",
+      "npm install @jami-studio/harness@0.1.1 @jami-studio/harness-cli@0.1.1",
       "npx jami init --json",
       "npx jami run --json",
       "npx jami inspect --json"
@@ -40,10 +40,11 @@
       "pnpm release:readiness",
       "pnpm package:dry-run:check",
       "pnpm package:smoke:check",
-      "npm install @jami-studio/harness-cli@0.1.1 @jami-studio/harness-sdk@0.1.1",
+      "npm install @jami-studio/harness@0.1.1 @jami-studio/harness-cli@0.1.1",
       "npx jami inspect --json"
     ],
     "sourceEvidence": [
+      "packages/harness/src/index.mjs",
       "packages/sdk/src/index.mjs",
       "apps/cli/src/cli.mjs",
       "packages/docs/scripts/generate-docs.mjs",

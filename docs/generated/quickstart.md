@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:aacf0d0c05ad75bbea7c79f84191df948923f5d6ce93f78fa5764dfb86ea7915`
+- Source input hash: `sha256:fd33cee4c60f4a6b82a529d82febb9aab7e7547a52660aad14c2a6f1ec1b4fbb`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -32,7 +32,7 @@ node apps/cli/src/cli.mjs inspect --json
 
 ## Full Local Harness Path
 
-The supported install paths today are a local source checkout, the generated clean local tarball install smoke, and public npm installation from the published harness packages. The corrected CLI/SDK inspection path is prepared for `@jami-studio/harness-cli@0.1.1` and `@jami-studio/harness-sdk@0.1.1`.
+The supported install paths today are a local source checkout, the generated clean local tarball install smoke, and public npm installation from the published harness packages. The canonical batteries-included package is `@jami-studio/harness@0.1.1`; the corrected CLI/SDK inspection path is prepared for `@jami-studio/harness-cli@0.1.1` and `@jami-studio/harness-sdk@0.1.1`.
 
 ```powershell
 pnpm install --frozen-lockfile
@@ -67,6 +67,7 @@ The same evidence is emitted as structured JSON in `docs/generated/install-readi
 - `@jami-studio/harness-contracts` from `packages/contracts/package.json`: Harness-owned shared contracts, JSON Schema anchors, and compatibility fixtures.
 - `@jami-studio/harness-core` from `packages/core/package.json`: Core composition layer for harness runtime, policy, tools, memory, context, artifacts, observability, stores, providers, and docs-output ports.
 - `@jami-studio/harness-docs` from `packages/docs/package.json`: Deterministic docs, changelog, system-map, and evidence-index generator for Jami Harness source records.
+- `@jami-studio/harness` from `packages/harness/package.json`: Batteries-included Jami Harness entrypoint that composes the published runtime, SDK, core, tools, memory, store, provider, artifacts, observability, and policy packages.
 - `@jami-studio/harness-memory` from `packages/memory/package.json`: Harness-owned memory, search, citation, permission filtering, and context replay foundations.
 - `@jami-studio/harness-observability` from `packages/observability/package.json`: Harness-owned trace, audit, and evidence packet export foundations.
 - `@jami-studio/harness-policy` from `packages/policy/package.json`: Harness-owned policy, approval, identity, secret-reference, and audit runtime spine.
