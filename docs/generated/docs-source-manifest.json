@@ -6,7 +6,7 @@
   "sourceRef": "main",
   "sourceRefResolution": "pinned-default-publication-branch",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:a52741d69148d89657e4e8a04a051123e87a3e2ad7130ee5af252fe86e7d1fff",
+  "sourceInputHash": "sha256:f2d867d72d42e74ded35c26cd557807bd93b097398e22a3f06d1db65e8840cd2",
   "generatedAt": "deterministic:git-head-plus-input-hash",
   "freshnessClass": "deterministic_current_source_tree",
   "command": "pnpm docs:generate -- --check",
@@ -309,12 +309,12 @@
     },
     {
       "path": "docs/architecture/product-architecture.md",
-      "sha256": "sha256:d9b30effc258fc3d4164596fd9bf81902330706254f24d9da7c0e01b2cdff968",
-      "bytes": 6098
+      "sha256": "sha256:fadeb21dce01de24bd9276c98b2d943a268ad35182ae0b7bc32ca4aa5a722ef8",
+      "bytes": 6106
     },
     {
       "path": "docs/generated/release-capability-manifest.json",
-      "sha256": "sha256:7765c2d67d4a9b365333a5166608a32f2d117253d95acb0fcb947559af5fc88e",
+      "sha256": "sha256:e030d3cc7080f0f923f843503ab2d40b70391ba82ac6757a407c60f0d9959e50",
       "bytes": 33824
     },
     {
@@ -334,8 +334,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "sha256:15d555b648551db6dd727d8d6302b4b6b6eeeb7c6905ce3def146e8ad4a7c2f5",
-      "bytes": 4754
+      "sha256": "sha256:90655452382ef903d659ac78b5f2ba6f497c61100f7782d4d64f794461e413ae",
+      "bytes": 4901
     },
     {
       "path": "packages/artifacts/package.json",
@@ -388,11 +388,6 @@
       "bytes": 987
     },
     {
-      "path": "packages/contracts/fixtures/compatibility/valid-suite-ref.json",
-      "sha256": "sha256:089bc9136736257816f525f6a6389b792e67797b2ce440667f852f82ce132bb4",
-      "bytes": 755
-    },
-    {
       "path": "packages/contracts/fixtures/compatibility/valid-theme-ref.json",
       "sha256": "sha256:53c997692c04bc52924461b692086d4303818334bf0a9b9c77401d7f43b4728e",
       "bytes": 630
@@ -401,6 +396,11 @@
       "path": "packages/contracts/fixtures/compatibility/valid-ui-payload.json",
       "sha256": "sha256:b32ae3180178cc30bdd1ffc0d08d04a074c0bbd41effd9b4593d22ee11a7717c",
       "bytes": 903
+    },
+    {
+      "path": "packages/contracts/fixtures/compatibility/valid-workspace-ref.json",
+      "sha256": "sha256:6639c04b2ca7c5b99731187b1eb3a2f7329fb28d79f2718c34524230017c1882",
+      "bytes": 769
     },
     {
       "path": "packages/contracts/fixtures/manifests/capability-manifest.json",
@@ -623,11 +623,6 @@
       "bytes": 677
     },
     {
-      "path": "packages/contracts/fixtures/shared-seams/phase2-suite-ref-states.json",
-      "sha256": "sha256:7cd65196ad6868e5f8a19a191776cb095887e797f5949a45b4a532d2282ebab1",
-      "bytes": 1180
-    },
-    {
       "path": "packages/contracts/fixtures/shared-seams/phase2-theme-ref-states.json",
       "sha256": "sha256:f38d1f0201e4a46b82edd5566f3dd756485a98ad096b5812aec52e560ae3699e",
       "bytes": 885
@@ -679,8 +674,13 @@
     },
     {
       "path": "packages/contracts/fixtures/shared-seams/phase2-ui-payload-valid-tree.json",
-      "sha256": "sha256:74daf494c9915d25287e9da71da46b87a4331d7178553e8ee5bf8658ed6cd67d",
-      "bytes": 1403
+      "sha256": "sha256:67056c14c427ba203577f578a27de51e67690432a325ed85c9bc0c79df7149c4",
+      "bytes": 1411
+    },
+    {
+      "path": "packages/contracts/fixtures/shared-seams/phase2-workspace-ref-states.json",
+      "sha256": "sha256:a77b79cc978ae8eb66e79aa49a03493f4396c0d83bc0910a765eb2766074e61f",
+      "bytes": 1235
     },
     {
       "path": "packages/contracts/fixtures/threat-model/fixture-catalog.json",
@@ -709,13 +709,13 @@
     },
     {
       "path": "packages/contracts/generated/openapi.json",
-      "sha256": "sha256:b0c090ddaba0d497bdcf1131fd3fee9d8d2e2fe9979dd48e2e95f559c685c171",
-      "bytes": 65608
+      "sha256": "sha256:143e5fe516dfbb567ff9aeb572ad6f653c28c0d0c8d7b888f66fa629aaf5ff62",
+      "bytes": 65659
     },
     {
       "path": "packages/contracts/generated/reference.json",
-      "sha256": "sha256:0b9edd192c007fc9e48b1957a1ea44ed082acbdfa4551a1954bf8ca044353565",
-      "bytes": 8515
+      "sha256": "sha256:9ed43889c919edd2222f8df1dd1b74ec9056a85cc94b020583e66be6213e9932",
+      "bytes": 8539
     },
     {
       "path": "packages/contracts/package.json",
@@ -793,11 +793,6 @@
       "bytes": 961
     },
     {
-      "path": "packages/contracts/schemas/suite-ref.schema.json",
-      "sha256": "sha256:ca582de6ee2788d7c2f103d0ead973403c53ff963e7740f4219ff62c8f4f0b6e",
-      "bytes": 1291
-    },
-    {
       "path": "packages/contracts/schemas/theme-ref.schema.json",
       "sha256": "sha256:5c6cf0de65978e5a86e78fe6a6281e5c3ee72e130e703e47ce7597cf45cca4bf",
       "bytes": 1362
@@ -819,8 +814,13 @@
     },
     {
       "path": "packages/contracts/schemas/ui-payload.schema.json",
-      "sha256": "sha256:b9919032e8b64c8931a91de72693831f721d71f355125001337dc99acd6825ef",
-      "bytes": 2081
+      "sha256": "sha256:be1a909cd1dbe9f3625a59b665c8eef6b323b880d51849c6c831862cbebf91ff",
+      "bytes": 2089
+    },
+    {
+      "path": "packages/contracts/schemas/workspace-ref.schema.json",
+      "sha256": "sha256:cf3965eac35a208e7e2a53b08cf677c622d60556381d1a5200f31919e439f22b",
+      "bytes": 1330
     },
     {
       "path": "packages/core/README.md",
@@ -1197,19 +1197,6 @@
       ]
     },
     {
-      "name": "suiteRef",
-      "schemaId": "https://jami.studio/schemas/harness/suite-ref.schema.json",
-      "schemaPath": "packages/contracts/schemas/suite-ref.schema.json",
-      "requiredFields": [
-        "schemaVersion",
-        "suiteId",
-        "lane",
-        "installedItems",
-        "routeMap",
-        "optionalHarnessCapabilities"
-      ]
-    },
-    {
       "name": "themeRef",
       "schemaId": "https://jami.studio/schemas/harness/theme-ref.schema.json",
       "schemaPath": "packages/contracts/schemas/theme-ref.schema.json",
@@ -1278,6 +1265,19 @@
         "props",
         "fallback"
       ]
+    },
+    {
+      "name": "workspaceRef",
+      "schemaId": "https://jami.studio/schemas/harness/workspace-ref.schema.json",
+      "schemaPath": "packages/contracts/schemas/workspace-ref.schema.json",
+      "requiredFields": [
+        "schemaVersion",
+        "workspaceId",
+        "audience",
+        "installedItems",
+        "routeMap",
+        "optionalHarnessCapabilities"
+      ]
     }
   ],
   "acceptedEvidenceReferences": [
@@ -1309,13 +1309,13 @@
       "path": "packages/contracts/fixtures/compatibility/valid-artifact-view.json"
     },
     {
-      "path": "packages/contracts/fixtures/compatibility/valid-suite-ref.json"
-    },
-    {
       "path": "packages/contracts/fixtures/compatibility/valid-theme-ref.json"
     },
     {
       "path": "packages/contracts/fixtures/compatibility/valid-ui-payload.json"
+    },
+    {
+      "path": "packages/contracts/fixtures/compatibility/valid-workspace-ref.json"
     },
     {
       "path": "packages/contracts/fixtures/memory/invalid-memory-cross-actor-leakage.json"

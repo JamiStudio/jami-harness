@@ -145,7 +145,7 @@ const reference = {
       "token output",
       "registry packaging",
       "renderer execution behavior",
-      "suite install behavior",
+      "workspace install behavior",
     ],
   },
 };

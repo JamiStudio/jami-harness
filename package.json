@@ -20,6 +20,7 @@
     "contracts:generate": "node packages/contracts/scripts/generate-contracts.mjs",
     "contracts:generate:check": "node packages/contracts/scripts/generate-contracts.mjs --check",
     "contracts:validate": "node packages/contracts/scripts/validate-contracts.mjs",
+    "contracts:check": "node packages/contracts/scripts/generate-contracts.mjs --check && node packages/contracts/scripts/validate-contracts.mjs",
     "sbom:generate": "node scripts/release/generate-sbom.mjs",
     "sbom:check": "node scripts/release/generate-sbom.mjs --check",
     "package:dry-run": "node scripts/release/check-package-contents.mjs --contents",

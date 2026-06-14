@@ -6,7 +6,7 @@
   "sourceRef": "main",
   "sourceRefResolution": "pinned-default-publication-branch",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:57db9883295ad40cd1de769385c2420a92ef92adb027c9bbf9bc9c5b210a55e1",
+  "sourceInputHash": "sha256:479a6c98f4e7b52e9bc48615298ef045a0bdc20fdc85a0ab27ad6c8003dd8f31",
   "generatedAt": "deterministic:local-workbench-source-tree",
   "freshnessClass": "deterministic_current_source_tree",
   "generator": {
@@ -44,27 +44,27 @@
     },
     {
       "path": "apps/workbench/dist/healthz.json",
-      "sha256": "sha256:20bf16dc6f671621b7ce87847aa0e36659fa3b2563e72032e6920051a8b81bdd",
+      "sha256": "sha256:cae02d0c8dd55016f44363e10b1cef7607a7b3f482acc301752dab160a77fb3f",
       "bytes": 2012
     },
     {
       "path": "apps/workbench/dist/provider-store-observability.json",
-      "sha256": "sha256:08fdd5b88af31162015e9f40322ded04077381c0682896494a99f2034d685ebd",
+      "sha256": "sha256:cdbd3e7ba550bfa90ebce5003e627400ee609c1ce47fdb0c7023b1a3affa61e1",
       "bytes": 4679
     },
     {
       "path": "apps/workbench/dist/release-readiness.json",
-      "sha256": "sha256:41e652b9b488129dd6215b492103569d0948e3cd48747519616c874653ae8d76",
+      "sha256": "sha256:0dad9ae9b97723b0682bfc49c8b517ccf7f268535a714edb54b18b3a573baf40",
       "bytes": 4041
     },
     {
       "path": "apps/workbench/dist/status.json",
-      "sha256": "sha256:8c61848e210510432389ee23f8ae4888047c296c15b7e43014001506848ec245",
+      "sha256": "sha256:14c91ea2c1b84c858eedddbcda1b55c60c7a5bb737481de30b9d968060f9895e",
       "bytes": 2633
     },
     {
       "path": "apps/workbench/generated/hosted-route-manifest.json",
-      "sha256": "sha256:a62746a345fc904e546099458081a0f9bff00879d8d621d9c45d2d8ff07ce738",
+      "sha256": "sha256:a94f728b9d62dbcee76b52a2879859197b32168b32a0ee91acee46a427e15bc4",
       "bytes": 15143
     },
     {
@@ -84,32 +84,32 @@
     },
     {
       "path": "docs/generated/docs-source-manifest.json",
-      "sha256": "sha256:8f72e2748421dfb72953ac4f3926755a63b7e26e367512f92ece1b3da3dffa5b",
-      "bytes": 50956
+      "sha256": "sha256:d5826d3a3b74ab4fab59f91c5d5df82be15cda77b713f4c897b86420105cc24b",
+      "bytes": 50992
     },
     {
       "path": "docs/generated/evidence-index.md",
-      "sha256": "sha256:2713ce7078bef873a8c4f9792f009f098d36a59b2c8156b7010fa5d721f4ada6",
-      "bytes": 27509
+      "sha256": "sha256:3d63593d6350574c2cffd3c9d118cdd2a0587902684a930696511c67e2cedc1d",
+      "bytes": 27521
     },
     {
       "path": "docs/generated/hosted-route-manifest.json",
-      "sha256": "sha256:a62746a345fc904e546099458081a0f9bff00879d8d621d9c45d2d8ff07ce738",
+      "sha256": "sha256:a94f728b9d62dbcee76b52a2879859197b32168b32a0ee91acee46a427e15bc4",
       "bytes": 15143
     },
     {
       "path": "docs/generated/install-readiness-manifest.json",
-      "sha256": "sha256:85f85781e0291a39e83ccfb249915d67a23a56a11d0861e89859b3326c082418",
+      "sha256": "sha256:9cf4f3153c38f8ead38297cc3639550f280a962dc226ef50c9ed06aa56c47434",
       "bytes": 8385
     },
     {
       "path": "docs/generated/quickstart.md",
-      "sha256": "sha256:db9107614e1f5c19159e3623af6775dab9887e87acad01b42da0df711c14c638",
+      "sha256": "sha256:59d9c38e12b0a0afbfeaf774395b289732da0f369e311ab909575e81e387dda6",
       "bytes": 6951
     },
     {
       "path": "docs/generated/release-capability-manifest.json",
-      "sha256": "sha256:7765c2d67d4a9b365333a5166608a32f2d117253d95acb0fcb947559af5fc88e",
+      "sha256": "sha256:e030d3cc7080f0f923f843503ab2d40b70391ba82ac6757a407c60f0d9959e50",
       "bytes": 33824
     },
     {
@@ -119,23 +119,23 @@
     },
     {
       "path": "docs/generated/system-map.md",
-      "sha256": "sha256:9bc624274c984a1afe04a6134694bee62431c1fbae84e7b139966cb7dd3472ec",
+      "sha256": "sha256:6976c20cbcfea2173956a6858b7a32198a87c2fa1d1de6d2dfe3f7f7ca194779",
       "bytes": 1718
     },
     {
       "path": "docs/generated/user-manual.md",
-      "sha256": "sha256:0eb2a91f3cb4746294f19a0aa294d0b513539c674f76427a67e849e0cf6e6124",
+      "sha256": "sha256:14d8e59e1c7cdf279525bb76188f18c6b73034aa824b818f71b385de67aeafde",
       "bytes": 4359
     },
     {
       "path": "package.json",
-      "sha256": "sha256:15d555b648551db6dd727d8d6302b4b6b6eeeb7c6905ce3def146e8ad4a7c2f5",
-      "bytes": 4754
+      "sha256": "sha256:90655452382ef903d659ac78b5f2ba6f497c61100f7782d4d64f794461e413ae",
+      "bytes": 4901
     },
     {
       "path": "packages/contracts/generated/reference.json",
-      "sha256": "sha256:0b9edd192c007fc9e48b1957a1ea44ed082acbdfa4551a1954bf8ca044353565",
-      "bytes": 8515
+      "sha256": "sha256:9ed43889c919edd2222f8df1dd1b74ec9056a85cc94b020583e66be6213e9932",
+      "bytes": 8539
     },
     {
       "path": "packages/docs/scripts/generate-docs.mjs",
@@ -504,26 +504,26 @@
       {
         "title": "Quickstart",
         "path": "docs/generated/quickstart.md",
-        "sha256": "sha256:db9107614e1f5c19159e3623af6775dab9887e87acad01b42da0df711c14c638",
-        "excerpt": "# Generated Quickstart\n\n<!-- generated by packages/docs/scripts/generate-docs.mjs; do not edit by hand -->\n\n## Provenance\n\n- Source repo: `jami-harness`\n- Source commit: `git:HEAD`\n- Source ref: `main`\n- Source input hash: `sha256:a52741d69148d89657e4e8a04a051123e87a3e2ad7130ee5af252fe86e7d1fff`\n- Command: `pnpm docs:generate -- --check`\n- Command result: `passed`\n- Freshness class: `deterministic_current_source_tree`\n\n## Current Install Posture\n\nThe root package is `jami-harness` at version `0.1.0`. Harness packages are published at `@jami-studio/*@0.1.0` with trusted GitHub Actions provenance and clean external install smoke evidence.\n\n## Local Commands\n\n```powershell\npnpm install --frozen-lockfile\npnpm docs:generate -- --check\npnpm workbench:generate\npnpm workbench:check\npnpm eval:smoke\npnpm verify\nnode apps/cli/src/cli.mjs init --json\nnode apps/cli/src/cli.mjs run --json\nnode apps/cli/src/cli.mjs inspect --json\n```\n\n## Full Local Harness Path\n\nThe supported install paths today are a local source checkout, the generated clean local tarball install smoke, and public npm installation from the published harness packages. The canonical batteries-included package is `@jami-studio/harness@0.1.1`; the corrected CLI/SDK inspection path is prepared for `@jami-studio/harness-cli@0.1.1` and `@jami-studio/harness-sdk@0.1.1`.\n\n```powershell\npnpm install --frozen-lockfile\nnode apps/cli/src/cli.mjs init --json\nnode apps/cli/src/cli.mjs run --json\nnode apps/cli/src/cli.mjs inspect --json\n```\n\n## Modular Replacement Paths\n\n| Path | SDK option | Current status | Evidence boundary |\n| --- | --- | --- | --- |\n| `byo_memory` | `memory` | `supported_port` | Use no-op, local, or user-owned memory modules while preserving citation, freshness, scope, and replay metadata. |"
+        "sha256": "sha256:59d9c38e12b0a0afbfeaf774395b289732da0f369e311ab909575e81e387dda6",
+        "excerpt": "# Generated Quickstart\n\n<!-- generated by packages/docs/scripts/generate-docs.mjs; do not edit by hand -->\n\n## Provenance\n\n- Source repo: `jami-harness`\n- Source commit: `git:HEAD`\n- Source ref: `main`\n- Source input hash: `sha256:f2d867d72d42e74ded35c26cd557807bd93b097398e22a3f06d1db65e8840cd2`\n- Command: `pnpm docs:generate -- --check`\n- Command result: `passed`\n- Freshness class: `deterministic_current_source_tree`\n\n## Current Install Posture\n\nThe root package is `jami-harness` at version `0.1.0`. Harness packages are published at `@jami-studio/*@0.1.0` with trusted GitHub Actions provenance and clean external install smoke evidence.\n\n## Local Commands\n\n```powershell\npnpm install --frozen-lockfile\npnpm docs:generate -- --check\npnpm workbench:generate\npnpm workbench:check\npnpm eval:smoke\npnpm verify\nnode apps/cli/src/cli.mjs init --json\nnode apps/cli/src/cli.mjs run --json\nnode apps/cli/src/cli.mjs inspect --json\n```\n\n## Full Local Harness Path\n\nThe supported install paths today are a local source checkout, the generated clean local tarball install smoke, and public npm installation from the published harness packages. The canonical batteries-included package is `@jami-studio/harness@0.1.1`; the corrected CLI/SDK inspection path is prepared for `@jami-studio/harness-cli@0.1.1` and `@jami-studio/harness-sdk@0.1.1`.\n\n```powershell\npnpm install --frozen-lockfile\nnode apps/cli/src/cli.mjs init --json\nnode apps/cli/src/cli.mjs run --json\nnode apps/cli/src/cli.mjs inspect --json\n```\n\n## Modular Replacement Paths\n\n| Path | SDK option | Current status | Evidence boundary |\n| --- | --- | --- | --- |\n| `byo_memory` | `memory` | `supported_port` | Use no-op, local, or user-owned memory modules while preserving citation, freshness, scope, and replay metadata. |"
       },
       {
         "title": "User Manual",
         "path": "docs/generated/user-manual.md",
-        "sha256": "sha256:0eb2a91f3cb4746294f19a0aa294d0b513539c674f76427a67e849e0cf6e6124",
-        "excerpt": "# Generated User Manual\n\n<!-- generated by packages/docs/scripts/generate-docs.mjs; do not edit by hand -->\n\n## Provenance\n\n- Source repo: `jami-harness`\n- Source commit: `git:HEAD`\n- Source ref: `main`\n- Source input hash: `sha256:a52741d69148d89657e4e8a04a051123e87a3e2ad7130ee5af252fe86e7d1fff`\n- Command: `pnpm docs:generate -- --check`\n- Command result: `passed`\n- Freshness class: `deterministic_current_source_tree`\n\n## Developer Workflow\n\nUse the CLI for local state and evidence inspection. The CLI writes local `.jami-harness` state in the target project and does not publish externally.\n\n## Module Inspection\n\n`jami map --json` reports active runtime, policy, provider, tools, memory, artifacts, observability, and docs-output capability state.\n\n## Full Harness And Modular Paths\n\nUse the full local source-checkout path when you want the complete current foundation. Use SDK module injection when you need to bring your own memory, context, search, checkpoint store, provider, policy engine, tools, artifact store, observability sink, or docs-output path.\n\n| Path | SDK option | Current status | Evidence boundary |\n| --- | --- | --- | --- |\n| `byo_memory` | `memory` | `supported_port` | Use no-op, local, or user-owned memory modules while preserving citation, freshness, scope, and replay metadata. |\n| `byo_context` | `context` | `supported_port` | Replace context assembly without changing run grammar; context packs preserve inclusion reasons and deterministic hashes. |\n| `byo_search` | `search` | `supported_port` | Use the no-op or memory-backed adapter today; hosted/vector search remains unavailable. |\n| `byo_store` | `checkpointStore` | `supported_port` | Use in-memory or filesystem checkpoint stores today; hosted stores remain unavailable. |\n| `byo_provider` | `provider` | `supported_port_local_plus_hosted_fail_closed` | The default provider router runs the local deterministic route and exposes a fail-closed hosted OpenAI route; hosted execution requires explicit provider env vars, and streaming, hosted tool calls, structured output schemas, and cancellation are not wired yet. |\n| `byo_policy` | `policyEngine` | `supported_port` | Replace the policy engine behind the harness seam without weakening default-deny and audit evidence requirements. |\n| `byo_tools` | `tools` | `supported_port_current_adapters_only` | Function tools and trusted MCP fixtures are supported; OpenAPI, shell, browser, code, provider-as-tool, A2A, stdio MCP, and remote MCP remain fail-closed unsupported surfaces. |\n| `byo_artifacts` | `artifactStore` | `supported_port` | Replace artifact storage while preserving provenance, evidence refs, and artifact view projection. |\n| `byo_observability` | `observability` | `supported_port` | Replace trace/audit/evidence sinks while preserving redaction and evidence packet shape. |\n| `byo_docs_output` | `docsOutput` | `repo_generator_supported_sdk_output_unavailable` | Repo-level docs generation is supported; SDK docs-output injection and hosted docs publishing remain unavailable. |\n\nThe docs-output path is intentionally split: repo-level generation is supported through `pnpm docs:generate`, while SDK docs-output injection remains unavailable.\n\n## Evidence Handling\n\nGenerated docs and evidence records are tied to accepted source records, contract references, command result, freshness class, and generated output paths in `docs/generated/docs-source-manifest.json`.\n\n`apps/workbench/dist/index.html` is a dependency-free local static shell generated from SDK runtime evidence, explicit local CLI state when provided, generated docs previews, and the generated system map. It is not a hosted workbench or Studio UI package integration.\n\n`docs/generated/release-capability-manifest.json` is the executable release/hosted capability ledger. It records public npm provenance and GitHub release attestation evidence while keeping Mintlify validation, hosted docs, hosted provider, hosted store, hosted observability, and hosted workbench claims fail-closed until command evidence exists."
+        "sha256": "sha256:14d8e59e1c7cdf279525bb76188f18c6b73034aa824b818f71b385de67aeafde",
+        "excerpt": "# Generated User Manual\n\n<!-- generated by packages/docs/scripts/generate-docs.mjs; do not edit by hand -->\n\n## Provenance\n\n- Source repo: `jami-harness`\n- Source commit: `git:HEAD`\n- Source ref: `main`\n- Source input hash: `sha256:f2d867d72d42e74ded35c26cd557807bd93b097398e22a3f06d1db65e8840cd2`\n- Command: `pnpm docs:generate -- --check`\n- Command result: `passed`\n- Freshness class: `deterministic_current_source_tree`\n\n## Developer Workflow\n\nUse the CLI for local state and evidence inspection. The CLI writes local `.jami-harness` state in the target project and does not publish externally.\n\n## Module Inspection\n\n`jami map --json` reports active runtime, policy, provider, tools, memory, artifacts, observability, and docs-output capability state.\n\n## Full Harness And Modular Paths\n\nUse the full local source-checkout path when you want the complete current foundation. Use SDK module injection when you need to bring your own memory, context, search, checkpoint store, provider, policy engine, tools, artifact store, observability sink, or docs-output path.\n\n| Path | SDK option | Current status | Evidence boundary |\n| --- | --- | --- | --- |\n| `byo_memory` | `memory` | `supported_port` | Use no-op, local, or user-owned memory modules while preserving citation, freshness, scope, and replay metadata. |\n| `byo_context` | `context` | `supported_port` | Replace context assembly without changing run grammar; context packs preserve inclusion reasons and deterministic hashes. |\n| `byo_search` | `search` | `supported_port` | Use the no-op or memory-backed adapter today; hosted/vector search remains unavailable. |\n| `byo_store` | `checkpointStore` | `supported_port` | Use in-memory or filesystem checkpoint stores today; hosted stores remain unavailable. |\n| `byo_provider` | `provider` | `supported_port_local_plus_hosted_fail_closed` | The default provider router runs the local deterministic route and exposes a fail-closed hosted OpenAI route; hosted execution requires explicit provider env vars, and streaming, hosted tool calls, structured output schemas, and cancellation are not wired yet. |\n| `byo_policy` | `policyEngine` | `supported_port` | Replace the policy engine behind the harness seam without weakening default-deny and audit evidence requirements. |\n| `byo_tools` | `tools` | `supported_port_current_adapters_only` | Function tools and trusted MCP fixtures are supported; OpenAPI, shell, browser, code, provider-as-tool, A2A, stdio MCP, and remote MCP remain fail-closed unsupported surfaces. |\n| `byo_artifacts` | `artifactStore` | `supported_port` | Replace artifact storage while preserving provenance, evidence refs, and artifact view projection. |\n| `byo_observability` | `observability` | `supported_port` | Replace trace/audit/evidence sinks while preserving redaction and evidence packet shape. |\n| `byo_docs_output` | `docsOutput` | `repo_generator_supported_sdk_output_unavailable` | Repo-level docs generation is supported; SDK docs-output injection and hosted docs publishing remain unavailable. |\n\nThe docs-output path is intentionally split: repo-level generation is supported through `pnpm docs:generate`, while SDK docs-output injection remains unavailable.\n\n## Evidence Handling\n\nGenerated docs and evidence records are tied to accepted source records, contract references, command result, freshness class, and generated output paths in `docs/generated/docs-source-manifest.json`.\n\n`apps/workbench/dist/index.html` is a dependency-free local static shell generated from SDK runtime evidence, explicit local CLI state when provided, generated docs previews, and the generated system map. It is not a hosted workbench or Studio UI package integration.\n\n`docs/generated/release-capability-manifest.json` is the executable release/hosted capability ledger. It records public npm provenance and GitHub release attestation evidence while keeping Mintlify validation, hosted docs, hosted provider, hosted store, hosted observability, and hosted workbench claims fail-closed until command evidence exists."
       },
       {
         "title": "Evidence Index",
         "path": "docs/generated/evidence-index.md",
-        "sha256": "sha256:2713ce7078bef873a8c4f9792f009f098d36a59b2c8156b7010fa5d721f4ada6",
-        "excerpt": "# Generated Claims And Evidence Index\n\n<!-- generated by packages/docs/scripts/generate-docs.mjs; do not edit by hand -->\n\n## Provenance\n\n- Source repo: `jami-harness`\n- Source commit: `git:HEAD`\n- Source ref: `main`\n- Source input hash: `sha256:a52741d69148d89657e4e8a04a051123e87a3e2ad7130ee5af252fe86e7d1fff`\n- Command: `pnpm docs:generate -- --check`\n- Command result: `passed`\n- Freshness class: `deterministic_current_source_tree`\n\n## Claims\n\n- Local contract schemas, generated references, and fixtures exist.\n- Local docs generation exists and has check mode.\n- Local CLI/SDK evidence smoke exists.\n- Full local source-checkout install and modular replacement paths are recorded in a generated install-readiness manifest.\n- Release and hosted capability readiness is recorded in a generated manifest with official-source prerequisites and fail-closed unsupported states.\n- Local deterministic provider workflow exists and routes tool calls through the policy-gated tool gateway.\n- Local redacted metric records exist for latency, token-estimate, external-billable-cost, and tool-call measurements.\n- Local deterministic regression eval smoke exists for tool safety, docs generation, memory recall, and recovery.\n- Local static workbench generation exists for run timeline, approvals, artifacts, traces, memory/context, docs preview, and system-map inspection from current local evidence.\n- Tool adapter source inspection exists for supported function and trusted MCP fixture paths plus fail-closed OpenAPI, shell, browser, code, provider-as-tool, and A2A dry-run evidence.\n- Release and hosted capability readiness is generated into `docs/generated/release-capability-manifest.json`, with package contents dry-runs, clean local tarball install smoke, public npm provenance, and GitHub release attestations marked supported evidence, while Mintlify validation/publishing, hosted docs, hosted providers, hosted stores, hosted observability, and hosted workbench surfaces remain fail-closed.\n- Hosted docs, hosted model providers, executable full protocol/local tool adapters, hosted observability, and hosted control/runtime routes remain unavailable until their gates close.\n\n## Evidence Inputs\n\n- `.changes/2026-06-07-local-first-workflow.md` (sha256:4e3bbd7ac85d968de1879d99d9ee1d01e27e395c6ae7af36839313208a77ba41)\n- `.changes/2026-06-08-jami-harness-rename.md` (sha256:df02a10fb696bef220639a8f006029c2a0bfbbac71b765267f4a16350eb3441f)\n- `.changes/2026-06-09-candidate-stack-source-lock.md` (sha256:b1549284045c002b840b766615041bdee2b5aade42ac543b94cc99da891fd3c0)\n- `.changes/2026-06-09-checkpoint-resume-store.md` (sha256:14c833709cf8fb33c8ba704eb639e03f85c555c42a754031464b9e54516b5e5a)\n- `.changes/2026-06-09-cli-provider-unsupported-exit.md` (sha256:c8259b42eb637b22e4c93ef77b9427a86d41e691683d353d8bc5f0a55f74fa42)\n- `.changes/2026-06-09-contract-generation-evidence.md` (sha256:c9249512e27c6b4924b7db129a537fdea77e336dd0345e545e18ce0760bf9578)\n- `.changes/2026-06-09-contract-spine-validation-hardening.md` (sha256:365b9a39f2d209053f54db2c045ddabcafe37c1bedb4c276ef806b8174ac6298)\n- `.changes/2026-06-09-contract-spine.md` (sha256:af85b4d4d95f9c47a9cb28db05486f022cade60a0e9cc02f5e2a7e854f89cab9)\n- `.changes/2026-06-09-crossflow-completion-audit.md` (sha256:3c270d3ff7a8380a596bbadc7afce072fc9dbf05eecac56ec8c1bc6af9fc91d9)\n- `.changes/2026-06-09-current-source-agent-rule.md` (sha256:2a9505172ba9a42ecac99c9c12fecefabc67f6d41ae18caa2f4af2260e20e2eb)\n- `.changes/2026-06-09-docs-source-generator.md` (sha256:b4449fdcf21905e34664994fd38ff2d72fe8663cd0efd62f6c541e1f62f34445)\n- `.changes/2026-06-09-harness-readiness-boundary.md` (sha256:f1c2001a6f6de9e4931e55e293a90d63ce20c71c5631fb5cd4d1f9dda0377797)\n- `.changes/2026-06-09-install-readiness-manifest.md` (sha256:66bed0f69d9d619fec76849b606bc7669762b5fdc8411ec9ac806bd80a8965c4)\n- `.changes/2026-06-09-local-deterministic-provider.md` (sha256:42a42c7f954d386bb917f8022a0082328e5ab5207b415a8afb498ab3be9b45e8)\n- `.changes/2026-06-09-local-workbench-shell.md` (sha256:3a3aa2da6f72bb5533b8ade7c9a37d02310cd63c8548e84664c421f731ca237c)\n- `.changes/2026-06-09-mcp-direct-registration-hardening.md` (sha256:57fd1839984abe6942df1743fcf4c21e45ab74721505171bc83c420c1fa6c7aa)\n- `.changes/2026-06-09-mcp-source-lock-fixture-adapter.md` (sha256:ae76aaf59bdc90edf563e1f4d79dbbbbac71da85ae41d0c3ff04f35080d8e218)"
+        "sha256": "sha256:3d63593d6350574c2cffd3c9d118cdd2a0587902684a930696511c67e2cedc1d",
+        "excerpt": "# Generated Claims And Evidence Index\n\n<!-- generated by packages/docs/scripts/generate-docs.mjs; do not edit by hand -->\n\n## Provenance\n\n- Source repo: `jami-harness`\n- Source commit: `git:HEAD`\n- Source ref: `main`\n- Source input hash: `sha256:f2d867d72d42e74ded35c26cd557807bd93b097398e22a3f06d1db65e8840cd2`\n- Command: `pnpm docs:generate -- --check`\n- Command result: `passed`\n- Freshness class: `deterministic_current_source_tree`\n\n## Claims\n\n- Local contract schemas, generated references, and fixtures exist.\n- Local docs generation exists and has check mode.\n- Local CLI/SDK evidence smoke exists.\n- Full local source-checkout install and modular replacement paths are recorded in a generated install-readiness manifest.\n- Release and hosted capability readiness is recorded in a generated manifest with official-source prerequisites and fail-closed unsupported states.\n- Local deterministic provider workflow exists and routes tool calls through the policy-gated tool gateway.\n- Local redacted metric records exist for latency, token-estimate, external-billable-cost, and tool-call measurements.\n- Local deterministic regression eval smoke exists for tool safety, docs generation, memory recall, and recovery.\n- Local static workbench generation exists for run timeline, approvals, artifacts, traces, memory/context, docs preview, and system-map inspection from current local evidence.\n- Tool adapter source inspection exists for supported function and trusted MCP fixture paths plus fail-closed OpenAPI, shell, browser, code, provider-as-tool, and A2A dry-run evidence.\n- Release and hosted capability readiness is generated into `docs/generated/release-capability-manifest.json`, with package contents dry-runs, clean local tarball install smoke, public npm provenance, and GitHub release attestations marked supported evidence, while Mintlify validation/publishing, hosted docs, hosted providers, hosted stores, hosted observability, and hosted workbench surfaces remain fail-closed.\n- Hosted docs, hosted model providers, executable full protocol/local tool adapters, hosted observability, and hosted control/runtime routes remain unavailable until their gates close.\n\n## Evidence Inputs\n\n- `.changes/2026-06-07-local-first-workflow.md` (sha256:4e3bbd7ac85d968de1879d99d9ee1d01e27e395c6ae7af36839313208a77ba41)\n- `.changes/2026-06-08-jami-harness-rename.md` (sha256:df02a10fb696bef220639a8f006029c2a0bfbbac71b765267f4a16350eb3441f)\n- `.changes/2026-06-09-candidate-stack-source-lock.md` (sha256:b1549284045c002b840b766615041bdee2b5aade42ac543b94cc99da891fd3c0)\n- `.changes/2026-06-09-checkpoint-resume-store.md` (sha256:14c833709cf8fb33c8ba704eb639e03f85c555c42a754031464b9e54516b5e5a)\n- `.changes/2026-06-09-cli-provider-unsupported-exit.md` (sha256:c8259b42eb637b22e4c93ef77b9427a86d41e691683d353d8bc5f0a55f74fa42)\n- `.changes/2026-06-09-contract-generation-evidence.md` (sha256:c9249512e27c6b4924b7db129a537fdea77e336dd0345e545e18ce0760bf9578)\n- `.changes/2026-06-09-contract-spine-validation-hardening.md` (sha256:365b9a39f2d209053f54db2c045ddabcafe37c1bedb4c276ef806b8174ac6298)\n- `.changes/2026-06-09-contract-spine.md` (sha256:af85b4d4d95f9c47a9cb28db05486f022cade60a0e9cc02f5e2a7e854f89cab9)\n- `.changes/2026-06-09-crossflow-completion-audit.md` (sha256:3c270d3ff7a8380a596bbadc7afce072fc9dbf05eecac56ec8c1bc6af9fc91d9)\n- `.changes/2026-06-09-current-source-agent-rule.md` (sha256:2a9505172ba9a42ecac99c9c12fecefabc67f6d41ae18caa2f4af2260e20e2eb)\n- `.changes/2026-06-09-docs-source-generator.md` (sha256:b4449fdcf21905e34664994fd38ff2d72fe8663cd0efd62f6c541e1f62f34445)\n- `.changes/2026-06-09-harness-readiness-boundary.md` (sha256:f1c2001a6f6de9e4931e55e293a90d63ce20c71c5631fb5cd4d1f9dda0377797)\n- `.changes/2026-06-09-install-readiness-manifest.md` (sha256:66bed0f69d9d619fec76849b606bc7669762b5fdc8411ec9ac806bd80a8965c4)\n- `.changes/2026-06-09-local-deterministic-provider.md` (sha256:42a42c7f954d386bb917f8022a0082328e5ab5207b415a8afb498ab3be9b45e8)\n- `.changes/2026-06-09-local-workbench-shell.md` (sha256:3a3aa2da6f72bb5533b8ade7c9a37d02310cd63c8548e84664c421f731ca237c)\n- `.changes/2026-06-09-mcp-direct-registration-hardening.md` (sha256:57fd1839984abe6942df1743fcf4c21e45ab74721505171bc83c420c1fa6c7aa)\n- `.changes/2026-06-09-mcp-source-lock-fixture-adapter.md` (sha256:ae76aaf59bdc90edf563e1f4d79dbbbbac71da85ae41d0c3ff04f35080d8e218)"
       },
       {
         "title": "System Map",
         "path": "docs/generated/system-map.md",
-        "sha256": "sha256:9bc624274c984a1afe04a6134694bee62431c1fbae84e7b139966cb7dd3472ec",
-        "excerpt": "# Generated System Map\n\n<!-- generated by packages/docs/scripts/generate-docs.mjs; do not edit by hand -->\n\n## Provenance\n\n- Source repo: `jami-harness`\n- Source commit: `git:HEAD`\n- Source ref: `main`\n- Source input hash: `sha256:a52741d69148d89657e4e8a04a051123e87a3e2ad7130ee5af252fe86e7d1fff`\n- Command: `pnpm docs:generate -- --check`\n- Command result: `passed`\n- Freshness class: `deterministic_current_source_tree`\n\n## Package Graph\n\n```mermaid\nflowchart LR\n  contracts[packages/contracts]\n  runtime[packages/runtime]\n  policy[packages/policy]\n  tools[packages/tools]\n  provider[packages/provider-local]\n  memory[packages/memory]\n  artifacts[packages/artifacts]\n  observability[packages/observability]\n  evals[evals/smoke.mjs]\n  harness[packages/harness]\n  core[packages/core]\n  sdk[packages/sdk]\n  cli[apps/cli]\n  docs[packages/docs]\n  workbench[apps/workbench]\n  contracts --> runtime\n  contracts --> policy\n  contracts --> tools\n  contracts --> provider\n  contracts --> memory\n  contracts --> artifacts\n  contracts --> observability\n  runtime --> core\n  policy --> core\n  tools --> core\n  provider --> core\n  memory --> core\n  artifacts --> core\n  observability --> core\n  sdk --> harness"
+        "sha256": "sha256:6976c20cbcfea2173956a6858b7a32198a87c2fa1d1de6d2dfe3f7f7ca194779",
+        "excerpt": "# Generated System Map\n\n<!-- generated by packages/docs/scripts/generate-docs.mjs; do not edit by hand -->\n\n## Provenance\n\n- Source repo: `jami-harness`\n- Source commit: `git:HEAD`\n- Source ref: `main`\n- Source input hash: `sha256:f2d867d72d42e74ded35c26cd557807bd93b097398e22a3f06d1db65e8840cd2`\n- Command: `pnpm docs:generate -- --check`\n- Command result: `passed`\n- Freshness class: `deterministic_current_source_tree`\n\n## Package Graph\n\n```mermaid\nflowchart LR\n  contracts[packages/contracts]\n  runtime[packages/runtime]\n  policy[packages/policy]\n  tools[packages/tools]\n  provider[packages/provider-local]\n  memory[packages/memory]\n  artifacts[packages/artifacts]\n  observability[packages/observability]\n  evals[evals/smoke.mjs]\n  harness[packages/harness]\n  core[packages/core]\n  sdk[packages/sdk]\n  cli[apps/cli]\n  docs[packages/docs]\n  workbench[apps/workbench]\n  contracts --> runtime\n  contracts --> policy\n  contracts --> tools\n  contracts --> provider\n  contracts --> memory\n  contracts --> artifacts\n  contracts --> observability\n  runtime --> core\n  policy --> core\n  tools --> core\n  provider --> core\n  memory --> core\n  artifacts --> core\n  observability --> core\n  sdk --> harness"
       }
     ],
     "systemMap": {
@@ -874,7 +874,7 @@
         "sourceRef": "main",
         "sourceRefResolution": "pinned-default-publication-branch",
         "sourceCommitResolutionCommand": "git rev-parse HEAD",
-        "sourceInputHash": "sha256:a52741d69148d89657e4e8a04a051123e87a3e2ad7130ee5af252fe86e7d1fff",
+        "sourceInputHash": "sha256:f2d867d72d42e74ded35c26cd557807bd93b097398e22a3f06d1db65e8840cd2",
         "generatedAt": "deterministic:git-head-plus-input-hash",
         "freshnessClass": "deterministic_current_source_tree",
         "command": "pnpm docs:generate -- --check",
@@ -1079,7 +1079,7 @@
       },
       "releaseCapabilities": {
         "schemaVersion": "2026-06-09.release-capability-manifest",
-        "sourceInputHash": "sha256:9663264dd5e8c2a96343903fb76c766420426ef242469e655e80b11e91e9200a",
+        "sourceInputHash": "sha256:b7e09ec63a13cc50b2f08376e4a54454495d90de8198cc99151e971a1239fa00",
         "unsupportedCount": 6,
         "unsupportedSurfaces": [
           "Mintlify validation and hosted publishing",
@@ -1092,7 +1092,7 @@
       },
       "hostedRoutes": {
         "schemaVersion": "2026-06-12.hosted-route-manifest",
-        "sourceInputHash": "sha256:a8c5d9853de14275ab6c222a2f2167adda6d25e163f1e28955b148c1804ced8d",
+        "sourceInputHash": "sha256:d85d93fd0ee46f0fa416a43d651a2e83ed83f910a0efdc45daf956a41492e5c6",
         "publicUrlStatus": "live_smoke_passed",
         "localDirectory": "apps/workbench/dist",
         "previewServeCommand": "npx serve apps/workbench/dist",

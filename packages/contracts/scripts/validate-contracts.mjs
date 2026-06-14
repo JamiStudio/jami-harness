@@ -13,7 +13,7 @@ const requiredAnchors = new Map([
   ["artifactView", "artifact-view.schema.json"],
   ["actionRef", "action-ref.schema.json"],
   ["themeRef", "theme-ref.schema.json"],
-  ["suiteRef", "suite-ref.schema.json"],
+  ["workspaceRef", "workspace-ref.schema.json"],
   ["capabilityManifest", "capability-manifest.schema.json"],
   ["primitiveManifest", "primitive-manifest.schema.json"],
   ["policyDecision", "policy-decision.schema.json"],
@@ -125,15 +125,15 @@ const requiredPhase2Coverage = new Map([
     ],
   ],
   [
-    "suiteRef",
+    "workspaceRef",
     [
-      "suite_root",
+      "workspace_root",
       "page",
       "block",
       "primitive_dependency",
       "harness_capability",
       "missing_dependency",
-      "unsupported_suite_version",
+      "unsupported_workspace_version",
       "stale_registry_item",
     ],
   ],
@@ -588,12 +588,12 @@ function validateSemantics(schemaTitle, value) {
     }
   }
 
-  if (schemaTitle === "suiteRef") {
+  if (schemaTitle === "workspaceRef") {
     if (value.installedItems.some((item) => !item.startsWith("@jami-studio/ui/"))) {
       errors.push("$.installedItems must reference Studio UI registry items");
     }
     if (value.registryState && value.registryState !== "current" && value.installedItems.length > 0 && !value.evidenceRef) {
-      errors.push("$.evidenceRef is required for non-current suite refs");
+      errors.push("$.evidenceRef is required for non-current workspace refs");
     }
   }
 

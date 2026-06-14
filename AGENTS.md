@@ -53,10 +53,10 @@ typed contracts and cross-links, not duplicated roadmaps or collapsed ownership.
 
 This repo owns agent runs, tools, policy, approvals, memory, artifacts, traces, evidence,
 runtime state, and agent-facing CLI/SDK surfaces. Studio UI owns tokens, UI
-primitives, registry items, resident rendering, workbench controls, suite packs, and UI
+primitives, registry items, resident rendering, workbench controls, workspace packs, and UI
 install/config flows.
 
-When a UI payload, artifact view, action ref, theme ref, or suite ref contract changes,
+When a UI payload, artifact view, action ref, theme ref, or workspace ref contract changes,
 update `docs/architecture/foundation-alignment.md` and the matching Studio UI doc. Do
 not move token decisions, primitive implementation, registry packaging, or resident UI
 rendering into this repo.

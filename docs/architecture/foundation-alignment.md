@@ -32,12 +32,12 @@ Jami Harness owns:
 Studio UI owns:
 
 - Tokens, factory themes, and generated design-system outputs.
-- Radix-first shadcn primitives, components, blocks, pages, app shells, and suites.
+- Radix-first shadcn primitives, components, blocks, pages, app shells, and workspaces.
 - shadcn-compatible registry items and install-time package metadata.
 - Resident runtime renderer vocabulary, payload validation, and UI fallback behavior.
 - Always-live workbench overlay, theme/preset save flows, package registration, and
   registry export.
-- CLI install/config flows for UI items, themes, pages, apps, and suites.
+- CLI install/config flows for UI items, themes, pages, apps, and workspaces.
 
 ## Shared Contracts
 
@@ -47,7 +47,7 @@ The shared seam is typed data, not arbitrary code:
 - Studio UI validates and renders those payloads with resident allowlisted components.
 - Harness action refs stay policy-gated and auditable.
 - Studio UI components expose declared action slots and never execute model-provided code.
-- Theme, preset, registry item, and suite metadata can be referenced by harness artifacts
+- Theme, preset, registry item, and workspace metadata can be referenced by harness artifacts
   but remain authored and distributed by Studio UI.
 
 Initial shared contract families:
@@ -59,14 +59,14 @@ Initial shared contract families:
 - `actionRef`: stable id, label, risk, policy scope, confirmation mode, and harness route.
 - `themeRef`: theme id, token version, source registry item, factory/custom status, and
   restore target.
-- `suiteRef`: suite lane, installed item graph, app shell id, route map, and optional
+- `workspaceRef`: workspace audience, installed item graph, app shell id, route map, and optional
   harness capabilities.
 
 Harness-side schema anchors now live in
 `packages/contracts/schemas/` with compatibility fixtures under
 `packages/contracts/fixtures/`. These anchors define the data the harness can emit or
 consume at the sibling seam; they do not define Studio UI token output, primitive
-implementation, registry item packaging, resident renderer internals, or suite install
+implementation, registry item packaging, resident renderer internals, or workspace install
 behavior.
 
 The initial checkable anchors are:
@@ -76,7 +76,7 @@ The initial checkable anchors are:
 - `artifactView`
 - `actionRef`
 - `themeRef`
-- `suiteRef`
+- `workspaceRef`
 - `capabilityManifest`
 - `primitiveManifest`
 - `policyDecision`
@@ -92,11 +92,11 @@ The initial checkable anchors are:
 - `threatModelFixtureCatalog`
 
 The first compatibility cases cover unsupported UI components, invalid payloads,
-denied actions, renderer error states, artifact views, theme references, suite
+denied actions, renderer error states, artifact views, theme references, workspace
 references, and unsafe UI prop rejection. Harness validation now requires fixture
 coverage for every current shared anchor and fails cross-field semantics such as denied
 actions without policy evidence or renderer errors without a typed renderer error state.
-It also rejects unsafe UI props and suite refs that do not point at Studio UI registry
+It also rejects unsafe UI props and workspace refs that do not point at Studio UI registry
 items. Policy fixtures now cover prompt injection, tool metadata poisoning, MCP transport
 abuse, secret exfiltration, approval replay, denied action audit states, and
 secret-reference value leakage as harness-owned typed references. The first
@@ -157,7 +157,7 @@ across the sibling boundary.
 Phase 2 / Group A fresh pass 1 extends the harness-side shared seam fixtures under
 `packages/contracts/fixtures/shared-seams/` and the contract validator now requires
 machine-readable coverage for the root-roadmap seam matrix: `runEvent`, `uiPayload`,
-`artifactView`, `actionRef`, `themeRef`, `suiteRef`, `evidencePacket`, `memoryRecord`,
+`artifactView`, `actionRef`, `themeRef`, `workspaceRef`, `evidencePacket`, `memoryRecord`,
 `contextPack`, and `capabilityManifest`. The coverage gate includes positive, denied,
 unsupported, malformed or invalid, missing-source, stale, redacted, expired, replayed,
 local-only, hosted, package, release, and evidence states where those states belong to a
@@ -171,7 +171,7 @@ The first integration should be contract-first:
 1. Studio UI defines renderer payload schema and component vocabulary.
 2. Harness defines artifact/action/policy references that can point at UI payloads.
 3. Both repos add machine-readable compatibility fixtures for shared payloads, action
-   responses, artifact views, theme refs, suite refs, unsupported components, denied
+   responses, artifact views, theme refs, workspace refs, unsupported components, denied
    actions, invalid payloads, and renderer error states.
 4. Suite packs consume harness capabilities through adapters, not direct runtime imports.
 5. Showcase or hosted apps can import both packages through normal package boundaries once

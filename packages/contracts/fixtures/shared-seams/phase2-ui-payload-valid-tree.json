@@ -33,7 +33,7 @@
     "actionRefs": ["act_phase2_approve"],
     "artifactViewRefs": ["artv_phase2_docs"],
     "themeRef": "theme_phase2_default",
-    "suiteRef": "suite_phase2_root",
+    "workspaceRef": "workspace_phase2_root",
     "fallback": {
       "mode": "text",
       "message": "Run timeline is available as text."

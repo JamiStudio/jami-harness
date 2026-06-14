@@ -1,6 +1,6 @@
 {
   "generated": {
-    "generatedAt": "2026-06-13T10:35:17.965Z",
+    "generatedAt": "2026-06-14T08:18:25.362Z",
     "generatorVersion": "2026-06-09.contracts.1",
     "source": "packages/contracts/schemas/*.schema.json"
   },
@@ -229,19 +229,6 @@
       "title": "secretRef"
     },
     {
-      "file": "schemas/suite-ref.schema.json",
-      "id": "https://jami.studio/schemas/harness/suite-ref.schema.json",
-      "required": [
-        "schemaVersion",
-        "suiteId",
-        "lane",
-        "installedItems",
-        "routeMap",
-        "optionalHarnessCapabilities"
-      ],
-      "title": "suiteRef"
-    },
-    {
       "file": "schemas/theme-ref.schema.json",
       "id": "https://jami.studio/schemas/harness/theme-ref.schema.json",
       "required": [
@@ -310,6 +297,19 @@
         "fallback"
       ],
       "title": "uiPayload"
+    },
+    {
+      "file": "schemas/workspace-ref.schema.json",
+      "id": "https://jami.studio/schemas/harness/workspace-ref.schema.json",
+      "required": [
+        "schemaVersion",
+        "workspaceId",
+        "audience",
+        "installedItems",
+        "routeMap",
+        "optionalHarnessCapabilities"
+      ],
+      "title": "workspaceRef"
     }
   ],
   "studioUiHandshake": {
@@ -330,7 +330,7 @@
       "token output",
       "registry packaging",
       "renderer execution behavior",
-      "suite install behavior"
+      "workspace install behavior"
     ]
   }
 }

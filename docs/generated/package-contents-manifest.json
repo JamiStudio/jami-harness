@@ -120,7 +120,7 @@
       ],
       "tarball": {
         "filename": "jami-studio-harness-contracts-0.1.0.tgz",
-        "unpackedSize": 245117,
+        "unpackedSize": 245415,
         "entryCount": 98
       },
       "files": [
@@ -132,27 +132,27 @@
         },
         {
           "path": "README.md",
-          "size": 5774,
+          "size": 5798,
           "mode": 420,
-          "sha256": "sha256:db75b926217c98659d54addadd9da5fcf9f08acc4971932d9e2f56981334ec4f"
+          "sha256": "sha256:8d307c92aaf317235fa691f229ae2127ec2c0e8b98208c0ece39f5f33151e427"
         },
         {
           "path": "generated//contracts.ts",
-          "size": 56886,
+          "size": 56961,
           "mode": 420,
-          "sha256": "sha256:8aa7bca270ceba7e7452a5562d8c6ed4014510efa75a84c7ec8f6e2be882816e"
+          "sha256": "sha256:70532df5e0aa9978977cd910bf59ad811d5273d685d69558f369f7ff4ca01db4"
         },
         {
           "path": "generated//openapi.json",
-          "size": 65608,
+          "size": 65659,
           "mode": 420,
-          "sha256": "sha256:b0c090ddaba0d497bdcf1131fd3fee9d8d2e2fe9979dd48e2e95f559c685c171"
+          "sha256": "sha256:143e5fe516dfbb567ff9aeb572ad6f653c28c0d0c8d7b888f66fa629aaf5ff62"
         },
         {
           "path": "generated//reference.json",
-          "size": 8515,
+          "size": 8539,
           "mode": 420,
-          "sha256": "sha256:0b9edd192c007fc9e48b1957a1ea44ed082acbdfa4551a1954bf8ca044353565"
+          "sha256": "sha256:9ed43889c919edd2222f8df1dd1b74ec9056a85cc94b020583e66be6213e9932"
         },
         {
           "path": "schemas//action-ref.schema.json",
@@ -239,12 +239,6 @@
           "sha256": "sha256:560a632ecfcf875a81a6f120cb1e59fc374103b951095c4cba46c03f47fa3436"
         },
         {
-          "path": "schemas//suite-ref.schema.json",
-          "size": 1291,
-          "mode": 420,
-          "sha256": "sha256:ca582de6ee2788d7c2f103d0ead973403c53ff963e7740f4219ff62c8f4f0b6e"
-        },
-        {
           "path": "schemas//theme-ref.schema.json",
           "size": 1362,
           "mode": 420,
@@ -270,9 +264,15 @@
         },
         {
           "path": "schemas//ui-payload.schema.json",
-          "size": 2081,
+          "size": 2089,
           "mode": 420,
-          "sha256": "sha256:b9919032e8b64c8931a91de72693831f721d71f355125001337dc99acd6825ef"
+          "sha256": "sha256:be1a909cd1dbe9f3625a59b665c8eef6b323b880d51849c6c831862cbebf91ff"
+        },
+        {
+          "path": "schemas//workspace-ref.schema.json",
+          "size": 1330,
+          "mode": 420,
+          "sha256": "sha256:cf3965eac35a208e7e2a53b08cf677c622d60556381d1a5200f31919e439f22b"
         },
         {
           "path": "fixtures//artifacts/valid-artifact-record.json",
@@ -329,12 +329,6 @@
           "sha256": "sha256:807ecd33d21fbe25af7a7a9bcc7385f7a974b5faa484bc6be4b59829aa9259b4"
         },
         {
-          "path": "fixtures//compatibility/valid-suite-ref.json",
-          "size": 755,
-          "mode": 420,
-          "sha256": "sha256:089bc9136736257816f525f6a6389b792e67797b2ce440667f852f82ce132bb4"
-        },
-        {
           "path": "fixtures//compatibility/valid-theme-ref.json",
           "size": 630,
           "mode": 420,
@@ -345,6 +339,12 @@
           "size": 903,
           "mode": 420,
           "sha256": "sha256:b32ae3180178cc30bdd1ffc0d08d04a074c0bbd41effd9b4593d22ee11a7717c"
+        },
+        {
+          "path": "fixtures//compatibility/valid-workspace-ref.json",
+          "size": 769,
+          "mode": 420,
+          "sha256": "sha256:6639c04b2ca7c5b99731187b1eb3a2f7329fb28d79f2718c34524230017c1882"
         },
         {
           "path": "fixtures//manifests/capability-manifest.json",
@@ -611,12 +611,6 @@
           "sha256": "sha256:ccea2961674f4de1797531d03ae3256369d6fb568598bfb585e4286640fc7703"
         },
         {
-          "path": "fixtures//shared-seams/phase2-suite-ref-states.json",
-          "size": 1180,
-          "mode": 420,
-          "sha256": "sha256:7cd65196ad6868e5f8a19a191776cb095887e797f5949a45b4a532d2282ebab1"
-        },
-        {
           "path": "fixtures//shared-seams/phase2-theme-ref-states.json",
           "size": 885,
           "mode": 420,
@@ -678,9 +672,15 @@
         },
         {
           "path": "fixtures//shared-seams/phase2-ui-payload-valid-tree.json",
-          "size": 1403,
+          "size": 1411,
           "mode": 420,
-          "sha256": "sha256:74daf494c9915d25287e9da71da46b87a4331d7178553e8ee5bf8658ed6cd67d"
+          "sha256": "sha256:67056c14c427ba203577f578a27de51e67690432a325ed85c9bc0c79df7149c4"
+        },
+        {
+          "path": "fixtures//shared-seams/phase2-workspace-ref-states.json",
+          "size": 1235,
+          "mode": 420,
+          "sha256": "sha256:a77b79cc978ae8eb66e79aa49a03493f4396c0d83bc0910a765eb2766074e61f"
         },
         {
           "path": "fixtures//threat-model/fixture-catalog.json",

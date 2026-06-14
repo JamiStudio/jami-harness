@@ -49,10 +49,10 @@ Sibling boundary:
 - Jami Harness owns governed agent execution, tools, policy, approvals, memory, artifacts,
   traces, evidence, runtime state, and agent-facing CLI/SDK surfaces.
 - Studio UI owns tokens, UI primitives, registry packaging, resident rendering, workbench
-  controls, suite packs, and UI install/config flows.
+  controls, workspace packs, and UI install/config flows.
 - Shared integration moves through typed `uiPayload`, `artifactView`, `actionRef`,
-  `themeRef`, and `suiteRef` contracts. Do not duplicate the Studio UI roadmap or move UI
-  primitive, token, registry, renderer, suite, or install/config ownership into this repo.
+  `themeRef`, and `workspaceRef` contracts. Do not duplicate the Studio UI roadmap or move UI
+  primitive, token, registry, renderer, workspace, or install/config ownership into this repo.
 
 See the active plan's `Implementation Order`, `Adversarial Hardening Gates`, and
 `Cross-Stream Dependency Map` for sequence and what parallelizes.
@@ -215,7 +215,7 @@ Please AUDIT/EXECUTE Workstream <N>, aiming for completeness and cohesion, using
 live codebase as the source of truth rather than roadmap claims. Preserve the sibling
 boundary: Jami Harness owns governed agent execution, policy, tools, memory, artifacts,
 traces, evidence, runtime state, CLI/SDK runtime surfaces; Studio UI owns tokens, UI
-primitives, registry packaging, resident renderer, workbench, suites, and UI
+primitives, registry packaging, resident renderer, workbench, workspaces, and UI
 install/config surfaces.
 
 Read the relevant repo guidance before editing:
