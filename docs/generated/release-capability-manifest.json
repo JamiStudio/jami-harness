@@ -6,7 +6,7 @@
   "sourceRef": "main",
   "sourceRefResolution": "pinned-default-publication-branch",
   "sourceCommitResolutionCommand": "git rev-parse HEAD",
-  "sourceInputHash": "sha256:69486b8f16606dca0dce812cc0bded5d555e2966c5c870fa16662f640e2431dc",
+  "sourceInputHash": "sha256:f8c8fa0c7cfdeb1937a7a5afb093eb3e29191275c146233dbec14f11dcf768b8",
   "generatedAt": "deterministic:git-head-plus-release-capability-input-hash",
   "command": "pnpm release:capabilities:check",
   "commandResult": "passed",
@@ -520,8 +520,8 @@
     },
     {
       "path": "docs/operations/production-current-source-lock.md",
-      "sha256": "sha256:6cfec8ebfeaf52a9134864d010a663dbce20854f3600d25d1dc451bf6fc1d3a6",
-      "bytes": 6076
+      "sha256": "sha256:df9792641b31319812b59c48c3204a5f7dcd2820a0cb1c1057b885c943e98577",
+      "bytes": 6659
     },
     {
       "path": "docs/operations/release-capability-source-lock.md",
@@ -635,8 +635,8 @@
     },
     {
       "path": "scripts/release/generate-capability-manifest.mjs",
-      "sha256": "sha256:91192f447f90dc78d4d62ce8fcd34e3ba149d1ff24c388ba62ccd733a664c035",
-      "bytes": 44474
+      "sha256": "sha256:2259ccc390675847dfaeb5f758fbe3cba078e6715b7a510c74145bb26a9332fb",
+      "bytes": 49711
     },
     {
       "path": "scripts/release/generate-sbom.mjs",
@@ -910,7 +910,10 @@
       "commandEvidence": [
         "pnpm release:capabilities:check"
       ],
-      "officialSourceIds": [],
+      "officialSourceIds": [
+        "openai_agents_sdk",
+        "openai_agents_running"
+      ],
       "blockers": [
         "No hosted provider adapter source-lock, authentication, redaction, streaming, retry, billing, or policy fixtures exist.",
         "Current unsupported external provider CLI routes return nonzero fail-closed evidence."
@@ -930,7 +933,9 @@
       "commandEvidence": [
         "pnpm release:capabilities:check"
       ],
-      "officialSourceIds": [],
+      "officialSourceIds": [
+        "neon_connection_string"
+      ],
       "blockers": [
         "No database/object-store adapter exists.",
         "No hosted store credentials, migration, fixture, or replay evidence exists."
@@ -950,7 +955,10 @@
       "commandEvidence": [
         "pnpm release:capabilities:check"
       ],
-      "officialSourceIds": [],
+      "officialSourceIds": [
+        "cloudflare_pages_direct_upload",
+        "cloudflare_pages_headers"
+      ],
       "blockers": [
         "apps/workbench is a dependency-free local static shell, not a hosted control plane.",
         "Studio UI owns workbench UI primitives and install/config surfaces.",
@@ -1159,6 +1167,99 @@
       ],
       "blockers": [],
       "requiredBeforeClaim": []
+    },
+    {
+      "routeId": "route_local_docs_generation",
+      "plannedRoute": "Local docs generation into repo-owned generated Markdown and Mintlify-ready draft config.",
+      "sourceLockRecord": "docs/operations/release-capability-source-lock.md",
+      "ownerPackage": "@jami-studio/harness-docs",
+      "verificationCommand": "pnpm docs:generate:check",
+      "localGateCommand": "docs:generate:check",
+      "evidenceArtifacts": [
+        "packages/docs/scripts/generate-docs.mjs",
+        "docs/generated/docs-source-manifest.json",
+        "apps/docs/docs.json"
+      ],
+      "implementationPaths": [
+        "packages/docs/scripts/generate-docs.mjs"
+      ],
+      "fixturePaths": [
+        "docs/generated/docs-source-manifest.json",
+        "apps/docs/docs.json"
+      ],
+      "hostedPublicClaim": "Supported local generated docs only; Mintlify validation and hosted docs publishing remain unavailable.",
+      "supportState": "supported_local_evidence",
+      "officialSourceIds": [
+        "mintlify_docs_json"
+      ],
+      "blockers": [],
+      "requiredBeforeClaim": []
+    },
+    {
+      "routeId": "route_mintlify_validate_publish",
+      "plannedRoute": "Mintlify validation, hosted Mintlify build, and hosted docs publishing for generated docs output.",
+      "sourceLockRecord": "docs/operations/release-capability-source-lock.md",
+      "ownerPackage": "@jami-studio/harness-docs",
+      "verificationCommand": "pnpm docs:generate:check",
+      "localGateCommand": "docs:generate:check",
+      "evidenceArtifacts": [
+        "apps/docs/docs.json",
+        "docs/generated/docs-source-manifest.json"
+      ],
+      "implementationPaths": [],
+      "fixturePaths": [
+        "apps/docs/docs.json",
+        "docs/generated/docs-source-manifest.json"
+      ],
+      "hostedPublicClaim": "Unavailable; Mintlify-ready local files exist, but Mintlify validation/build/publish is not source-locked or run.",
+      "supportState": "fail_closed_unsupported",
+      "officialSourceIds": [
+        "mintlify_cli",
+        "mintlify_docs_json"
+      ],
+      "blockers": [
+        "The Mintlify CLI/package is not installed or source-locked in this repo.",
+        "`mint validate` has not run against apps/docs.",
+        "No Mintlify project, authentication, or hosted docs target is selected."
+      ],
+      "requiredBeforeClaim": [
+        "Source-lock the exact Mintlify CLI/package.",
+        "Install it intentionally and run mint validate or the accepted current local build check.",
+        "Record hosted project authorization and hosted build/publish smoke evidence."
+      ]
+    },
+    {
+      "routeId": "route_hosted_public_docs",
+      "plannedRoute": "Hosted public docs on Mintlify, Vercel, Cloudflare, or another selected docs target.",
+      "sourceLockRecord": "docs/operations/release-capability-source-lock.md",
+      "ownerPackage": "@jami-studio/harness-docs",
+      "verificationCommand": "pnpm docs:generate:check",
+      "localGateCommand": "docs:generate:check",
+      "evidenceArtifacts": [
+        "apps/docs/docs.json",
+        "docs/generated/docs-source-manifest.json"
+      ],
+      "implementationPaths": [],
+      "fixturePaths": [
+        "apps/docs/docs.json",
+        "docs/generated/docs-source-manifest.json"
+      ],
+      "hostedPublicClaim": "Unavailable; public docs hosting is not selected or deployed.",
+      "supportState": "fail_closed_unsupported",
+      "officialSourceIds": [
+        "mintlify_cli",
+        "cloudflare_pages_direct_upload"
+      ],
+      "blockers": [
+        "No hosted docs target is selected.",
+        "No account/project authorization evidence is recorded.",
+        "No deploy dry run or hosted docs smoke URL exists."
+      ],
+      "requiredBeforeClaim": [
+        "Select the hosted docs target.",
+        "Record account/project authorization and run the target's local/dry-run gate.",
+        "Record hosted docs URL smoke evidence before any public docs hosting claim."
+      ]
     },
     {
       "routeId": "route_package_contents_and_install",

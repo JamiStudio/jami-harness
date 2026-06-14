@@ -28,6 +28,10 @@ Verified on 2026-06-14:
   `https://ui.shadcn.com/docs/registry/registry-index`
 - shadcn registry item schema:
   `https://ui.shadcn.com/docs/registry/registry-item-json`
+- Mintlify CLI commands:
+  `https://www.mintlify.com/docs/cli/commands`
+- Mintlify `docs.json` settings:
+  `https://www.mintlify.com/docs/organize/settings-reference`
 - OpenAI Agents SDK overview:
   `https://developers.openai.com/api/docs/guides/agents`
 - OpenAI Agents SDK running agents:
@@ -56,6 +60,9 @@ a release-only route.
 - The shadcn registry item schema records item metadata, dependencies, and files. Harness
   shared seams stay typed data contracts; they must not copy Studio UI registry
   implementation or execute UI payload code.
+- Mintlify-ready local docs output is generated from source records, but `mint validate`,
+  hosted Mintlify builds, and hosted public docs publishing remain unavailable until the
+  exact CLI/package and hosted target are source-locked and smoke-tested.
 - OpenAI Agents SDK docs describe agents as applications that plan, call tools, coordinate
   specialists, and maintain state for multi-step work. Harness-owned orchestration,
   approval, tool execution, tracing, and run-state contracts stay product grammar rather
@@ -103,6 +110,8 @@ rows must name blockers and the proof required before a public support claim.
 - Hosted stores, hosted observability sinks, and hosted workbench/control remain
   unavailable. Generated route output may describe missing secret/account actions, but it
   is not hosted runtime proof.
+- Mintlify validation/build/publish and hosted public docs remain unavailable. Local
+  generated docs and `apps/docs/docs.json` are supported local evidence only.
 - Harness-side shared UI references are typed data contracts only. Studio UI owns registry
   items, token output, primitive implementation, resident rendering, and install/config
   behavior.

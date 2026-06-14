@@ -325,6 +325,7 @@ function buildCapabilities() {
       surface: "hosted provider runtime",
       blockedCommand: "hosted provider model call",
       safeClaim: "Hosted provider execution remains unsupported; only the local deterministic provider is executable.",
+      officialSourceIds: ["openai_agents_sdk", "openai_agents_running"],
       blockers: [
         "No hosted provider adapter source-lock, authentication, redaction, streaming, retry, billing, or policy fixtures exist.",
         "Current unsupported external provider CLI routes return nonzero fail-closed evidence.",
@@ -338,6 +339,7 @@ function buildCapabilities() {
       surface: "hosted durable stores",
       blockedCommand: "hosted store read/write smoke",
       safeClaim: "Hosted stores are not implemented; only local in-memory and filesystem checkpoint stores are available.",
+      officialSourceIds: ["neon_connection_string"],
       blockers: [
         "No database/object-store adapter exists.",
         "No hosted store credentials, migration, fixture, or replay evidence exists.",
@@ -351,6 +353,7 @@ function buildCapabilities() {
       surface: "hosted workbench",
       blockedCommand: "workbench build/smoke/deploy",
       safeClaim: "A local static workbench generator exists, but hosted workbench/control is not implemented or deployed.",
+      officialSourceIds: ["cloudflare_pages_direct_upload", "cloudflare_pages_headers"],
       blockers: [
         "apps/workbench is a dependency-free local static shell, not a hosted control plane.",
         "Studio UI owns workbench UI primitives and install/config surfaces.",
@@ -501,6 +504,72 @@ function buildProductionAcceptanceMatrix() {
       hostedPublicClaim: "Harness emits typed data only; Studio UI owns registry item implementation and resident rendering.",
       supportState: "supported_local_evidence",
       officialSourceIds: ["shadcn_registry_index", "shadcn_registry_item_schema"],
+    }),
+    acceptanceRow({
+      routeId: "route_local_docs_generation",
+      plannedRoute: "Local docs generation into repo-owned generated Markdown and Mintlify-ready draft config.",
+      sourceLockRecord: sourceLockPath,
+      ownerPackage: "@jami-studio/harness-docs",
+      verificationCommand: "pnpm docs:generate:check",
+      localGateCommand: "docs:generate:check",
+      evidenceArtifacts: [
+        "packages/docs/scripts/generate-docs.mjs",
+        "docs/generated/docs-source-manifest.json",
+        "apps/docs/docs.json",
+      ],
+      implementationPaths: ["packages/docs/scripts/generate-docs.mjs"],
+      fixturePaths: ["docs/generated/docs-source-manifest.json", "apps/docs/docs.json"],
+      hostedPublicClaim: "Supported local generated docs only; Mintlify validation and hosted docs publishing remain unavailable.",
+      supportState: "supported_local_evidence",
+      officialSourceIds: ["mintlify_docs_json"],
+    }),
+    acceptanceRow({
+      routeId: "route_mintlify_validate_publish",
+      plannedRoute: "Mintlify validation, hosted Mintlify build, and hosted docs publishing for generated docs output.",
+      sourceLockRecord: sourceLockPath,
+      ownerPackage: "@jami-studio/harness-docs",
+      verificationCommand: "pnpm docs:generate:check",
+      localGateCommand: "docs:generate:check",
+      evidenceArtifacts: ["apps/docs/docs.json", "docs/generated/docs-source-manifest.json"],
+      implementationPaths: [],
+      fixturePaths: ["apps/docs/docs.json", "docs/generated/docs-source-manifest.json"],
+      hostedPublicClaim: "Unavailable; Mintlify-ready local files exist, but Mintlify validation/build/publish is not source-locked or run.",
+      supportState: "fail_closed_unsupported",
+      officialSourceIds: ["mintlify_cli", "mintlify_docs_json"],
+      blockers: [
+        "The Mintlify CLI/package is not installed or source-locked in this repo.",
+        "`mint validate` has not run against apps/docs.",
+        "No Mintlify project, authentication, or hosted docs target is selected.",
+      ],
+      requiredBeforeClaim: [
+        "Source-lock the exact Mintlify CLI/package.",
+        "Install it intentionally and run mint validate or the accepted current local build check.",
+        "Record hosted project authorization and hosted build/publish smoke evidence.",
+      ],
+    }),
+    acceptanceRow({
+      routeId: "route_hosted_public_docs",
+      plannedRoute: "Hosted public docs on Mintlify, Vercel, Cloudflare, or another selected docs target.",
+      sourceLockRecord: sourceLockPath,
+      ownerPackage: "@jami-studio/harness-docs",
+      verificationCommand: "pnpm docs:generate:check",
+      localGateCommand: "docs:generate:check",
+      evidenceArtifacts: ["apps/docs/docs.json", "docs/generated/docs-source-manifest.json"],
+      implementationPaths: [],
+      fixturePaths: ["apps/docs/docs.json", "docs/generated/docs-source-manifest.json"],
+      hostedPublicClaim: "Unavailable; public docs hosting is not selected or deployed.",
+      supportState: "fail_closed_unsupported",
+      officialSourceIds: ["mintlify_cli", "cloudflare_pages_direct_upload"],
+      blockers: [
+        "No hosted docs target is selected.",
+        "No account/project authorization evidence is recorded.",
+        "No deploy dry run or hosted docs smoke URL exists.",
+      ],
+      requiredBeforeClaim: [
+        "Select the hosted docs target.",
+        "Record account/project authorization and run the target's local/dry-run gate.",
+        "Record hosted docs URL smoke evidence before any public docs hosting claim.",
+      ],
     }),
     acceptanceRow({
       routeId: "route_package_contents_and_install",
@@ -698,6 +767,23 @@ function validateProductionAcceptanceMatrix(manifest) {
   const scripts = JSON.parse(readFileSync(join(repoRoot, "package.json"), "utf8")).scripts ?? {};
   const packageNames = new Set(manifest.packageSummary.packages.map((entry) => entry.name));
   const sourceIds = new Set(manifest.officialSources.map((entry) => entry.id));
+  const knownSupportStates = new Set(["supported_local_evidence", "supported_public_evidence", "fail_closed_unsupported"]);
+  const requiredRouteIds = new Set([
+    "route_mcp_trusted_fixture_tools",
+    "route_tool_adapters_fail_closed",
+    "route_local_deterministic_provider",
+    "route_hosted_provider_runtime",
+    "route_policy_default_deny_security",
+    "route_studio_ui_shared_contract_refs",
+    "route_local_docs_generation",
+    "route_mintlify_validate_publish",
+    "route_hosted_public_docs",
+    "route_package_contents_and_install",
+    "route_npm_provenance",
+    "route_github_release_attestation",
+    "route_hosted_status_control_static",
+    "route_hosted_stores_observability_workbench",
+  ]);
   const rows = manifest.productionAcceptanceMatrix;
   if (!Array.isArray(rows) || rows.length === 0) {
     fail("production acceptance matrix is missing");
@@ -708,6 +794,9 @@ function validateProductionAcceptanceMatrix(manifest) {
       fail(`production acceptance matrix has a missing or duplicate route id: ${row.routeId ?? "<missing>"}`);
     }
     seen.add(row.routeId);
+    if (!requiredRouteIds.has(row.routeId)) {
+      fail(`production acceptance matrix has an unexpected route id: ${row.routeId}`);
+    }
     if (!packageNames.has(row.ownerPackage)) {
       fail(`${row.routeId} owner package does not exist in package inventory: ${row.ownerPackage}`);
     }
@@ -716,6 +805,15 @@ function validateProductionAcceptanceMatrix(manifest) {
     }
     if (!row.localGateCommand || !scripts[row.localGateCommand]) {
       fail(`${row.routeId} local gate command is not a package script: ${row.localGateCommand}`);
+    }
+    if (!row.verificationCommand || row.verificationCommand !== `pnpm ${row.localGateCommand}`) {
+      fail(`${row.routeId} verification command must be the pnpm form of localGateCommand`);
+    }
+    if (!row.hostedPublicClaim) {
+      fail(`${row.routeId} hosted/public claim boundary is missing`);
+    }
+    if (!knownSupportStates.has(row.supportState)) {
+      fail(`${row.routeId} has unknown support state: ${row.supportState}`);
     }
     for (const id of row.officialSourceIds ?? []) {
       if (!sourceIds.has(id)) fail(`${row.routeId} references unknown official source id: ${id}`);
@@ -737,9 +835,11 @@ function validateProductionAcceptanceMatrix(manifest) {
     } else if (row.supportState === "fail_closed_unsupported") {
       if (!row.blockers?.length) fail(`${row.routeId} is fail-closed without blockers`);
       if (!row.requiredBeforeClaim?.length) fail(`${row.routeId} is fail-closed without requiredBeforeClaim`);
-    } else {
-      fail(`${row.routeId} has unknown support state: ${row.supportState}`);
     }
+  }
+  const missingRoutes = [...requiredRouteIds].filter((routeId) => !seen.has(routeId));
+  if (missingRoutes.length > 0) {
+    fail(`production acceptance matrix is missing required route ids: ${missingRoutes.join(", ")}`);
   }
 }
 

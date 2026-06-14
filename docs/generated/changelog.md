@@ -7,7 +7,7 @@
 - Source repo: `jami-harness`
 - Source commit: `git:HEAD`
 - Source ref: `main`
-- Source input hash: `sha256:ac6f266df3e5c1c765d37ad219ca6aadc5c9c6b51454bf9c229e73f493e26a92`
+- Source input hash: `sha256:76fa8b939c8d44a3b6bd333a357f7f8966acae06dcf8e8b734145c7a452a0133`
 - Command: `pnpm docs:generate -- --check`
 - Command result: `passed`
 - Freshness class: `deterministic_current_source_tree`
@@ -61,6 +61,7 @@
 - 2026-06-13-public-inspection-patch (`.changes/2026-06-13-public-inspection-patch.md`)
 - 2026-06-14-posthog-product-telemetry (`.changes/2026-06-14-posthog-product-telemetry.md`)
 - Production Acceptance Matrix (`.changes/2026-06-14-production-acceptance-matrix.md`)
+- 2026-06-14-production-acceptance-pass2 (`.changes/2026-06-14-production-acceptance-pass2.md`)
 - 2026-06-14-telemetry-audit-pass2 (`.changes/2026-06-14-telemetry-audit-pass2.md`)
 - stream5-cli-sdk-fail-closed-ids (`.changes/stream5-cli-sdk-fail-closed-ids.md`)
 - stream5-cli-sdk-foundation (`.changes/stream5-cli-sdk-foundation.md`)
