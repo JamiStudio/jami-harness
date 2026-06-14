@@ -3,6 +3,8 @@ import assert from "node:assert/strict";
 import { createRunObservability } from "../src/index.mjs";
 import {
   createNoopTelemetrySink,
+  redactRunEventForTelemetry,
+  redactTelemetryString,
   resolveTelemetryGate,
   withTelemetry,
 } from "../src/telemetry.mjs";
@@ -255,4 +257,92 @@ test("PostHog sink stays inert when the vendor module cannot load", async () => 
   const client = await sink.ready();
   assert.equal(client, undefined);
   await sink.shutdown(); // must not throw
+});
+
+test("redactTelemetryString scrubs secret-like substrings and is idempotent", () => {
+  const dirty = "auth failed: Authorization: Bearer sk-ABCDEF1234567890abcdef api_key=phc_live_0123456789ABCDEFhij token abc123def456ghi789jkl012";
+  const once = redactTelemetryString(dirty);
+  assert.equal(once.includes("Bearer sk-"), false);
+  assert.equal(once.includes("phc_live_0123456789"), false);
+  assert.match(once, /\[redacted\]/);
+  // Idempotent: re-running does not double-redact or change a clean result.
+  assert.equal(redactTelemetryString(once), once);
+  // Benign text is untouched.
+  assert.equal(redactTelemetryString("renderer rejected the payload"), "renderer rejected the payload");
+});
+
+test("redactRunEventForTelemetry scrubs free-text fields but preserves the structured spine", () => {
+  const event = {
+    eventType: "run.failed",
+    runId: "run_demo",
+    taskId: "task_a",
+    sequence: 4,
+    message: "provider 401: api_key=sk-SHOULDNOTLEAK0123456789abcd",
+  };
+  const scrubbed = redactRunEventForTelemetry(event);
+  assert.equal(scrubbed.eventType, "run.failed");
+  assert.equal(scrubbed.runId, "run_demo");
+  assert.equal(scrubbed.taskId, "task_a");
+  assert.equal(scrubbed.sequence, 4);
+  assert.equal(scrubbed.message.includes("sk-SHOULDNOTLEAK"), false);
+  assert.match(scrubbed.message, /\[redacted\]/);
+  // Original is not mutated.
+  assert.match(event.message, /sk-SHOULDNOTLEAK/);
+});
+
+test("withTelemetry scrubs a secret-bearing run.failed message before it reaches the sink", () => {
+  const base = createRunObservability({ now });
+  const captured = [];
+  const sink = { kind: "fake", captureRunEvent: (event) => captured.push(event) };
+  const observability = withTelemetry(base, sink);
+
+  // A run.failed whose message carries a leaked provider key (as the runtime would
+  // forward error.message verbatim).
+  observability.eventSink.write({
+    eventType: "run.failed",
+    runId: "run_demo",
+    message: "upstream provider error: Authorization: Bearer sk-LEAKED_TOKEN_0123456789abcdef",
+  });
+
+  assert.equal(captured.length, 1);
+  const serialized = JSON.stringify(captured[0]);
+  assert.equal(serialized.includes("sk-LEAKED_TOKEN"), false);
+  assert.equal(serialized.includes("Bearer sk-"), false);
+  assert.match(captured[0].message, /\[redacted\]/);
+});
+
+test("PostHog sink scrubs a secret-bearing message even when fed an event directly", async () => {
+  const client = createFakeClient();
+  const sink = createPostHogTelemetrySink({ key: "phc_test", client, distinctId: "install_token" });
+
+  sink.captureRunEvent({
+    eventType: "run.failed",
+    runId: "run_demo",
+    message: "provider rejected token=ghp_0123456789abcdefABCDEF0123456789abcd",
+  });
+  await sink.ready();
+  await new Promise((resolve) => setImmediate(resolve));
+
+  assert.equal(client.exceptions.length, 1);
+  // The free-text message is carried as the Error's message (not an enumerable
+  // property), so assert on it directly: the secret must be gone and replaced.
+  const errorMessage = client.exceptions[0].error?.message ?? "";
+  assert.equal(errorMessage.includes("ghp_0123456789"), false);
+  assert.match(errorMessage, /\[redacted\]/);
+});
+
+test("PostHog sink shutdown is bounded when the client flush hangs", async () => {
+  // A client whose shutdown never resolves must not hang the caller.
+  const hangingClient = {
+    capture() {},
+    captureException() {},
+    shutdown() {
+      return new Promise(() => {}); // never resolves
+    },
+  };
+  const sink = createPostHogTelemetrySink({ key: "phc_test", client: hangingClient, shutdownTimeoutMs: 50 });
+  const start = Date.now();
+  await sink.shutdown();
+  const elapsed = Date.now() - start;
+  assert.ok(elapsed < 1000, `shutdown should be bounded, took ${elapsed}ms`);
 });

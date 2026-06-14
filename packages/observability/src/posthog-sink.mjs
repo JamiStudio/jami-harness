@@ -19,6 +19,12 @@
 // The PostHog client is created lazily (dynamic import) only when this sink is
 // constructed, so the harness install graph stays dependency-free unless telemetry
 // is enabled. A client may be injected for testing without importing the vendor.
+//
+// The only free text this sink emits is a failure event's `message` (as the
+// $exception message). We scrub it here too — independently of the withTelemetry
+// seam — so the sink is safe even when a custom caller feeds it events directly.
+
+import { redactTelemetryString } from "./telemetry.mjs";
 
 const DEFAULT_HOST = "https://us.posthog.com";
 
@@ -42,6 +48,10 @@ export function createPostHogTelemetrySink(options = {}) {
   const distinctId = nonEmpty(options.distinctId) ?? "jami-harness-anonymous";
   const captureContent = options.captureContent === true;
   const onError = typeof options.onError === "function" ? options.onError : () => {};
+  // Hard cap on flush/shutdown so a short-lived process never blocks on telemetry.
+  const shutdownTimeoutMs = Number.isFinite(options.shutdownTimeoutMs) && options.shutdownTimeoutMs > 0
+    ? options.shutdownTimeoutMs
+    : 2000;
 
   let clientPromise;
   let resolvedClient = options.client && typeof options.client === "object" ? options.client : undefined;
@@ -101,7 +111,10 @@ export function createPostHogTelemetrySink(options = {}) {
         harness_renderer_state: event.rendererState,
         $ai_trace_id: traceIdFor(event.runId),
       });
-      const message = typeof event.message === "string" ? event.message : `harness ${event.eventType}`;
+      const rawMessage = typeof event.message === "string" ? event.message : `harness ${event.eventType}`;
+      // Defense in depth: scrub secret-like substrings from the only free-text field
+      // this sink emits, even if the caller bypassed the withTelemetry seam.
+      const message = redactTelemetryString(rawMessage);
       enqueue((client) => {
         if (typeof client.captureException === "function") {
           client.captureException(toError(message, event.eventType), distinctId, properties);
@@ -178,13 +191,21 @@ export function createPostHogTelemetrySink(options = {}) {
       const client = resolvedClient ?? (await getClient());
       if (!client) return;
       try {
+        // Bound the flush so a slow/unreachable network can never hang a short-lived
+        // process (e.g. the CLI exit path). Pass the budget to the vendor where it is
+        // honored, and also race a hard timeout so the flush()/shutdownAsync() fallbacks
+        // (which take no timeout) are bounded too. Telemetry loss on timeout is fine.
+        let work;
         if (typeof client.shutdown === "function") {
-          await client.shutdown();
+          work = Promise.resolve(client.shutdown(shutdownTimeoutMs));
         } else if (typeof client.shutdownAsync === "function") {
-          await client.shutdownAsync();
+          work = Promise.resolve(client.shutdownAsync());
         } else if (typeof client.flush === "function") {
-          await client.flush();
+          work = Promise.resolve(client.flush());
+        } else {
+          return;
         }
+        await raceTimeout(work, shutdownTimeoutMs);
       } catch (error) {
         onError(error);
       }
@@ -280,4 +301,20 @@ function nonEmpty(value) {
 function round(value, places) {
   const factor = 10 ** places;
   return Math.round(value * factor) / factor;
+}
+
+// Resolve when `work` settles or `ms` elapses, whichever comes first. The timer is
+// unref'd so it can never keep the event loop (and thus the process) alive.
+function raceTimeout(work, ms) {
+  return new Promise((resolve) => {
+    let settled = false;
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      resolve();
+    };
+    const timer = setTimeout(finish, ms);
+    if (typeof timer.unref === "function") timer.unref();
+    Promise.resolve(work).then(finish, finish);
+  });
 }

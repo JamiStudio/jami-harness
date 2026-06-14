@@ -11,10 +11,22 @@
 //
 // The external analytics vendor never appears here. The vendor adapter lives in a
 // separate file and is only loaded when the gate is enabled, keeping the harness
-// dependency-free by default. The decorator forwards already-redacted records from
-// the base observability port, so prompts/secrets are never re-introduced.
+// dependency-free by default.
+//
+// Defense in depth on the event seam: the base observability port redacts trace
+// attributes and metric dimensions, but a run event's free-text `message` (e.g.
+// `run.failed` carries `error.message` verbatim from the runtime) is forwarded to
+// the sink at the seam *before* the base port's own redaction runs. We therefore
+// scrub the forwarded event's free-text fields here with a small, self-contained,
+// dependency-free redactor so an unredacted error string can never reach the sink —
+// regardless of what any base port does.
 
 const TRUE_FLAG = /^(1|true|yes|on)$/i;
+
+// Free-text fields on a run event that may carry secrets/PII and must be scrubbed
+// before the event is teed to an external telemetry sink. Structured/ID/enum fields
+// (eventType, runId, taskId, sequence, rendererState, refs) are safe by construction.
+const RUN_EVENT_FREE_TEXT_FIELDS = ["message", "detail", "details", "reason", "error", "stack"];
 
 /**
  * Resolve whether OSS-safe telemetry is permitted to initialize.
@@ -141,8 +153,11 @@ export function withTelemetry(base, sink = createNoopTelemetrySink()) {
 
   const wrappedEventSink = {
     write(event) {
+      // Base port keeps its own (locally stored) redacted copy. The copy teed to the
+      // external sink is scrubbed here at the seam so a run event's free-text fields
+      // (e.g. run.failed's verbatim error message) cannot leak secrets/PII off-box.
       base.eventSink?.write?.(event);
-      safeForward(() => safeSink.captureRunEvent?.(event));
+      safeForward(() => safeSink.captureRunEvent?.(redactRunEventForTelemetry(event)));
     },
   };
 
@@ -238,4 +253,41 @@ async function safeForwardAsync(fn) {
   } catch {
     // Telemetry must never break a run. Swallow sink errors.
   }
+}
+
+// Scrub secret-like substrings (bearer tokens, `key=...`, `Authorization: ...`,
+// long opaque token runs) out of a free-text string before it leaves for an
+// external sink. Dependency-free and idempotent: re-running on already-scrubbed
+// text is a no-op. Mirrors the base observability port's string redaction so the
+// telemetry seam carries the same guarantee without importing it.
+export function redactTelemetryString(value) {
+  if (typeof value !== "string" || value.length === 0) return value;
+  return value
+    .replace(/\b(authorization)\b\s*[:=]\s*(?:[A-Za-z]+\s+)?[^,\s;]+/gi, "$1=[redacted]")
+    .replace(
+      /\b(api[_-]?key|secret|password|passwd|credential|token|cookie|session|bearer)\b\s*[:=]\s*[^,\s;]+/gi,
+      "$1=[redacted]",
+    )
+    .replace(/\bBearer\s+[A-Za-z0-9._~+/=-]+/gi, "Bearer [redacted]")
+    // Long opaque secret-shaped tokens (provider keys, JWT-ish blobs) with no spaces.
+    .replace(/\b(?=[A-Za-z0-9._-]*[A-Za-z])(?=[A-Za-z0-9._-]*\d)[A-Za-z0-9._-]{24,}\b/g, "[redacted]")
+    // Known key prefixes regardless of length (e.g. sk-..., phc_..., ghp_...).
+    .replace(/\b(sk|pk|rk|phc|ghp|gho|ghs|xox[abposr])[-_][A-Za-z0-9._-]{6,}\b/gi, "[redacted]");
+}
+
+// Return a shallow copy of a run event with its free-text fields scrubbed. Only the
+// fields that the telemetry sink may emit as free text are touched; everything else
+// (the structured spine) is passed through untouched.
+export function redactRunEventForTelemetry(event) {
+  if (!event || typeof event !== "object") return event;
+  let copy;
+  for (const field of RUN_EVENT_FREE_TEXT_FIELDS) {
+    const original = event[field];
+    if (typeof original !== "string") continue;
+    const scrubbed = redactTelemetryString(original);
+    if (scrubbed === original) continue;
+    if (!copy) copy = { ...event };
+    copy[field] = scrubbed;
+  }
+  return copy ?? event;
 }
